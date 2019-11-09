@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Soft Report</title>
+<link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+
+<body>
+	<h1>Design your project!</h1>
+	<img th:src="@{/images/SoftReport.png}" />
+
+	<form method="POST" th:object="${project}">
+		<span class="validationError" th:if="${#fields.hasErrors('systems')}"
+			th:errors="*{systems}">Systems Error</span>
+
+		<div class="grid">
+			<div class="ingredient-group" id="infosystems">
+				<h3>Designate your systems:</h3>
+				<div th:each="system : ${systems}">
+					<input name="systems" type="checkbox" th:value="${system.id}" /> <span
+						th:text="${system.name}">Information System</span><br />
+				</div>
+			</div>
+		</div>
+		<div>
+			<h3>Name your project creation:</h3>
+			<input type="text" th:field="*{name}" /> <span
+				th:text="${#fields.hasErrors('name')}">XXX</span> <span
+				class="validationError" th:if="${#fields.hasErrors('name')}"
+				th:errors="*{name}">Name Error</span> <br />
+
+			<button>Submit your project</button>
+		</div>
+	</form>
+</body>
+</html>
