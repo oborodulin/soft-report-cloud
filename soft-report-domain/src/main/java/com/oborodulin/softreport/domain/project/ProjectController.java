@@ -16,7 +16,7 @@ import com.oborodulin.softreport.domain.software.Software;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
+//@Controller
 @RequestMapping("/projects")
 public class ProjectController {
 	@GetMapping
