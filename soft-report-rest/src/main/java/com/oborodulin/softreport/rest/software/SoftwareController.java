@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.rest.project;
+package com.oborodulin.softreport.rest.software;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,30 +19,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oborodulin.softreport.domain.project.Project;
-import com.oborodulin.softreport.domain.project.ProjectRepository;
+import com.oborodulin.softreport.domain.software.Software;
+import com.oborodulin.softreport.domain.software.SoftwareRepository;
 
 @RestController
-@RequestMapping(path = "/projects", produces = "application/json")
+@RequestMapping(path = "/softwares", produces = "application/json")
 @CrossOrigin(origins = "*")
-public class ProjectController {
-	private ProjectRepository projectRepo;
+public class SoftwareController {
+	private SoftwareRepository softwareRepo;
 
 	@Autowired
 	EntityLinks entityLinks;
 
-	public ProjectController(ProjectRepository projectRepo) {
-		this.projectRepo = projectRepo;
+	public SoftwareController(SoftwareRepository softwareRepo) {
+		this.softwareRepo = softwareRepo;
 	}
 
 	@GetMapping("/recent")
-	public CollectionModel<ProjectModel> recentProjects() {
+	public CollectionModel<SoftwareModel> recentProjects() {
 		PageRequest page = PageRequest.of(0, 12, Sort	.by("createdAt")
 														.descending());
-		List<Project> projects = projectRepo.findAll(page)
+		List<Software> softwares = softwareRepo.findAll(page)
 											.getContent();
-		CollectionModel<ProjectModel> recentCollectionModel = new ProjectModelAssembler().toCollectionModel(projects);
-		recentCollectionModel.add(WebMvcLinkBuilder	.linkTo(WebMvcLinkBuilder.methodOn(ProjectController.class)
+		CollectionModel<SoftwareModel> recentCollectionModel = new SoftwareModelAssembler().toCollectionModel(softwares);
+		recentCollectionModel.add(WebMvcLinkBuilder	.linkTo(WebMvcLinkBuilder.methodOn(SoftwareController.class)
 																			.recentProjects())
 													.withRel("projects.recent"));
 		return recentCollectionModel;
@@ -50,13 +50,13 @@ public class ProjectController {
 
 	@PostMapping(consumes = "application/json")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Project postProject(@RequestBody Project project) {
-		return projectRepo.save(project);
+	public Software postProject(@RequestBody Software software) {
+		return softwareRepo.save(software);
 	}
 
 	@GetMapping("/{id}")
-	public Project projectById(@PathVariable("id") Long id) {
-		Optional<Project> optProject = projectRepo.findById(id);
+	public Software tacoById(@PathVariable("id") Long id) {
+		Optional<Software> optProject = softwareRepo.findById(id);
 		if (optProject.isPresent()) {
 			return optProject.get();
 		}

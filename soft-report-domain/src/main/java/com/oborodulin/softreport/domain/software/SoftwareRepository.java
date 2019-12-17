@@ -1,7 +1,7 @@
 package com.oborodulin.softreport.domain.software;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface SoftwareRepository extends CrudRepository<Software, Long> {
+public interface SoftwareRepository extends PagingAndSortingRepository<Software, Long> {
 
 }

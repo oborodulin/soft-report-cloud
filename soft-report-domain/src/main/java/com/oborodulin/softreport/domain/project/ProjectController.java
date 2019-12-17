@@ -2,7 +2,7 @@ package com.oborodulin.softreport.domain.project;
 
 import java.util.List;
 import javax.validation.Valid;
-import org.springframework.stereotype.Controller;
+//import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +30,7 @@ public class ProjectController {
 	}
 
 	@PostMapping
-	public String processDesign(@Valid @ModelAttribute("project") Project _project, Errors errors, Model model) {
+	public String processDesign(@Valid @ModelAttribute("project") Software _project, Errors errors, Model model) {
 		if (errors.hasErrors()) {
 			return "projects";
 		}
