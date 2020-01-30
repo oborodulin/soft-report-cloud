@@ -30,6 +30,7 @@
 		<module>soft-report-domain</module>
 		<module>soft-report-rest</module>
 		<module>soft-report-security</module>
+		<module>soft-report-web</module>
 		<module>soft-report-ui</module>
 	</modules>
 

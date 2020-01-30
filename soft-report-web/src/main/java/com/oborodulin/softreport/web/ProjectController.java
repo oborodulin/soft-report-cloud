@@ -1,8 +1,8 @@
-package com.oborodulin.softreport.domain.project;
+package com.oborodulin.softreport.web;
 
 import java.util.List;
 import javax.validation.Valid;
-//import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ import com.oborodulin.softreport.domain.software.Software;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-//@Controller
+@Controller
 @RequestMapping("/projects")
 public class ProjectController {
 	@GetMapping
@@ -30,14 +30,14 @@ public class ProjectController {
 	}
 
 	@PostMapping
-	public String processDesign(@Valid @ModelAttribute("project") Software _project, Errors errors, Model model) {
+	public String processDesign(@Valid @ModelAttribute("project") Software project, Errors errors, Model model) {
 		if (errors.hasErrors()) {
 			return "projects";
 		}
 
 		// Save the project...
 		// We'll do this in chapter 3
-		log.info("Processing project: " + _project);
+		log.info("Processing project: " + project);
 
 		return "redirect:/orders/current";
 	}

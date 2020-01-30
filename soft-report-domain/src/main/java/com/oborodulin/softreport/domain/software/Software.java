@@ -1,5 +1,7 @@
 package com.oborodulin.softreport.domain.software;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,4 +21,8 @@ public class Software {
 	@NotNull
 	private String name;
 	private String descr;
+	private Date createdAt;
+	private String createdBy;
+	private Date modifiedAt;
+	private String modifiedBy;
 }
