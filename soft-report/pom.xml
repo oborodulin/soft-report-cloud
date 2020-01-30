@@ -31,7 +31,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.oborodulin</groupId>
-			<artifactId>soft-report-ui</artifactId>
+			<artifactId>soft-report-web</artifactId>
 			<version>${softreport.version}</version>
 		</dependency>
 		<!-- Actuator and DevTools...just because -->

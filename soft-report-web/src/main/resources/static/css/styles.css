@@ -1,0 +1,93 @@
+body {
+	font-family: arial;
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+div.header {
+	margin-top:50px;
+	height: 100px;
+	background-image: url("images/cloud-taco.png");
+	text-align: right;
+}
+
+img.logo {
+	float: left; 
+	height:200px;
+}
+
+section.content {
+	margin-top: 50px;
+	margin-left:250px;
+	margin=right:250px;
+}
+
+div.footer {
+	height: 50px;
+	background-image: url("images/cloud-taco.png");
+}
+
+
+div.ingredient-group:nth-child(odd) {
+	float: left;
+	padding-right: 20px;
+}
+
+div.ingredient-group:nth-child(even) {
+    float: left;
+	padding-right: 0;
+}
+
+div.ingredient-group {
+	width: 50%;
+}
+
+.grid:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+*, *:after, *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+span.validationError {
+	color: red;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container {
+  padding: 60px 15px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
+}
