@@ -1,0 +1,101 @@
+<div id="sidebar-menu" class="main_menu_side hidden-print main_menu"
+	th:fragment="sidebar-menu">
+	<div class="menu_section">
+		<h3>Главное меню</h3>
+		<ul class="nav side-menu">
+			<li><a><i class="fa fa-home"></i> Проектная работа <span
+					class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<li><a th:href="@{projects}">Проекты</a></li>
+					<li><a href="index2.html">Задачи</a></li>
+				</ul></li>
+			<li><a><i class="fa fa-table"></i> ПО <span
+					class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<li><a href="tables.html">Системы</a></li>
+					<li><a href="tables_dynamic.html">Модули</a></li>
+				</ul></li>
+			<li><a><i class="fa fa-desktop"></i> ИТ-услуги <span
+					class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<li><a href="general_elements.html">Каталог</a></li>
+					<li><a href="media_gallery.html">Ответственные</a></li>
+					<li><a href="typography.html">ПО</a></li>
+				</ul></li>
+			<li><a><i class="fa fa-edit"></i> Документооборот <span
+					class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<li><a href="form.html">Документы</a></li>
+					<li><a href="form_validation.html">Рисунки</a></li>
+					<li><a>Модели данных<span class="fa fa-chevron-down"></span></a>
+						<ul class="nav child_menu">
+							<li class="sub_menu"><a href="level2.html">БД</a></li>
+							<li><a href="#level2_1">Схемы</a></li>
+							<li><a href="#level2_1">Таблицы</a></li>
+							<li><a href="#level2_1">Поля</a></li>
+							<li><a href="#level2_1">Представления</a></li>
+							<li><a href="#level2_1">Процедуры</a></li>
+						</ul></li>
+					<li><a href="form_upload.html">Элементы UI</a></li>
+					<li><a href="form_buttons.html">Отчёты</a></li>
+					<li><a href="form_buttons.html">Файлы</a></li>
+				</ul></li>
+			<li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span
+					class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<li><a href="chartjs.html">Chart JS</a></li>
+					<li><a href="chartjs2.html">Chart JS2</a></li>
+					<li><a href="morisjs.html">Moris JS</a></li>
+					<li><a href="echarts.html">ECharts</a></li>
+					<li><a href="other_charts.html">Other Charts</a></li>
+				</ul></li>
+			<li><a><i class="fa fa-clone"></i>Справочники <span
+					class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<li><a href="fixed_sidebar.html">Активы</a></li>
+					<li><a href="fixed_sidebar.html">Подписанты</a></li>
+				</ul></li>
+		</ul>
+	</div>
+	<div class="menu_section">
+		<h3>Администрирование</h3>
+		<ul class="nav side-menu">
+			<li><a><i class="fa fa-bug"></i> Настройки <span
+					class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<li><a href="e_commerce.html">Почта</a></li>
+					<li><a href="e_commerce.html">Аутентификация</a></li>
+				</ul></li>
+			<li><a><i class="fa fa-bug"></i> Пользователи <span
+					class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<li><a href="e_commerce.html">Пользователи</a></li>
+					<li><a href="e_commerce.html">Должности</a></li>
+					<li><a href="e_commerce.html">Роли</a></li>
+					<li><a href="e_commerce.html">Группы</a></li>
+					<li><a href="e_commerce.html">Полномочия</a></li>
+				</ul></li>
+			<li><a><i class="fa fa-sitemap"></i> Справочники <span
+					class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu">
+					<li><a>Документооборот<span class="fa fa-chevron-down"></span></a>
+						<ul class="nav child_menu">
+							<li class="sub_menu"><a href="level2.html">Категории</a></li>
+							<li><a href="#level2_1">Типы</a></li>
+						</ul></li>
+					<li><a>ПО<span class="fa fa-chevron-down"></span></a>
+						<ul class="nav child_menu">
+							<li class="sub_menu"><a href="level2.html">Архитектуры</a></li>
+							<li><a href="#level2_1">Типы ПО</a></li>
+							<li><a href="#level2_1">Типы БД</a></li>
+							<li><a href="#level2_2">Стеки</a></li>
+							<li><a href="#level2_2">Типы данных</a></li>
+							<li><a href="#level2_2">Элементы UI</a></li>
+						</ul></li>
+				</ul></li>
+			<li><a href="javascript:void(0)"><i class="fa fa-laptop"></i>
+					Landing Page <span class="label label-success pull-right">Coming
+						Soon</span></a></li>
+		</ul>
+	</div>
+</div>
