@@ -6,7 +6,7 @@ import com.oborodulin.softreport.domain.project.Project;
 public class ProjectModelAssembler extends RepresentationModelAssemblerSupport<Project, ProjectModel> {
 
 	public ProjectModelAssembler() {
-		super(ProjectController.class, ProjectModel.class);
+		super(ProjectRestController.class, ProjectModel.class);
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import com.oborodulin.softreport.domain.software.Software;
 public class SoftwareModelAssembler extends RepresentationModelAssemblerSupport<Software, SoftwareModel> {
 
 	public SoftwareModelAssembler() {
-		super(SoftwareController.class, SoftwareModel.class);
+		super(SoftwareRestController.class, SoftwareModel.class);
 	}
 
 	@Override

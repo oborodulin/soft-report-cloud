@@ -19,9 +19,11 @@ import com.oborodulin.softreport.domain.project.task.Task;
 import com.oborodulin.softreport.domain.software.Software;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @Entity
+@RequiredArgsConstructor
 @Table(name = "Projects")
 public class Project {
 	@Id

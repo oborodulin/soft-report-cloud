@@ -57,27 +57,25 @@
 							<div class="clearfix"></div>
 						</div>
 
-						<div class="x_content">
+						<div th:switch="${projects}" class="x_content">
 
 							<p>
 								Add class
 								<code>bulk_action</code>
 								to table for bulk actions options on row select
 							</p>
-
+       <a class="btn btn-primary" href="/projects/create">
+  <i class="fas fa-user-plus ml-2"></i>Добавить</a>
+  <h2 th:case="null">Проектов пока нет!</h2>
+  <div th:case="*">
 							<div class="table-responsive">
 								<table class="table table-striped jambo_table bulk_action">
 									<thead>
 										<tr class="headings">
 											<th><input type="checkbox" id="check-all" class="flat">
 											</th>
-											<th class="column-title">Invoice</th>
-											<th class="column-title">Invoice Date</th>
-											<th class="column-title">Order</th>
-											<th class="column-title">Bill to Name</th>
-											<th class="column-title">Status</th>
-											<th class="column-title">Amount</th>
-											<th class="column-title no-link last"><span class="nobr">Action</span>
+											<th class="column-title">Наименование</th>
+											<th class="column-title no-link last"><span class="nobr">Описание</span>
 											</th>
 											<th class="bulk-actions" colspan="7"><a class="antoo"
 												style="color: #fff; font-weight: 500;">Bulk Actions ( <span
@@ -208,7 +206,7 @@
 									</tbody>
 								</table>
 							</div>
-
+							</div>
 
 						</div>
 					</div>
