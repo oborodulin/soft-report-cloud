@@ -2,6 +2,7 @@ package com.oborodulin.softreport.web;
 
 import java.util.Arrays;
 import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.oborodulin.softreport.domain.project.Project;
 import com.oborodulin.softreport.domain.project.ProjectRepository;
 import com.oborodulin.softreport.domain.software.Software;
+import com.oborodulin.softreport.domain.software.SoftwareRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,8 +26,19 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/projects/")
 public class ProjectMvcController {
-	@Autowired
+	private final SoftwareRepository softwareRepository;
 	private ProjectRepository projectRepository;
+
+	@Autowired
+	public ProjectMvcController(ProjectRepository projectRepository, SoftwareRepository softwareRepository) {
+		this.projectRepository = projectRepository;
+		this.softwareRepository = softwareRepository;
+	}
+
+	@ModelAttribute(name = "project")
+	public Project project() {
+		return new Project();
+	}
 
 	@GetMapping
 	public String showProjectsList(Model model) {
@@ -35,25 +48,30 @@ public class ProjectMvcController {
 
 	@GetMapping("create")
 	public String showCreateForm(Model model) {
-		List<Software> softwares = null;
-		Arrays.asList(
+		List<Software> softwares = (List<Software>) softwareRepository.findAll();
+		if (softwares == null || softwares.isEmpty()) {
+			softwares = Arrays.asList(
 				new Software(1L, "ИДС УЖДТ",
 						"Информационно-диспетчерская система управления железнодорожным транспортом"),
 				new Software(2L, "SAP ERP", "Система SAP"), new Software(3L, "OEBS", "Oracle E-Business Suite"));
+		}
 		model.addAttribute("softwares", softwares);
-		model.addAttribute("project", new Project());
+		log.info("Отображение формы создания проекта");
 		return "create-project";
 	}
 
 	@PostMapping("create")
 	public String createProject(@Valid @ModelAttribute("project") Project project, Errors errors, Model model) {
+		log.info("Создание проекта: " + project);
 		if (errors.hasErrors()) {
+			errors.getAllErrors().stream().forEach(System.out::println);
+			log.info("Создание проекта: " + project);
 			return "create-project";
 		}
-		log.info("Создание проекта: " + project);
+		log.info("Сохранение проекта: " + project);
 		projectRepository.save(project);
 
-		return "redirect:/";
+		return "redirect:/projects/";
 	}
 
 	@GetMapping("edit/{id}")

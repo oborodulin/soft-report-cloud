@@ -22,11 +22,11 @@
 			<artifactId>soft-report-rest</artifactId>
 			<version>${softreport.version}</version>
 		</dependency>
-		<dependency>
+		<!-- dependency>
 			<groupId>com.oborodulin</groupId>
 			<artifactId>soft-report-security</artifactId>
 			<version>${softreport.version}</version>
-		</dependency>
+		</dependency-->
 		<dependency>
 			<groupId>com.oborodulin</groupId>
 			<artifactId>soft-report-web</artifactId>

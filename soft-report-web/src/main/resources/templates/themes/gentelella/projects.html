@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout}">
+	layout:decorate="~{layouts/layout-tables}">
 <head>
 <title>Проекты</title>
 </head>
@@ -13,9 +13,7 @@
 		<div class="">
 			<div class="page-title">
 				<div class="title_left">
-					<h3>
-						Проектная работа
-					</h3>
+					<h3>Проектная работа</h3>
 				</div>
 
 				<div class="title_right">
@@ -39,9 +37,7 @@
 				<div class="col-md-12 col-sm-12  ">
 					<div class="x_panel">
 						<div class="x_title">
-							<h2>
-								Проекты
-							</h2>
+							<h2>Проекты</h2>
 							<ul class="nav navbar-right panel_toolbox">
 								<li><a class="collapse-link"><i
 										class="fa fa-chevron-up"></i></a></li>
@@ -56,158 +52,46 @@
 							</ul>
 							<div class="clearfix"></div>
 						</div>
-
-						<div th:switch="${projects}" class="x_content">
-
-							<p>
-								Add class
-								<code>bulk_action</code>
-								to table for bulk actions options on row select
-							</p>
-       <a class="btn btn-primary" href="/projects/create">
-  <i class="fas fa-user-plus ml-2"></i>Добавить</a>
-  <h2 th:case="null">Проектов пока нет!</h2>
-  <div th:case="*">
+						<div class="x_content">
+							<!-- Info Alert -->
+							<div th:if="${#lists.isEmpty(projects)}" class="bs-example">
+								<div class="alert alert-info alert-dismissible fade show">
+									<strong>Информация!</strong> Проектов пока нет.
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+								</div>
+							</div>
+							<a href="/projects/create" class="btn btn-primary btn-xs"><i
+								class="fa fa-plus"></i>&nbsp;Добавить </a>
 							<div class="table-responsive">
-								<table class="table table-striped jambo_table bulk_action">
+								<table th:if="${not #lists.isEmpty(projects)}"
+									class="table table-striped jambo_table bulk_action">
 									<thead>
 										<tr class="headings">
 											<th><input type="checkbox" id="check-all" class="flat">
 											</th>
+											<th class="column-title"></th>
 											<th class="column-title">Наименование</th>
 											<th class="column-title no-link last"><span class="nobr">Описание</span>
-											</th>
-											<th class="bulk-actions" colspan="7"><a class="antoo"
-												style="color: #fff; font-weight: 500;">Bulk Actions ( <span
-													class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+											<th class="bulk-actions" colspan="7"><a
+												th:href="@{projects/delete/{id}(id=${project.id})}"
+												class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>&nbsp;Удалить</a>
 											</th>
 										</tr>
 									</thead>
-
 									<tbody>
-										<tr class="even pointer">
-											<td class="a-center "><input type="checkbox"
-												class="flat" name="table_records"></td>
-											<td class=" ">121000040</td>
-											<td class=" ">May 23, 2014 11:47:56 PM</td>
-											<td class=" ">121000210 <i
-												class="success fa fa-long-arrow-up"></i></td>
-											<td class=" ">John Blank L</td>
-											<td class=" ">Paid</td>
-											<td class="a-right a-right ">$7.45</td>
-											<td class=" last"><a href="#">View</a></td>
-										</tr>
-										<tr class="odd pointer">
-											<td class="a-center "><input type="checkbox"
-												class="flat" name="table_records"></td>
-											<td class=" ">121000039</td>
-											<td class=" ">May 23, 2014 11:30:12 PM</td>
-											<td class=" ">121000208 <i
-												class="success fa fa-long-arrow-up"></i>
-											</td>
-											<td class=" ">John Blank L</td>
-											<td class=" ">Paid</td>
-											<td class="a-right a-right ">$741.20</td>
-											<td class=" last"><a href="#">View</a></td>
-										</tr>
-										<tr class="even pointer">
-											<td class="a-center "><input type="checkbox"
-												class="flat" name="table_records"></td>
-											<td class=" ">121000038</td>
-											<td class=" ">May 24, 2014 10:55:33 PM</td>
-											<td class=" ">121000203 <i
-												class="success fa fa-long-arrow-up"></i>
-											</td>
-											<td class=" ">Mike Smith</td>
-											<td class=" ">Paid</td>
-											<td class="a-right a-right ">$432.26</td>
-											<td class=" last"><a href="#">View</a></td>
-										</tr>
-										<tr class="odd pointer">
-											<td class="a-center "><input type="checkbox"
-												class="flat" name="table_records"></td>
-											<td class=" ">121000037</td>
-											<td class=" ">May 24, 2014 10:52:44 PM</td>
-											<td class=" ">121000204</td>
-											<td class=" ">Mike Smith</td>
-											<td class=" ">Paid</td>
-											<td class="a-right a-right ">$333.21</td>
-											<td class=" last"><a href="#">View</a></td>
-										</tr>
-										<tr class="even pointer">
-											<td class="a-center "><input type="checkbox"
-												class="flat" name="table_records"></td>
-											<td class=" ">121000040</td>
-											<td class=" ">May 24, 2014 11:47:56 PM</td>
-											<td class=" ">121000210</td>
-											<td class=" ">John Blank L</td>
-											<td class=" ">Paid</td>
-											<td class="a-right a-right ">$7.45</td>
-											<td class=" last"><a href="#">View</a></td>
-										</tr>
-										<tr class="odd pointer">
-											<td class="a-center "><input type="checkbox"
-												class="flat" name="table_records"></td>
-											<td class=" ">121000039</td>
-											<td class=" ">May 26, 2014 11:30:12 PM</td>
-											<td class=" ">121000208 <i
-												class="error fa fa-long-arrow-down"></i>
-											</td>
-											<td class=" ">John Blank L</td>
-											<td class=" ">Paid</td>
-											<td class="a-right a-right ">$741.20</td>
-											<td class=" last"><a href="#">View</a></td>
-										</tr>
-										<tr class="even pointer">
-											<td class="a-center "><input type="checkbox"
-												class="flat" name="table_records"></td>
-											<td class=" ">121000038</td>
-											<td class=" ">May 26, 2014 10:55:33 PM</td>
-											<td class=" ">121000203</td>
-											<td class=" ">Mike Smith</td>
-											<td class=" ">Paid</td>
-											<td class="a-right a-right ">$432.26</td>
-											<td class=" last"><a href="#">View</a></td>
-										</tr>
-										<tr class="odd pointer">
-											<td class="a-center "><input type="checkbox"
-												class="flat" name="table_records"></td>
-											<td class=" ">121000037</td>
-											<td class=" ">May 26, 2014 10:52:44 PM</td>
-											<td class=" ">121000204</td>
-											<td class=" ">Mike Smith</td>
-											<td class=" ">Paid</td>
-											<td class="a-right a-right ">$333.21</td>
-											<td class=" last"><a href="#">View</a></td>
-										</tr>
-
-										<tr class="even pointer">
-											<td class="a-center "><input type="checkbox"
-												class="flat" name="table_records"></td>
-											<td class=" ">121000040</td>
-											<td class=" ">May 27, 2014 11:47:56 PM</td>
-											<td class=" ">121000210</td>
-											<td class=" ">John Blank L</td>
-											<td class=" ">Paid</td>
-											<td class="a-right a-right ">$7.45</td>
-											<td class=" last"><a href="#">View</a></td>
-										</tr>
-										<tr class="odd pointer">
-											<td class="a-center "><input type="checkbox"
-												class="flat" name="table_records"></td>
-											<td class=" ">121000039</td>
-											<td class=" ">May 28, 2014 11:30:12 PM</td>
-											<td class=" ">121000208</td>
-											<td class=" ">John Blank L</td>
-											<td class=" ">Paid</td>
-											<td class="a-right a-right ">$741.20</td>
-											<td class=" last"><a href="#">View</a></td>
+										<tr th:each="project, rowStat : ${projects}"
+											th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
+											<td class="a-center "><input name="projects"
+												type="checkbox" th:value="${project.id}" class="flat"></td>
+											<td class=" "><a
+												th:href="@{/projects/edit/{id}(id=${project.id})}"
+												class="btn btn-info btn-sm"><i class="fa fa-pencil"></i></a></td>
+											<td th:text="${project.name}" class=" "></td>
+											<td th:text="${project.descr}" class=" "></td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
-							</div>
-
 						</div>
 					</div>
 				</div>

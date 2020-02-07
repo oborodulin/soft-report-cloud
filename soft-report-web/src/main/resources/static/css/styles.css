@@ -1,93 +1,27 @@
-body {
-	font-family: arial;
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+.bs-example {
+	margin: 20px;
 }
 
-div.header {
-	margin-top:50px;
-	height: 100px;
-	background-image: url("images/cloud-taco.png");
-	text-align: right;
+.alert-success {
+	color: #155724;
+	background-color: #d4edda;
+	border-color: #c3e6cb;
 }
 
-img.logo {
-	float: left; 
-	height:200px;
+.alert-danger {
+	color: #721c24;
+	background-color: #f8d7da;
+	border-color: #f5c6cb;
 }
 
-section.content {
-	margin-top: 50px;
-	margin-left:250px;
-	margin=right:250px;
+.alert-warning {
+	color: #856404;
+	background-color: #fff3cd;
+	border-color: #ffeeba;
 }
 
-div.footer {
-	height: 50px;
-	background-image: url("images/cloud-taco.png");
-}
-
-
-div.ingredient-group:nth-child(odd) {
-	float: left;
-	padding-right: 20px;
-}
-
-div.ingredient-group:nth-child(even) {
-    float: left;
-	padding-right: 0;
-}
-
-div.ingredient-group {
-	width: 50%;
-}
-
-.grid:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-*, *:after, *:before {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-span.validationError {
-	color: red;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  line-height: 60px; /* Vertically center the text there */
-  background-color: #f5f5f5;
-}
-
-
-/* Custom page CSS
--------------------------------------------------- */
-/* Not required for template or sticky footer method. */
-
-body > .container {
-  padding: 60px 15px 0;
-}
-
-.footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
-code {
-  font-size: 80%;
+.alert-info {
+	color: #0c5460;
+	background-color: #d1ecf1;
+	border-color: #bee5eb;
 }
