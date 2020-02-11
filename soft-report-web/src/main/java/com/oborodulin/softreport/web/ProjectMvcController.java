@@ -95,8 +95,19 @@ public class ProjectMvcController {
 		return "projects";
 	}
 
+	@GetMapping("delete")
+	public String deleteProjects(Errors errors, Model model) {
+		if (errors.hasErrors()) {
+			errors.getAllErrors().stream().forEach(System.out::println);
+			return "projects";
+		}
+		//projectRepository.save(project);
+
+		return "redirect:/projects/";
+	}
+
 	@GetMapping("delete/{id}")
-	public String deleteStudent(@PathVariable("id") long id, Model model) {
+	public String deleteProject(@PathVariable("id") long id, Model model) {
 		Project project = projectRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid project Id:" + id));
 		projectRepository.delete(project);

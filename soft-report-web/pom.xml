@@ -22,10 +22,8 @@
 			<version>${softreport.version}</version>
 		</dependency>
 		<!-- Necessary Boot starters -->
-		<!--dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency-->
+		<!--dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-security</artifactId> 
+			</dependency -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -344,7 +342,13 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>popper.js</artifactId>
 			<version>2.0.2</version>
-		</dependency>		<!-- Можно не указывать в ссылках версию <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script> 
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>bootstrap-duallistbox</artifactId>
+			<version>3.0.6</version>
+		</dependency>
+		<!-- Можно не указывать в ссылках версию <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script> 
 			версия определяется по версии в POM'е -->
 		<dependency>
 			<groupId>org.webjars</groupId>
