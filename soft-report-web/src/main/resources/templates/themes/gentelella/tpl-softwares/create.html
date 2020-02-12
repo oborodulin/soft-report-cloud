@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-forms}">
+<head>
+<title>Система</title>
+</head>
+
+<body class="nav-md">
+	<!-- page content -->
+	<div class="right_col" role="main" layout:fragment="page-content">
+		<div class="">
+			<div class="page-title">
+				<div class="title_left">
+					<h3>Программное обеспечение</h3>
+				</div>
+				<div class="title_right">
+					<div class="col-md-5 col-sm-5  form-group pull-right top_search">
+						<div class="input-group">
+							<input type="text" class="form-control"
+								placeholder="Search for..."> <span
+								class="input-group-btn">
+								<button class="btn btn-default" type="button">Go!</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12 ">
+					<div class="x_panel">
+						<div class="x_title">
+							<h2>Новая система</h2>
+							<ul class="nav navbar-right panel_toolbox">
+								<li><a class="collapse-link"><i
+										class="fa fa-chevron-up"></i></a></li>
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									data-toggle="dropdown" role="button" aria-haspopup="true"
+									aria-expanded="false"><i class="fa fa-wrench"></i></a>
+									<ul class="dropdown-menu" role="menu">
+										<li><a class="dropdown-item" href="#">Settings 1</a></li>
+										<li><a class="dropdown-item" href="#">Settings 2</a></li>
+									</ul></li>
+								<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+							</ul>
+							<div class="clearfix"></div>
+						</div>
+						<div class="x_content">
+							<br />
+							<form th:action="@{~/softwares/create}" th:object="${software}"
+								th:method="POST" id="create-software" data-parsley-validate
+								class="form-horizontal form-label-left">
+								<div class="form-group row">
+									<label class="control-label col-md-3 col-sm-3 ">Select
+										Grouped</label>
+									<div class="col-md-9 col-sm-9 ">
+										<select class="select2_group form-control">
+											<optgroup label="Alaskan/Hawaiian Time Zone">
+												<option value="AK">Alaska</option>
+												<option value="HI">Hawaii</option>
+											</optgroup>
+											<optgroup label="Pacific Time Zone">
+												<option value="CA">California</option>
+												<option value="NV">Nevada</option>
+												<option value="OR">Oregon</option>
+												<option value="WA">Washington</option>
+											</optgroup>
+											<optgroup label="Mountain Time Zone">
+												<option value="AZ">Arizona</option>
+												<option value="CO">Colorado</option>
+												<option value="ID">Idaho</option>
+												<option value="MT">Montana</option>
+												<option value="NE">Nebraska</option>
+												<option value="NM">New Mexico</option>
+												<option value="ND">North Dakota</option>
+												<option value="UT">Utah</option>
+												<option value="WY">Wyoming</option>
+											</optgroup>
+											<optgroup label="Central Time Zone">
+												<option value="AL">Alabama</option>
+												<option value="AR">Arkansas</option>
+												<option value="IL">Illinois</option>
+												<option value="IA">Iowa</option>
+												<option value="KS">Kansas</option>
+												<option value="KY">Kentucky</option>
+												<option value="LA">Louisiana</option>
+												<option value="MN">Minnesota</option>
+												<option value="MS">Mississippi</option>
+												<option value="MO">Missouri</option>
+												<option value="OK">Oklahoma</option>
+												<option value="SD">South Dakota</option>
+												<option value="TX">Texas</option>
+												<option value="TN">Tennessee</option>
+												<option value="WI">Wisconsin</option>
+											</optgroup>
+											<optgroup label="Eastern Time Zone">
+												<option value="CT">Connecticut</option>
+												<option value="DE">Delaware</option>
+												<option value="FL">Florida</option>
+												<option value="GA">Georgia</option>
+												<option value="IN">Indiana</option>
+												<option value="ME">Maine</option>
+												<option value="MD">Maryland</option>
+												<option value="MA">Massachusetts</option>
+												<option value="MI">Michigan</option>
+												<option value="NH">New Hampshire</option>
+												<option value="NJ">New Jersey</option>
+												<option value="NY">New York</option>
+												<option value="NC">North Carolina</option>
+												<option value="OH">Ohio</option>
+												<option value="PA">Pennsylvania</option>
+												<option value="RI">Rhode Island</option>
+												<option value="SC">South Carolina</option>
+												<option value="VT">Vermont</option>
+												<option value="VA">Virginia</option>
+												<option value="WV">West Virginia</option>
+											</optgroup>
+										</select>
+									</div>
+								</div>
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align"
+										for="code">Код <span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 ">
+										<input type="text" th:field="*{code}" id="code"
+											required="required" class="form-control ">
+									</div>
+									<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+										class="text-danger"></span>
+								</div>
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align"
+										for="name">Наименование <span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 ">
+										<input type="text" th:field="*{name}" id="name"
+											required="required" class="form-control ">
+									</div>
+									<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+										class="text-danger"></span>
+								</div>
+								<div class="item form-group">
+									<label for="descr"
+										class="col-form-label col-md-3 col-sm-3 label-align">Описание</label>
+									<div class="col-md-6 col-sm-6 ">
+										<textarea th:field="*{descr}" id="descr" class="form-control"
+											rows="3" placeholder="Краткое описание проекта"></textarea>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="x_content">
+									<ul class="nav nav-tabs bar_tabs" id="softwareTab"
+										role="tablist">
+										<li class="nav-item"><a class="nav-link active"
+											id="enterprises-tab" data-toggle="tab" href="#enterprises"
+											role="tab" aria-controls="enterprises" aria-selected="true">Активы</a></li>
+										<li class="nav-item"><a class="nav-link"
+											id="software-tab" data-toggle="tab" href="#softwares"
+											role="tab" aria-controls="softwares" aria-selected="false">ПО</a></li>
+										<li class="nav-item"><a class="nav-link"
+											id="participants-tab" data-toggle="tab" href="#participants"
+											role="tab" aria-controls="participants" aria-selected="false">Участники</a></li>
+									</ul>
+									<div class="tab-content" id="myTabContent">
+										<div class="tab-pane fade show active" id="enterprises"
+											role="tabpanel" aria-labelledby="enterprises-tab">Raw
+											denim you probably haven't heard of them jean shorts Austin.
+											Nesciunt tofu stumptown aliqua, retro synth master cleanse.
+											Mustache cliche tempor, williamsburg carles vegan helvetica.
+											Reprehenderit butcher retro keffiyeh dreamcatcher synth.
+											Cosby sweater eu banh mi, qui irure terr.</div>
+										<div class="tab-pane fade" id="softwares" role="tabpanel"
+											aria-labelledby="software-tab">
+											<div class="clearfix"></div>
+											<div class="x_content">
+												<!-- Info Alert -->
+												<div th:if="${#lists.isEmpty(softwares)}" class="bs-example">
+													<div class="alert alert-info alert-dismissible fade show">
+														<strong>Информация!</strong> Программного обеспечения пока
+														нет.
+														<button type="button" class="close" data-dismiss="alert">&times;</button>
+													</div>
+												</div>
+												<div class="table-responsive">
+													<table th:if="${not #lists.isEmpty(softwares)}"
+														class="table table-striped jambo_table bulk_action">
+														<thead>
+															<tr class="headings">
+																<th><input type="checkbox" id="check-all"
+																	class="flat"></th>
+																<th class="column-title">Наименование</th>
+																<th class="column-title no-link last"><span
+																	class="nobr">Описание</span>
+																<th class="bulk-actions" colspan="7"><a
+																	class="antoo" style="color: #fff; font-weight: 500;">Bulk
+																		Actions ( <span class="action-cnt"> </span> ) <i
+																		class="fa fa-chevron-down"></i>
+																</a></th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr th:each="software, rowStat : ${softwares}"
+																th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
+																<td class="a-center "><input name="softwares"
+																	type="checkbox" th:value="${software.id}" class="flat"></td>
+																<td th:text="${software.name}" class=" "></td>
+																<td th:text="${software.descr}" class=" "></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<div class="clearfix"></div>
+										<div class="tab-pane fade" id="participants" role="tabpanel"
+											aria-labelledby="participants-tab">xxFood truck fixie
+											locavore, accusamus mcsweeney's marfa nulla single-origin
+											coffee squid. Exercitation +1 labore velit, blog sartorial
+											PBR leggings next level wes anderson artisan four loko
+											farm-to-table craft beer twee. Qui photo booth letterpress,
+											commodo enim craft beer mlkshk</div>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="ln_solid"></div>
+								<div class="item form-group">
+									<div class="col-md-6 col-sm-6 offset-md-3">
+										<a th:href="@{~/softwares/}" class="btn btn-primary"> <i
+											class="fa fa-undo"></i>&nbsp;Отмена
+										</a>
+										<button type="submit" class="btn btn-success">ОК</button>
+									</div>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /page content -->
+</body>
+</html>
