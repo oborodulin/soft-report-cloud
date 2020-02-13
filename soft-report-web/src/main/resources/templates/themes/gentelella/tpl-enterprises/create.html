@@ -4,7 +4,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout-forms}">
 <head>
-<title>Новый проект</title>
+<title>Новый актив</title>
 </head>
 
 <body class="nav-md">
@@ -13,7 +13,7 @@
 		<div class="">
 			<div class="page-title">
 				<div class="title_left">
-					<h3>Проектная работа</h3>
+					<h3>Справочники</h3>
 				</div>
 				<div class="title_right">
 					<div class="col-md-5 col-sm-5  form-group pull-right top_search">
@@ -32,7 +32,7 @@
 				<div class="col-md-12 col-sm-12 ">
 					<div class="x_panel">
 						<div class="x_title">
-							<h2>Новый проект</h2>
+							<h2>Новый актив</h2>
 							<ul class="nav navbar-right panel_toolbox">
 								<li><a class="collapse-link"><i
 										class="fa fa-chevron-up"></i></a></li>
@@ -49,9 +49,36 @@
 						</div>
 						<div class="x_content">
 							<br />
-							<form th:action="@{~/projects/create}" th:object="${project}"
-								th:method="POST" id="form-create-project" data-parsley-validate
+							<form th:action="@{~/enterprises/create}" th:object="${enterprise}"
+								th:method="POST" id="form-create-enterprise" data-parsley-validate
 								class="form-horizontal form-label-left">
+								<div class="form-group row">
+									<label class="col-form-label col-md-3 col-sm-3 label-align">Родительский
+										актив</label>
+									<div class="col-md-6 col-sm-6 ">
+										<select th:field="*{parent}"
+											class="select2_group form-control">
+											<option value="">Выберите актив...</option>
+											<option th:each="sw : ${enterprises}" th:value="${sw.id}"
+												th:text="${sw.name}"></option>
+											<!-- optgroup label="Alaskan/Hawaiian Time Zone">
+												<option value="AK">Alaska</option>
+												<option value="HI">Hawaii</option>
+											</optgroup-->
+										</select>
+									</div>
+								</div>
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align"
+										for="code">Код <span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 ">
+										<input type="text" th:field="*{code}" id="code"
+											required="required" class="form-control ">
+									</div>
+									<span th:if="${#fields.hasErrors('code')}" th:errors="*{code}"
+										class="text-danger"></span>
+								</div>
 								<div class="item form-group">
 									<label class="col-form-label col-md-3 col-sm-3 label-align"
 										for="name">Наименование <span class="required">*</span>
@@ -68,19 +95,19 @@
 										class="col-form-label col-md-3 col-sm-3 label-align">Описание</label>
 									<div class="col-md-6 col-sm-6 ">
 										<textarea th:field="*{descr}" id="descr" class="form-control"
-											rows="3" placeholder="Краткое описание проекта"></textarea>
+											rows="3"></textarea>
 									</div>
 								</div>
 								<div class="clearfix"></div>
 								<div class="x_content">
-									<ul class="nav nav-tabs bar_tabs" id="projectTab"
+									<ul class="nav nav-tabs bar_tabs" id="enterpriseTab"
 										role="tablist">
 										<li class="nav-item"><a class="nav-link active"
 											id="enterprises-tab" data-toggle="tab" href="#enterprises"
 											role="tab" aria-controls="enterprises" aria-selected="true">Активы</a></li>
 										<li class="nav-item"><a class="nav-link"
-											id="software-tab" data-toggle="tab" href="#softwares"
-											role="tab" aria-controls="softwares" aria-selected="false">ПО</a></li>
+											id="enterprise-tab" data-toggle="tab" href="#enterprises"
+											role="tab" aria-controls="enterprises" aria-selected="false">ПО</a></li>
 										<li class="nav-item"><a class="nav-link"
 											id="participants-tab" data-toggle="tab" href="#participants"
 											role="tab" aria-controls="participants" aria-selected="false">Участники</a></li>
@@ -93,12 +120,12 @@
 											Mustache cliche tempor, williamsburg carles vegan helvetica.
 											Reprehenderit butcher retro keffiyeh dreamcatcher synth.
 											Cosby sweater eu banh mi, qui irure terr.</div>
-										<div class="tab-pane fade" id="softwares" role="tabpanel"
-											aria-labelledby="software-tab">
+										<div class="tab-pane fade" id="enterprises" role="tabpanel"
+											aria-labelledby="enterprise-tab">
 											<div class="clearfix"></div>
 											<div class="x_content">
 												<!-- Info Alert -->
-												<div th:if="${#lists.isEmpty(softwares)}" class="bs-example">
+												<div th:if="${#lists.isEmpty(enterprises)}" class="bs-example">
 													<div class="alert alert-info alert-dismissible fade show">
 														<strong>Информация!</strong> Программного обеспечения пока
 														нет.
@@ -106,7 +133,7 @@
 													</div>
 												</div>
 												<div class="table-responsive">
-													<table th:if="${not #lists.isEmpty(softwares)}"
+													<table th:if="${not #lists.isEmpty(enterprises)}"
 														class="table table-striped jambo_table bulk_action">
 														<thead>
 															<tr class="headings">
@@ -123,12 +150,12 @@
 															</tr>
 														</thead>
 														<tbody>
-															<tr th:each="software, rowStat : ${softwares}"
+															<tr th:each="enterprise, rowStat : ${enterprises}"
 																th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
-																<td class="a-center "><input name="softwares"
-																	type="checkbox" th:value="${software.id}" class="flat"></td>
-																<td th:text="${software.name}" class=" "></td>
-																<td th:text="${software.descr}" class=" "></td>
+																<td class="a-center "><input name="enterprises"
+																	type="checkbox" th:value="${enterprise.id}" class="flat"></td>
+																<td th:text="${enterprise.name}" class=" "></td>
+																<td th:text="${enterprise.descr}" class=" "></td>
 															</tr>
 														</tbody>
 													</table>
@@ -149,7 +176,7 @@
 								<div class="ln_solid"></div>
 								<div class="item form-group">
 									<div class="col-md-6 col-sm-6 offset-md-3">
-										<a th:href="@{~/projects/}" class="btn btn-primary"> <i
+										<a th:href="@{~/enterprises/}" class="btn btn-primary"> <i
 											class="fa fa-undo"></i>&nbsp;Отмена
 										</a>
 										<button type="submit" class="btn btn-success">ОК</button>
@@ -164,4 +191,5 @@
 		</div>
 	</div>
 	<!-- /page content -->
-</body></html>
+</body>
+</html>

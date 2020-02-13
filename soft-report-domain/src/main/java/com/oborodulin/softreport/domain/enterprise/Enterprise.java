@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.software;
+package com.oborodulin.softreport.domain.enterprise;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,10 +22,10 @@ import lombok.RequiredArgsConstructor;
 @Data
 @Entity
 @RequiredArgsConstructor
-@Table(name = "Softwares")
-public class Software {
+@Table(name = "Enterprises")
+public class Enterprise {
 
-	public Software(Long id, String code, String name) {
+	public Enterprise(Long id, String code, String name) {
 		this.id = id;
 		this.code = code;
 		this.name = name;
@@ -43,10 +43,10 @@ public class Software {
 
 	@ManyToOne
 	@JoinColumn(name = "parent_id")
-	private Software parent;
+	private Enterprise parent;
 
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
-	private List<Software> softwares = new ArrayList<Software>();
+	private List<Enterprise> enterprises = new ArrayList<Enterprise>();
 
 	private Date createdAt;
 	private String createdBy;

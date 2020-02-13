@@ -4,7 +4,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout-tables}">
 <head>
-<title>Программы</title>
+<title>Активы</title>
 </head>
 
 <body class="nav-md">
@@ -13,7 +13,7 @@
 		<div class="">
 			<div class="page-title">
 				<div class="title_left">
-					<h3>Программное обеспечение</h3>
+					<h3>Справочники</h3>
 				</div>
 
 				<div class="title_right">
@@ -37,7 +37,7 @@
 				<div class="col-md-12 col-sm-12  ">
 					<div class="x_panel">
 						<div class="x_title">
-							<h2>Программы</h2>
+							<h2>Активы</h2>
 							<ul class="nav navbar-right panel_toolbox">
 								<li><a class="collapse-link"><i
 										class="fa fa-chevron-up"></i></a></li>
@@ -55,16 +55,16 @@
 
 						<div class="x_content">
 							<!-- Info Alert -->
-							<div th:if="${#lists.isEmpty(softwares)}" class="bs-example">
+							<div th:if="${#lists.isEmpty(enterprises)}" class="bs-example">
 								<div class="alert alert-info alert-dismissible fade show">
-									<strong>Информация!</strong> Систем пока нет.
+									<strong>Информация!</strong> Активов пока нет.
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
 								</div>
 							</div>
-							<a href="/softwares/create" class="btn btn-primary btn-xs"><i
+							<a href="/enterprises/create" class="btn btn-primary btn-xs"><i
 								class="fa fa-plus"></i>&nbsp;Добавить </a>
 
-							<div th:if="${not #lists.isEmpty(softwares)}"
+							<div th:if="${not #lists.isEmpty(enterprises)}"
 								class="table-responsive">
 								<table class="table table-striped jambo_table bulk_action">
 									<thead>
@@ -77,24 +77,24 @@
 											<th class="column-title no-link last"><span class="nobr">Описание</span>
 											</th>
 											<th class="bulk-actions" colspan="4"><a
-												th:href="@{~/softwares/delete}" class="btn btn-danger btn-xs"><i
+												th:href="@{~/enterprises/delete}" class="btn btn-danger btn-xs"><i
 													class="fa fa-trash-o"></i>&nbsp;Удалить</a></th>
 										</tr>
 									</thead>
 
 									<tbody>
-										<tr th:each="software, rowStat : ${softwares}"
+										<tr th:each="enterprise, rowStat : ${enterprises}"
 											th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
 											<td class="a-center "><input name="table_records"
-												type="checkbox" th:value="${software.id}" class="flat"></td>
+												type="checkbox" th:value="${enterprise.id}" class="flat"></td>
 											<td class=" "><a
-												th:href="@{/softwares/edit/{id}(id=${software.id})}"
+												th:href="@{/enterprises/edit/{id}(id=${enterprise.id})}"
 												class="btn btn-info btn-sm"
 												style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
 													class="fa fa-pencil fa-xs"></i></a></td>
-											<td th:text="${software.code}" class=" "></td>
-											<td th:text="${software.name}" class=" "></td>
-											<td th:text="${software.descr}" class=" "></td>
+											<td th:text="${enterprise.code}" class=" "></td>
+											<td th:text="${enterprise.name}" class=" "></td>
+											<td th:text="${enterprise.descr}" class=" "></td>
 										</tr>
 									</tbody>
 								</table>

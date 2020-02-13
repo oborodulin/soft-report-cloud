@@ -1,8 +1,5 @@
 package com.oborodulin.softreport.web;
 
-import java.util.Arrays;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +48,7 @@ public class SoftwareMvcController {
 	@GetMapping("create")
 	public String showCreateForm(Model model) {
 		log.info("Отображение формы создания системы");
+		model.addAttribute("softwares", softwareRepository.findAll());
 		return VN_CREATE;
 	}
 

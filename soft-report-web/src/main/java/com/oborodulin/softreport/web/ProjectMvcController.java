@@ -1,7 +1,7 @@
 package com.oborodulin.softreport.web;
 
-import java.util.Arrays;
-import java.util.List;
+//import java.util.Arrays;
+//import java.util.List;
 
 import javax.validation.Valid;
 
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oborodulin.softreport.domain.project.Project;
 import com.oborodulin.softreport.domain.project.ProjectRepository;
-import com.oborodulin.softreport.domain.software.Software;
+//import com.oborodulin.softreport.domain.software.Software;
 import com.oborodulin.softreport.domain.software.SoftwareRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -54,14 +54,15 @@ public class ProjectMvcController {
 
 	@GetMapping("create")
 	public String showCreateForm(Model model) {
-		List<Software> softwares = (List<Software>) softwareRepository.findAll();
-		if (softwares == null || softwares.isEmpty()) {
-			softwares = Arrays.asList(
-					new Software(1L, "ИДС УЖДТ",
-							"Информационно-диспетчерская система управления железнодорожным транспортом"),
-					new Software(2L, "SAP ERP", "Система SAP"), new Software(3L, "OEBS", "Oracle E-Business Suite"));
-		}
-		model.addAttribute("softwares", softwares);
+		/*
+		 * List<Software> softwares = (List<Software>) softwareRepository.findAll(); if
+		 * (softwares == null || softwares.isEmpty()) { softwares = Arrays.asList( new
+		 * Software(1L, "ИДС УЖДТ",
+		 * "Информационно-диспетчерская система управления железнодорожным транспортом"
+		 * ), new Software(2L, "SAP ERP", "Система SAP"), new Software(3L, "OEBS",
+		 * "Oracle E-Business Suite")); }
+		 */
+		model.addAttribute("softwares", softwareRepository.findAll());
 		log.info("Отображение формы создания проекта");
 		return VN_CREATE;
 	}
