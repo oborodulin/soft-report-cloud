@@ -22,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/softwares/")
 public class SoftwareMvcController {
 
+	private static final String BASE_URL = "/enterprises/";
+
 	private static final String VN_PATH = "tpl-softwares/";
 	private static final String VN_READ = VN_PATH.concat("read");
 	private static final String VN_CREATE = VN_PATH.concat("create");
@@ -63,7 +65,7 @@ public class SoftwareMvcController {
 		log.info("Сохранение ПО: " + software);
 		softwareRepository.save(software);
 
-		return "redirect:/softwares/";
+		return "redirect:".concat(BASE_URL);
 	}
 
 	@GetMapping("edit/{id}")
@@ -95,7 +97,7 @@ public class SoftwareMvcController {
 		}
 		// softwareRepository.save(software);
 
-		return "redirect:/softwares/";
+		return "redirect:".concat(BASE_URL);
 	}
 
 	@GetMapping("delete/{id}")

@@ -16,12 +16,13 @@ import nz.net.ultraq.thymeleaf.decorators.strategies.GroupingRespectLayoutTitleS
 
 @Configuration
 public class ThymeleafWebMvcConfig implements WebMvcConfigurer {
+
 	@Bean
 	@Description("Thymeleaf template resolver serving HTML 5")
 	public ClassLoaderTemplateResolver templateResolver() {
-	    var templateResolver = new ClassLoaderTemplateResolver();
+		var templateResolver = new ClassLoaderTemplateResolver();
 
-		//templateResolver.setPrefix("templates/");
+		// templateResolver.setPrefix("templates/");
 		templateResolver.setPrefix("templates/themes/gentelella/");
 		templateResolver.setCacheable(false);
 		templateResolver.setSuffix(".html");
@@ -31,32 +32,31 @@ public class ThymeleafWebMvcConfig implements WebMvcConfigurer {
 		return templateResolver;
 	}
 
-/*	@Bean
-	@Description("Thymeleaf template engine with Spring integration")
-	public SpringTemplateEngine templateEngine() {
-
-		var templateEngine = new SpringTemplateEngine();
-		templateEngine.setTemplateResolver(templateResolver());
-//		templateEngine.setDialect(new LayoutDialect(new GroupingRespectLayoutTitleStrategy()));
-
-		return templateEngine;
-	}
-
-	@Bean
-	@Description("Thymeleaf view resolver")
-	public ViewResolver viewResolver() {
-
-		var viewResolver = new ThymeleafViewResolver();
-
-		viewResolver.setTemplateEngine(templateEngine());
-		viewResolver.setCharacterEncoding("UTF-8");
-
-		return viewResolver;
-	}
-
-	@Bean
-	public LayoutDialect layoutDialect() {
-		return new LayoutDialect(new GroupingRespectLayoutTitleStrategy());
-	}
-	*/
+	/*
+	 * @Bean
+	 * 
+	 * @Description("Thymeleaf template engine with Spring integration") public
+	 * SpringTemplateEngine templateEngine() {
+	 * 
+	 * var templateEngine = new SpringTemplateEngine();
+	 * templateEngine.setTemplateResolver(templateResolver()); //
+	 * templateEngine.setDialect(new LayoutDialect(new
+	 * GroupingRespectLayoutTitleStrategy()));
+	 * 
+	 * return templateEngine; }
+	 * 
+	 * @Bean
+	 * 
+	 * @Description("Thymeleaf view resolver") public ViewResolver viewResolver() {
+	 * 
+	 * var viewResolver = new ThymeleafViewResolver();
+	 * 
+	 * viewResolver.setTemplateEngine(templateEngine());
+	 * viewResolver.setCharacterEncoding("UTF-8");
+	 * 
+	 * return viewResolver; }
+	 * 
+	 * @Bean public LayoutDialect layoutDialect() { return new LayoutDialect(new
+	 * GroupingRespectLayoutTitleStrategy()); }
+	 */
 }

@@ -27,6 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/projects/")
 public class ProjectMvcController {
 
+	private static final String BASE_URL = "/projects/";
+
 	private static final String VN_PATH = "tpl-projects/";
 	private static final String VN_READ = VN_PATH.concat("read");
 	private static final String VN_CREATE = VN_PATH.concat("create");
@@ -78,7 +80,7 @@ public class ProjectMvcController {
 		log.info("Сохранение проекта: " + project);
 		projectRepository.save(project);
 
-		return "redirect:/projects/";
+		return "redirect:".concat(BASE_URL);
 	}
 
 	@GetMapping("edit/{id}")
@@ -110,7 +112,7 @@ public class ProjectMvcController {
 		}
 		// projectRepository.save(project);
 
-		return "redirect:/projects/";
+		return "redirect:".concat(BASE_URL);
 	}
 
 	@GetMapping("delete/{id}")

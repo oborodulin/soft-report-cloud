@@ -4,7 +4,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout-tables}">
 <head>
-<title>Активы</title>
+<title th:text="${titleRead}"></title>
 </head>
 
 <body class="nav-md">
@@ -13,7 +13,7 @@
 		<div class="">
 			<div class="page-title">
 				<div class="title_left">
-					<h3>Справочники</h3>
+					<h3 th:text="${titleParent}"></h3>
 				</div>
 
 				<div class="title_right">
@@ -37,7 +37,7 @@
 				<div class="col-md-12 col-sm-12  ">
 					<div class="x_panel">
 						<div class="x_title">
-							<h2>Активы</h2>
+							<h2 th:text="${titleRead}"></h2>
 							<ul class="nav navbar-right panel_toolbox">
 								<li><a class="collapse-link"><i
 										class="fa fa-chevron-up"></i></a></li>
@@ -57,47 +57,56 @@
 							<!-- Info Alert -->
 							<div th:if="${#lists.isEmpty(enterprises)}" class="bs-example">
 								<div class="alert alert-info alert-dismissible fade show">
-									<strong>Информация!</strong> Активов пока нет.
+									<strong th:text="#{msg.title.info}"></strong> <span
+										th:text="#{info.enterprises.empty}"></span>
 									<button type="button" class="close" data-dismiss="alert">&times;</button>
 								</div>
 							</div>
 							<a href="/enterprises/create" class="btn btn-primary btn-xs"><i
-								class="fa fa-plus"></i>&nbsp;Добавить </a>
+								class="fa fa-plus"></i><span th:text="' '+#{label.add}"></span></a>
 
 							<div th:if="${not #lists.isEmpty(enterprises)}"
 								class="table-responsive">
-								<table class="table table-striped jambo_table bulk_action">
-									<thead>
-										<tr class="headings">
-											<th><input type="checkbox" id="check-all" class="flat">
-											</th>
-											<th class="column-title"></th>
-											<th class="column-title">Код</th>
-											<th class="column-title">Наименование</th>
-											<th class="column-title no-link last"><span class="nobr">Описание</span>
-											</th>
-											<th class="bulk-actions" colspan="4"><a
-												th:href="@{~/enterprises/delete}" class="btn btn-danger btn-xs"><i
-													class="fa fa-trash-o"></i>&nbsp;Удалить</a></th>
-										</tr>
-									</thead>
+								<form th:action="@{~/enterprises/delete}" th:method="POST"
+									id="form-delete-enterprises">
+									<table class="table table-striped jambo_table bulk_action">
+										<thead>
+											<tr class="headings">
+												<th><input type="checkbox" id="check-all" class="flat">
+												</th>
+												<th class="column-title"></th>
+												<th class="column-title" th:text="#{label.code}"></th>
+												<th class="column-title" th:text="#{label.shortname}"></th>
+												<th class="column-title" th:text="#{label.fullname}"></th>
+												<th class="column-title no-link last"><span
+													class="nobr" th:text="#{label.descr}"></span></th>
+												<th class="bulk-actions" colspan="5">
+													<button type="submit" class="btn btn-danger btn-xs">
+														<i class="fa fa-trash-o"></i><span th:text="' '+#{label.delete}"></span>
+													</button>
+												</th>
+											</tr>
+										</thead>
 
-									<tbody>
-										<tr th:each="enterprise, rowStat : ${enterprises}"
-											th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
-											<td class="a-center "><input name="table_records"
-												type="checkbox" th:value="${enterprise.id}" class="flat"></td>
-											<td class=" "><a
-												th:href="@{/enterprises/edit/{id}(id=${enterprise.id})}"
-												class="btn btn-info btn-sm"
-												style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
-													class="fa fa-pencil fa-xs"></i></a></td>
-											<td th:text="${enterprise.code}" class=" "></td>
-											<td th:text="${enterprise.name}" class=" "></td>
-											<td th:text="${enterprise.descr}" class=" "></td>
-										</tr>
-									</tbody>
-								</table>
+										<tbody>
+											<tr th:each="enterprise, rowStat : ${enterprises}"
+												th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
+												<td class="a-center "><input id="table_records"
+													name="table_records" type="checkbox"
+													th:value="${enterprise.id}" class="flat"></td>
+												<td class=" "><a
+													th:href="@{/enterprises/edit/{id}(id=${enterprise.id})}"
+													class="btn btn-info btn-sm"
+													style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
+														class="fa fa-pencil fa-xs"></i></a></td>
+												<td th:text="${enterprise.code}" class=" "></td>
+												<td th:text="${enterprise.shortName}" class=" "></td>
+												<td th:text="${enterprise.name}" class=" "></td>
+												<td th:text="${enterprise.descr}" class=" "></td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
 							</div>
 
 

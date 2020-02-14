@@ -38,6 +38,8 @@ public class Enterprise {
 	@Column(unique = true)
 	private String code;
 	@NotBlank
+	private String shortName;
+	@NotBlank
 	private String name;
 	private String descr;
 

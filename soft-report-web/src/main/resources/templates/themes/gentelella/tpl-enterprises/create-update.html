@@ -4,7 +4,8 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout-forms}">
 <head>
-<title>Новый актив</title>
+<title
+	th:text="${enterprise.id == null} ? 'Новый элемент оргструктуры' : 'Изменение оргструктуры'"></title>
 </head>
 
 <body class="nav-md">
@@ -32,7 +33,8 @@
 				<div class="col-md-12 col-sm-12 ">
 					<div class="x_panel">
 						<div class="x_title">
-							<h2>Новый актив</h2>
+							<h2
+								th:text="${enterprise.id == null} ? 'Новый элемент оргструктуры' : 'Изменение оргструктуры'"></h2>
 							<ul class="nav navbar-right panel_toolbox">
 								<li><a class="collapse-link"><i
 										class="fa fa-chevron-up"></i></a></li>
@@ -49,8 +51,10 @@
 						</div>
 						<div class="x_content">
 							<br />
-							<form th:action="@{~/enterprises/create}" th:object="${enterprise}"
-								th:method="POST" id="form-create-enterprise" data-parsley-validate
+							<form
+								th:action="${enterprise.id == null} ? @{~/enterprises/create} : @{~/enterprises/update/{id}(id=${enterprise.id})}"
+								th:object="${enterprise}" th:method="POST"
+								id="form-create-enterprise" data-parsley-validate
 								class="form-horizontal form-label-left">
 								<div class="form-group row">
 									<label class="col-form-label col-md-3 col-sm-3 label-align">Родительский
@@ -81,7 +85,18 @@
 								</div>
 								<div class="item form-group">
 									<label class="col-form-label col-md-3 col-sm-3 label-align"
-										for="name">Наименование <span class="required">*</span>
+										for="shortName">Короткое наименование <span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 ">
+										<input type="text" th:field="*{shortName}" id="shortName"
+											required="required" class="form-control ">
+									</div>
+									<span th:if="${#fields.hasErrors('shortName')}" th:errors="*{shortName}"
+										class="text-danger"></span>
+								</div>
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align"
+										for="name">Полное наименование <span class="required">*</span>
 									</label>
 									<div class="col-md-6 col-sm-6 ">
 										<input type="text" th:field="*{name}" id="name"
@@ -125,7 +140,8 @@
 											<div class="clearfix"></div>
 											<div class="x_content">
 												<!-- Info Alert -->
-												<div th:if="${#lists.isEmpty(enterprises)}" class="bs-example">
+												<div th:if="${#lists.isEmpty(enterprises)}"
+													class="bs-example">
 													<div class="alert alert-info alert-dismissible fade show">
 														<strong>Информация!</strong> Программного обеспечения пока
 														нет.
@@ -153,7 +169,8 @@
 															<tr th:each="enterprise, rowStat : ${enterprises}"
 																th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
 																<td class="a-center "><input name="enterprises"
-																	type="checkbox" th:value="${enterprise.id}" class="flat"></td>
+																	type="checkbox" th:value="${enterprise.id}"
+																	class="flat"></td>
 																<td th:text="${enterprise.name}" class=" "></td>
 																<td th:text="${enterprise.descr}" class=" "></td>
 															</tr>

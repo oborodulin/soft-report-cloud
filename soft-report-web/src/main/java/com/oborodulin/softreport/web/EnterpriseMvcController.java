@@ -1,8 +1,12 @@
 package com.oborodulin.softreport.web;
 
+import java.util.List;
+import java.util.Locale;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -11,7 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import com.oborodulin.softreport.domain.enterprise.EnterpriseRepository;
 import com.oborodulin.softreport.domain.enterprise.Enterprise;
 
@@ -22,12 +26,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/enterprises/")
 public class EnterpriseMvcController {
 
+	private static final String BASE_URL = "/enterprises/";
+
 	private static final String VN_PATH = "tpl-enterprises/";
-	private static final String VN_READ = VN_PATH.concat("read");
-	private static final String VN_CREATE = VN_PATH.concat("create");
-	private static final String VN_UPDATE = VN_PATH.concat("update");
+	private static final String VN_READ_DELETE = VN_PATH.concat("read-delete");
+	private static final String VN_CREATE_UPDATE = VN_PATH.concat("create-update");
 
 	private final EnterpriseRepository enterpriseRepository;
+	@Autowired
+	MessageSource messageSource;
 
 	@Autowired
 	public EnterpriseMvcController(EnterpriseRepository enterpriseRepository) {
@@ -40,62 +47,71 @@ public class EnterpriseMvcController {
 	}
 
 	@GetMapping
-	public String showEnterprisesList(Model model) {
+	public String showEnterprisesList(Locale locale, Model model) {
+		model.addAttribute("titleParent", messageSource.getMessage("enterprises.title.parent", null, locale));
+		model.addAttribute("titleRead", messageSource.getMessage("enterprises.title.read", null, locale));
 		model.addAttribute("enterprises", enterpriseRepository.findAll());
-		return VN_READ;
+		return VN_READ_DELETE;
 	}
 
 	@GetMapping("create")
-	public String showCreateForm(Model model) {
+	public String showCreateForm(Locale locale, Model model) {
 		log.info("Отображение формы создания актива");
+		model.addAttribute("titleParent", messageSource.getMessage("enterprises.title.parent", null, locale));
+		model.addAttribute("titleCreate", messageSource.getMessage("enterprises.title.create", null, locale));
 		model.addAttribute("enterprises", enterpriseRepository.findAll());
-		return VN_CREATE;
+		return VN_CREATE_UPDATE;
 	}
 
 	@PostMapping("create")
-	public String createEnterprise(@Valid @ModelAttribute("enterprise") Enterprise enterprise, Errors errors, Model model) {
+	public String createEnterprise(@Valid @ModelAttribute("enterprise") Enterprise enterprise, Errors errors,
+			Model model) {
 		log.info("Создание актива: " + enterprise);
 		if (errors.hasErrors()) {
 			errors.getAllErrors().stream().forEach(System.out::println);
 			log.info("Создание актива: " + enterprise);
-			return VN_CREATE;
+			return VN_CREATE_UPDATE;
 		}
 		log.info("Сохранение актива: " + enterprise);
 		enterpriseRepository.save(enterprise);
 
-		return "redirect:/enterprises/";
+		return "redirect:".concat(BASE_URL);
 	}
 
 	@GetMapping("edit/{id}")
-	public String showUpdateForm(@PathVariable("id") long id, Model model) {
+	public String showUpdateForm(@PathVariable("id") long id, Locale locale, Model model) {
 		new IllegalArgumentException();
 		Enterprise enterprise = enterpriseRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid enterprise Id:" + id));
+		model.addAttribute("titleParent", messageSource.getMessage("enterprises.title.parent", null, locale));
+		model.addAttribute("titleUpdate", messageSource.getMessage("enterprises.title.update", null, locale));
 		model.addAttribute("enterprise", enterprise);
-		return VN_UPDATE;
+		return VN_CREATE_UPDATE;
 	}
 
 	@PostMapping("update/{id}")
-	public String updateEnterprise(@PathVariable("id") long id, @Valid Enterprise enterprise, Errors errors, Model model) {
+	public String updateEnterprise(@PathVariable("id") long id, @Valid Enterprise enterprise, Errors errors,
+			Model model) {
 		if (errors.hasErrors()) {
 			enterprise.setId(id);
-			return VN_UPDATE;
+			return VN_CREATE_UPDATE;
 		}
 
 		enterpriseRepository.save(enterprise);
 		model.addAttribute("enterprises", enterpriseRepository.findAll());
-		return VN_READ;
+		return VN_READ_DELETE;
 	}
 
-	@GetMapping("delete")
-	public String deleteEnterprises(Errors errors, Model model) {
-		if (errors.hasErrors()) {
-			errors.getAllErrors().stream().forEach(System.out::println);
-			return VN_READ;
+	@PostMapping("delete")
+	public String deleteEnterprises(@RequestParam("table_records") List<String> ids) {
+		if (ids != null) {
+			for (String idsStr : ids) {
+				long id = Long.parseLong(idsStr);
+				log.info("Удаление актива: id=" + idsStr);
+				enterpriseRepository.deleteById(id);
+			}
 		}
-		// enterpriseRepository.save(enterprise);
-
-		return "redirect:/enterprises/";
+		return "redirect:".concat(BASE_URL);
 	}
 
 	@GetMapping("delete/{id}")
@@ -104,6 +120,6 @@ public class EnterpriseMvcController {
 				.orElseThrow(() -> new IllegalArgumentException("Invalid enterprise Id:" + id));
 		enterpriseRepository.delete(enterprise);
 		model.addAttribute("enterprises", enterpriseRepository.findAll());
-		return VN_READ;
+		return VN_READ_DELETE;
 	}
 }
