@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-forms}"
+	th:with="titleCurrent=${valuesSet.id == null} ? ${titleCreate} : ${titleUpdate}">
+<head>
+<title th:text="${titleCurrent}">${Create Entity}</title>
+</head>
+
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<br />
+		<form
+			th:action="${valuesSet.id == null} ? @{~/valuessets/create} : @{~/valuessets/update/{id}(id=${valuesSet.id})}"
+			th:object="${valuesSet}" th:method="POST" id="form-create-valuesSet"
+			data-parsley-validate class="form-horizontal form-label-left">
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="code"><span th:text="#{code.label}"></span><span
+					class="required">*</span> </label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{code}" id="code" required="required"
+						class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('code')}" th:errors="*{code}"
+					class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="name"><span th:text="#{name.label}"></span><span
+					class="required">*</span> </label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{name}" id="name" required="required"
+						class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+					class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="isUpdatable"><span th:text="#{isupdatable.label}"></span></label>
+				<div class="col-md-3 col-sm-3 ">
+					<div class="checkbox">
+						<input type="checkbox" th:field="*{isUpdatable}" id="isUpdatable"
+							class="flat">
+					</div>
+				</div>
+				<span th:if="${#fields.hasErrors('isUpdatable')}"
+					th:errors="*{isUpdatable}" class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label for="descr"
+					class="col-form-label col-md-3 col-sm-3 label-align"
+					th:text="#{descr.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<textarea th:field="*{descr}" id="descr" class="form-control"
+						rows="3"></textarea>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="ln_solid"></div>
+			<div class="item form-group">
+				<div class="col-md-6 col-sm-6 offset-md-3">
+					<a th:href="@{~/valuessets/}" class="btn btn-primary"> <i
+						class="fa fa-undo"></i><span th:text="' '+#{cancel.label}"></span>
+					</a>
+					<button type="submit" class="btn btn-success"
+						th:text="' '+#{ok.label}"></button>
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<!-- /page content -->
+</body>
+</html>

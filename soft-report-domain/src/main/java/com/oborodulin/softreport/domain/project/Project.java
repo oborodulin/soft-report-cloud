@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,10 +40,11 @@ public class Project {
 	private Date modifiedAt;
 	private String modifiedBy;
 
-	@OneToMany(targetEntity = Task.class)
+	@OneToMany(mappedBy = "project")
 	private List<Task> tasks = new ArrayList<>();
 
-	@ManyToMany(targetEntity = Software.class)
+	@ManyToMany(mappedBy = "projects",fetch = FetchType.EAGER)
+	//@ManyToMany(targetEntity = Software.class)
 	@Size(min = 1, message = "Вы должны выбрать хотя бы одно ПО")
 	private List<Software> softwares = new ArrayList<>();
 

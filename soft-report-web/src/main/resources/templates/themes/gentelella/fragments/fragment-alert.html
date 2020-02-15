@@ -1,0 +1,8 @@
+<div th:fragment="alert (type, message)"
+	th:assert="${!#strings.isEmpty(type) and !#strings.isEmpty(message)}"
+	class="alert alert-dismissable" th:classappend="'alert-' + ${type}">
+	<button type="button" class="close" data-dismiss="alert"
+		aria-hidden="true">&times;</button>
+	<strong th:text="#{'msg.'+${type}+'.title'}"></strong>&nbsp;<span
+		th:text="${message}">Test</span>
+</div>

@@ -6,20 +6,30 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.oborodulin.softreport.domain.project.Project;
 
 import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "Tasks")
 public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private final Long id;
+	private Long id;
+	@ManyToOne
+	@JoinColumn(name = "projects_id", nullable = false)
+	private Project project;
+
 	@NotBlank(message = "Name is required")
-	private final String name;
-	private final String descr;
+	private String name;
+	private String descr;
 
 	@NotNull
 	private Status status;

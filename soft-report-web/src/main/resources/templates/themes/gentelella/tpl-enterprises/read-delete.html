@@ -13,13 +13,13 @@
 		<!-- Info Alert -->
 		<div th:if="${#lists.isEmpty(enterprises)}" class="bs-example">
 			<div class="alert alert-info alert-dismissible fade show">
-				<strong th:text="#{msg.title.info}"></strong> <span
-					th:text="#{info.enterprises.empty}"></span>
+				<strong th:text="#{msg.info.title}"></strong> <span
+					th:text="#{enterprises.info.empty}"></span>
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 			</div>
 		</div>
 		<a href="/enterprises/create" class="btn btn-primary btn-xs"><i
-			class="fa fa-plus"></i><span th:text="' '+#{label.add}"></span></a>
+			class="fa fa-plus"></i><span th:text="' '+#{add.label}"></span></a>
 
 		<div th:if="${not #lists.isEmpty(enterprises)}"
 			class="table-responsive">
@@ -31,15 +31,15 @@
 							<th><input type="checkbox" id="check-all" class="flat">
 							</th>
 							<th class="column-title"></th>
-							<th class="column-title" th:text="#{label.code}"></th>
-							<th class="column-title" th:text="#{label.shortname}"></th>
-							<th class="column-title" th:text="#{label.fullname}"></th>
+							<th class="column-title" th:text="#{code.label}"></th>
+							<th class="column-title" th:text="#{shortname.label}"></th>
+							<th class="column-title" th:text="#{fullname.label}"></th>
 							<th class="column-title no-link last"><span class="nobr"
-								th:text="#{label.descr}"></span></th>
+								th:text="#{descr.label}"></span></th>
 							<th class="bulk-actions" colspan="5">
 								<button type="submit" class="btn btn-danger btn-xs">
 									<i class="fa fa-trash-o"></i><span
-										th:text="' '+#{label.delete}"></span>
+										th:text="' '+#{delete.label}"></span>
 								</button>
 							</th>
 						</tr>

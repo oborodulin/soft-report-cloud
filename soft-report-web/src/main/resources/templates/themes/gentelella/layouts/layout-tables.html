@@ -113,7 +113,12 @@
 									</ul>
 									<div class="clearfix"></div>
 								</div>
-
+								<!-- /* Handle the flash message */-->
+								<th:block th:if="${message != null}">
+									<!-- /* The message code is returned from the @Controller */ -->
+									<div
+										th:replace="fragments/fragment-alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}})">&nbsp;</div>
+								</th:block>
 								<div layout:fragment="page-content"></div>
 							</div>
 						</div>
@@ -174,6 +179,7 @@
 
 	<!-- Custom Theme Scripts -->
 	<script src="/themes/gentelella/build/js/custom.min.js"></script>
+	<script src="/js/utils.js"></script>
 
 </body>
 </html>

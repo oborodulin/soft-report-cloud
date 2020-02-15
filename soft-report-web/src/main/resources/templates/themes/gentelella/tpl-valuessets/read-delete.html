@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-tables}">
+<head>
+<title th:text="${titleRead}"></title>
+</head>
+
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<a th:href="@{~/valuessets/create}" class="btn btn-primary btn-xs"><i
+			class="fa fa-plus"></i><span th:text="' '+#{add.label}"></span></a>
+
+		<div th:if="${not #lists.isEmpty(valuesSets)}"
+			class="table-responsive">
+			<form th:action="@{~/valuessets/delete}" th:method="POST"
+				id="form-delete-valuesSets">
+				<table class="table table-striped jambo_table bulk_action">
+					<thead>
+						<tr class="headings">
+							<th><input type="checkbox" id="check-all" class="flat">
+							</th>
+							<th class="column-title"></th>
+							<th class="column-title" th:text="#{code.label}"></th>
+							<th class="column-title" th:text="#{name.label}"></th>
+							<th class="column-title" th:text="#{isupdatable.label}"></th>
+							<th class="column-title no-link last"><span class="nobr"
+								th:text="#{descr.label}"></span></th>
+							<th class="bulk-actions" colspan="5">
+								<div class="col-md-6 col-sm-6">
+									<button type="submit" class="btn btn-danger btn-xs">
+										<i class="fa fa-trash-o"></i><span
+											th:text="' '+#{delete.label}"></span>
+									</button>
+									<a id="btn-value-create" th:href="@{~/valuessets/values/}"
+										class="btn btn-secondary btn-xs"
+										onclick="bulkActionChecked(this, event, 'table_records');"><i
+										class="fa fa-folder-open"></i><span
+										th:text="' '+#{value.read.label}"></span></a>
+								</div>
+							</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="valuesSet, rowStat : ${valuesSets}"
+							th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
+							<td class="a-center "><input id="table_records"
+								name="table_records" type="checkbox" th:value="${valuesSet.id}"
+								class="flat"></td>
+							<td class=" "><a
+								th:href="@{/valuessets/edit/{id}(id=${valuesSet.id})}"
+								class="btn btn-info btn-sm"
+								style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
+									class="fa fa-pencil fa-xs"></i></a></td>
+							<td th:text="${valuesSet.code}" class=" " />
+							<td th:text="${valuesSet.name}" class=" " />
+							<td class="a-center"><input type="checkbox" id="isUpdatable"
+								name="isUpdatable" disabled="disabled"
+								th:checked="${valuesSet.isUpdatable}" class="flat" /></td>
+							<td th:text="${valuesSet.descr}" class=" " />
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+	<!-- /page content -->
+</body>
+</html>
