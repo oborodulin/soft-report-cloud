@@ -9,112 +9,61 @@
 
 <body class="nav-md">
 	<!-- page content -->
-	<div class="right_col" role="main" layout:fragment="page-content">
-		<div class="">
-			<div class="page-title">
-				<div class="title_left">
-					<h3 th:text="${titleParent}"></h3>
-				</div>
-
-				<div class="title_right">
-					<div class="col-md-5 col-sm-5   form-group pull-right top_search">
-						<div class="input-group">
-							<input type="text" class="form-control"
-								placeholder="Search for..."> <span
-								class="input-group-btn">
-								<button class="btn btn-default" type="button">Go!</button>
-							</span>
-						</div>
-					</div>
-				</div>
+	<div class="x_content" layout:fragment="page-content">
+		<!-- Info Alert -->
+		<div th:if="${#lists.isEmpty(enterprises)}" class="bs-example">
+			<div class="alert alert-info alert-dismissible fade show">
+				<strong th:text="#{msg.title.info}"></strong> <span
+					th:text="#{info.enterprises.empty}"></span>
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
 			</div>
+		</div>
+		<a href="/enterprises/create" class="btn btn-primary btn-xs"><i
+			class="fa fa-plus"></i><span th:text="' '+#{label.add}"></span></a>
 
-			<div class="clearfix"></div>
+		<div th:if="${not #lists.isEmpty(enterprises)}"
+			class="table-responsive">
+			<form th:action="@{~/enterprises/delete}" th:method="POST"
+				id="form-delete-enterprises">
+				<table class="table table-striped jambo_table bulk_action">
+					<thead>
+						<tr class="headings">
+							<th><input type="checkbox" id="check-all" class="flat">
+							</th>
+							<th class="column-title"></th>
+							<th class="column-title" th:text="#{label.code}"></th>
+							<th class="column-title" th:text="#{label.shortname}"></th>
+							<th class="column-title" th:text="#{label.fullname}"></th>
+							<th class="column-title no-link last"><span class="nobr"
+								th:text="#{label.descr}"></span></th>
+							<th class="bulk-actions" colspan="5">
+								<button type="submit" class="btn btn-danger btn-xs">
+									<i class="fa fa-trash-o"></i><span
+										th:text="' '+#{label.delete}"></span>
+								</button>
+							</th>
+						</tr>
+					</thead>
 
-			<div class="row" style="display: block;">
-				<div class="clearfix"></div>
-
-				<div class="col-md-12 col-sm-12  ">
-					<div class="x_panel">
-						<div class="x_title">
-							<h2 th:text="${titleRead}"></h2>
-							<ul class="nav navbar-right panel_toolbox">
-								<li><a class="collapse-link"><i
-										class="fa fa-chevron-up"></i></a></li>
-								<li class="dropdown"><a href="#" class="dropdown-toggle"
-									data-toggle="dropdown" role="button" aria-expanded="false"><i
-										class="fa fa-wrench"></i></a>
-									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<a class="dropdown-item" href="#">Settings 1</a> <a
-											class="dropdown-item" href="#">Settings 2</a>
-									</div></li>
-								<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-							</ul>
-							<div class="clearfix"></div>
-						</div>
-
-						<div class="x_content">
-							<!-- Info Alert -->
-							<div th:if="${#lists.isEmpty(enterprises)}" class="bs-example">
-								<div class="alert alert-info alert-dismissible fade show">
-									<strong th:text="#{msg.title.info}"></strong> <span
-										th:text="#{info.enterprises.empty}"></span>
-									<button type="button" class="close" data-dismiss="alert">&times;</button>
-								</div>
-							</div>
-							<a href="/enterprises/create" class="btn btn-primary btn-xs"><i
-								class="fa fa-plus"></i><span th:text="' '+#{label.add}"></span></a>
-
-							<div th:if="${not #lists.isEmpty(enterprises)}"
-								class="table-responsive">
-								<form th:action="@{~/enterprises/delete}" th:method="POST"
-									id="form-delete-enterprises">
-									<table class="table table-striped jambo_table bulk_action">
-										<thead>
-											<tr class="headings">
-												<th><input type="checkbox" id="check-all" class="flat">
-												</th>
-												<th class="column-title"></th>
-												<th class="column-title" th:text="#{label.code}"></th>
-												<th class="column-title" th:text="#{label.shortname}"></th>
-												<th class="column-title" th:text="#{label.fullname}"></th>
-												<th class="column-title no-link last"><span
-													class="nobr" th:text="#{label.descr}"></span></th>
-												<th class="bulk-actions" colspan="5">
-													<button type="submit" class="btn btn-danger btn-xs">
-														<i class="fa fa-trash-o"></i><span th:text="' '+#{label.delete}"></span>
-													</button>
-												</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											<tr th:each="enterprise, rowStat : ${enterprises}"
-												th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
-												<td class="a-center "><input id="table_records"
-													name="table_records" type="checkbox"
-													th:value="${enterprise.id}" class="flat"></td>
-												<td class=" "><a
-													th:href="@{/enterprises/edit/{id}(id=${enterprise.id})}"
-													class="btn btn-info btn-sm"
-													style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
-														class="fa fa-pencil fa-xs"></i></a></td>
-												<td th:text="${enterprise.code}" class=" "></td>
-												<td th:text="${enterprise.shortName}" class=" "></td>
-												<td th:text="${enterprise.name}" class=" "></td>
-												<td th:text="${enterprise.descr}" class=" "></td>
-											</tr>
-										</tbody>
-									</table>
-								</form>
-							</div>
-
-
-						</div>
-
-					</div>
-				</div>
-			</div>
+					<tbody>
+						<tr th:each="enterprise, rowStat : ${enterprises}"
+							th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
+							<td class="a-center "><input id="table_records"
+								name="table_records" type="checkbox" th:value="${enterprise.id}"
+								class="flat"></td>
+							<td class=" "><a
+								th:href="@{/enterprises/edit/{id}(id=${enterprise.id})}"
+								class="btn btn-info btn-sm"
+								style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
+									class="fa fa-pencil fa-xs"></i></a></td>
+							<td th:text="${enterprise.code}" class=" "></td>
+							<td th:text="${enterprise.shortName}" class=" "></td>
+							<td th:text="${enterprise.name}" class=" "></td>
+							<td th:text="${enterprise.descr}" class=" "></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
 		</div>
 	</div>
 	<!-- /page content -->

@@ -41,24 +41,40 @@ public class EnterpriseMvcController {
 		this.enterpriseRepository = enterpriseRepository;
 	}
 
+	@ModelAttribute(name = "titleParent")
+	public String titleParent(Locale locale) {
+		return messageSource.getMessage("enterprises.title.parent", null, locale);
+	}
+
+	@ModelAttribute(name = "titleRead")
+	public String titleRead(Locale locale) {
+		return messageSource.getMessage("enterprises.title.read", null, locale);
+	}
+
+	@ModelAttribute(name = "titleCreate")
+	public String titleCreate(Locale locale) {
+		return messageSource.getMessage("enterprises.title.create", null, locale);
+	}
+
+	@ModelAttribute(name = "titleUpdate")
+	public String titleUpdate(Locale locale) {
+		return messageSource.getMessage("enterprises.title.update", null, locale);
+	}
+
 	@ModelAttribute(name = "enterprise")
 	public Enterprise enterprise() {
 		return new Enterprise();
 	}
 
 	@GetMapping
-	public String showEnterprisesList(Locale locale, Model model) {
-		model.addAttribute("titleParent", messageSource.getMessage("enterprises.title.parent", null, locale));
-		model.addAttribute("titleRead", messageSource.getMessage("enterprises.title.read", null, locale));
+	public String showEnterprisesList(Model model) {
 		model.addAttribute("enterprises", enterpriseRepository.findAll());
 		return VN_READ_DELETE;
 	}
 
 	@GetMapping("create")
-	public String showCreateForm(Locale locale, Model model) {
+	public String showCreateForm(Model model) {
 		log.info("Отображение формы создания актива");
-		model.addAttribute("titleParent", messageSource.getMessage("enterprises.title.parent", null, locale));
-		model.addAttribute("titleCreate", messageSource.getMessage("enterprises.title.create", null, locale));
 		model.addAttribute("enterprises", enterpriseRepository.findAll());
 		return VN_CREATE_UPDATE;
 	}
@@ -79,12 +95,10 @@ public class EnterpriseMvcController {
 	}
 
 	@GetMapping("edit/{id}")
-	public String showUpdateForm(@PathVariable("id") long id, Locale locale, Model model) {
+	public String showUpdateForm(@PathVariable("id") long id, Model model) {
 		new IllegalArgumentException();
 		Enterprise enterprise = enterpriseRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid enterprise Id:" + id));
-		model.addAttribute("titleParent", messageSource.getMessage("enterprises.title.parent", null, locale));
-		model.addAttribute("titleUpdate", messageSource.getMessage("enterprises.title.update", null, locale));
 		model.addAttribute("enterprise", enterprise);
 		return VN_CREATE_UPDATE;
 	}
