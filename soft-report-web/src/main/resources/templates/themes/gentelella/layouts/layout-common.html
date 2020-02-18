@@ -30,12 +30,24 @@
 <link
 	th:href="@{/webjars/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css}"
 	rel="stylesheet">
-<!-- JQVMap -->
-<link th:href="@{/webjars/jqvmap/dist/jqvmap.min.css}" rel="stylesheet" />
-<!-- bootstrap-daterangepicker -->
+
+<!-- Datatables -->
 <link
-	th:href="@{/webjars/bootstrap-daterangepicker/css/bootstrap-daterangepicker.css}"
+	th:href="@{/webjars/datatables.net-bs/css/dataTables.bootstrap.css}"
 	rel="stylesheet">
+<link
+	th:href="@{/webjars/datatables.net-buttons-bs/css/buttons.bootstrap.min.css}"
+	rel="stylesheet">
+<link
+	th:href="@{/webjars/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}"
+	rel="stylesheet">
+<link
+	th:href="@{/webjars/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}"
+	rel="stylesheet">
+<link
+	th:href="@{/webjars/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}"
+	rel="stylesheet">
+
 <!-- Custom Theme Styles -->
 <link href="/themes/gentelella/build/css/custom.min.css"
 	rel="stylesheet">
@@ -97,7 +109,19 @@
 						<div class="col-md-12 col-sm-12  ">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2 th:text="${titleRead}"></h2>
+									<div th:if="${#strings.isEmpty(titleMaster)}">
+										<h2 th:text="${titleRead}"></h2>
+									</div>
+									<div th:unless="${#strings.isEmpty(titleMaster)}"
+										style="display: inline;display: flex;">
+										<h2 th:text="${titleMaster}"
+											style="display: inline; padding-right: 10px;"></h2>
+										<i class="fa fa-angle-double-right fa-2x"
+											style="display: inline"></i>
+										<h2 style="display: inline">
+											<small th:text="${titleRead}" class="text-muted"></small>
+										</h2>
+									</div>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i
 												class="fa fa-chevron-up"></i></a></li>
@@ -113,7 +137,12 @@
 									</ul>
 									<div class="clearfix"></div>
 								</div>
-
+								<!-- /* Handle the flash message */-->
+								<th:block th:if="${message != null}">
+									<!-- /* The message code is returned from the @Controller */ -->
+									<div
+										th:replace="fragments/fragment-alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#arrays.length(message.args) > 0} ? ${message.args[0]} : '', ${#arrays.length(message.args) > 1} ? ${message.args[1]} : '')})">&nbsp;</div>
+								</th:block>
 								<div layout:fragment="page-content"></div>
 							</div>
 						</div>
@@ -136,13 +165,6 @@
 	<script th:src="@{/webjars/fastclick/fastclick.js}"></script>
 	<!-- NProgress -->
 	<script th:src="@{/webjars/nprogress/nprogress.js}"></script>
-	<!-- Chart.js -->
-	<script th:src="@{/webjars/chartjs/Chart.min.js}"></script>
-	<!-- gauge.js -->
-	<script th:src="@{/webjars/gauge.js/dist/gauge.min.js}"></script>
-	<!-- bootstrap-progressbar -->
-	<script
-		th:src="@{/webjars/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
 	<!-- iCheck -->
 	<script th:src="@{/webjars/iCheck/icheck.min.js}"></script>
 	<!-- Skycons -->
@@ -160,20 +182,40 @@
 	<script th:src="@{/webjars/flot.curvedlines/curvedLines.js}"></script>
 	<!-- DateJS -->
 	<script th:src="@{/webjars/datejs/build/date.js}"></script>
-	<!-- JQVMap -->
-	<script th:src="@{/webjars/jqvmap/dist/jquery.vmap.min.js}"></script>
-	<script th:src="@{/webjars/jqvmap/dist/maps/jquery.vmap.world.js}"></script>
-	<script
-		th:src="@{/webjars/jqvmap/examples/js/jquery.vmap.sampledata.js}"></script>
-	<!-- bootstrap-daterangepicker -->
-	<script th:src="@{/webjars/momentjs/min/moment.min.js}"></script>
-	<script
-		th:src="@{/webjars/bootstrap-daterangepicker/js/bootstrap-daterangepicker.js}"></script>
 	<!-- popper.js -->
 	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 
+	<!-- Datatables -->
+	<script th:src="@{/webjars/datatables.net/js/jquery.dataTables.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-buttons/js/buttons.flash.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-buttons/js/buttons.html5.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-buttons/js/buttons.print.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-responsive-bs/js/responsive.bootstrap.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
+	<script th:src="@{/webjars/jszip/jszip.min.js}"></script>
+	<script th:src="@{/webjars/pdfmake/build/pdfmake.min.js}"></script>
+	<script th:src="@{/webjars/pdfmake/build/vfs_fonts.js}"></script>
+
 	<!-- Custom Theme Scripts -->
 	<script src="/themes/gentelella/build/js/custom.min.js"></script>
+	<script src="/js/utils.js"></script>
 
 </body>
 </html>

@@ -11,7 +11,7 @@
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
 		<a th:href="@{~/valuessets/create}" class="btn btn-primary btn-xs"><i
-			class="fa fa-plus"></i><span th:text="' '+#{add.label}"></span></a>
+			class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a>
 
 		<div th:if="${not #lists.isEmpty(valuesSets)}"
 			class="table-responsive">
@@ -20,23 +20,22 @@
 				<table class="table table-striped jambo_table bulk_action">
 					<thead>
 						<tr class="headings">
-							<th><input type="checkbox" id="check-all" class="flat">
-							</th>
-							<th class="column-title"></th>
-							<th class="column-title" th:text="#{code.label}"></th>
-							<th class="column-title" th:text="#{name.label}"></th>
-							<th class="column-title" th:text="#{isupdatable.label}"></th>
+							<th><input type="checkbox" id="check-all" class="flat" /></th>
+							<th class="column-title" />
+							<th class="column-title" th:text="#{code.label}" />
+							<th class="column-title" th:text="#{name.label}" />
+							<th class="column-title" th:text="#{isupdatable.label}" />
 							<th class="column-title no-link last"><span class="nobr"
 								th:text="#{descr.label}"></span></th>
 							<th class="bulk-actions" colspan="5">
 								<button type="submit" class="btn btn-danger btn-xs">
-									<i class="fa fa-trash-o"></i><span
-										th:text="' '+#{delete.label}"></span>
+									<i class="fa fa-trash-o"></i>
+									<th:block th:text="' '+#{delete.label}" />
 								</button> <!-- <a id="btn-value-create" th:href="@{~/valuessets/values/}"
 								class="btn btn-secondary btn-xs"
 								onclick="bulkActionChecked(this, event, 'table_records');"><i
-									class="fa fa-folder-open"></i><span
-									th:text="' '+#{value.read.label}"></span></a>-->
+									class="fa fa-folder-open"></i><th:block
+									th:text="' '+#{value.read.label}"/></a>-->
 							</th>
 						</tr>
 					</thead>
@@ -44,14 +43,18 @@
 					<tbody>
 						<tr th:each="valuesSet, rowStat : ${valuesSets}"
 							th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
-							<td class="a-center "><input id="table_records"
+							<td class="a-center"><input id="table_records"
 								name="table_records" type="checkbox" th:value="${valuesSet.id}"
 								class="flat"></td>
-							<td class=" "><a
+							<td class="a-center"><a
 								th:href="@{/valuessets/edit/{id}(id=${valuesSet.id})}"
 								class="btn btn-info btn-sm"
 								style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
 									class="fa fa-pencil fa-xs"></i></a> <a
+								th:href="@{/valuessets/delete/{id}(id=${valuesSet.id})}"
+								class="btn btn-danger btn-sm"
+								style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
+									class="fa fa-trash-o fa-xs"></i></a><a
 								th:href="@{/valuessets/{setId}/values(setId=${valuesSet.id})}"
 								class="btn btn-secondary btn-sm"
 								style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i

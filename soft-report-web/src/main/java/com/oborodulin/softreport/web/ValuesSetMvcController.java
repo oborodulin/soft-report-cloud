@@ -58,11 +58,6 @@ public class ValuesSetMvcController {
 		return messageSource.getMessage("valuessets.title.parent", null, locale);
 	}
 
-	@ModelAttribute(name = "titleUpdate")
-	public String titleUpdate(Locale locale) {
-		return messageSource.getMessage("valuessets.title.update", null, locale);
-	}
-
 	@ModelAttribute(name = "valuesSet")
 	public ValuesSet valuesSet() {
 		return new ValuesSet();
@@ -85,33 +80,39 @@ public class ValuesSetMvcController {
 		return VN_MST_CREATE_UPDATE;
 	}
 
-	@PostMapping("create")
-	public String createValuesSet(@Valid @ModelAttribute("valuesSet") ValuesSet valuesSet, Errors errors, Model model) {
+	@PostMapping("create/{isContinue}")
+	public String createValuesSet(@PathVariable("isContinue") boolean isContinue,
+			@Valid @ModelAttribute("valuesSet") ValuesSet valuesSet, Errors errors, Model model) {
 		if (errors.hasErrors()) {
 			errors.getAllErrors().stream().forEach(System.out::println);
 			return VN_MST_CREATE_UPDATE;
 		}
 		valuesSetRepository.save(valuesSet);
+		if (isContinue) {
+			return "redirect:".concat(BASE_MST_URL).concat("create");
+		}
 		return "redirect:".concat(BASE_MST_URL);
 	}
 
 	@GetMapping("edit/{id}")
-	public String showValuesSetUpdateForm(@PathVariable("id") long id, Model model) {
-		new IllegalArgumentException();
+	public String showValuesSetUpdateForm(@PathVariable("id") long id, Locale locale, Model model) {
 		ValuesSet valuesSet = valuesSetRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid valuesSet Id:" + id));
+		model.addAttribute("titleUpdate", messageSource.getMessage("valuessets.title.update", null, locale));
 		model.addAttribute("valuesSet", valuesSet);
 		return VN_MST_CREATE_UPDATE;
 	}
 
 	@PostMapping("update/{id}")
-	public String updateValuesSet(@PathVariable("id") long id, @Valid ValuesSet valuesSet, Errors errors, Model model) {
+	public String updateValuesSet(@PathVariable("id") long id, @Valid ValuesSet valuesSet, Locale locale, Errors errors,
+			Model model) {
 		if (errors.hasErrors()) {
 			valuesSet.setId(id);
 			return VN_MST_CREATE_UPDATE;
 		}
 
 		valuesSetRepository.save(valuesSet);
+		model.addAttribute("titleRead", messageSource.getMessage("valuessets.title.read", null, locale));
 		model.addAttribute("valuesSets", valuesSetRepository.findAll());
 		return VN_MST_READ_DELETE;
 	}
@@ -132,8 +133,7 @@ public class ValuesSetMvcController {
 		ValuesSet valuesSet = valuesSetRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid valuesSet Id:" + id));
 		valuesSetRepository.delete(valuesSet);
-		model.addAttribute("valuesSets", valuesSetRepository.findAll());
-		return VN_MST_READ_DELETE;
+		return "redirect:".concat(BASE_MST_URL);
 	}
 
 	@GetMapping("{setId}/values")
@@ -165,9 +165,9 @@ public class ValuesSetMvcController {
 		return VN_DTL_CREATE_UPDATE;
 	}
 
-	@PostMapping("{setId}/values/create")
-	public String createValue(@PathVariable("setId") long setId, @Valid @ModelAttribute("value") Value value,
-			Errors errors, Model model
+	@PostMapping("{setId}/values/create/{isContinue}")
+	public String createValue(@PathVariable("setId") long setId, @PathVariable("isContinue") boolean isContinue,
+			@Valid @ModelAttribute("value") Value value, Locale locale, Errors errors, Model model
 	// , RedirectAttributes redirectAttributes
 	) {
 		value.setValuesSet(valuesSetRepository.findById(setId)
@@ -177,47 +177,60 @@ public class ValuesSetMvcController {
 			return VN_DTL_CREATE_UPDATE;
 		}
 		valueRepository.save(value);
+		if (isContinue) {
+			return "redirect:".concat(BASE_MST_URL).concat(Long.toString(setId)).concat(BASE_DTL_URL).concat("/create");
+		}
 		// redirectAttributes.addFlashAttribute("valuesSet", );
-		return "redirect:".concat(BASE_MST_URL).concat(value.getValuesSet().getId().toString()).concat(BASE_DTL_URL);
+		return "redirect:".concat(BASE_MST_URL).concat(Long.toString(setId)).concat(BASE_DTL_URL);
 	}
 
-	@GetMapping("values/edit/{id}")
-	public String showValueUpdateForm(@PathVariable("id") long id, Model model) {
+	@GetMapping("{setId}/values/edit/{id}")
+	public String showValueUpdateForm(@PathVariable("setId") long setId, @PathVariable("id") long id, Locale locale,
+			Model model) {
 		Value value = valueRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid value Id:" + id));
+		model.addAttribute("titleMaster",
+				value.getValuesSet().getName().concat(" [").concat(value.getValuesSet().getCode()).concat("]"));
+		model.addAttribute("titleUpdate", messageSource.getMessage("values.title.update", null, locale));
 		model.addAttribute("value", value);
 		return VN_DTL_CREATE_UPDATE;
 	}
 
-	@PostMapping("values/update/{id}")
-	public String updateValue(@PathVariable("id") long id, @Valid Value value, Errors errors, Model model) {
+	@PostMapping("{setId}/values/update/{id}")
+	public String updateValue(@PathVariable("setId") long setId, @PathVariable("id") long id, @Valid Value value,
+			Locale locale, Errors errors, Model model) {
 		if (errors.hasErrors()) {
 			value.setId(id);
 			return VN_DTL_CREATE_UPDATE;
 		}
-
+		value.setValuesSet(valuesSetRepository.findById(setId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid valuesSet Id:" + setId)));
 		valueRepository.save(value);
-		model.addAttribute("values", valueRepository.findAll());
+		ValuesSet valuesSet = valuesSetRepository.findById(setId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid valuesSet Id:" + setId));
+		model.addAttribute("titleMaster", valuesSet.getName().concat(" [").concat(valuesSet.getCode()).concat("]"));
+		model.addAttribute("titleRead", messageSource.getMessage("values.title.read", null, locale));
+		model.addAttribute("valuesSet", valuesSet);
+		model.addAttribute("values", valueRepository.findByValuesSet(valuesSet, Sort.by("code")));
 		return VN_DTL_READ_DELETE;
 	}
 
-	@PostMapping("values/delete")
-	public String deleteValues(@RequestParam("table_records") List<String> ids) {
+	@PostMapping("{setId}/values/delete")
+	public String deleteValues(@PathVariable("setId") long setId, @RequestParam("table_records") List<String> ids) {
 		if (ids != null) {
 			for (String idsStr : ids) {
 				long id = Long.parseLong(idsStr);
 				valueRepository.deleteById(id);
 			}
 		}
-		return "redirect:".concat(BASE_DTL_URL);
+		return "redirect:".concat(BASE_MST_URL).concat(Long.toString(setId)).concat(BASE_DTL_URL);
 	}
 
-	@GetMapping("values/delete/{id}")
-	public String deleteValue(@PathVariable("id") long id, Model model) {
+	@GetMapping("{setId}/values/delete/{id}")
+	public String deleteValue(@PathVariable("setId") long setId, @PathVariable("id") long id, Model model) {
 		Value value = valueRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid value Id:" + id));
 		valueRepository.delete(value);
-		model.addAttribute("values", valueRepository.findAll());
-		return VN_DTL_READ_DELETE;
+		return "redirect:".concat(BASE_MST_URL).concat(Long.toString(setId)).concat(BASE_DTL_URL);
 	}
 }
