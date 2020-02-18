@@ -10,13 +10,13 @@
 <body class="nav-md">
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
-		<a th:href="@{~/valuessets/create}" class="btn btn-primary btn-xs"><i
-			class="fa fa-plus"></i><span th:text="' '+#{add.label}"></span></a>
+		<a th:href="@{~/valuessets/{setId}/values/create(setId=${valuesSet.id})}"
+			class="btn btn-primary btn-xs"><i class="fa fa-plus"></i><span
+			th:text="' '+#{add.label}"></span></a>
 
-		<div th:if="${not #lists.isEmpty(valuesSets)}"
-			class="table-responsive">
-			<form th:action="@{~/valuessets/delete}" th:method="POST"
-				id="form-delete-valuesSets">
+		<div th:if="${not #lists.isEmpty(values)}" class="table-responsive">
+			<form th:action="@{~/valuessets/values/delete}" th:method="POST"
+				id="form-delete-values">
 				<table class="table table-striped jambo_table bulk_action">
 					<thead>
 						<tr class="headings">
@@ -24,43 +24,54 @@
 							</th>
 							<th class="column-title"></th>
 							<th class="column-title" th:text="#{code.label}"></th>
-							<th class="column-title" th:text="#{name.label}"></th>
-							<th class="column-title" th:text="#{isupdatable.label}"></th>
+							<th class="column-title" th:text="#{value.label}"></th>
+							<th class="column-title" th:text="#{closeDate.label}"></th>
+							<th class="column-title" th:text="#{descr.label}"></th>
+							<th class="column-title" th:text="#{attr1.label}"></th>
+							<th class="column-title" th:text="#{attr2.label}"></th>
+							<th class="column-title" th:text="#{attr3.label}"></th>
+							<th class="column-title" th:text="#{attr4.label}"></th>
+							<th class="column-title" th:text="#{attr5.label}"></th>
+							<th class="column-title" th:text="#{attr6.label}"></th>
+							<th class="column-title" th:text="#{attr7.label}"></th>
+							<th class="column-title" th:text="#{attr8.label}"></th>
+							<th class="column-title" th:text="#{attr9.label}"></th>
 							<th class="column-title no-link last"><span class="nobr"
-								th:text="#{descr.label}"></span></th>
-							<th class="bulk-actions" colspan="5">
-								<div class="col-md-6 col-sm-6">
-									<button type="submit" class="btn btn-danger btn-xs">
-										<i class="fa fa-trash-o"></i><span
-											th:text="' '+#{delete.label}"></span>
-									</button>
-									<a id="btn-value-create" th:href="@{~/valuessets/values/}"
-										class="btn btn-secondary btn-xs"
-										onclick="bulkActionChecked(this, event, 'table_records');"><i
-										class="fa fa-folder-open"></i><span
-										th:text="' '+#{value.read.label}"></span></a>
-								</div>
+								th:text="#{attr10.label}"></span></th>
+							<th class="bulk-actions" colspan="16">
+								<button type="submit" class="btn btn-danger btn-xs">
+									<i class="fa fa-trash-o"></i><span
+										th:text="' '+#{delete.label}"></span>
+								</button>
 							</th>
 						</tr>
 					</thead>
 
 					<tbody>
-						<tr th:each="valuesSet, rowStat : ${valuesSets}"
+						<tr th:each="value, rowStat : ${values}"
 							th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
 							<td class="a-center "><input id="table_records"
-								name="table_records" type="checkbox" th:value="${valuesSet.id}"
+								name="table_records" type="checkbox" th:value="${value.id}"
 								class="flat"></td>
 							<td class=" "><a
-								th:href="@{/valuessets/edit/{id}(id=${valuesSet.id})}"
+								th:href="@{/valuessets/values/edit/{id}(id=${value.id})}"
 								class="btn btn-info btn-sm"
 								style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
 									class="fa fa-pencil fa-xs"></i></a></td>
-							<td th:text="${valuesSet.code}" class=" " />
-							<td th:text="${valuesSet.name}" class=" " />
-							<td class="a-center"><input type="checkbox" id="isUpdatable"
-								name="isUpdatable" disabled="disabled"
-								th:checked="${valuesSet.isUpdatable}" class="flat" /></td>
-							<td th:text="${valuesSet.descr}" class=" " />
+							<td th:text="${value.code}" class=" " />
+							<td th:text="${value.value}" class=" " />
+							<td th:text="${value.closeDate}" class=" " />
+							<td th:text="${value.descr}" class=" " />
+							<td th:text="${value.attr1}" class=" " />
+							<td th:text="${value.attr2}" class=" " />
+							<td th:text="${value.attr3}" class=" " />
+							<td th:text="${value.attr4}" class=" " />
+							<td th:text="${value.attr5}" class=" " />
+							<td th:text="${value.attr6}" class=" " />
+							<td th:text="${value.attr7}" class=" " />
+							<td th:text="${value.attr8}" class=" " />
+							<td th:text="${value.attr9}" class=" " />
+							<td th:text="${value.attr10}" class=" " />
 						</tr>
 					</tbody>
 				</table>

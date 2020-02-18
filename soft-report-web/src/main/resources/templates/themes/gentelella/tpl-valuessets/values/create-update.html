@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-forms}"
+	th:with="titleCurrent=${value.id == null} ? ${titleCreate} : ${titleUpdate}">
+<head>
+<title th:text="${titleCurrent}">titleCurrent</title>
+</head>
+
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<br />
+		<form
+			th:action="${value.id == null} ? @{~/valuessets/{setId}/values/create(setId=${value.valuesSet.id})} : @{~/valuessets/values/update/{id}(id=${value.id})}"
+			th:object="${value}" th:method="POST" id="form-create-value"
+			data-parsley-validate class="form-horizontal form-label-left">
+			<input type="hidden" th:value="${value.valuesSet.Id}" id="setId"
+				name="setId">
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="code"><span th:text="#{code.label}"></span><span
+					class="required">*</span> </label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{code}" id="code" name="code"
+						required="required" class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('code')}" th:errors="*{code}"
+					class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="value"><span th:text="#{value.label}"></span><span
+					class="required">*</span> </label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{value}" id="value" name="value"
+						required="required" class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('value')}" th:errors="*{value}"
+					class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="closeDate"><span th:text="#{closeDate.label}"></span></label>
+				<div class='input-group date col-md-3 col-sm-3'
+					id='closeDatetimepicker'>
+					<input type='text' th:field="*{closeDate}" id="closeDate"
+						name="closeDate" class="form-control" /> <span
+						class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>
+				</div>
+				<span th:if="${#fields.hasErrors('closeDate')}"
+					th:errors="*{closeDate}" class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label for="descr"
+					class="col-form-label col-md-3 col-sm-3 label-align"
+					th:text="#{descr.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<textarea th:field="*{descr}" id="descr" name="descr"
+						class="form-control" rows="3"></textarea>
+				</div>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="attr1"><span th:text="#{attr1.label}"></span></label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{attr1}" id="attr1" name="attr1"
+						class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('attr1')}" th:errors="*{attr1}"
+					class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="attr2"><span th:text="#{attr2.label}"></span></label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{attr2}" id="attr2" name="attr2"
+						class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('attr2')}" th:errors="*{attr2}"
+					class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="attr3"><span th:text="#{attr3.label}"></span></label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{attr3}" id="attr3" name="attr3"
+						class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('attr3')}" th:errors="*{attr3}"
+					class="text-danger"></span>
+			</div>
+			<div class="clearfix"></div>
+			<div class="ln_solid"></div>
+			<div class="item form-group">
+				<div class="col-md-6 col-sm-6 offset-md-3">
+					<a
+						th:href="@{~/valuessets/{setId}/values(setId=${value.valuesSet.id})}"
+						class="btn btn-primary"> <i class="fa fa-undo"></i><span
+						th:text="' '+#{cancel.label}"></span>
+					</a>
+					<button type="submit" class="btn btn-success"
+						th:text="' '+#{ok.label}"></button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- /page content -->
+</body>
+</html>

@@ -51,6 +51,10 @@
 <link
 	th:href="@{/webjars/bootstrap-daterangepicker/css/bootstrap-daterangepicker.css}"
 	rel="stylesheet">
+<!-- bootstrap-datetimepicker -->
+<link
+	th:href="@{/webjars/Eonasdan-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}"
+	rel="stylesheet">
 <!-- bootstrap-duallistbox -->
 <link
 	th:href="@{/webjars/bootstrap-duallistbox/dist/bootstrap-duallistbox.css}"
@@ -117,7 +121,19 @@
 						<div class="col-md-12 col-sm-12  ">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2 th:text="${titleCurrent}"></h2>
+									<div th:if="${#strings.isEmpty(titleMaster)}">
+										<h2 th:text="${titleCurrent}"></h2>
+									</div>
+									<div th:unless="${#strings.isEmpty(titleMaster)}"
+										style="display: inline; display: flex;">
+										<h2 th:text="${titleMaster}"
+											style="display: inline; padding-right: 10px;"></h2>
+										<i class="fa fa-angle-double-right fa-2x"
+											style="display: inline"></i>
+										<h2 style="display: inline">
+											<small th:text="${titleCurrent}" class="text-muted"></small>
+										</h2>
+									</div>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i
 												class="fa fa-chevron-up"></i></a></li>
@@ -191,9 +207,13 @@
 	<script
 		th:src="@{/webjars/jqvmap/examples/js/jquery.vmap.sampledata.js}"></script>
 	<!-- bootstrap-daterangepicker -->
-	<script th:src="@{/webjars/momentjs/min/moment.min.js}"></script>
+	<script src="/js/moment-with-locales.min.js"></script>
+	<!-- script th:src="@{/webjars/momentjs/min/moment.min.js}"></script-->
 	<script
 		th:src="@{/webjars/bootstrap-daterangepicker/js/bootstrap-daterangepicker.js}"></script>
+	<!-- bootstrap-datetimepicker -->
+	<script
+		th:src="@{/webjars/Eonasdan-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}"></script>
 
 	<!-- bootstrap-wysiwyg -->
 	<!-- script src="../vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
@@ -223,6 +243,15 @@
 
 	<!-- Custom Theme Scripts -->
 	<script src="/themes/gentelella/build/js/custom.min.js"></script>
+	<!-- Initialize datetimepicker 	format:'d.m.Y H:i',-->
+	<script type="text/javascript">
+		$(function() {
+			moment().locale('ru');
+			$('#closeDatetimepicker').datetimepicker({
+				format : "DD.MM.YYYY"
+			});
+		});
+	</script>
 
 </body>
 </html>

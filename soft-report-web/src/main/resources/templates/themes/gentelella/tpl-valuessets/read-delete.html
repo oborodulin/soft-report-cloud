@@ -29,17 +29,14 @@
 							<th class="column-title no-link last"><span class="nobr"
 								th:text="#{descr.label}"></span></th>
 							<th class="bulk-actions" colspan="5">
-								<div class="col-md-6 col-sm-6">
-									<button type="submit" class="btn btn-danger btn-xs">
-										<i class="fa fa-trash-o"></i><span
-											th:text="' '+#{delete.label}"></span>
-									</button>
-									<a id="btn-value-create" th:href="@{~/valuessets/values/}"
-										class="btn btn-secondary btn-xs"
-										onclick="bulkActionChecked(this, event, 'table_records');"><i
-										class="fa fa-folder-open"></i><span
-										th:text="' '+#{value.read.label}"></span></a>
-								</div>
+								<button type="submit" class="btn btn-danger btn-xs">
+									<i class="fa fa-trash-o"></i><span
+										th:text="' '+#{delete.label}"></span>
+								</button> <!-- <a id="btn-value-create" th:href="@{~/valuessets/values/}"
+								class="btn btn-secondary btn-xs"
+								onclick="bulkActionChecked(this, event, 'table_records');"><i
+									class="fa fa-folder-open"></i><span
+									th:text="' '+#{value.read.label}"></span></a>-->
 							</th>
 						</tr>
 					</thead>
@@ -54,7 +51,11 @@
 								th:href="@{/valuessets/edit/{id}(id=${valuesSet.id})}"
 								class="btn btn-info btn-sm"
 								style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
-									class="fa fa-pencil fa-xs"></i></a></td>
+									class="fa fa-pencil fa-xs"></i></a> <a
+								th:href="@{/valuessets/{setId}/values(setId=${valuesSet.id})}"
+								class="btn btn-secondary btn-sm"
+								style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
+									class="fa fa-plus-square-o fa-xs"></i></a></td>
 							<td th:text="${valuesSet.code}" class=" " />
 							<td th:text="${valuesSet.name}" class=" " />
 							<td class="a-center"><input type="checkbox" id="isUpdatable"

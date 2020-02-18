@@ -108,6 +108,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
+			<artifactId>Eonasdan-bootstrap-datetimepicker</artifactId>
+			<version>4.17.47</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
 			<artifactId>fastclick</artifactId>
 			<version>1.0.6</version>
 		</dependency>
@@ -274,6 +279,11 @@
 			<version>1.6.1</version>
 		</dependency>
 		<dependency>
+			<groupId>org.webjars.bowergithub.datatables</groupId>
+			<artifactId>dist-datatables-buttons-bootstrap</artifactId>
+			<version>1.5.3</version>
+		</dependency>
+		<dependency>
 			<groupId>org.webjars.bower</groupId>
 			<artifactId>datatables.net-buttons-bs</artifactId>
 			<version>1.5.6</version>
@@ -296,7 +306,7 @@
 		<dependency>
 			<groupId>org.webjars.bower</groupId>
 			<artifactId>datatables.net-responsive</artifactId>
-			<version>2.2.0</version>
+			<version>2.2.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars.bower</groupId>

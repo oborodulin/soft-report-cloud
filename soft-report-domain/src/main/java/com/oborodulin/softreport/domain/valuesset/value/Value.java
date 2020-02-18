@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.oborodulin.softreport.domain.valuesset.ValuesSet;
 
 import lombok.Data;
@@ -31,8 +33,9 @@ public class Value {
 	@Column(unique = true)
 	private String code;
 	@NotBlank(message = "Value is required")
-	private String value;
+	private String val;
 	private String descr;
+	@DateTimeFormat(pattern="dd.MM.yyyy")
 	private Date closeDate;
 	private String attr1;
 	private String attr2;
