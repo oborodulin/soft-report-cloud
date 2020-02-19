@@ -1,8 +1,10 @@
 package com.oborodulin.softreport.security;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.oborodulin.softreport.domain.model.user.User;
+
 import lombok.Data;
-import com.oborodulin.softreport.domain.user.User;
 
 @Data
 public class RegistrationForm {

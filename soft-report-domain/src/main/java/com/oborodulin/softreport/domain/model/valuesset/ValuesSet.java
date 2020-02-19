@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.valuesset;
+package com.oborodulin.softreport.domain.model.valuesset;
 
 import java.util.Set;
 
@@ -14,19 +14,24 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.oborodulin.softreport.domain.valuesset.value.Value;
+import org.hibernate.annotations.SelectBeforeUpdate;
+
+import com.oborodulin.softreport.domain.model.AuditableEntity;
+import com.oborodulin.softreport.domain.model.software.Software;
+import com.oborodulin.softreport.domain.model.valuesset.value.Value;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
-@RequiredArgsConstructor
 @Table(name = "ValsSets")
-public class ValuesSet {
+public class ValuesSet extends AuditableEntity<Software> {
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@Column(updatable = false)
+	protected Long id;
 	@NotBlank
 	@Column(unique = true)
 	private String code;

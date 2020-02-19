@@ -1,31 +1,38 @@
-package com.oborodulin.softreport.domain.valuesset.value;
+package com.oborodulin.softreport.domain.model.valuesset.value;
 
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.oborodulin.softreport.domain.valuesset.ValuesSet;
+import com.oborodulin.softreport.domain.model.AuditableEntity;
+import com.oborodulin.softreport.domain.model.software.Software;
+import com.oborodulin.softreport.domain.model.valuesset.ValuesSet;
 
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "Vals")
-public class Value {
+public class Value extends AuditableEntity<Software> {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@Column(updatable = false)
+	protected Long id;
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "vals_sets_id", nullable = false)
 	private ValuesSet valuesSet;
@@ -35,7 +42,8 @@ public class Value {
 	@NotBlank(message = "Value is required")
 	private String val;
 	private String descr;
-	@DateTimeFormat(pattern="dd.MM.yyyy")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	private Date closeDate;
 	private String attr1;
 	private String attr2;

@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.data.domain.Sort;
 
-import com.oborodulin.softreport.domain.valuesset.ValuesSetRepository;
-import com.oborodulin.softreport.domain.valuesset.value.Value;
-import com.oborodulin.softreport.domain.valuesset.value.ValueRepository;
+import com.oborodulin.softreport.domain.model.valuesset.ValuesSet;
+import com.oborodulin.softreport.domain.model.valuesset.ValuesSetRepository;
+import com.oborodulin.softreport.domain.model.valuesset.value.Value;
+import com.oborodulin.softreport.domain.model.valuesset.value.ValueRepository;
 import com.oborodulin.softreport.web.support.MessageHelper;
-import com.oborodulin.softreport.domain.valuesset.ValuesSet;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -106,6 +105,9 @@ public class ValuesSetMvcController {
 	@PostMapping("update/{id}")
 	public String updateValuesSet(@PathVariable("id") long id, @Valid ValuesSet valuesSet, Locale locale, Errors errors,
 			Model model) {
+		// ValuesSet updValuesSet = valuesSetRepository.findById(id).get();
+
+		log.info(valuesSet.toString());
 		if (errors.hasErrors()) {
 			valuesSet.setId(id);
 			return VN_MST_CREATE_UPDATE;

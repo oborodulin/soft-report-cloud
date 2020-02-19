@@ -1,0 +1,1 @@
+package com.oborodulin.softreport.domain.model.software;

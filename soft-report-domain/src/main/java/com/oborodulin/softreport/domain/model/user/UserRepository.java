@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.user;
+package com.oborodulin.softreport.domain.model.user;
 
 import org.springframework.data.repository.CrudRepository;
 

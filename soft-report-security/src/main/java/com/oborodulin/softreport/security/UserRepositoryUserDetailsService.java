@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.oborodulin.softreport.domain.user.User;
-import com.oborodulin.softreport.domain.user.UserRepository;
+import com.oborodulin.softreport.domain.model.user.User;
+import com.oborodulin.softreport.domain.model.user.UserRepository;
 
 @Service
 public class UserRepositoryUserDetailsService implements UserDetailsService {

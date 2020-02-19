@@ -1,7 +1,8 @@
 package com.oborodulin.softreport.rest.software;
 
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
-import com.oborodulin.softreport.domain.software.Software;
+
+import com.oborodulin.softreport.domain.model.software.Software;
 
 public class SoftwareModelAssembler extends RepresentationModelAssemblerSupport<Software, SoftwareModel> {
 

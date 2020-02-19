@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oborodulin.softreport.domain.project.Project;
-import com.oborodulin.softreport.domain.project.ProjectRepository;
+import com.oborodulin.softreport.domain.model.project.Project;
+import com.oborodulin.softreport.domain.model.project.ProjectRepository;
 
 @RestController
 @RequestMapping(path = "/projects", produces = "application/json")

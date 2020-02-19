@@ -5,8 +5,9 @@ import java.util.Date;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
+import com.oborodulin.softreport.domain.model.software.Software;
+
 import lombok.Getter;
-import com.oborodulin.softreport.domain.software.Software;
 
 @Relation(value = "software", collectionRelation = "softwares")
 public class SoftwareModel extends RepresentationModel<SoftwareModel> {

@@ -7,7 +7,8 @@ import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import lombok.Getter;
-import com.oborodulin.softreport.domain.project.Project;
+
+import com.oborodulin.softreport.domain.model.project.Project;
 import com.oborodulin.softreport.rest.software.SoftwareModel;
 import com.oborodulin.softreport.rest.software.SoftwareModelAssembler;
 

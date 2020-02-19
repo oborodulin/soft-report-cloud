@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.valuesset;
+package com.oborodulin.softreport.domain.model.valuesset;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -16,6 +16,7 @@
 			th:action="${valuesSet.id == null} ? @{~/valuessets/create/{isContinue}(isContinue='false')} : @{~/valuessets/update/{id}(id=${valuesSet.id})}"
 			th:object="${valuesSet}" th:method="POST" id="form-create-valuesSet"
 			data-parsley-validate class="form-horizontal form-label-left">
+			<input type="hidden" th:field="*{version}">
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
 					for="code"><th:block th:text="#{code.label}" /><span

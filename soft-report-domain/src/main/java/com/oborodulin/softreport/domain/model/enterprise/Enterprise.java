@@ -1,7 +1,6 @@
-package com.oborodulin.softreport.domain.enterprise;
+package com.oborodulin.softreport.domain.model.enterprise;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,24 +15,21 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.oborodulin.softreport.domain.model.AuditableEntity;
+import com.oborodulin.softreport.domain.model.software.Software;
+
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @Entity
-@RequiredArgsConstructor
 @Table(name = "Enterprises")
-public class Enterprise {
-
-	public Enterprise(Long id, String code, String name) {
-		this.id = id;
-		this.code = code;
-		this.name = name;
-	}
+public class Enterprise extends AuditableEntity<Software> {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@Column(updatable = false)
+	protected Long id;
 	@NotBlank
 	@Column(unique = true)
 	private String code;
@@ -49,9 +45,4 @@ public class Enterprise {
 
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Enterprise> enterprises = new ArrayList<Enterprise>();
-
-	private Date createdAt;
-	private String createdBy;
-	private Date modifiedAt;
-	private String modifiedBy;
 }

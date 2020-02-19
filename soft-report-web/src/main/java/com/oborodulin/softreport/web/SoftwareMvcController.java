@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.oborodulin.softreport.domain.software.Software;
-import com.oborodulin.softreport.domain.software.SoftwareRepository;
+import com.oborodulin.softreport.domain.model.software.Software;
+import com.oborodulin.softreport.domain.model.software.SoftwareRepository;
 
 import lombok.extern.slf4j.Slf4j;
 

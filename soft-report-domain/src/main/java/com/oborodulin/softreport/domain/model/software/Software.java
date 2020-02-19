@@ -1,7 +1,6 @@
-package com.oborodulin.softreport.domain.software;
+package com.oborodulin.softreport.domain.model.software;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -18,20 +17,21 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import com.oborodulin.softreport.domain.project.Project;
+import com.oborodulin.softreport.domain.model.AuditableEntity;
+import com.oborodulin.softreport.domain.model.project.Project;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @Entity
-@RequiredArgsConstructor
 @Table(name = "Softwares")
-public class Software {
+public class Software extends AuditableEntity<Software> {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@Column(updatable = false)
+	protected Long id;
 	@NotBlank
 	@Column(unique = true)
 	private String code;
@@ -48,9 +48,4 @@ public class Software {
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Project> projects = new ArrayList<>();
-
-	private Date createdAt;
-	private String createdBy;
-	private Date modifiedAt;
-	private String modifiedBy;
 }

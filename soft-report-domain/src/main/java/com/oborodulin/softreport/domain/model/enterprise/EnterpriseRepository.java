@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.enterprise;
+package com.oborodulin.softreport.domain.model.enterprise;
 
 
 import org.springframework.data.repository.PagingAndSortingRepository;
