@@ -3,12 +3,8 @@ package com.oborodulin.softreport.domain.model.project;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -23,14 +19,11 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Projects")
-public class Project extends AuditableEntity<Software> {
-	private static final long serialVersionUID = 1L;
+@Table(name = Project.TABLE_NAME)
+public class Project extends AuditableEntity<String> {
+	private static final long serialVersionUID = -3514627948973849043L;
+	public static final String TABLE_NAME= "PROJECTS";
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(updatable = false)
-	protected Long id;
 	@NotBlank
 	@Size(min = 5, message = "Наименование проекта должно состоять как минимум из 5 символов")
 	private String name;

@@ -1,13 +1,12 @@
 package com.oborodulin.softreport.domain.model.valuesset;
 
-import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
-public interface ValuesSetService {
-	List<ValuesSet> findAll();
+import com.oborodulin.softreport.domain.model.CommonJpaService;
+import com.oborodulin.softreport.domain.model.valuesset.value.Value;
 
-	ValuesSet findById(Long id);
+public interface ValuesSetService extends CommonJpaService<ValuesSet, String> {
 
-	ValuesSet save(ValuesSet singer);
-
-	void delete(ValuesSet singer);
+	public Optional<Set<Value>> getValuesBySetCode(String code);
 }

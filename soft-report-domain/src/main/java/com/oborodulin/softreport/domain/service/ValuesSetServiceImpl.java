@@ -1,44 +1,34 @@
 package com.oborodulin.softreport.domain.service;
 
-import java.util.List;
-
+import com.oborodulin.softreport.domain.model.JpaAbstractService;
 import com.oborodulin.softreport.domain.model.valuesset.ValuesSet;
+import com.oborodulin.softreport.domain.model.valuesset.ValuesSetRepository;
 import com.oborodulin.softreport.domain.model.valuesset.ValuesSetService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import javax.persistence.PersistenceContext;
-import javax.persistence.EntityManager;
+import com.oborodulin.softreport.domain.model.valuesset.value.Value;
+
+import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.core.EntityInformation;
+import org.springframework.stereotype.Service;
+
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("jpaValuesSetService")
 @Transactional
-public class ValuesSetServiceImpl implements ValuesSetService {
+public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSetRepository, String>
+		implements ValuesSetService {
+
 	@Autowired
-	private EntityManager em;
-
-	@Transactional(readOnly = true)
-	@Override
-	public List<ValuesSet> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public ValuesSetServiceImpl(ValuesSetRepository repository) {
+		super(repository);
 	}
 
 	@Override
-	public ValuesSet findById(Long id) {
-		return this.em.find(ValuesSet.class, id);
-	}
+	public Optional<Set<Value>> getValuesBySetCode(String code) {
+		Optional<ValuesSet> valuesSet = Optional.ofNullable(this.repository.findByCode(code));
 
-	@Override
-	@Transactional
-	public ValuesSet save(ValuesSet valuesSet) {
-		return null;
-	}
-
-	@Override
-	public void delete(ValuesSet valuesSet) {
-		// TODO Auto-generated method stub
-
+		return valuesSet.isPresent() ? Optional.ofNullable(valuesSet.get().getValues()) : Optional.empty();
 	}
 
 }

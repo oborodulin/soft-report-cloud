@@ -27,7 +27,7 @@ public class ProjectModel extends RepresentationModel<ProjectModel> {
 
 	public ProjectModel(Project project) {
 		this.name = project.getName();
-		this.createdAt = project.getCreatedAt();
+		this.createdAt = project.getCreatedDate();
 		this.softwares = softwareAssembler.toCollectionModel(project.getSoftwares());
 	}
 

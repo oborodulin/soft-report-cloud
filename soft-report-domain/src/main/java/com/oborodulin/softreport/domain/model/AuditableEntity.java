@@ -16,18 +16,27 @@ import java.util.Date;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AuditableEntity<U> implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -9180531813274000726L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(updatable = false)
+	protected Long id;
 
 	@Version
-	private Integer version;
+	private Long version;
+
+	@CreatedBy
+	protected U createdBy;
+
 	@CreatedDate
 	@Temporal(TemporalType.TIMESTAMP)
-	protected Date createdAt;
-	@CreatedBy
-	protected String createdBy;
+	protected Date createdDate;
+
 	@LastModifiedBy
-	protected String modifiedBy;
+	protected U lastModifiedBy;
+
 	@LastModifiedDate
 	@Temporal(TemporalType.TIMESTAMP)
-	protected Date modifiedAt;
+	protected Date lastModifiedDate;
 }

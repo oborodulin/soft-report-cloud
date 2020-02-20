@@ -1,7 +1,11 @@
 package com.oborodulin.softreport.domain.model.valuesset;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ValuesSetRepository extends JpaRepository<ValuesSet, Long> {
+import com.oborodulin.softreport.domain.model.CommonRepository;
 
+@Repository
+public interface ValuesSetRepository extends CommonRepository<ValuesSet, String> {
+
+	ValuesSet findByCode(String code);
 }

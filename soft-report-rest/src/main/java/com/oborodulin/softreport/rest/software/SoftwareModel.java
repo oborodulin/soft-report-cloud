@@ -20,7 +20,7 @@ public class SoftwareModel extends RepresentationModel<SoftwareModel> {
 
 	public SoftwareModel(Software software) {
 		this.name = software.getName();
-		this.createdAt = software.getCreatedAt();
+		this.createdAt = software.getCreatedDate();
 	}
 
 }

@@ -10,29 +10,22 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.oborodulin.softreport.domain.model.AuditableEntity;
-import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.model.valuesset.ValuesSet;
 
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Vals")
-public class Value extends AuditableEntity<Software> {
-	private static final long serialVersionUID = 1L;
+@Table(name = Value.TABLE_NAME)
+public class Value extends AuditableEntity<String> {
+	private static final long serialVersionUID = 639613089661707969L;
+	public static final String TABLE_NAME= "VALS";
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(updatable = false)
-	protected Long id;
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "vals_sets_id", nullable = false)
 	private ValuesSet valuesSet;
