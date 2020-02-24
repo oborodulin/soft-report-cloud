@@ -16,6 +16,13 @@
 			th:action="${value.id == null} ? @{~/valuessets/{setId}/values/create/{isContinue}(setId=${value.valuesSet.id}, isContinue='false')} : @{~/valuessets/{setId}/values/update/{id}(setId=${value.valuesSet.id}, id=${value.id})}"
 			th:object="${value}" th:method="POST" id="form-create-value"
 			data-parsley-validate class="form-horizontal form-label-left">
+			<!--/* Необходимо добавлять скрытые поля: version - для определения операции создания/обновления, 
+				а created* - для сохранения значений при обновлении*/-->
+			<input type="hidden" th:field="*{version}">
+			<th:block th:if="${value.id != null}">
+				<input type="hidden" th:field="*{createdBy}">
+				<input type="hidden" th:field="*{createdDate}">
+			</th:block>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
 					for="code"><th:block th:text="#{code.label}" /><span

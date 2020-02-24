@@ -5,6 +5,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -23,6 +24,12 @@ public abstract class AuditableEntity<U> implements Serializable {
 	@Column(updatable = false)
 	protected Long id;
 
+	/**
+	 * Номер версии записи.
+	 * 
+	 * Необходим для того, чтобы JPA определил необходимо создавать Entity или обновлять его.
+	 * Для этого номер версии должен присутствовать в html-форме обновления данных.
+	 */
 	@Version
 	private Long version;
 
@@ -31,6 +38,7 @@ public abstract class AuditableEntity<U> implements Serializable {
 
 	@CreatedDate
 	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss.SSS")
 	protected Date createdDate;
 
 	@LastModifiedBy

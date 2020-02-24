@@ -1,7 +1,10 @@
 package com.oborodulin.softreport.domain.model.software;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
+import java.util.List;
 
-public interface SoftwareRepository extends PagingAndSortingRepository<Software, Long> {
+import com.oborodulin.softreport.domain.model.CommonRepository;
 
+public interface SoftwareRepository extends CommonRepository<Software, String> {
+
+	public List<Software> findByTypeCode(String typeCode);
 }
