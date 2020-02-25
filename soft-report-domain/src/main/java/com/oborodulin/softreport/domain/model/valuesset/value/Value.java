@@ -54,7 +54,7 @@ public class Value extends AuditableEntity<String> {
 	private String attr9;
 	private String attr10;
 
-	@OneToMany(mappedBy = "typeCode", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<Software> softwares = new ArrayList<Software>();
 

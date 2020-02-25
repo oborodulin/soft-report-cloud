@@ -2,11 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout-tables}">
-<head>
-<title th:text="${titleRead}"></title>
-</head>
-
+	layout:decorate="~{layouts/layout-read-delete}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-header-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
+	</head>
+</th:block>
 <body class="nav-md">
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
@@ -89,5 +90,10 @@
 		</div>
 	</div>
 	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-body-read-delete :: body(scripts=~{this :: .custom-script})">
+		</th:block>
+	</th:block>
 </body>
 </html>

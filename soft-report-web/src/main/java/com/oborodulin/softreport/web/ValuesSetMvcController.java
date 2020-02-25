@@ -65,6 +65,7 @@ public class ValuesSetMvcController {
 		if (valuesSets.isEmpty()) {
 			MessageHelper.addInfoAttribute(model, "valuessets.info.empty");
 		}
+		model.addAttribute("viewReadDelete", VN_READ_DELETE);
 		model.addAttribute("titleRead", messageSource.getMessage("valuessets.title.read", null, locale));
 		model.addAttribute("valuesSets", valuesSets);
 		return VN_READ_DELETE;
@@ -72,6 +73,7 @@ public class ValuesSetMvcController {
 
 	@GetMapping("create")
 	public String showValuesSetCreateForm(Locale locale, Model model) {
+		model.addAttribute("viewCreateUpdate", VN_CREATE_UPDATE);
 		model.addAttribute("titleCreate", messageSource.getMessage("valuessets.title.create", null, locale));
 		model.addAttribute("valuesSet", new ValuesSet());
 		return VN_CREATE_UPDATE;
@@ -93,9 +95,9 @@ public class ValuesSetMvcController {
 
 	@GetMapping("edit/{id}")
 	public String showValuesSetUpdateForm(@PathVariable("id") long id, Locale locale, Model model) {
-		ValuesSet valuesSet = valuesSetService.getById(id);
+		model.addAttribute("viewCreateUpdate", VN_CREATE_UPDATE);
 		model.addAttribute("titleUpdate", messageSource.getMessage("valuessets.title.update", null, locale));
-		model.addAttribute("valuesSet", valuesSet);
+		model.addAttribute("valuesSet", valuesSetService.getById(id));
 		return VN_CREATE_UPDATE;
 	}
 
@@ -113,15 +115,14 @@ public class ValuesSetMvcController {
 	public String deleteValuesSets(@RequestParam("table_records") List<String> ids) {
 		if (ids != null) {
 			for (String idsStr : ids) {
-				long id = Long.parseLong(idsStr);
-				valuesSetService.deleteById(id);
+				valuesSetService.deleteById(Long.parseLong(idsStr));
 			}
 		}
 		return "redirect:".concat(BASE_URL);
 	}
 
 	@GetMapping("delete/{id}")
-	public String deleteValuesSet(@PathVariable("id") long id, Model model) {
+	public String deleteValuesSet(@PathVariable("id") long id) {
 		valuesSetService.deleteById(id);
 		return "redirect:".concat(BASE_URL);
 	}
@@ -137,6 +138,7 @@ public class ValuesSetMvcController {
 		model.addAttribute("titleMaster", valuesSet.getNameAndCode());
 		// model.addAttribute("titleRead", messageSource.getMessage("values.title.read",
 		// new Object[] {valuesSet.getCode()}, locale));
+		model.addAttribute("viewReadDelete", VN_DTL_READ_DELETE);
 		model.addAttribute("titleRead", messageSource.getMessage("values.title.read", null, locale));
 		model.addAttribute("valuesSet", valuesSet);
 		model.addAttribute("values", valuesSet.getValues());
@@ -146,6 +148,7 @@ public class ValuesSetMvcController {
 	@GetMapping("{setId}/values/create")
 	public String showValueCreateForm(@PathVariable("setId") long setId, Locale locale, Model model) {
 		Value value = valuesSetService.getNewValue(setId);
+		model.addAttribute("viewCreateUpdate", VN_DTL_CREATE_UPDATE);
 		model.addAttribute("titleMaster", value.getSetNameAndCode());
 		model.addAttribute("titleCreate", messageSource.getMessage("values.title.create", null, locale));
 		model.addAttribute("value", value);
@@ -173,6 +176,7 @@ public class ValuesSetMvcController {
 	public String showValueUpdateForm(@PathVariable("setId") long setId, @PathVariable("id") long id, Locale locale,
 			Model model) {
 		Value value = valuesSetService.findValueById(id);
+		model.addAttribute("viewCreateUpdate", VN_DTL_CREATE_UPDATE);
 		model.addAttribute("titleMaster", value.getSetNameAndCode());
 		model.addAttribute("titleUpdate", messageSource.getMessage("values.title.update", null, locale));
 		model.addAttribute("value", value);

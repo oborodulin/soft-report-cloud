@@ -2,11 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout-forms}"
+	layout:decorate="~{layouts/layout-create-update}"
 	th:with="titleCurrent=${valuesSet.id == null} ? ${titleCreate} : ${titleUpdate}">
-<head>
-<title th:text="${titleCurrent}">titleCurrent</title>
-</head>
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-header-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
+	</head>
+</th:block>
 
 <body class="nav-md">
 	<!-- page content -->
@@ -89,5 +91,10 @@
 		</form>
 	</div>
 	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-body-create-update :: body(scripts=~{this :: .custom-script})">
+		</th:block>
+	</th:block>
 </body>
 </html>

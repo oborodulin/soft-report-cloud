@@ -22,7 +22,7 @@ public class SoftwareServiceImpl extends JpaAbstractService<Software, SoftwareRe
 	@Override
 	public Software getById(Long id) {
 		return this.repository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid valuesSet Id:" + id));
+				.orElseThrow(() -> new IllegalArgumentException("Invalid software Id:" + id));
 	}
 
 	@Override
@@ -30,4 +30,12 @@ public class SoftwareServiceImpl extends JpaAbstractService<Software, SoftwareRe
 		return this.repository.findByTypeCode(typeCode);
 	}
 
+	@Override
+	public Software getNewChild(Long parentId) {
+		Software software = new Software();
+		software.setParent(this.repository.findById(parentId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid software parent Id:" + parentId)));
+		return software;
+	};
+	
 }

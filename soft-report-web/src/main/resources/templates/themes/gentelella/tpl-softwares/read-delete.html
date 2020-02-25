@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-read-delete}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-header-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
+	</head>
+</th:block>
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<a th:href="@{~/softwares/create}" class="btn btn-primary btn-xs"><i
+			class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a>
+
+		<div th:if="${not #lists.isEmpty(softwares)}" class="table-responsive">
+			<table class="table table-striped jambo_table bulk_action">
+				<thead>
+					<tr class="headings">
+						<th><input type="checkbox" id="check-all" class="flat">
+						</th>
+						<th class="column-title"></th>
+						<th class="column-title">Код</th>
+						<th class="column-title">Наименование</th>
+						<th class="column-title no-link last"><span class="nobr">Описание</span>
+						</th>
+						<th class="bulk-actions" colspan="4"><a
+							th:href="@{~/softwares/delete}" class="btn btn-danger btn-xs"><i
+								class="fa fa-trash-o"></i>&nbsp;Удалить</a></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="software, rowStat : ${softwares}"
+						th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
+						<td class="a-center "><input name="table_records"
+							type="checkbox" th:value="${software.id}" class="flat"></td>
+						<td class=" "><a
+							th:href="@{/softwares/edit/{id}(id=${software.id})}"
+							class="btn btn-info btn-sm"
+							style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
+								class="fa fa-pencil fa-xs"></i></a></td>
+						<td th:text="${software.code}" class=" "></td>
+						<td th:text="${software.name}" class=" "></td>
+						<td th:text="${software.descr}" class=" "></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- /page content -->
+</body>
+</html>

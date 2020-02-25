@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title, links)">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/themes/gentelella/production/images/favicon.ico"
+	type="image/ico" />
+
+<title th:text="${title} + ' | Soft Report'"></title>
+
+<!-- Bootstrap -->
+<!-- link href="cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"-->
+<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
+	rel="stylesheet">
+<!-- NProgress -->
+<link th:href="@{/webjars/nprogress/nprogress.css}" rel="stylesheet">
+<!-- iCheck -->
+<link th:href="@{/webjars/iCheck/skins/flat/green.css}" rel="stylesheet">
+
+<!-- bootstrap-progressbar -->
+<!-- link
+	th:href="@{/webjars/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css}"
+	rel="stylesheet"-->
+
+<!-- Datatables -->
+<!-- link
+	th:href="@{/webjars/datatables.net-bs/css/dataTables.bootstrap.css}"
+	rel="stylesheet">
+<link
+	th:href="@{/webjars/datatables.net-buttons-bs/css/buttons.bootstrap.min.css}"
+	rel="stylesheet">
+<link
+	th:href="@{/webjars/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}"
+	rel="stylesheet">
+<link
+	th:href="@{/webjars/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}"
+	rel="stylesheet">
+<link
+	th:href="@{/webjars/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}"
+	rel="stylesheet"-->
+
+<!--/* Per-page placeholder for additional links */-->
+<th:block th:if="${links != null}">
+	<th:block th:replace="${links}" />
+</th:block>
+
+<!-- Custom Theme Styles -->
+<link href="/themes/gentelella/build/css/custom.min.css"
+	rel="stylesheet">
+<link href="/css/styles.css" rel="stylesheet">
+</head>
+</html>

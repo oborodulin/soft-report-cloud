@@ -2,11 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout-forms}"
+	layout:decorate="~{layouts/layout-create-update}"
 	th:with="titleCurrent=${value.id == null} ? ${titleCreate} : ${titleUpdate}">
-<head>
-<title th:text="${titleCurrent}">titleCurrent</title>
-</head>
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-header-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
+<!-- bootstrap-daterangepicker -->
+<link class="custom-link"
+	th:href="@{/webjars/bootstrap-daterangepicker/css/bootstrap-daterangepicker.css}"
+	rel="stylesheet">
+	</head>
+	<!-- bootstrap-datetimepicker -->
+	<link class="custom-link"
+		th:href="@{/webjars/Eonasdan-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}"
+		rel="stylesheet">
+</th:block>
 
 <body class="nav-md">
 	<!-- page content -->
@@ -118,5 +128,27 @@
 		</form>
 	</div>
 	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-body-create-update :: body(scripts=~{this :: .custom-script})">
+		</th:block>
+		<!-- bootstrap-daterangepicker -->
+		<script class="custom-script" src="/js/moment-with-locales.min.js"></script>
+		<!-- script class="custom-script" th:src="@{/webjars/momentjs/min/moment.min.js}"></script-->
+		<script class="custom-script"
+			th:src="@{/webjars/bootstrap-daterangepicker/js/bootstrap-daterangepicker.js}"></script>
+		<!-- bootstrap-datetimepicker -->
+		<script class="custom-script"
+			th:src="@{/webjars/Eonasdan-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}"></script>
+		<!-- Initialize datetimepicker 	format:'d.m.Y H:i',-->
+		<script class="custom-script" type="text/javascript">
+			$(function() {
+				moment().locale('ru');
+				$('#closeDatetimepicker').datetimepicker({
+					format : "DD.MM.YYYY"
+				});
+			});
+		</script>
+	</th:block>
 </body>
 </html>

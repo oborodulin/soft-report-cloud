@@ -9,4 +9,7 @@ public interface SoftwareService extends CommonJpaService<Software, String> {
 	public Software getById(Long id);
 
 	public List<Software> findByTypeCode(String typeCode);
+
+	public Software getNewChild(Long parentId);
+
 }

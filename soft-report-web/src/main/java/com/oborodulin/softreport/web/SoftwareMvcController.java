@@ -1,8 +1,12 @@
 package com.oborodulin.softreport.web;
 
+import java.util.List;
+import java.util.Locale;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -11,101 +15,133 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oborodulin.softreport.domain.model.software.Software;
-import com.oborodulin.softreport.domain.model.software.SoftwareRepository;
+import com.oborodulin.softreport.domain.service.SoftwareService;
+import com.oborodulin.softreport.web.support.MessageHelper;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/softwares/")
+@RequestMapping(SoftwareMvcController.BASE_URL)
 public class SoftwareMvcController {
 
-	private static final String BASE_URL = "/enterprises/";
-
+	public static final String BASE_URL = "/enterprises/";
 	private static final String VN_PATH = "tpl-softwares/";
-	private static final String VN_READ = VN_PATH.concat("read");
-	private static final String VN_CREATE = VN_PATH.concat("create");
-	private static final String VN_UPDATE = VN_PATH.concat("update");
+	private static final String VN_READ_DELETE = VN_PATH.concat("read-delete");
+	private static final String VN_CREATE_UPDATE = VN_PATH.concat("create-update");
 
-	private final SoftwareRepository softwareRepository;
+	private final SoftwareService softwareService;
+	@Autowired
+	MessageSource messageSource;
 
 	@Autowired
-	public SoftwareMvcController(SoftwareRepository softwareRepository) {
-		this.softwareRepository = softwareRepository;
+	public SoftwareMvcController(SoftwareService softwareService) {
+		this.softwareService = softwareService;
 	}
 
-	@ModelAttribute(name = "software")
-	public Software software() {
-		return new Software();
+	@ModelAttribute(name = "titleParent")
+	public String titleParent(Locale locale) {
+		return messageSource.getMessage("softwares.title.parent", null, locale);
+	}
+
+	@ModelAttribute(name = "viewReadDelete")
+	public String viewReadDelete() {
+		return VN_READ_DELETE;
+	}
+
+	@ModelAttribute(name = "viewCreateUpdate")
+	public String viewCreateUpdate() {
+		return VN_CREATE_UPDATE;
 	}
 
 	@GetMapping
-	public String showSoftwaresList(Model model) {
-		model.addAttribute("softwares", softwareRepository.findAll());
-		return VN_READ;
+	public String showSoftwaresList(Locale locale, Model model) {
+		List<Software> softwares = softwareService.findAll();
+		if (softwares.isEmpty()) {
+			MessageHelper.addInfoAttribute(model, "softwares.info.empty");
+		}
+		model.addAttribute("titleRead", messageSource.getMessage("softwares.title.read", null, locale));
+		model.addAttribute("softwares", softwares);
+		return VN_READ_DELETE;
 	}
 
 	@GetMapping("create")
-	public String showCreateForm(Model model) {
+	public String showCreateForm(Locale locale, Model model) {
 		log.info("Отображение формы создания системы");
-		model.addAttribute("softwares", softwareRepository.findAll());
-		return VN_CREATE;
+		model.addAttribute("titleCreate", messageSource.getMessage("softwares.title.create", null, locale));
+		model.addAttribute("software", new Software());
+		return VN_CREATE_UPDATE;
 	}
 
-	@PostMapping("create")
-	public String createSoftware(@Valid @ModelAttribute("software") Software software, Errors errors, Model model) {
-		log.info("Создание ПО: " + software);
+	@PostMapping("create/{isContinue}")
+	public String createSoftware(@PathVariable("isContinue") boolean isContinue,
+			@Valid @ModelAttribute("software") Software software, Errors errors, Model model) {
 		if (errors.hasErrors()) {
 			errors.getAllErrors().stream().forEach(System.out::println);
-			log.info("Создание ПО: " + software);
-			return VN_CREATE;
+			return VN_CREATE_UPDATE;
 		}
-		log.info("Сохранение ПО: " + software);
-		softwareRepository.save(software);
+		softwareService.save(software);
+		if (isContinue) {
+			return "redirect:".concat(BASE_URL).concat("create");
+		}
+		return "redirect:".concat(BASE_URL);
+	}
 
+	@GetMapping("{parentId}/create")
+	public String showCreateChildForm(@PathVariable("parentId") long parentId, Locale locale, Model model) {
+		model.addAttribute("titleCreate", messageSource.getMessage("softwares.title.create", null, locale));
+		model.addAttribute("software", softwareService.getNewChild(parentId));
+		return VN_CREATE_UPDATE;
+	}
+
+	@PostMapping("{parentId}/create/{isContinue}")
+	public String createChildSoftware(@PathVariable("parentId") long parentId,
+			@PathVariable("isContinue") boolean isContinue, @Valid @ModelAttribute("software") Software software,
+			Errors errors, Model model) {
+		if (errors.hasErrors()) {
+			errors.getAllErrors().stream().forEach(System.out::println);
+			return VN_CREATE_UPDATE;
+		}
+		softwareService.save(software);
+		if (isContinue) {
+			return "redirect:".concat(BASE_URL).concat("create");
+		}
 		return "redirect:".concat(BASE_URL);
 	}
 
 	@GetMapping("edit/{id}")
-	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-		new IllegalArgumentException();
-		Software software = softwareRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid software Id:" + id));
-		model.addAttribute("software", software);
-		return VN_UPDATE;
+	public String showUpdateForm(@PathVariable("id") long id, Locale locale, Model model) {
+		model.addAttribute("titleUpdate", messageSource.getMessage("softwares.title.update", null, locale));
+		model.addAttribute("software", softwareService.getById(id));
+		return VN_CREATE_UPDATE;
 	}
 
 	@PostMapping("update/{id}")
 	public String updateSoftware(@PathVariable("id") long id, @Valid Software software, Errors errors, Model model) {
 		if (errors.hasErrors()) {
 			software.setId(id);
-			return VN_UPDATE;
+			return VN_CREATE_UPDATE;
 		}
-
-		softwareRepository.save(software);
-		model.addAttribute("softwares", softwareRepository.findAll());
-		return VN_READ;
+		softwareService.save(software);
+		return "redirect:".concat(BASE_URL);
 	}
 
 	@GetMapping("delete")
-	public String deleteSoftwares(Errors errors, Model model) {
-		if (errors.hasErrors()) {
-			errors.getAllErrors().stream().forEach(System.out::println);
-			return VN_READ;
+	public String deleteSoftwares(@RequestParam("table_records") List<String> ids) {
+		if (ids != null) {
+			for (String idsStr : ids) {
+				softwareService.deleteById(Long.parseLong(idsStr));
+			}
 		}
-		// softwareRepository.save(software);
-
 		return "redirect:".concat(BASE_URL);
 	}
 
 	@GetMapping("delete/{id}")
-	public String deleteSoftware(@PathVariable("id") long id, Model model) {
-		Software software = softwareRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid software Id:" + id));
-		softwareRepository.delete(software);
-		model.addAttribute("softwares", softwareRepository.findAll());
-		return VN_READ;
+	public String deleteSoftware(@PathVariable("id") long id) {
+		softwareService.deleteById(id);
+		return "redirect:".concat(BASE_URL);
 	}
 }
