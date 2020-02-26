@@ -15,40 +15,70 @@
 			class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a>
 
 		<div th:if="${not #lists.isEmpty(softwares)}" class="table-responsive">
-			<table class="table table-striped jambo_table bulk_action">
-				<thead>
-					<tr class="headings">
-						<th><input type="checkbox" id="check-all" class="flat">
-						</th>
-						<th class="column-title"></th>
-						<th class="column-title">Код</th>
-						<th class="column-title">Наименование</th>
-						<th class="column-title no-link last"><span class="nobr">Описание</span>
-						</th>
-						<th class="bulk-actions" colspan="4"><a
-							th:href="@{~/softwares/delete}" class="btn btn-danger btn-xs"><i
-								class="fa fa-trash-o"></i>&nbsp;Удалить</a></th>
-					</tr>
-				</thead>
-
-				<tbody>
-					<tr th:each="software, rowStat : ${softwares}"
-						th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
-						<td class="a-center "><input name="table_records"
-							type="checkbox" th:value="${software.id}" class="flat"></td>
-						<td class=" "><a
-							th:href="@{/softwares/edit/{id}(id=${software.id})}"
-							class="btn btn-info btn-sm"
-							style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
-								class="fa fa-pencil fa-xs"></i></a></td>
-						<td th:text="${software.code}" class=" "></td>
-						<td th:text="${software.name}" class=" "></td>
-						<td th:text="${software.descr}" class=" "></td>
-					</tr>
-				</tbody>
-			</table>
+			<form th:action="@{~/softwares/delete}" th:method="POST"
+				id="form-delete-softwares">
+				<table class="table table-striped jambo_table bulk_action">
+					<thead>
+						<tr class="headings">
+							<th><input type="checkbox" id="check-all" class="flat">
+							</th>
+							<th class="column-title"></th>
+							<th class="column-title" th:text="#{code.label}" />
+							<th class="column-title" th:text="#{name.label}" />
+							<th class="column-title" th:text="#{type.label}" />
+							<th class="column-title no-link last"><span class="nobr"
+								th:text="#{descr.label}"></span></th>
+							<th class="bulk-actions" colspan="5"><button type="submit"
+									class="btn btn-danger btn-xs">
+									<i class="fa fa-trash-o"></i>
+									<th:block th:text="' '+#{delete.label}" />
+								</button> <a th:href="@{~/softwares/[id]/create}"
+								class="btn btn-secondary btn-xs"
+								onclick="bulkActionChecked(this, event, 'table_records');"><i
+									class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a></th>
+						</tr>
+					</thead>
+					<tbody th:with="rowNum=0">
+						<th:block
+							th:replace="this :: outputSoftware(${softwares}, ${rowNum}, 0)" />
+					</tbody>
+				</table>
+			</form>
 		</div>
 	</div>
+	<th:block th:fragment="outputSoftware(softwares, rowNum, level)">
+		<th:block th:with="rowNum=${rowNum+1}">
+			<th:block th:each="software, stat : ${softwares}">
+				<tr th:class="${rowNum % 2 != 0} ? 'odd pointer' : 'even pointer'">
+					<td class="a-center "><input name="table_records"
+						type="checkbox" th:value="${software.id}" class="flat"></td>
+					<td class=" "><div style="display: flex;">
+							<a th:href="@{/softwares/edit/{id}(id=${software.id})}"
+								class="btn btn-info btn-sm"
+								style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
+								class="fa fa-pencil fa-xs"></i></a><a
+								th:href="@{/softwares/delete/{id}(id=${software.id})}"
+								class="btn btn-danger btn-sm"
+								style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
+								class="fa fa-trash-o fa-xs"></i></a>
+						</div></td>
+					<td th:with="pl=${level+4}" th:text="${software.code}"
+						th:class="${software.parent == null} ? '' : ${'pl-'+pl}" />
+					<td th:text="${software.name}" class=" " />
+					<td th:text="${software.type.val}" class=" " />
+					<td th:text="${software.descr}" class=" " />
+				</tr>
+				<th:block th:if="${!#lists.isEmpty(software.softwares)}"
+					th:with="level=${level+1}"
+					th:replace="this :: outputSoftware(${software.softwares}, ${rowNum}, ${level})" />
+			</th:block>
+		</th:block>
+	</th:block>
 	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-body-read-delete :: body(scripts=~{this :: .custom-script})">
+		</th:block>
+	</th:block>
 </body>
 </html>

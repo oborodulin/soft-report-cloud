@@ -23,6 +23,7 @@ import com.oborodulin.softreport.domain.model.valuesset.ValuesSet;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -33,6 +34,7 @@ public class Value extends AuditableEntity<String> {
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "vals_sets_id", nullable = false)
+	@ToString.Exclude
 	private ValuesSet valuesSet;
 	@NotBlank
 	@Column(unique = true)

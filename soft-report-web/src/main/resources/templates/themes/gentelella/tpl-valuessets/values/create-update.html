@@ -104,27 +104,8 @@
 			</div>
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
-			<div class="item form-group">
-				<div class="col-md-6 col-sm-6 offset-md-3">
-					<a
-						th:href="@{~/valuessets/{setId}/values(setId=${value.valuesSet.id})}"
-						class="btn btn-primary"> <i class="fa fa-undo"></i><span
-						th:text="' '+#{cancel.label}"></span>
-					</a>
-					<button type="submit" class="btn btn-success">
-						<i
-							th:class="${value.id == null} ? 'fa fa-sign-out' : 'fa fa-check'"
-							aria-hidden="true"></i>
-						<th:block
-							th:text="' ' + ${value.id == null} ? #{add.label} : #{ok.label}" />
-					</button>
-					<a th:if="${value.id == null}" href="#" class="btn btn-success"
-						onclick="setFormContinueMark('form-create-value');"> <i
-						class="fa fa-check" aria-hidden="true"></i> <th:block
-							th:text="' '+#{add.continue.label}" />
-					</a>
-				</div>
-			</div>
+			<th:block
+				th:replace="fragments/fragment-create-update-form :: buttons(cancelHref=@{~/valuessets/{setId}/values(setId=${value.valuesSet.id})}, object=${value}, formId='form-create-value')" />
 		</form>
 	</div>
 	<!-- /page content -->

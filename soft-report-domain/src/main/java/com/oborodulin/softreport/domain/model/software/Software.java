@@ -20,6 +20,7 @@ import com.oborodulin.softreport.domain.model.valuesset.value.Value;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -31,25 +32,27 @@ public class Software extends AuditableEntity<String> {
 	@NotBlank
 	@Column(unique = true)
 	private String code;
-	
+
 	@NotBlank
 	private String name;
-	
+
 	private String descr;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "type_code", nullable = false)
+	@ToString.Exclude
 	private Value type;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "parent_id")
+	@ToString.Exclude
 	private Software parent;
 
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@EqualsAndHashCode.Exclude
 	private List<Software> softwares = new ArrayList<Software>();
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@EqualsAndHashCode.Exclude
 	private List<Project> projects = new ArrayList<>();
 }

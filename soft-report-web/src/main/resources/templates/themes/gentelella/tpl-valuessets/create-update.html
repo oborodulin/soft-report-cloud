@@ -9,7 +9,6 @@
 		th:replace="fragments/fragment-header-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
 	</head>
 </th:block>
-
 <body class="nav-md">
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
@@ -68,26 +67,8 @@
 			</div>
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
-			<div class="item form-group">
-				<div class="col-md-6 col-sm-6 offset-md-3">
-					<a th:href="@{~/valuessets/}" class="btn btn-primary"> <i
-						class="fa fa-undo"></i> <th:block th:text="' '+#{cancel.label}" />
-					</a>
-					<button type="submit" class="btn btn-success">
-						<i
-							th:class="${valuesSet.id == null} ? 'fa fa-sign-out' : 'fa fa-check'"
-							aria-hidden="true"></i>
-						<th:block
-							th:text="' ' + ${valuesSet.id == null} ? #{add.label} : #{ok.label}" />
-					</button>
-					<a th:if="${valuesSet.id == null}" href="#" class="btn btn-success"
-						onclick="setFormContinueMark('form-create-valuesSet');"> <i
-						class="fa fa-check" aria-hidden="true"></i> <th:block
-							th:text="' '+#{add.continue.label}" />
-					</a>
-				</div>
-			</div>
-
+			<th:block
+				th:replace="fragments/fragment-create-update-form :: buttons(cancelHref=@{~/valuessets/}, object=${valuesSet}, formId='form-create-valuesSet')" />
 		</form>
 	</div>
 	<!-- /page content -->

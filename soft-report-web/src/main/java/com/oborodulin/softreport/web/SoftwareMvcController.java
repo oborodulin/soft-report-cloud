@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.service.SoftwareService;
+import com.oborodulin.softreport.domain.service.SoftwareServiceImpl;
 import com.oborodulin.softreport.web.support.MessageHelper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(SoftwareMvcController.BASE_URL)
 public class SoftwareMvcController {
 
-	public static final String BASE_URL = "/enterprises/";
+	public static final String BASE_URL = "/softwares/";
 	private static final String VN_PATH = "tpl-softwares/";
 	private static final String VN_READ_DELETE = VN_PATH.concat("read-delete");
 	private static final String VN_CREATE_UPDATE = VN_PATH.concat("create-update");
@@ -38,7 +39,7 @@ public class SoftwareMvcController {
 	MessageSource messageSource;
 
 	@Autowired
-	public SoftwareMvcController(SoftwareService softwareService) {
+	public SoftwareMvcController(SoftwareServiceImpl softwareService) {
 		this.softwareService = softwareService;
 	}
 
@@ -59,10 +60,11 @@ public class SoftwareMvcController {
 
 	@GetMapping
 	public String showSoftwaresList(Locale locale, Model model) {
-		List<Software> softwares = softwareService.findAll();
+		List<Software> softwares = softwareService.findByParentIsNull();
 		if (softwares.isEmpty()) {
 			MessageHelper.addInfoAttribute(model, "softwares.info.empty");
 		}
+		model.addAttribute("viewReadDelete", VN_READ_DELETE);
 		model.addAttribute("titleRead", messageSource.getMessage("softwares.title.read", null, locale));
 		model.addAttribute("softwares", softwares);
 		return VN_READ_DELETE;
@@ -71,7 +73,10 @@ public class SoftwareMvcController {
 	@GetMapping("create")
 	public String showCreateForm(Locale locale, Model model) {
 		log.info("Отображение формы создания системы");
+		model.addAttribute("viewCreateUpdate", VN_CREATE_UPDATE);
 		model.addAttribute("titleCreate", messageSource.getMessage("softwares.title.create", null, locale));
+		model.addAttribute("softwares", softwareService.findAll());
+		model.addAttribute("types", softwareService.getTypes());
 		model.addAttribute("software", new Software());
 		return VN_CREATE_UPDATE;
 	}
@@ -80,7 +85,6 @@ public class SoftwareMvcController {
 	public String createSoftware(@PathVariable("isContinue") boolean isContinue,
 			@Valid @ModelAttribute("software") Software software, Errors errors, Model model) {
 		if (errors.hasErrors()) {
-			errors.getAllErrors().stream().forEach(System.out::println);
 			return VN_CREATE_UPDATE;
 		}
 		softwareService.save(software);
@@ -91,36 +95,42 @@ public class SoftwareMvcController {
 	}
 
 	@GetMapping("{parentId}/create")
-	public String showCreateChildForm(@PathVariable("parentId") long parentId, Locale locale, Model model) {
+	public String showCreateChildForm(@PathVariable("parentId") Long parentId, Locale locale, Model model) {
+		model.addAttribute("viewCreateUpdate", VN_CREATE_UPDATE);
 		model.addAttribute("titleCreate", messageSource.getMessage("softwares.title.create", null, locale));
+		model.addAttribute("softwares", softwareService.findAll());
+		model.addAttribute("types", softwareService.getTypes());
 		model.addAttribute("software", softwareService.getNewChild(parentId));
+		// model.addAttribute("software", new Software());
 		return VN_CREATE_UPDATE;
 	}
 
 	@PostMapping("{parentId}/create/{isContinue}")
-	public String createChildSoftware(@PathVariable("parentId") long parentId,
+	public String createChildSoftware(@PathVariable("parentId") Long parentId,
 			@PathVariable("isContinue") boolean isContinue, @Valid @ModelAttribute("software") Software software,
 			Errors errors, Model model) {
 		if (errors.hasErrors()) {
-			errors.getAllErrors().stream().forEach(System.out::println);
 			return VN_CREATE_UPDATE;
 		}
-		softwareService.save(software);
+		softwareService.saveChild(parentId, software);
 		if (isContinue) {
-			return "redirect:".concat(BASE_URL).concat("create");
+			return "redirect:".concat(BASE_URL).concat(Long.toString(parentId)).concat("/create");
 		}
 		return "redirect:".concat(BASE_URL);
 	}
 
 	@GetMapping("edit/{id}")
-	public String showUpdateForm(@PathVariable("id") long id, Locale locale, Model model) {
+	public String showUpdateForm(@PathVariable("id") Long id, Locale locale, Model model) {
+		model.addAttribute("viewCreateUpdate", VN_CREATE_UPDATE);
 		model.addAttribute("titleUpdate", messageSource.getMessage("softwares.title.update", null, locale));
+		model.addAttribute("softwares", softwareService.findByIdIsNot(id));
+		model.addAttribute("types", softwareService.getTypes());
 		model.addAttribute("software", softwareService.getById(id));
 		return VN_CREATE_UPDATE;
 	}
 
 	@PostMapping("update/{id}")
-	public String updateSoftware(@PathVariable("id") long id, @Valid Software software, Errors errors, Model model) {
+	public String updateSoftware(@PathVariable("id") Long id, @Valid Software software, Errors errors, Model model) {
 		if (errors.hasErrors()) {
 			software.setId(id);
 			return VN_CREATE_UPDATE;
@@ -129,7 +139,7 @@ public class SoftwareMvcController {
 		return "redirect:".concat(BASE_URL);
 	}
 
-	@GetMapping("delete")
+	@PostMapping("delete")
 	public String deleteSoftwares(@RequestParam("table_records") List<String> ids) {
 		if (ids != null) {
 			for (String idsStr : ids) {
@@ -140,7 +150,7 @@ public class SoftwareMvcController {
 	}
 
 	@GetMapping("delete/{id}")
-	public String deleteSoftware(@PathVariable("id") long id) {
+	public String deleteSoftware(@PathVariable("id") Long id) {
 		softwareService.deleteById(id);
 		return "redirect:".concat(BASE_URL);
 	}
