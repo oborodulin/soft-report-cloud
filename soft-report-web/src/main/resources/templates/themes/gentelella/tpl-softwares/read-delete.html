@@ -5,7 +5,7 @@
 	layout:decorate="~{layouts/layout-read-delete}">
 <th:block th:fragment="header">
 	<head
-		th:replace="fragments/fragment-header-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
+		th:replace="fragments/fragment-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
 	</head>
 </th:block>
 <body class="nav-md">
@@ -38,9 +38,9 @@
 									class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a></th>
 						</tr>
 					</thead>
-					<tbody th:with="rowNum=0">
+					<tbody th:with="rowNum=0, level=0">
 						<th:block
-							th:replace="this :: outputSoftware(${softwares}, ${rowNum}, 0)" />
+							th:replace="this :: outputSoftware(${softwares}, ${rowNum}, ${level})" />
 					</tbody>
 				</table>
 			</form>
@@ -62,6 +62,7 @@
 								style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
 								class="fa fa-trash-o fa-xs"></i></a>
 						</div></td>
+						<!-- /*https://stackoverflow.com/questions/46595638/adding-padding-to-bootstrap-table-cells*/ -->
 					<td th:with="pl=${level+4}" th:text="${software.code}"
 						th:class="${software.parent == null} ? '' : ${'pl-'+pl}" />
 					<td th:text="${software.name}" class=" " />
@@ -77,7 +78,7 @@
 	<!-- /page content -->
 	<th:block th:fragment="body-scripts">
 		<th:block
-			th:replace="fragments/fragment-body-read-delete :: body(scripts=~{this :: .custom-script})">
+			th:replace="fragments/fragment-read-delete :: body(scripts=~{this :: .custom-script})">
 		</th:block>
 	</th:block>
 </body>

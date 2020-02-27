@@ -5,7 +5,7 @@
 	layout:decorate="~{layouts/layout-read-delete}">
 <th:block th:fragment="header">
 	<head
-		th:replace="fragments/fragment-header-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
+		th:replace="fragments/fragment-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
 	</head>
 </th:block>
 <body class="nav-md">
@@ -71,7 +71,7 @@
 	<!-- /page content -->
 	<th:block th:fragment="body-scripts">
 		<th:block
-			th:replace="fragments/fragment-body-read-delete :: body(scripts=~{this :: .custom-script})">
+			th:replace="fragments/fragment-read-delete :: body(scripts=~{this :: .custom-script})">
 		</th:block>
 	</th:block>
 </body>

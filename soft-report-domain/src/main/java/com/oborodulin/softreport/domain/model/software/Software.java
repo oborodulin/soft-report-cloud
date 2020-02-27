@@ -10,11 +10,10 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import com.oborodulin.softreport.domain.model.AuditableEntity;
+import com.oborodulin.softreport.domain.model.TreeEntity;
 import com.oborodulin.softreport.domain.model.project.Project;
 import com.oborodulin.softreport.domain.model.valuesset.value.Value;
 
@@ -25,7 +24,7 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = Software.TABLE_NAME)
-public class Software extends AuditableEntity<String> {
+public class Software extends TreeEntity<Software, String> {
 	private static final long serialVersionUID = 3241164622564083658L;
 	public static final String TABLE_NAME = "SOFTWARES";
 
@@ -42,15 +41,6 @@ public class Software extends AuditableEntity<String> {
 	@JoinColumn(name = "type_code", nullable = false)
 	@ToString.Exclude
 	private Value type;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "parent_id")
-	@ToString.Exclude
-	private Software parent;
-
-	@OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
-	@EqualsAndHashCode.Exclude
-	private List<Software> softwares = new ArrayList<Software>();
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@EqualsAndHashCode.Exclude

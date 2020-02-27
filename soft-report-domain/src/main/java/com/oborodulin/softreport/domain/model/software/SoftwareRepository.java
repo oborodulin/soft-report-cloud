@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.oborodulin.softreport.domain.model.CommonRepository;
+import com.oborodulin.softreport.domain.model.CommonTreeRepository;
 
 @Repository
-public interface SoftwareRepository extends CommonRepository<Software, String> {
+public interface SoftwareRepository extends CommonTreeRepository<Software, String> {
 
 	public List<Software> findByTypeCode(String typeCode);
 

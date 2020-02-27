@@ -6,7 +6,7 @@
 	th:with="titleCurrent=${valuesSet.id == null} ? ${titleCreate} : ${titleUpdate}">
 <th:block th:fragment="header">
 	<head
-		th:replace="fragments/fragment-header-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
+		th:replace="fragments/fragment-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
 	</head>
 </th:block>
 <body class="nav-md">
@@ -68,13 +68,13 @@
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
 			<th:block
-				th:replace="fragments/fragment-create-update-form :: buttons(cancelHref=@{~/valuessets/}, object=${valuesSet}, formId='form-create-valuesSet')" />
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/valuessets}, object=${valuesSet}, formId='form-create-valuesSet')" />
 		</form>
 	</div>
 	<!-- /page content -->
 	<th:block th:fragment="body-scripts">
 		<th:block
-			th:replace="fragments/fragment-body-create-update :: body(scripts=~{this :: .custom-script})">
+			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})">
 		</th:block>
 	</th:block>
 </body>

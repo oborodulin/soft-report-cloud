@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.web;
+package com.oborodulin.softreport.web.controller;
 
 import java.util.List;
 import java.util.Locale;

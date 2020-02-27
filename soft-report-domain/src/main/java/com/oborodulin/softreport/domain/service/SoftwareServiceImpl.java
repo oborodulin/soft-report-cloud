@@ -1,6 +1,6 @@
 package com.oborodulin.softreport.domain.service;
 
-import com.oborodulin.softreport.domain.model.JpaAbstractService;
+import com.oborodulin.softreport.domain.model.JpaTreeAbstractService;
 import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.model.software.SoftwareRepository;
 import com.oborodulin.softreport.domain.model.valuesset.ValuesSet;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("jpaSoftwareService")
 @Transactional
-public class SoftwareServiceImpl extends JpaAbstractService<Software, SoftwareRepository, String>
+public class SoftwareServiceImpl extends JpaTreeAbstractService<Software, SoftwareRepository, String>
 		implements SoftwareService {
 	@Autowired
 	private ValueRepository valueRepository;
@@ -61,12 +61,4 @@ public class SoftwareServiceImpl extends JpaAbstractService<Software, SoftwareRe
 	public List<Software> findByIdIsNot(Long id) {
 		return this.repository.findByIdIsNot(id);
 	};
-
-	@Override
-	public Software saveChild(Long parentId, Software software) {
-		software.setParent(this.repository.findById(parentId)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid software parent Id:" + parentId)));
-		return this.repository.save(software);
-	};
-
 }
