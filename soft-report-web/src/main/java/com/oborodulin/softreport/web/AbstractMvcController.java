@@ -9,8 +9,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 
-import com.oborodulin.softreport.domain.model.AuditableEntity;
-import com.oborodulin.softreport.domain.model.CommonJpaService;
+import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
+import com.oborodulin.softreport.domain.common.service.CommonJpaService;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 
 	public static final String RV_CHK_TABLE_RECORDS = "table_records";
 	public static final String PV_ID = "id";
+	public static final String PV_MASTER_ID = "masterId";
 	public static final String PV_PARENT_ID = "parentId";
 	public static final String PV_IS_CONTINUE = "isContinue";
 

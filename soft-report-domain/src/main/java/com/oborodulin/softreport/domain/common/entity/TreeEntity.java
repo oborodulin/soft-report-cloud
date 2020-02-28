@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.model;
+package com.oborodulin.softreport.domain.common.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,5 +28,5 @@ public abstract class TreeEntity<E extends AuditableEntity<U>, U> extends Audita
 
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@EqualsAndHashCode.Exclude
-	private List<E> softwares = new ArrayList<E>();
+	private List<E> children = new ArrayList<E>();
 }

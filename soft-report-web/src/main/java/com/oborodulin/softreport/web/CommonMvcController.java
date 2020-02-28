@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import com.oborodulin.softreport.domain.model.AuditableEntity;
+
+import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 
 public interface CommonMvcController<E extends AuditableEntity<U>, U> {
 

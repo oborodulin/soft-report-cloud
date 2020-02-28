@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.oborodulin.softreport.domain.model.CommonTreeRepository;
+import com.oborodulin.softreport.domain.common.repository.CommonTreeRepository;
 
 @Repository
 public interface SoftwareRepository extends CommonTreeRepository<Software, String> {

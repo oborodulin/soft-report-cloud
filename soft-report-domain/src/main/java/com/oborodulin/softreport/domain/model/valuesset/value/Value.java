@@ -7,8 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -17,25 +15,20 @@ import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.oborodulin.softreport.domain.model.AuditableEntity;
+import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.model.valuesset.ValuesSet;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = Value.TABLE_NAME)
-public class Value extends AuditableEntity<String> {
+public class Value extends DetailEntity<ValuesSet, String> {
 	private static final long serialVersionUID = 639613089661707969L;
 	public static final String TABLE_NAME = "VALS";
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "vals_sets_id", nullable = false)
-	@ToString.Exclude
-	private ValuesSet valuesSet;
 	@NotBlank
 	@Column(unique = true)
 	private String code;
@@ -69,6 +62,6 @@ public class Value extends AuditableEntity<String> {
 	 * @return имя и код набора значений
 	 */
 	public String getSetNameAndCode() {
-		return getValuesSet() != null ? getValuesSet().getNameAndCode() : null;
+		return getMaster() != null ? getMaster().getNameAndCode() : null;
 	};
 }

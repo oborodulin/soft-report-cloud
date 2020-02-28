@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.oborodulin.softreport.domain.model.AuditableEntity;
+import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 import com.oborodulin.softreport.domain.model.project.Project;
 import lombok.Data;
 

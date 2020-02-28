@@ -12,7 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import com.oborodulin.softreport.domain.model.AuditableEntity;
+import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
+
 import lombok.Data;
 
 @Data

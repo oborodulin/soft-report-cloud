@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.model;
+package com.oborodulin.softreport.domain.common.entity;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;

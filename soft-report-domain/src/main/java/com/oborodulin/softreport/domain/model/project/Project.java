@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.oborodulin.softreport.domain.model.AuditableEntity;
+import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 import com.oborodulin.softreport.domain.model.project.task.Task;
 import com.oborodulin.softreport.domain.model.software.Software;
 

@@ -1,9 +1,13 @@
-package com.oborodulin.softreport.domain.model;
+package com.oborodulin.softreport.domain.common.service;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
+
+import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
+import com.oborodulin.softreport.domain.common.repository.CommonRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class JpaAbstractService<E extends AuditableEntity<U>, R extends CommonRepository<E, U>, U>
@@ -25,6 +29,11 @@ public abstract class JpaAbstractService<E extends AuditableEntity<U>, R extends
 	@Override
 	public Optional<E> findById(Long id) {
 		return this.repository.findById(id);
+	}
+
+	@Override
+	public E getById(Long id) {
+		return this.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid entity Id:" + id));
 	}
 
 	@Override

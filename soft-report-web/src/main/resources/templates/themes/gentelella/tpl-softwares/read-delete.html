@@ -69,9 +69,9 @@
 					<td th:text="${software.type.val}" class=" " />
 					<td th:text="${software.descr}" class=" " />
 				</tr>
-				<th:block th:if="${!#lists.isEmpty(software.softwares)}"
+				<th:block th:if="${!#lists.isEmpty(software.children)}"
 					th:with="level=${level+1}"
-					th:replace="this :: outputSoftware(${software.softwares}, ${rowNum}, ${level})" />
+					th:replace="this :: outputSoftware(${software.children}, ${rowNum}, ${level})" />
 			</th:block>
 		</th:block>
 	</th:block>

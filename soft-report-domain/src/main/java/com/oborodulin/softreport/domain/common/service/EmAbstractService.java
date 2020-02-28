@@ -1,9 +1,13 @@
-package com.oborodulin.softreport.domain.model;
+package com.oborodulin.softreport.domain.common.service;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
+
+import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
+import com.oborodulin.softreport.domain.common.repository.CommonRepository;
+
 import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 

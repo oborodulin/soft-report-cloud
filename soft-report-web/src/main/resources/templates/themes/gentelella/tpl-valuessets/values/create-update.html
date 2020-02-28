@@ -23,7 +23,7 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${value.id == null} ? @{~/valuessets/{setId}/values/create/{isContinue}(setId=${value.valuesSet.id}, isContinue='false')} : @{~/valuessets/{setId}/values/update/{id}(setId=${value.valuesSet.id}, id=${value.id})}"
+			th:action="${value.id == null} ? @{~/valuessets/{masterId}/values/create/{isContinue}(masterId=${value.valuesSet.id}, isContinue='false')} : @{~/valuessets/{masterId}/values/update/{id}(masterId=${value.valuesSet.id}, id=${value.id})}"
 			th:object="${value}" th:method="POST" id="form-create-value"
 			data-parsley-validate class="form-horizontal form-label-left">
 			<!--/* Необходимо добавлять скрытые поля: version - для определения операции создания/обновления, 
@@ -105,7 +105,7 @@
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
 			<th:block
-				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/valuessets/{setId}/values(setId=${value.valuesSet.id})}, object=${value}, formId='form-create-value')" />
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/valuessets/{masterId}/values(masterId=${value.valuesSet.id})}, object=${value}, formId='form-create-value')" />
 		</form>
 	</div>
 	<!-- /page content -->

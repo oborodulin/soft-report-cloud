@@ -1,8 +1,12 @@
-package com.oborodulin.softreport.domain.model;
+package com.oborodulin.softreport.domain.common.service;
 
 import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
+
+import com.oborodulin.softreport.domain.common.entity.TreeEntity;
+import com.oborodulin.softreport.domain.common.repository.CommonTreeRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class JpaTreeAbstractService<E extends TreeEntity<E, U>, R extends CommonTreeRepository<E, U>, U>

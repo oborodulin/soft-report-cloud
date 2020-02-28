@@ -14,13 +14,13 @@
 		<a th:href="@{~/valuessets/}" class="btn btn-secondary btn-xs"><i
 			class="fa fa-arrow-left"></i> <th:block
 				th:text="' '+#{backto.label}+' '+${valuesSet.name}" /></a> <a
-			th:href="@{~/valuessets/{setId}/values/create(setId=${valuesSet.id})}"
+			th:href="@{~/valuessets/{masterId}/values/create(masterId=${valuesSet.id})}"
 			class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> <th:block
 				th:text="' '+#{add.label}" /></a>
 
 		<div th:if="${not #lists.isEmpty(values)}" class="table-responsive">
 			<form
-				th:action="@{~/valuessets/{setId}/values/delete(setId=${valuesSet.id})}"
+				th:action="@{~/valuessets/{masterId}/values/delete(masterId=${valuesSet.id})}"
 				th:method="POST" id="form-delete-values">
 				<table class="table table-striped jambo_table bulk_action">
 					<thead>
@@ -59,11 +59,11 @@
 								class="flat"></td>
 							<td class=" "><div style="display: flex;">
 									<a
-										th:href="@{/valuessets/{setId}/values/edit/{id}(setId=${value.valuesSet.id}, id=${value.id})}"
+										th:href="@{/valuessets/{masterId}/values/edit/{id}(masterId=${value.valuesSet.id}, id=${value.id})}"
 										class="btn btn-info btn-sm"
 										style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
 										class="fa fa-pencil fa-xs"></i></a><a
-										th:href="@{/valuessets/{setId}/values/delete/{id}(setId=${value.valuesSet.id}, id=${value.id})}"
+										th:href="@{/valuessets/{masterId}/values/delete/{id}(masterId=${value.valuesSet.id}, id=${value.id})}"
 										class="btn btn-danger btn-sm"
 										style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
 										class="fa fa-trash-o fa-xs"></i></a>

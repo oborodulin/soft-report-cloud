@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import com.oborodulin.softreport.domain.model.TreeEntity;
+import com.oborodulin.softreport.domain.common.entity.TreeEntity;
 import com.oborodulin.softreport.domain.model.project.Project;
 import com.oborodulin.softreport.domain.model.valuesset.value.Value;
 

@@ -1,6 +1,6 @@
 package com.oborodulin.softreport.domain.service;
 
-import com.oborodulin.softreport.domain.model.JpaTreeAbstractService;
+import com.oborodulin.softreport.domain.common.service.JpaTreeAbstractService;
 import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.model.software.SoftwareRepository;
 import com.oborodulin.softreport.domain.model.valuesset.ValuesSet;
@@ -24,12 +24,6 @@ public class SoftwareServiceImpl extends JpaTreeAbstractService<Software, Softwa
 	@Autowired
 	public SoftwareServiceImpl(SoftwareRepository repository) {
 		super(repository);
-	}
-
-	@Override
-	public Software getById(Long id) {
-		return this.repository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid software Id:" + id));
 	}
 
 	@Override

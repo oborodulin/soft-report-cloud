@@ -1,7 +1,9 @@
-package com.oborodulin.softreport.domain.model;
+package com.oborodulin.softreport.domain.common.service;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 
 public interface CommonEmService<E extends AuditableEntity<U>, U> {
 	List<E> findAll(Class<E> entityClass);

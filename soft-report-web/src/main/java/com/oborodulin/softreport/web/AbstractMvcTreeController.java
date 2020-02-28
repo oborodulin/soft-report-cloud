@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 
-import com.oborodulin.softreport.domain.model.CommonJpaTreeService;
-import com.oborodulin.softreport.domain.model.TreeEntity;
+import com.oborodulin.softreport.domain.common.entity.TreeEntity;
+import com.oborodulin.softreport.domain.common.service.CommonJpaTreeService;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
