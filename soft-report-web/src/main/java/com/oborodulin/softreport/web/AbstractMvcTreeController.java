@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 public abstract class AbstractMvcTreeController<E extends TreeEntity<E, U>, S extends CommonJpaTreeService<E, U>, U>
 		extends AbstractMvcController<E, S, U> implements CommonMvcTreeController<E, U> {
-
+	public static final String PV_PARENT_ID = "parentId";
 	@Autowired
 	protected AbstractMvcTreeController(S service, String baseUrl, String viewPath) {
 		super(service, baseUrl, viewPath);

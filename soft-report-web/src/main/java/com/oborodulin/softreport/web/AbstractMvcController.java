@@ -13,6 +13,7 @@ import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 import com.oborodulin.softreport.domain.common.service.CommonJpaService;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,10 +23,11 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	private static final String VN_READ_DELETE = "read-delete";
 	private static final String VN_CREATE_UPDATE = "create-update";
 
+	private static final String MA_READ_DELETE = "viewReadDelete";
+	private static final String MA_CREATE_UPDATE = "viewCreateUpdate";
+
 	public static final String RV_CHK_TABLE_RECORDS = "table_records";
 	public static final String PV_ID = "id";
-	public static final String PV_MASTER_ID = "masterId";
-	public static final String PV_PARENT_ID = "parentId";
 	public static final String PV_IS_CONTINUE = "isContinue";
 
 	public static final String URL_CREATE = "/create";
@@ -41,8 +43,8 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	@Autowired
 	protected MessageSource ms;
 
-	private String baseUrl;
-	private String viewPath;
+	protected String baseUrl;
+	protected String viewPath;
 
 	@Autowired
 	protected AbstractMvcController(S service, String baseUrl, String viewPath) {
@@ -79,6 +81,18 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	@Override
 	public String getRedirectToRead() {
 		return "redirect:".concat(this.baseUrl);
+	}
+
+	@Override
+	@ModelAttribute(name = MA_READ_DELETE)
+	public String viewReadDelete() {
+		return this.getViewNameReadDelete();
+	}
+
+	@Override
+	@ModelAttribute(name = MA_CREATE_UPDATE)
+	public String viewCreateUpdate() {
+		return this.getViewNameCreateUpdate();
 	}
 
 	/**

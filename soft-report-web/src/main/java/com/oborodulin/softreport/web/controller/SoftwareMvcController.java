@@ -35,16 +35,6 @@ public class SoftwareMvcController extends AbstractMvcTreeController<Software, S
 		return this.ms.getMessage("softwares.title.parent", null, locale);
 	}
 
-	@ModelAttribute(name = "viewReadDelete")
-	public String viewReadDelete() {
-		return this.getViewNameReadDelete();
-	}
-
-	@ModelAttribute(name = "viewCreateUpdate")
-	public String viewCreateUpdate() {
-		return this.getViewNameCreateUpdate();
-	}
-
 	@GetMapping
 	public String showRootList(Locale locale, Model model) {
 		List<Software> softwares = this.service.findByParentIsNull();

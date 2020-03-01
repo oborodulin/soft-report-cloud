@@ -6,9 +6,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
+@NoArgsConstructor
 @MappedSuperclass
 public abstract class DetailEntity<E extends AuditableEntity<U>, U> extends AuditableEntity<U> implements Serializable {
 	

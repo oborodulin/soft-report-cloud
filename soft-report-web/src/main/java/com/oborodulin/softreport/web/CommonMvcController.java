@@ -17,6 +17,10 @@ public interface CommonMvcController<E extends AuditableEntity<U>, U> {
 
 	public String getRedirectToCreate();
 
+	public String viewReadDelete();
+
+	public String viewCreateUpdate();
+
 	public String create(boolean isContinue, E entity, Errors errors, Model model);
 
 	public String update(Long id, E entity, Errors errors, Model model);

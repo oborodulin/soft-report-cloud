@@ -20,7 +20,7 @@ public class ValueServiceImpl
 		implements ValueService {
 	@Autowired
 	public ValueServiceImpl(ValuesSetRepository masterRepository, ValueRepository repository) {
-		super(masterRepository, repository);
+		super(masterRepository, repository, Value.class);
 	}
 
 	@Override
