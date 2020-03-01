@@ -36,7 +36,7 @@ public class ValuesSet extends AuditableEntity<String> {
 	@NotNull
 	private Boolean isUpdatable = false;
 
-	@OneToMany(mappedBy = "valuesSet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "master", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private Set<Value> values = new HashSet<Value>();
 

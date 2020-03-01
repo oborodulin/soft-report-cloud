@@ -20,6 +20,17 @@ import com.oborodulin.softreport.domain.common.service.CommonJpaService;
 public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, D extends DetailEntity<E, U>, M extends CommonJpaService<E, U>, S extends CommonJpaDetailService<E, D, U>, U>
 		extends AbstractMvcController<D, S, U> implements CommonMvcDetailController<E, D, U> {
 	public static final String PV_MASTER_ID = "masterId";
+
+	public static final String URL_DTL_READ = "/{masterId}";
+	public static final String URL_DTL_CREATE = "/{masterId}/create";
+	public static final String URL_DTL_CREATE_CONTINUE = "/{masterId}/create/{isContinue}";
+	public static final String URL_DTL_CREATE_CHILD = "/{masterId}/{parentId}/create";
+	public static final String URL_DTL_CREATE_CHILD_CONTINUE = "/{masterId}/{parentId}/create/{isContinue}";
+	public static final String URL_DTL_EDIT = "/{masterId}/edit/{id}";
+	public static final String URL_DTL_UPDATE = "/{masterId}/update/{id}";
+	public static final String URL_DTL_DELETE = "/{masterId}/delete";
+	public static final String URL_DTL_DELETE_BY_ID = "/{masterId}/delete/{id}";
+
 	protected final M masterService;
 
 	@Autowired
@@ -33,7 +44,7 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 	 */
 	@Override
 	public String getRedirectToRead(Long masterId) {
-		return "redirect:".concat(this.baseUrl).replace("{".concat(PV_MASTER_ID).concat("}"), Long.toString(masterId));
+		return "redirect:".concat(this.baseUrl).concat("/").concat(Long.toString(masterId));
 	}
 
 	/**
@@ -45,7 +56,7 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 	}
 
 	@Override
-	@PostMapping(URL_CREATE_CONTINUE)
+	@PostMapping(URL_DTL_CREATE_CONTINUE)
 	public String create(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_IS_CONTINUE) boolean isContinue,
 			@Valid D entity, Errors errors, Model model
 	// , RedirectAttributes redirectAttributes
@@ -62,7 +73,7 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 	}
 
 	@Override
-	@PostMapping(URL_UPDATE)
+	@PostMapping(URL_DTL_UPDATE)
 	public String update(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_ID) Long id, @Valid D entity,
 			Errors errors, Model model) {
 		if (errors.hasErrors()) {
@@ -74,7 +85,7 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 	}
 
 	@Override
-	@PostMapping(URL_DELETE)
+	@PostMapping(URL_DTL_DELETE)
 	public String delete(@PathVariable(PV_MASTER_ID) Long masterId,
 			@RequestParam(RV_CHK_TABLE_RECORDS) List<String> ids) {
 		if (ids != null) {
@@ -86,7 +97,7 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 	}
 
 	@Override
-	@GetMapping(URL_DELETE_BY_ID)
+	@GetMapping(URL_DTL_DELETE_BY_ID)
 	public String deleteById(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_ID) Long id) {
 		this.service.deleteById(id);
 		return this.getRedirectToRead(masterId);

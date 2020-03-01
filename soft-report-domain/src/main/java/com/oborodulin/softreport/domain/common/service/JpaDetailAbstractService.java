@@ -1,6 +1,5 @@
 package com.oborodulin.softreport.domain.common.service;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -22,16 +21,15 @@ public abstract class JpaDetailAbstractService<E extends AuditableEntity<U>, D e
 		this.clazz = clazz;
 	}
 
-	@Transactional(readOnly = true)
 	@Override
+	@Transactional
 	public D create(Long masterId) {
 		D entity = null;
 		try {
 			entity = this.clazz.getDeclaredConstructor().newInstance();
 			entity.setMaster(this.masterRepository.findById(masterId)
 					.orElseThrow(() -> new IllegalArgumentException("Invalid master Id:" + masterId)));
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

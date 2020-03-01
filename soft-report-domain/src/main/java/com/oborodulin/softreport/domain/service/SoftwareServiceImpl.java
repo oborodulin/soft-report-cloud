@@ -43,7 +43,7 @@ public class SoftwareServiceImpl extends JpaTreeAbstractService<Software, Softwa
 
 	@Override
 	public List<Value> getTypes() {
-		return valueRepository.findByValuesSetCode(ValuesSet.VS_SOFTWARE_TYPES, Sort.by("code"));
+		return valueRepository.findByMasterCode(ValuesSet.VS_SOFTWARE_TYPES, Sort.by("code"));
 	};
 
 	@Override

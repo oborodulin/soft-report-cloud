@@ -53,11 +53,11 @@
 					<td class="a-center "><input name="table_records"
 						type="checkbox" th:value="${software.id}" class="flat"></td>
 					<td class=" "><div style="display: flex;">
-							<a th:href="@{/softwares/edit/{id}(id=${software.id})}"
+							<a th:href="@{~/softwares/edit/{id}(id=${software.id})}"
 								class="btn btn-info btn-sm"
 								style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
 								class="fa fa-pencil fa-xs"></i></a><a
-								th:href="@{/softwares/delete/{id}(id=${software.id})}"
+								th:href="@{~/softwares/delete/{id}(id=${software.id})}"
 								class="btn btn-danger btn-sm"
 								style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
 								class="fa fa-trash-o fa-xs"></i></a>

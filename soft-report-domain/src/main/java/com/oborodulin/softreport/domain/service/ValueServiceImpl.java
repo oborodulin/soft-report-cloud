@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
-@Service("jpaValuesSetService")
+@Service("jpaValueService")
 @Transactional
 public class ValueServiceImpl
 		extends JpaDetailAbstractService<ValuesSet, Value, ValuesSetRepository, ValueRepository, String>
@@ -25,11 +25,11 @@ public class ValueServiceImpl
 
 	@Override
 	public List<Value> findByValuesSetCode(String code, Sort sort) {
-		return this.repository.findByValuesSetCode(code, sort);
+		return this.repository.findByMasterCode(code, sort);
 	}
 
 	@Override
 	public List<Value> findByValuesSetId(Long id, Sort sort) {
-		return this.repository.findByValuesSetId(id, sort);
+		return this.repository.findByMasterId(id, sort);
 	}
 }

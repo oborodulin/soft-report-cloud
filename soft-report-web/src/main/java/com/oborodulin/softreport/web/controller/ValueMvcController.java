@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ValueMvcController
 		extends AbstractMvcDetailController<ValuesSet, Value, ValuesSetServiceImpl, ValueServiceImpl, String> {
 
-	protected static final String BASE_URL = "/values/{masterId}";
+	protected static final String BASE_URL = "/values";
 	private static final String VN_PATH = "tpl-valuessets/values/";
 
 	@Autowired
@@ -36,7 +36,7 @@ public class ValueMvcController
 		return this.ms.getMessage("valuessets.title.parent", null, locale);
 	}
 
-	@GetMapping
+	@GetMapping(URL_DTL_READ)
 	public String showList(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
 		ValuesSet valuesSet = this.masterService.getById(masterId);
 		// List<Value> values = valueRepository.findByValuesSet(valuesSet,
@@ -53,7 +53,7 @@ public class ValueMvcController
 		return this.getViewNameReadDelete();
 	}
 
-	@GetMapping(URL_CREATE)
+	@GetMapping(URL_DTL_CREATE)
 	public String showCreateForm(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
 		Value value = this.service.create(masterId);
 		model.addAttribute("titleMaster", value.getSetNameAndCode());
@@ -62,7 +62,7 @@ public class ValueMvcController
 		return this.getViewNameCreateUpdate();
 	}
 
-	@GetMapping(URL_EDIT)
+	@GetMapping(URL_DTL_EDIT)
 	public String showUpdateForm(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_ID) Long id, Locale locale,
 			Model model) {
 		Value value = this.service.getById(id);

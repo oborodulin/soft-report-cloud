@@ -10,10 +10,10 @@ import org.springframework.data.domain.Sort;
 
 @Repository
 public interface ValueRepository extends CommonRepository<Value, String> {
-	public List<Value> findByValuesSet(ValuesSet valuesSet, Sort sort);
+	public List<Value> findByMaster(ValuesSet master, Sort sort);
 
-	public List<Value> findByValuesSetCode(String code, Sort sort);
+	public List<Value> findByMasterCode(String code, Sort sort);
 
-	public List<Value> findByValuesSetId(Long id, Sort sort);
+	public List<Value> findByMasterId(Long id, Sort sort);
 
 }

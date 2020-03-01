@@ -44,15 +44,15 @@
 								name="table_records" type="checkbox" th:value="${valuesSet.id}"
 								class="flat"></td>
 							<td class="a-center"><a
-								th:href="@{/valuessets/edit/{id}(id=${valuesSet.id})}"
+								th:href="@{~/valuessets/edit/{id}(id=${valuesSet.id})}"
 								class="btn btn-info btn-sm"
 								style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
 									class="fa fa-pencil fa-xs"></i></a> <a
-								th:href="@{/valuessets/delete/{id}(id=${valuesSet.id})}"
+								th:href="@{~/valuessets/delete/{id}(id=${valuesSet.id})}"
 								class="btn btn-danger btn-sm"
 								style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
 									class="fa fa-trash-o fa-xs"></i></a><a
-								th:href="@{/valuessets/{masterId}/values(masterId=${valuesSet.id})}"
+								th:href="@{~/values/{masterId}(masterId=${valuesSet.id})}"
 								class="btn btn-secondary btn-sm"
 								style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
 									class="fa fa-plus-square-o fa-xs"></i></a></td>
