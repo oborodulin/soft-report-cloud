@@ -37,7 +37,7 @@ public class ValueMvcController
 	}
 
 	@GetMapping(URL_DTL_READ)
-	public String showList(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
+	public String showChildrenList(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
 		ValuesSet valuesSet = this.masterService.getById(masterId);
 		// List<Value> values = valueRepository.findByValuesSet(valuesSet,
 		// Sort.by("code"));

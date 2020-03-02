@@ -1,7 +1,12 @@
 package com.oborodulin.softreport.domain.model.project.task;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
 
-public interface TaskRepository extends CrudRepository<Task, Long> {
+import org.springframework.data.domain.Sort;
+
+import com.oborodulin.softreport.domain.common.repository.CommonRepository;
+
+public interface TaskRepository extends CommonRepository<Task, String> {
+	public List<Task> findByMasterId(Long id, Sort sort);
 
 }

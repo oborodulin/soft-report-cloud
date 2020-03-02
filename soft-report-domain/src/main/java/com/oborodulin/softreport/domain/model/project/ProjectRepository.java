@@ -1,7 +1,7 @@
 package com.oborodulin.softreport.domain.model.project;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
+import com.oborodulin.softreport.domain.common.repository.CommonTreeRepository;
 
-public interface ProjectRepository extends PagingAndSortingRepository<Project, Long> {
+public interface ProjectRepository extends CommonTreeRepository<Project, String> {
 
 }

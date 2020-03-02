@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-read-delete}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
+	</head>
+</th:block>
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<a th:href="@{~/enterprises/create}" class="btn btn-primary btn-xs"><i
+			class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a>
+
+		<div th:if="${not #lists.isEmpty(enterprises)}" class="table-responsive">
+			<form th:action="@{~/enterprises/delete}" th:method="POST"
+				id="form-delete-enterprises">
+				<table class="table table-striped jambo_table bulk_action">
+					<thead>
+						<tr class="headings">
+							<th><input type="checkbox" id="check-all" class="flat">
+							</th>
+							<th class="column-title"></th>
+							<th class="column-title" th:text="#{code.label}" />
+							<th class="column-title" th:text="#{shortname.label}" />
+							<th class="column-title" th:text="#{fullname.label}" />
+							<th class="column-title no-link last"><span class="nobr"
+								th:text="#{descr.label}"></span></th>
+							<th class="bulk-actions" colspan="5">
+								<button type="submit" class="btn btn-danger btn-xs">
+									<i class="fa fa-trash-o"></i>
+									<th:block th:text="' '+#{delete.label}" />
+								</button> <a th:href="@{~/enterprises/[id]/create}"
+								class="btn btn-secondary btn-xs"
+								onclick="bulkActionChecked(this, event, 'table_records');"><i
+									class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a>
+							</th>
+						</tr>
+					</thead>
+					<tbody th:with="rowNum=0, level=0">
+						<th:block
+							th:replace="this :: outputTree(${enterprises}, ${rowNum}, ${level})" />
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+	<th:block th:fragment="outputTree(enterprises, rowNum, level)">
+		<th:block th:with="rowNum=${rowNum+1}">
+			<th:block th:each="enterprise, stat : ${enterprises}">
+				<tr th:class="${rowNum % 2 != 0} ? 'odd pointer' : 'even pointer'">
+					<td class="a-center "><input name="table_records"
+						type="checkbox" th:value="${enterprise.id}" class="flat"></td>
+					<td class=" "><div style="display: flex;">
+							<a th:href="@{~/enterprises/edit/{id}(id=${enterprise.id})}"
+								class="btn btn-info btn-sm"
+								style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
+								class="fa fa-pencil fa-xs"></i></a><a
+								th:href="@{~/enterprises/delete/{id}(id=${enterprise.id})}"
+								class="btn btn-danger btn-sm"
+								style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
+								class="fa fa-trash-o fa-xs"></i></a>
+						</div></td>
+						<!-- /*https://stackoverflow.com/questions/46595638/adding-padding-to-bootstrap-table-cells*/ -->
+					<td th:with="pl=${level+4}" th:text="${enterprise.code}"
+						th:class="${enterprise.parent == null} ? '' : ${'pl-'+pl}" />
+							<td th:text="${enterprise.shortName}" class=" "/>
+							<td th:text="${enterprise.fullName}" class=" "/>
+							<td th:text="${enterprise.descr}" class=" "/>
+				</tr>
+				<th:block th:if="${!#lists.isEmpty(enterprise.children)}"
+					th:with="level=${level+1}"
+					th:replace="this :: outputTree(${enterprise.children}, ${rowNum}, ${level})" />
+			</th:block>
+		</th:block>
+	</th:block>
+	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-read-delete :: body(scripts=~{this :: .custom-script})">
+		</th:block>
+	</th:block>
+</body>
+</html>

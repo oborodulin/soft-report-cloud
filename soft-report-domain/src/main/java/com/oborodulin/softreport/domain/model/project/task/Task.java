@@ -3,35 +3,38 @@ package com.oborodulin.softreport.domain.model.project.task;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.project.Project;
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = Task.TABLE_NAME)
-public class Task extends AuditableEntity<String> {
+public class Task extends DetailEntity<Project, String> {
 	private static final long serialVersionUID = 5701376057566461892L;
-	public static final String TABLE_NAME= "TASKS";
-
-	@ManyToOne
-	@JoinColumn(name = "projects_id", nullable = false)
-	private Project project;
+	public static final String TABLE_NAME = "TASKS";
 
 	@NotBlank(message = "Name is required")
 	private String name;
+
 	private String descr;
 
 	@NotNull
 	private Status status;
+
 	@NotNull
 	private Priority priority;
+
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	private Date startDate;
 
 	public static enum Status {

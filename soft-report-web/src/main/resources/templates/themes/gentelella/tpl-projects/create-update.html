@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-create-update}"
+	th:with="titleCurrent=${enterprise.id == null} ? ${titleCreate} : ${titleUpdate}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
+	</head>
+</th:block>
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<br />
+		<form
+			th:action="${enterprise.id == null} ? (${enterprise.parent == null} ? @{~/enterprises/create/{isContinue}(isContinue='false')}:@{~/enterprises/{parentId}/create/{isContinue}(parentId=${enterprise.parent.id}, isContinue='false')}) : @{~/enterprises/update/{id}(id=${enterprise.id})}"
+			th:object="${enterprise}" th:method="POST"
+			id="form-create-enterprise" data-parsley-validate
+			class="form-horizontal form-label-left">
+			<input type="hidden" th:field="*{version}">
+			<th:block th:if="${enterprise.id != null}">
+				<input type="hidden" th:field="*{createdBy}">
+				<input type="hidden" th:field="*{createdDate}">
+			</th:block>
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					th:text="#{enterprises.parent.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<select th:field="*{parent}" class="select2_group form-control">
+						<option value="" th:text="#{enterprises.opt.empty.label}" />
+						<option th:each="en : ${enterprises}" th:value="${en.id}"
+							th:text="${en.fullName}"
+							th:selected="${enterprise.parent != null} ? ${en.id == enterprise.parent.id}: 'false'"></option>
+					</select>
+				</div>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="code"><th:block th:text="#{code.label}" /><span
+					class="required">*</span> </label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{code}" required="required"
+						class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('code')}" th:errors="*{code}"
+					class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="shortName"><th:block th:text="#{shortname.label}" />
+					<span class="required">*</span> </label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{shortName}" required="required"
+						class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('shortName')}"
+					th:errors="*{shortName}" class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="fullName"><th:block th:text="#{fullname.label}" /> <span
+					class="required">*</span> </label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{fullName}" required="required"
+						class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('fullName')}"
+					th:errors="*{fullName}" class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label for="descr"
+					class="col-form-label col-md-3 col-sm-3 label-align"
+					th:text="#{descr.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<textarea th:field="*{descr}" class="form-control" rows="3"></textarea>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="ln_solid"></div>
+			<th:block
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/enterprises}, object=${enterprise}, formId='form-create-enterprise')" />
+		</form>
+	</div>
+	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})">
+		</th:block>
+	</th:block>
+</body>
+</html>

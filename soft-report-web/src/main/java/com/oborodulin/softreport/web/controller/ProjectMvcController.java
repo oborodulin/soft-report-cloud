@@ -1,125 +1,87 @@
 package com.oborodulin.softreport.web.controller;
 
+import java.util.List;
+import java.util.Locale;
+
 //import java.util.Arrays;
 //import java.util.List;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oborodulin.softreport.domain.model.project.Project;
-import com.oborodulin.softreport.domain.model.project.ProjectRepository;
-import com.oborodulin.softreport.domain.model.software.SoftwareRepository;
+import com.oborodulin.softreport.domain.service.ProjectServiceImpl;
+import com.oborodulin.softreport.web.AbstractMvcTreeController;
+import com.oborodulin.softreport.web.support.MessageHelper;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/projects/")
-public class ProjectMvcController {
+@RequestMapping(ProjectMvcController.BASE_URL)
+public class ProjectMvcController extends AbstractMvcTreeController<Project, ProjectServiceImpl, String> {
 
-	private static final String BASE_URL = "/projects/";
-
+	protected static final String BASE_URL = "/projects";
 	private static final String VN_PATH = "tpl-projects/";
-	private static final String VN_READ = VN_PATH.concat("read");
-	private static final String VN_CREATE = VN_PATH.concat("create");
-	private static final String VN_UPDATE = VN_PATH.concat("update");
-
-	private final SoftwareRepository softwareRepository;
-	private ProjectRepository projectRepository;
 
 	@Autowired
-	public ProjectMvcController(ProjectRepository projectRepository, SoftwareRepository softwareRepository) {
-		this.projectRepository = projectRepository;
-		this.softwareRepository = softwareRepository;
+	public ProjectMvcController(ProjectServiceImpl service) {
+		super(service, BASE_URL, VN_PATH);
 	}
 
-	@ModelAttribute(name = "project")
-	public Project project() {
-		return new Project();
+	@ModelAttribute(name = "titleParent")
+	public String titleParent(Locale locale) {
+		return this.ms.getMessage("projects.title.parent", null, locale);
+	}
+
+	@ModelAttribute(name = "titleRead")
+	public String titleRead(Locale locale) {
+		return this.ms.getMessage("projects.title.read", null, locale);
+	}
+
+	@ModelAttribute(name = "titleCreate")
+	public String titleCreate(Locale locale) {
+		return this.ms.getMessage("projects.title.create", null, locale);
+	}
+
+	@ModelAttribute(name = "titleUpdate")
+	public String titleUpdate(Locale locale) {
+		return this.ms.getMessage("projects.title.update", null, locale);
 	}
 
 	@GetMapping
-	public String showProjectsList(Model model) {
-		model.addAttribute("projects", projectRepository.findAll());
-		return VN_READ;
+	public String showRootList(Model model) {
+		List<Project> projects = this.service.findByParentIsNull();
+		if (projects.isEmpty()) {
+			MessageHelper.addInfoAttribute(model, "projects.info.empty");
+		}
+		model.addAttribute("projects", projects);
+		return this.getViewNameReadDelete();
 	}
 
-	@GetMapping("create")
+	@GetMapping(URL_CREATE)
 	public String showCreateForm(Model model) {
-		/*
-		 * List<Software> softwares = (List<Software>) softwareRepository.findAll(); if
-		 * (softwares == null || softwares.isEmpty()) { softwares = Arrays.asList( new
-		 * Software(1L, "ИДС УЖДТ",
-		 * "Информационно-диспетчерская система управления железнодорожным транспортом"
-		 * ), new Software(2L, "SAP ERP", "Система SAP"), new Software(3L, "OEBS",
-		 * "Oracle E-Business Suite")); }
-		 */
-		model.addAttribute("softwares", softwareRepository.findAll());
-		log.info("Отображение формы создания проекта");
-		return VN_CREATE;
+		model.addAttribute("projects", this.service.findAll());
+		model.addAttribute("project", new Project());
+		return this.getViewNameCreateUpdate();
 	}
 
-	@PostMapping("create")
-	public String createProject(@Valid @ModelAttribute("project") Project project, Errors errors, Model model) {
-		log.info("Создание проекта: " + project);
-		if (errors.hasErrors()) {
-			errors.getAllErrors().stream().forEach(System.out::println);
-			log.info("Создание проекта: " + project);
-			return VN_CREATE;
-		}
-		log.info("Сохранение проекта: " + project);
-		projectRepository.save(project);
-
-		return "redirect:".concat(BASE_URL);
+	@GetMapping(URL_CREATE_CHILD)
+	public String showCreateChildForm(@PathVariable(PV_PARENT_ID) Long parentId, Model model) {
+		model.addAttribute("projects", this.service.findAll());
+		model.addAttribute("project", this.service.createChild(parentId));
+		return this.getViewNameCreateUpdate();
 	}
 
-	@GetMapping("edit/{id}")
-	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-		new IllegalArgumentException();
-		Project project = projectRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid project Id:" + id));
-		model.addAttribute("project", project);
-		return VN_UPDATE;
-	}
-
-	@PostMapping("update/{id}")
-	public String updateProject(@PathVariable("id") long id, @Valid Project project, Errors errors, Model model) {
-		if (errors.hasErrors()) {
-			project.setId(id);
-			return VN_UPDATE;
-		}
-
-		projectRepository.save(project);
-		model.addAttribute("projects", projectRepository.findAll());
-		return VN_READ;
-	}
-
-	@GetMapping("delete")
-	public String deleteProjects(Errors errors, Model model) {
-		if (errors.hasErrors()) {
-			errors.getAllErrors().stream().forEach(System.out::println);
-			return VN_READ;
-		}
-		// projectRepository.save(project);
-
-		return "redirect:".concat(BASE_URL);
-	}
-
-	@GetMapping("delete/{id}")
-	public String deleteProject(@PathVariable("id") long id, Model model) {
-		Project project = projectRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid project Id:" + id));
-		projectRepository.delete(project);
-		model.addAttribute("projects", projectRepository.findAll());
-		return VN_READ;
+	@GetMapping(URL_EDIT)
+	public String showUpdateForm(@PathVariable(PV_ID) Long id, Model model) {
+		model.addAttribute("projects", this.service.findByIdIsNot(id));
+		model.addAttribute("project", this.service.getById(id));
+		return this.getViewNameCreateUpdate();
 	}
 }

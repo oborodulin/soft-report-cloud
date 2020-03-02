@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-create-update}"
+	th:with="titleCurrent=${value.id == null} ? ${titleCreate} : ${titleUpdate}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
+<!-- bootstrap-daterangepicker -->
+<link class="custom-link"
+	th:href="@{/webjars/bootstrap-daterangepicker/css/bootstrap-daterangepicker.css}"
+	rel="stylesheet">
+	</head>
+	<!-- bootstrap-datetimepicker -->
+	<link class="custom-link"
+		th:href="@{/webjars/Eonasdan-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}"
+		rel="stylesheet">
+</th:block>
+
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<br />
+		<form
+			th:action="${value.id == null} ? @{~/values/{masterId}/create/{isContinue}(masterId=${value.master.id}, isContinue='false')} : @{~/values/{masterId}/update/{id}(masterId=${value.master.id}, id=${value.id})}"
+			th:object="${value}" th:method="POST" id="form-create-value"
+			data-parsley-validate class="form-horizontal form-label-left">
+			<!--/* Необходимо добавлять скрытые поля: version - для определения операции создания/обновления, 
+				а created* - для сохранения значений при обновлении*/-->
+			<input type="hidden" th:field="*{version}">
+			<th:block th:if="${value.id != null}">
+				<input type="hidden" th:field="*{createdBy}">
+				<input type="hidden" th:field="*{createdDate}">
+			</th:block>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="code"><th:block th:text="#{code.label}" /><span
+					class="required">*</span> </label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{code}" required="required"
+						class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('code')}" th:errors="*{code}"
+					class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="val"><th:block th:text="#{val.label}" /><span
+					class="required">*</span> </label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{val}" required="required"
+						class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('val')}" th:errors="*{val}"
+					class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="closeDate" th:text="#{closeDate.label}"></label>
+				<div class='input-group date col-md-3 col-sm-3'
+					id='closeDatetimepicker'>
+					<input type='text' th:field="*{closeDate}" class="form-control" />
+					<span class="input-group-addon"><i
+						class="fa fa-calendar fa-lg"></i></span>
+				</div>
+				<span th:if="${#fields.hasErrors('closeDate')}"
+					th:errors="*{closeDate}" class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label for="descr"
+					class="col-form-label col-md-3 col-sm-3 label-align"
+					th:text="#{descr.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<textarea th:field="*{descr}" class="form-control" rows="3"></textarea>
+				</div>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="attr1" th:text="#{attr1.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{attr1}" class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('attr1')}" th:errors="*{attr1}"
+					class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="attr2" th:text="#{attr2.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{attr2}" class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('attr2')}" th:errors="*{attr2}"
+					class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="attr3" th:text="#{attr3.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{attr3}" class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('attr3')}" th:errors="*{attr3}"
+					class="text-danger"></span>
+			</div>
+			<div class="clearfix"></div>
+			<div class="ln_solid"></div>
+			<th:block
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/values/{masterId}(masterId=${value.master.id})}, object=${value}, formId='form-create-value')" />
+		</form>
+	</div>
+	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})">
+		</th:block>
+		<!-- bootstrap-daterangepicker -->
+		<script class="custom-script" src="/js/moment-with-locales.min.js"></script>
+		<!-- script class="custom-script" th:src="@{/webjars/momentjs/min/moment.min.js}"></script-->
+		<script class="custom-script"
+			th:src="@{/webjars/bootstrap-daterangepicker/js/bootstrap-daterangepicker.js}"></script>
+		<!-- bootstrap-datetimepicker -->
+		<script class="custom-script"
+			th:src="@{/webjars/Eonasdan-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}"></script>
+		<!-- Initialize datetimepicker 	format:'d.m.Y H:i',-->
+		<script class="custom-script" type="text/javascript">
+			$(function() {
+				moment().locale('ru');
+				$('#closeDatetimepicker').datetimepicker({
+					format : "DD.MM.YYYY"
+				});
+			});
+		</script>
+	</th:block>
+</body>
+</html>

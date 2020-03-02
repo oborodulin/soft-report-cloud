@@ -3,6 +3,7 @@ package com.oborodulin.softreport.domain.model.project;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
@@ -11,25 +12,28 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
+import com.oborodulin.softreport.domain.common.entity.TreeEntity;
 import com.oborodulin.softreport.domain.model.project.task.Task;
 import com.oborodulin.softreport.domain.model.software.Software;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @Table(name = Project.TABLE_NAME)
-public class Project extends AuditableEntity<String> {
+public class Project extends TreeEntity<Project, String> {
 	private static final long serialVersionUID = -3514627948973849043L;
 	public static final String TABLE_NAME= "PROJECTS";
 
 	@NotBlank
 	@Size(min = 5, message = "Наименование проекта должно состоять как минимум из 5 символов")
 	private String name;
+	
 	private String descr;
 
-	@OneToMany(mappedBy = "project")
+	@OneToMany(mappedBy = "master", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
 	private List<Task> tasks = new ArrayList<>();
 
 	@ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
