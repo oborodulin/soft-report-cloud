@@ -61,7 +61,7 @@ public class SoftwareMvcController extends AbstractMvcTreeController<Software, S
 		model.addAttribute("titleCreate", this.ms.getMessage("softwares.title.create", null, locale));
 		model.addAttribute("softwares", this.service.findAll());
 		model.addAttribute("types", this.service.getTypes());
-		model.addAttribute("software", this.service.getNewChild(parentId));
+		model.addAttribute("software", this.service.createChild(parentId));
 		// model.addAttribute("software", new Software());
 		return this.getViewNameCreateUpdate();
 	}

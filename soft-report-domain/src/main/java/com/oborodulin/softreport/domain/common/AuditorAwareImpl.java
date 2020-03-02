@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.model;
+package com.oborodulin.softreport.domain.common;
 
 import java.util.Optional;
 

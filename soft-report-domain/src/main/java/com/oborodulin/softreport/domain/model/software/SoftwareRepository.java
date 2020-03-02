@@ -11,6 +11,4 @@ public interface SoftwareRepository extends CommonTreeRepository<Software, Strin
 
 	public List<Software> findByTypeCode(String typeCode);
 
-	public List<Software> findByIdIsNot(Long id);
-
 }

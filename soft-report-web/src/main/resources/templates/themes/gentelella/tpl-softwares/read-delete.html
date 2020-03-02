@@ -40,13 +40,13 @@
 					</thead>
 					<tbody th:with="rowNum=0, level=0">
 						<th:block
-							th:replace="this :: outputSoftware(${softwares}, ${rowNum}, ${level})" />
+							th:replace="this :: outputTree(${softwares}, ${rowNum}, ${level})" />
 					</tbody>
 				</table>
 			</form>
 		</div>
 	</div>
-	<th:block th:fragment="outputSoftware(softwares, rowNum, level)">
+	<th:block th:fragment="outputTree(softwares, rowNum, level)">
 		<th:block th:with="rowNum=${rowNum+1}">
 			<th:block th:each="software, stat : ${softwares}">
 				<tr th:class="${rowNum % 2 != 0} ? 'odd pointer' : 'even pointer'">
@@ -71,7 +71,7 @@
 				</tr>
 				<th:block th:if="${!#lists.isEmpty(software.children)}"
 					th:with="level=${level+1}"
-					th:replace="this :: outputSoftware(${software.children}, ${rowNum}, ${level})" />
+					th:replace="this :: outputTree(${software.children}, ${rowNum}, ${level})" />
 			</th:block>
 		</th:block>
 	</th:block>

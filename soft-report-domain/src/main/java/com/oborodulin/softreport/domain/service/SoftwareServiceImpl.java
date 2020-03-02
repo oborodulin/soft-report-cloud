@@ -23,7 +23,7 @@ public class SoftwareServiceImpl extends JpaTreeAbstractService<Software, Softwa
 
 	@Autowired
 	public SoftwareServiceImpl(SoftwareRepository repository) {
-		super(repository);
+		super(repository, Software.class);
 	}
 
 	@Override
@@ -32,27 +32,14 @@ public class SoftwareServiceImpl extends JpaTreeAbstractService<Software, Softwa
 	}
 
 	@Override
-	public Software getNewChild(Long parentId) {
-		Software parent = this.repository.findById(parentId)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid software parent Id:" + parentId));
-		Software software = new Software();
-		software.setParent(parent);
-		software.setType(parent.getType());
+	public Software createChild(Long parentId) {
+		Software software = super.createChild(parentId);
+		software.setType(software.getParent().getType());
 		return software;
 	};
 
 	@Override
 	public List<Value> getTypes() {
 		return valueRepository.findByMasterCode(ValuesSet.VS_SOFTWARE_TYPES, Sort.by("code"));
-	};
-
-	@Override
-	public List<Software> findByParentIsNull() {
-		return this.repository.findByParentIsNull();
-	};
-
-	@Override
-	public List<Software> findByIdIsNot(Long id) {
-		return this.repository.findByIdIsNot(id);
 	};
 }
