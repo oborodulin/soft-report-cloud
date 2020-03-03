@@ -4,8 +4,8 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 
 import com.oborodulin.softreport.domain.common.service.CommonJpaDetailService;
-import com.oborodulin.softreport.domain.model.valuesset.ValuesSet;
-import com.oborodulin.softreport.domain.model.valuesset.value.Value;
+import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
+import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 
 public interface ValueService extends CommonJpaDetailService<ValuesSet, Value, String> {
 

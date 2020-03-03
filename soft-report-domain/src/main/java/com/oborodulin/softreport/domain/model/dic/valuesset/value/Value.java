@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.model.valuesset.value;
+package com.oborodulin.softreport.domain.model.dic.valuesset.value;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,8 +16,9 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
+import com.oborodulin.softreport.domain.model.dic.doctype.DocType;
+import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.model.software.Software;
-import com.oborodulin.softreport.domain.model.valuesset.ValuesSet;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -53,6 +54,14 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	@EqualsAndHashCode.Exclude
 	private List<Software> softwares = new ArrayList<Software>();
 
+	@OneToMany(mappedBy = "categ", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<DocType> byCategDocTypes = new ArrayList<DocType>();
+
+	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<DocType> byTypeDocTypes = new ArrayList<DocType>();
+	
 	/**
 	 * Возвращает имя и код набора значений.
 	 * 

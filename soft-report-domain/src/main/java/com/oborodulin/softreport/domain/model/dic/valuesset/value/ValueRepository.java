@@ -1,10 +1,10 @@
-package com.oborodulin.softreport.domain.model.valuesset.value;
+package com.oborodulin.softreport.domain.model.dic.valuesset.value;
 
 import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.oborodulin.softreport.domain.common.repository.CommonRepository;
-import com.oborodulin.softreport.domain.model.valuesset.ValuesSet;
+import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 
 import org.springframework.data.domain.Sort;
 

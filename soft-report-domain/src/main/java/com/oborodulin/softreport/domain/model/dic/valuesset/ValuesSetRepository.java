@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.model.valuesset;
+package com.oborodulin.softreport.domain.model.dic.valuesset;
 
 import java.util.Optional;
 

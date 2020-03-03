@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
-import com.oborodulin.softreport.domain.model.valuesset.value.Value;
+import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 
 //import org.springframework.security.core.GrantedAuthority;
 //import org.springframework.security.core.authority.SimpleGrantedAuthority;

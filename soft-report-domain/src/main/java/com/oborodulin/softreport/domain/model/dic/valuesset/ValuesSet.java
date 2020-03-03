@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.model.valuesset;
+package com.oborodulin.softreport.domain.model.dic.valuesset;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
-import com.oborodulin.softreport.domain.model.valuesset.value.Value;
+import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

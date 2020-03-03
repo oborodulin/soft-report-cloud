@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.model.project.Project;
 import com.oborodulin.softreport.domain.model.project.task.Task;
-import com.oborodulin.softreport.domain.model.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.service.ProjectServiceImpl;
 import com.oborodulin.softreport.domain.service.TaskServiceImpl;
 import com.oborodulin.softreport.web.AbstractMvcDetailController;
@@ -51,7 +51,7 @@ public class TaskMvcController
 	}
 	
 	@GetMapping(URL_DTL_READ)
-	public String showChildrenList(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
+	public String showDetailList(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
 		Project project = this.masterService.getById(masterId);
 		// List<Task> tasks = valueRepository.findByValuesSet(project,
 		// Sort.by("code"));
@@ -67,20 +67,36 @@ public class TaskMvcController
 		return this.getViewNameReadDelete();
 	}
 
+	@GetMapping(URL_CREATE)
+	public String showCreateForm(Locale locale, Model model) {
+		model.addAttribute("titleCreate", this.ms.getMessage("tasks.title.create", null, locale));
+		model.addAttribute("task", new Task());
+		return this.getViewNameCreateUpdate();
+	}
 	@GetMapping(URL_DTL_CREATE)
-	public String showCreateForm(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
+	public String showDetailCreateForm(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
 		Task task = this.service.create(masterId);
-		model.addAttribute("titleMaster", task.getName());
+		model.addAttribute("titleMaster", task.getMaster().getName());
 		model.addAttribute("titleCreate", this.ms.getMessage("tasks.title.create", null, locale));
 		model.addAttribute("task", task);
 		return this.getViewNameCreateUpdate();
 	}
 
-	@GetMapping(URL_DTL_EDIT)
-	public String showUpdateForm(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_ID) Long id, Locale locale,
+	@GetMapping(URL_EDIT)
+	public String showUpdateForm(@PathVariable(PV_ID) Long id, Locale locale,
 			Model model) {
 		Task task = this.service.getById(id);
 		model.addAttribute("titleMaster", task.getName());
+		model.addAttribute("titleUpdate", this.ms.getMessage("tasks.title.update", null, locale));
+		model.addAttribute("task", task);
+		return this.getViewNameCreateUpdate();
+	}
+
+	@GetMapping(URL_DTL_EDIT)
+	public String showDetailUpdateForm(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_ID) Long id, Locale locale,
+			Model model) {
+		Task task = this.service.getById(id);
+		model.addAttribute("titleMaster", task.getMaster().getName());
 		model.addAttribute("titleUpdate", this.ms.getMessage("tasks.title.update", null, locale));
 		model.addAttribute("task", task);
 		return this.getViewNameCreateUpdate();

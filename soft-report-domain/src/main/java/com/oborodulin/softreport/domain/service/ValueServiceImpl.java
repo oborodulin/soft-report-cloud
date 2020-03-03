@@ -1,10 +1,10 @@
 package com.oborodulin.softreport.domain.service;
 
 import com.oborodulin.softreport.domain.common.service.JpaDetailAbstractService;
-import com.oborodulin.softreport.domain.model.valuesset.ValuesSet;
-import com.oborodulin.softreport.domain.model.valuesset.ValuesSetRepository;
-import com.oborodulin.softreport.domain.model.valuesset.value.Value;
-import com.oborodulin.softreport.domain.model.valuesset.value.ValueRepository;
+import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
+import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSetRepository;
+import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
+import com.oborodulin.softreport.domain.model.dic.valuesset.value.ValueRepository;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

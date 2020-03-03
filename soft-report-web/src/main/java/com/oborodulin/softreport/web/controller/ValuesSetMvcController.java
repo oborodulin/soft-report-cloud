@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.oborodulin.softreport.domain.model.valuesset.ValuesSet;
+
+import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.service.ValuesSetServiceImpl;
 import com.oborodulin.softreport.web.AbstractMvcController;
 import com.oborodulin.softreport.web.support.MessageHelper;

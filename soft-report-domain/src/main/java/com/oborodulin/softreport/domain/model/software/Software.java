@@ -14,8 +14,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import com.oborodulin.softreport.domain.common.entity.TreeEntity;
+import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import com.oborodulin.softreport.domain.model.project.Project;
-import com.oborodulin.softreport.domain.model.valuesset.value.Value;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

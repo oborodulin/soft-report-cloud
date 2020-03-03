@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout-create-update}"
-	th:with="titleCurrent=${value.id == null} ? ${titleCreate} : ${titleUpdate}">
+	th:with="titleCurrent=${task.id == null} ? ${titleCreate} : ${titleUpdate}">
 <th:block th:fragment="header">
 	<head
 		th:replace="fragments/fragment-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
@@ -23,13 +23,13 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${value.id == null} ? @{~/values/{masterId}/create/{isContinue}(masterId=${value.master.id}, isContinue='false')} : @{~/values/{masterId}/update/{id}(masterId=${value.master.id}, id=${value.id})}"
-			th:object="${value}" th:method="POST" id="form-create-value"
+			th:action="${task.id == null} ? @{~/tasks/{masterId}/create/{isContinue}(masterId=${task.master.id}, isContinue='false')} : @{~/tasks/{masterId}/update/{id}(masterId=${task.master.id}, id=${task.id})}"
+			th:object="${task}" th:method="POST" id="form-create-task"
 			data-parsley-validate class="form-horizontal form-label-left">
 			<!--/* Необходимо добавлять скрытые поля: version - для определения операции создания/обновления, 
 				а created* - для сохранения значений при обновлении*/-->
 			<input type="hidden" th:field="*{version}">
-			<th:block th:if="${value.id != null}">
+			<th:block th:if="${task.id != null}">
 				<input type="hidden" th:field="*{createdBy}">
 				<input type="hidden" th:field="*{createdDate}">
 			</th:block>
@@ -105,7 +105,7 @@
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
 			<th:block
-				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/values/{masterId}(masterId=${value.master.id})}, object=${value}, formId='form-create-value')" />
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/tasks/{masterId}(masterId=${task.master.id})}, object=${task}, formId='form-create-task')" />
 		</form>
 	</div>
 	<!-- /page content -->
