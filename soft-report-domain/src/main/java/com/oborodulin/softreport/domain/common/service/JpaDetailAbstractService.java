@@ -6,10 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
+import com.oborodulin.softreport.domain.common.repository.CommonDetailRepository;
 import com.oborodulin.softreport.domain.common.repository.CommonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class JpaDetailAbstractService<E extends AuditableEntity<U>, D extends DetailEntity<E, U>, M extends CommonRepository<E, U>, R extends CommonRepository<D, U>, U>
+public abstract class JpaDetailAbstractService<E extends AuditableEntity<U>, D extends DetailEntity<E, U>, M extends CommonRepository<E, U>, R extends CommonDetailRepository<E, D, U>, U>
 		extends JpaAbstractService<D, R, U> implements CommonJpaDetailService<E, D, U> {
 	protected final M masterRepository;
 	private Class<D> clazz;

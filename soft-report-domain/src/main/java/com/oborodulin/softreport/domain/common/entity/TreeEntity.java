@@ -28,5 +28,5 @@ public abstract class TreeEntity<E extends AuditableEntity<U>, U> extends Audita
 
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@EqualsAndHashCode.Exclude
-	private List<E> children = new ArrayList<E>();
+	private List<E> children = new ArrayList<>();
 }

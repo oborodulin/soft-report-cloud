@@ -13,8 +13,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @MappedSuperclass
 public abstract class DetailEntity<E extends AuditableEntity<U>, U> extends AuditableEntity<U> implements Serializable {
-	
+
 	private static final long serialVersionUID = 8924802008694600105L;
+	public static final String CLM_MASTER = "master";
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "master_id", nullable = false)

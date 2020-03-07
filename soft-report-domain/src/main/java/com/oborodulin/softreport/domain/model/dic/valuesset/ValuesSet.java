@@ -13,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
+import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 
 import lombok.Data;
@@ -25,8 +26,36 @@ public class ValuesSet extends AuditableEntity<String> {
 	private static final long serialVersionUID = 951472411985160909L;
 	public static final String TABLE_NAME = "VALS_SETS";
 
-	public static final String VS_SOFTWARE_TYPES = "SOFTWARE_TYPES";
+	/**	!!!Код набора значений: типы серверов (БД, Вебсервер, Сервер приложений, Отчётов) */
+	public static final String VS_SERVERS_TYPES = "SERVERS_TYPES";
 
+	/**	!!!Код набора значений: типы окружений (разработки, тестовое, промышленное и пр.) */
+	public static final String VS_ENV_TYPES = "ENV_TYPES";
+	
+	/**	Код набора значений: типы ПО (веб-приложение, десктопное приложение, интерфейс, служба) */
+	public static final String VS_SOFTWARE_TYPES = "SOFTWARE_TYPES";
+	/**	Код набора значений: архитектуры ПО (БД, ETL, фронтенд, бэкенд) */
+	public static final String VS_SOFTWARE_ARCHS = "SOFTWARE_ARCHS";
+	/**	!!!Код набора значений: технологии в т.ч. языки программирования*/
+	public static final String VS_SOFTWARE_LANGS = "SOFTWARE_TECHS";
+	
+	/**	Код набора значений: категории документов */
+	public static final String VS_DOC_CATEGS = "DOC_CATEGS";
+	/**	Код набора значений: типы документов */
+	public static final String VS_DOC_TYPES = "DOC_TYPES";
+
+	/**	Код набора значений: типы БД */
+	public static final String VS_DB_TYPES = "DB_TYPES";
+	/**	Код набора значений: типы таблиц данных (справочные, оперативные, интерфейсные, временные)*/
+	public static final String VS_DB_DT_TYPES = "DB_DT_TYPES";
+	/**	Код набора значений: типы объектов данных (БД, схемы, типы данных, ТД, триггеры, поля таблиц, представления, поля представлений, хранимые процедуры, функции, сиквенсы) */
+	public static final String VS_DB_OBJ_TYPES = "DB_OBJ_TYPES";
+	/**	Код набора значений: типы данных SQL*/
+	public static final String VS_DB_SQL_DATA_TYPES = "DB_SQL_DATA_TYPES";
+
+	/**	!!!Код набора значений: типы объектов UI */
+	public static final String VS_UI_OBJ_TYPES = "UI_OBJ_TYPES";
+	
 	@NotBlank
 	@Column(unique = true)
 	private String code;
@@ -36,19 +65,25 @@ public class ValuesSet extends AuditableEntity<String> {
 	@NotNull
 	private Boolean isUpdatable = false;
 
-	@OneToMany(mappedBy = "master", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private Set<Value> values = new HashSet<Value>();
+	private Set<Value> values = new HashSet<>();
 
+	/**
+	 * Добавляет значение в набор.
+	 *
+	 * @param value значение
+	 * @see com.oborodulin.softreport.domain.model.dic.valuesset.value.Value
+	 */
 	public void addValue(Value value) {
 		this.values.add(value);
 	}
 
 	/**
-	 * Возвращает имя и код набора значений.
-	 * 
+	 * Возвращает имя и код набора значений в формате <code>Name [Code]</code>.
+	 *  
 	 * Необходимо для отображения с целью визуальной идентификации набора значений,
-	 * которому принадлежит или будет принадлежать текущее значение.
+	 * которому принадлежит текущее или будет принадлежать новое значение.
 	 * 
 	 * @return имя и код набора значений
 	 */

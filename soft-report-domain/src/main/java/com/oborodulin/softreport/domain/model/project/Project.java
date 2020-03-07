@@ -12,7 +12,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.common.entity.TreeEntity;
+import com.oborodulin.softreport.domain.model.project.document.Document;
 import com.oborodulin.softreport.domain.model.project.task.Task;
 import com.oborodulin.softreport.domain.model.software.Software;
 
@@ -24,27 +26,53 @@ import lombok.EqualsAndHashCode;
 @Table(name = Project.TABLE_NAME)
 public class Project extends TreeEntity<Project, String> {
 	private static final long serialVersionUID = -3514627948973849043L;
-	public static final String TABLE_NAME= "PROJECTS";
+	public static final String TABLE_NAME = "PROJECTS";
 
 	@NotBlank
 	@Size(min = 5, message = "Наименование проекта должно состоять как минимум из 5 символов")
 	private String name;
-	
+
 	private String descr;
 
-	@OneToMany(mappedBy = "master", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<Task> tasks = new ArrayList<>();
+
+	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<Document> documents = new ArrayList<>();
 
 	@ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
 	// @ManyToMany(targetEntity = Software.class)
 	@Size(min = 1, message = "Вы должны выбрать хотя бы одно ПО")
 	private List<Software> softwares = new ArrayList<>();
 
+	/**
+	 * Добавляет к проекту задачу
+	 * 
+	 * @param task задача
+	 * @see com.oborodulin.softreport.domain.model.project.task.Task
+	 */
 	public void addTask(Task task) {
 		this.tasks.add(task);
 	}
 
+	/**
+	 * Добавляет к проекту документ
+	 * 
+	 * @param document документ
+	 * @see com.oborodulin.softreport.domain.model.project.document.Document
+	 */
+	public void addDocument(Document document) {
+		this.documents.add(document);
+	}
+
+	/**
+	 * Добавляет к проекту ПО
+	 * 
+	 * @param software ПО
+	 * @see com.oborodulin.softreport.domain.model.software.Software
+	 */
 	public void addSoftware(Software software) {
 		this.softwares.add(software);
 	}
