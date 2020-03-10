@@ -15,7 +15,7 @@ public class DataFormat extends DetailEntity<DataType, String> {
 
 	private static final long serialVersionUID = 6898903692392787105L;
 
-	public static final String TABLE_NAME = "DATAFORMATS";
+	public static final String TABLE_NAME = "DATA_FORMATS";
 
 	/** Наименование языка программирования или технологии */
 	@NotBlank

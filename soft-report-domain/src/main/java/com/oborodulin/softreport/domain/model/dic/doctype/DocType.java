@@ -33,13 +33,13 @@ public class DocType extends AuditableEntity<String> {
 	private String template;
 	
 	/** Категория документа */
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "categ_code", nullable = false)
 	@ToString.Exclude
 	private Value categ;
 
 	/** Тип документа */
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "type_code", nullable = false)
 	@ToString.Exclude
 	private Value type;

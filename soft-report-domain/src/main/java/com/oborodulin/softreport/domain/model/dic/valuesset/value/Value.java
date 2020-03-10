@@ -19,8 +19,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.databaseobject.DataBaseObject;
 import com.oborodulin.softreport.domain.model.dic.doctype.DocType;
+import com.oborodulin.softreport.domain.model.dic.objecthierarchy.ObjectHierarchy;
 import com.oborodulin.softreport.domain.model.dic.proglang.ProgLang;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
+import com.oborodulin.softreport.domain.model.dic.proglang.uiobject.UiObject;
 import com.oborodulin.softreport.domain.model.dic.server.Server;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.model.software.Software;
@@ -114,9 +116,9 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	private List<DataBaseObject> typeDataBaseObjects = new ArrayList<>();
 
 	/** Список объектов БД текущего типа таблиц данных (значения)*/
-	@OneToMany(mappedBy = "tableType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "dtType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DataBaseObject> tableTypeDataBaseObjects = new ArrayList<>();
+	private List<DataBaseObject> dtTypeDataBaseObjects = new ArrayList<>();
 
 	/** Список объектов БД текущего типа базы данных (значения)*/
 	@OneToMany(mappedBy = "dbType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -129,9 +131,9 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	private ProgLang progLang;
 
 	/** Список языков программирования текущей архитектуры ПО (значения)*/
-	@OneToMany(mappedBy = "archType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "arch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<ProgLang> tableTypeProgLangs = new ArrayList<>();
+	private List<ProgLang> archProgLangs = new ArrayList<>();
 
 	/** Список типов данных текущего типа данных (значения)*/
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -147,6 +149,26 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	@OneToMany(mappedBy = "env", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<Server> envServers = new ArrayList<>();
+
+	/** Список объектов иерархии текущей архитектуры ПО (значения)*/
+	@OneToMany(mappedBy = "arch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<ObjectHierarchy> archObjectHierarches = new ArrayList<>();
+
+	/** Список объектов БД иерархии текущего типа БД (значения)*/
+	@OneToMany(mappedBy = "dbType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<ObjectHierarchy> dbTypeObjectHierarches = new ArrayList<>();
+
+	/** Список объектов UI иерархии текущего типа UI (значения)*/
+	@OneToMany(mappedBy = "uiType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<ObjectHierarchy> uiTypeObjectHierarches = new ArrayList<>();
+
+	/** Список объектов UI текущего типа UI (значения)*/
+	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<UiObject> uiObjectTypes = new ArrayList<>();
 	
 	/**
 	 * Возвращает имя и код набора значений.

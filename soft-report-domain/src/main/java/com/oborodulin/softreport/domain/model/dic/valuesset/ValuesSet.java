@@ -36,8 +36,8 @@ public class ValuesSet extends AuditableEntity<String> {
 	public static final String VS_SOFTWARE_TYPES = "SOFTWARE_TYPES";
 	/**	Код набора значений: архитектуры ПО (БД, ETL, фронтенд, бэкенд) */
 	public static final String VS_SOFTWARE_ARCHS = "SOFTWARE_ARCHS";
-	/**	!!!Код набора значений: технологии в т.ч. языки программирования*/
-	public static final String VS_SOFTWARE_LANGS = "SOFTWARE_TECHS";
+	/**	!!!Код набора значений: технологии в т.ч. языки программирования с признаком язык/технология*/
+	public static final String VS_SOFTWARE_TECHS = "SOFTWARE_TECHS";
 	
 	/**	Код набора значений: категории документов */
 	public static final String VS_DOC_CATEGS = "DOC_CATEGS";
@@ -46,15 +46,17 @@ public class ValuesSet extends AuditableEntity<String> {
 
 	/**	Код набора значений: типы БД */
 	public static final String VS_DB_TYPES = "DB_TYPES";
-	/**	Код набора значений: типы таблиц данных (справочные, оперативные, интерфейсные, временные)*/
+	/**	!!!Код набора значений: типы таблиц данных (справочные, оперативные, интерфейсные, временные)*/
 	public static final String VS_DB_DT_TYPES = "DB_DT_TYPES";
-	/**	Код набора значений: типы объектов данных (БД, схемы, типы данных, ТД, триггеры, поля таблиц, представления, поля представлений, хранимые процедуры, функции, сиквенсы) */
+	/**	!!!Код набора значений: типы объектов данных (БД, схемы, типы данных, ТД, триггеры, поля таблиц, представления, поля представлений, хранимые процедуры, функции, сиквенсы) */
 	public static final String VS_DB_OBJ_TYPES = "DB_OBJ_TYPES";
-	/**	Код набора значений: типы данных SQL*/
+	/**	!!!Код набора значений: типы данных SQL*/
 	public static final String VS_DB_SQL_DATA_TYPES = "DB_SQL_DATA_TYPES";
 
-	/**	!!!Код набора значений: типы объектов UI */
+	/**	!!!Код набора значений: типы объектов UI (общие) с признаком контейнер/нет: окна, панели, кнопки, формы ввода, поля ввода, гриды, колонки и т.д. */
 	public static final String VS_UI_OBJ_TYPES = "UI_OBJ_TYPES";
+	/**	!!!Код набора значений: события объектов UI (общие): получение/потеря фокуса, нажите на кнопку, ввод/выбор значения и т.д. */
+	public static final String VS_UI_OBJ_EVENTS = "UI_OBJ_EVENTS";
 	
 	@NotBlank
 	@Column(unique = true)

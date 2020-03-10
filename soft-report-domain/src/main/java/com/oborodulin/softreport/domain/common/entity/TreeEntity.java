@@ -29,4 +29,14 @@ public abstract class TreeEntity<E extends AuditableEntity<U>, U> extends Audita
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@EqualsAndHashCode.Exclude
 	private List<E> children = new ArrayList<>();
+
+	/**
+	 * Добавляет подчинённую сущность к текущей
+	 * 
+	 * @param child подчинённая сущность
+	 */
+	public void addСhild(TreeEntity <E, U> child) {
+//		this.children.add(child.setParent(this));
+	}
+	
 }

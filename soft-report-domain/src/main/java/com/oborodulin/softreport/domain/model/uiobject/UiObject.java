@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.model.databaseobject;
+package com.oborodulin.softreport.domain.model.uiobject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,21 +25,22 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Класс описывает объект базы данных (БД).
+ * Класс описывает дерево объектов пользовательского интерфейса (UI).
  * 
- * Позволяет работать со всеми возможными объектами БД: схемы, таблицы (поля),
- * представления, процедуры и т.д.
+ * Позволяет работать со всеми возможными объектами UI: формы, панели, поля,
+ * таблицы, колонки, кнопки и т.д.
  * 
  * @author acs-i
  *
  */
 @Data
 @Entity
-@Table(name = DataBaseObject.TABLE_NAME)
-public class DataBaseObject extends TreeEntity<DataBaseObject, String> {
-	private static final long serialVersionUID = -5847640757970947607L;
+@Table(name = UiObject.TABLE_NAME)
+public class UiObject extends TreeEntity<UiObject, String> {
 
-	public static final String TABLE_NAME = "DATABASE_OBJECTS";
+	private static final long serialVersionUID = 873176357176317561L;
+
+	public static final String TABLE_NAME = "UI_OBJECTS";
 
 	/** Позиция */
 	@NotBlank
@@ -53,35 +54,21 @@ public class DataBaseObject extends TreeEntity<DataBaseObject, String> {
 	@Column(length = 1000)
 	private String descr;
 
-	/** Тип объекта БД */
+	/** Тип объекта UI */
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "type_code", nullable = false)
 	@ToString.Exclude
 	private Value type;
-
-	/** Тип базы данных */
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "db_type_code")
-	@ToString.Exclude
-	private Value dbType;
-
-	/** Сервер */
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "servers_id")
-	@ToString.Exclude
-	private Server server;
-	
-	/** Тип таблицы данных */
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "dt_type_code")
-	@ToString.Exclude
-	private Value dtType;
 
 	/** Бизнес-объект */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "business_objects_id")
 	@ToString.Exclude
 	private BusinessObject businessObject;
+	
+
+	
+	
 	
 	/** Признак первичного ключа */
 	@NotNull
@@ -109,7 +96,7 @@ public class DataBaseObject extends TreeEntity<DataBaseObject, String> {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "foreign_key_id")
 	@ToString.Exclude
-	private DataBaseObject foreignKey;
+	private UiObject foreignKey;
 
 	/** Длина (точность) */
 	private Integer precision;

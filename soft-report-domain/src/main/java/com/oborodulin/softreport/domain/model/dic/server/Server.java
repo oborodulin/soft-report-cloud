@@ -44,13 +44,13 @@ public class Server extends AuditableEntity<String> {
 	private String descr;
 	
 	/** Тип сервера */
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "type_code", nullable = false)
 	@ToString.Exclude
 	private Value type;
 
 	/** Тип окружения */
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "env_code", nullable = false)
 	@ToString.Exclude
 	private Value env;

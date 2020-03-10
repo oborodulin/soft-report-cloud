@@ -19,7 +19,7 @@ public class DataType extends DetailEntity<ProgLang, String> {
 
 	private static final long serialVersionUID = -2045805271638510988L;
 
-	public static final String TABLE_NAME = "DATATYPES";
+	public static final String TABLE_NAME = "DATA_TYPES";
 
 	/** Наименование */
 	private String name;
@@ -35,13 +35,13 @@ public class DataType extends DetailEntity<ProgLang, String> {
 
 	/** Описание */
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "backend_type_id")
+	@JoinColumn(name = "backend_id")
 	@ToString.Exclude
-	private DataType backendType;
+	private DataType backend;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "frontend_type_id")
+	@JoinColumn(name = "frontend_id")
 	@ToString.Exclude
-	private DataType frontendType;
+	private DataType frontend;
 
 }
