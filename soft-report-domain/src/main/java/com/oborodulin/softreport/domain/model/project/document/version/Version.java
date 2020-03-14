@@ -23,7 +23,7 @@ import lombok.Data;
 public class Version extends DetailEntity<Document, String> {
 	private static final long serialVersionUID = 81758010780885142L;
 
-	public static final String TABLE_NAME = "VERSIONS";
+	protected static final String TABLE_NAME = "VERSIONS";
 
 	/** Мажорная версия */
 	@NotEmpty

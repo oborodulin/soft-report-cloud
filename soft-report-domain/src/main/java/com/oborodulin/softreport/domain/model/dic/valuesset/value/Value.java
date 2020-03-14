@@ -17,12 +17,12 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
-import com.oborodulin.softreport.domain.model.databaseobject.DataBaseObject;
+import com.oborodulin.softreport.domain.model.dbobject.DbObject;
 import com.oborodulin.softreport.domain.model.dic.doctype.DocType;
-import com.oborodulin.softreport.domain.model.dic.objecthierarchy.ObjectHierarchy;
+import com.oborodulin.softreport.domain.model.dic.objhierarchy.ObjHierarchy;
 import com.oborodulin.softreport.domain.model.dic.proglang.ProgLang;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
-import com.oborodulin.softreport.domain.model.dic.proglang.uiobject.UiObject;
+import com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype.UiObjectType;
 import com.oborodulin.softreport.domain.model.dic.server.Server;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.model.software.Software;
@@ -35,7 +35,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = Value.TABLE_NAME)
 public class Value extends DetailEntity<ValuesSet, String> {
 	private static final long serialVersionUID = 639613089661707969L;
-	public static final String TABLE_NAME = "VALS";
+	protected static final String TABLE_NAME = "VALS";
 
 	/** Уникальный код значения */
 	@NotBlank
@@ -113,17 +113,17 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	/** Список объектов БД текущего типа (значения)*/
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DataBaseObject> typeDataBaseObjects = new ArrayList<>();
+	private List<DbObject> typeDbObjects = new ArrayList<>();
 
 	/** Список объектов БД текущего типа таблиц данных (значения)*/
 	@OneToMany(mappedBy = "dtType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DataBaseObject> dtTypeDataBaseObjects = new ArrayList<>();
+	private List<DbObject> dtTypeDbObjects = new ArrayList<>();
 
 	/** Список объектов БД текущего типа базы данных (значения)*/
 	@OneToMany(mappedBy = "dbType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DataBaseObject> dbTypeDataBaseObjects = new ArrayList<>();
+	private List<DbObject> dbTypeDbObjects = new ArrayList<>();
 	
 	/** Язык программирования текущей технологии (значения)*/
 	@OneToOne(mappedBy = "lang")
@@ -138,7 +138,7 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	/** Список типов данных текущего типа данных (значения)*/
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DataType> dataTypes = new ArrayList<>();
+	private List<DataType> typeDataTypes = new ArrayList<>();
 
 	/** Список серверов текущего типа (значения)*/
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -153,22 +153,22 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	/** Список объектов иерархии текущей архитектуры ПО (значения)*/
 	@OneToMany(mappedBy = "arch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<ObjectHierarchy> archObjectHierarches = new ArrayList<>();
+	private List<ObjHierarchy> archObjHierarches = new ArrayList<>();
 
 	/** Список объектов БД иерархии текущего типа БД (значения)*/
 	@OneToMany(mappedBy = "dbType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<ObjectHierarchy> dbTypeObjectHierarches = new ArrayList<>();
+	private List<ObjHierarchy> dbTypeObjHierarches = new ArrayList<>();
 
 	/** Список объектов UI иерархии текущего типа UI (значения)*/
 	@OneToMany(mappedBy = "uiType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<ObjectHierarchy> uiTypeObjectHierarches = new ArrayList<>();
+	private List<ObjHierarchy> uiTypeObjHierarches = new ArrayList<>();
 
 	/** Список объектов UI текущего типа UI (значения)*/
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<UiObject> uiObjectTypes = new ArrayList<>();
+	private List<UiObjectType> uiObjectTypes = new ArrayList<>();
 	
 	/**
 	 * Возвращает имя и код набора значений.

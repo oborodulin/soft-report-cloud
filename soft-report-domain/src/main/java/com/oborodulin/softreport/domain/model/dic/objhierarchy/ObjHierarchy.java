@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.model.dic.objecthierarchy;
+package com.oborodulin.softreport.domain.model.dic.objhierarchy;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,12 +19,12 @@ import lombok.ToString;
  */
 @Data
 @Entity
-@Table(name = ObjectHierarchy.TABLE_NAME)
-public class ObjectHierarchy extends TreeEntity<ObjectHierarchy, String> {
+@Table(name = ObjHierarchy.TABLE_NAME)
+public class ObjHierarchy extends TreeEntity<ObjHierarchy, String> {
 
 	private static final long serialVersionUID = 3850158095617591531L;
 
-	public static final String TABLE_NAME = "OBJECT_HIERARCHES";
+	protected static final String TABLE_NAME = "OBJ_HIERARCHES";
 
 	/** Тип архитектуры ПО */
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -34,14 +34,13 @@ public class ObjectHierarchy extends TreeEntity<ObjectHierarchy, String> {
 
 	/** Тип объекта БД */
 	@ManyToOne
-	@JoinColumn(name = "db_obj_code")
+	@JoinColumn(name = "db_type_code")
 	@ToString.Exclude
 	private Value dbType;
 
-
 	/** Тип объекта UI */
 	@ManyToOne
-	@JoinColumn(name = "ui_obj_code")
+	@JoinColumn(name = "ui_type_code")
 	@ToString.Exclude
 	private Value uiType;
 	

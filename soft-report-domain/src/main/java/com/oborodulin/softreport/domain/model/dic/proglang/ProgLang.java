@@ -26,7 +26,7 @@ public class ProgLang extends AuditableEntity<String> {
 
 	private static final long serialVersionUID = -2566233527997372728L;
 
-	public static final String TABLE_NAME = "PROG_LANGS";
+	protected static final String TABLE_NAME = "PROG_LANGS";
 
 	/** Тип языка */
 	@OneToOne(cascade = CascadeType.ALL)

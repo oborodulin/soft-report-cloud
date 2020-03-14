@@ -20,7 +20,7 @@ import lombok.Data;
 @Table(name = Task.TABLE_NAME)
 public class Task extends DetailEntity<Project, String> {
 	private static final long serialVersionUID = 5701376057566461892L;
-	public static final String TABLE_NAME = "TASKS";
+	protected static final String TABLE_NAME = "TASKS";
 
 	@NotBlank(message = "Name is required")
 	private String name;

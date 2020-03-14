@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = ValuesSet.TABLE_NAME)
 public class ValuesSet extends AuditableEntity<String> {
 	private static final long serialVersionUID = 951472411985160909L;
-	public static final String TABLE_NAME = "VALS_SETS";
+	protected static final String TABLE_NAME = "VALS_SETS";
 
 	/**	!!!Код набора значений: типы серверов (БД, Вебсервер, Сервер приложений, Отчётов) */
 	public static final String VS_SERVERS_TYPES = "SERVERS_TYPES";
@@ -44,26 +44,40 @@ public class ValuesSet extends AuditableEntity<String> {
 	/**	Код набора значений: типы документов */
 	public static final String VS_DOC_TYPES = "DOC_TYPES";
 
-	/**	Код набора значений: типы БД */
+	/**	Код набора значений: типы БД (MS SQL, Oracle DB, MySQL и пр.) */
 	public static final String VS_DB_TYPES = "DB_TYPES";
-	/**	!!!Код набора значений: типы таблиц данных (справочные, оперативные, интерфейсные, временные)*/
+	/**	!!!Код набора значений: типы таблиц данных (справочные, оперативные, интерфейсные, временные, логгирования)*/
 	public static final String VS_DB_DT_TYPES = "DB_DT_TYPES";
-	/**	!!!Код набора значений: типы объектов данных (БД, схемы, типы данных, ТД, триггеры, поля таблиц, представления, поля представлений, хранимые процедуры, функции, сиквенсы) */
+	/**	!!!Код набора значений: типы объектов данных (БД, схемы, типы данных, ТД, триггеры, поля таблиц, значения полей, представления, поля представлений, хранимые процедуры, функции, сиквенсы) */
 	public static final String VS_DB_OBJ_TYPES = "DB_OBJ_TYPES";
 	/**	!!!Код набора значений: типы данных SQL*/
 	public static final String VS_DB_SQL_DATA_TYPES = "DB_SQL_DATA_TYPES";
 
-	/**	!!!Код набора значений: типы объектов UI (общие) с признаком контейнер/нет: окна, панели, кнопки, формы ввода, поля ввода, гриды, колонки и т.д. */
+	/**	!!!Код набора значений: типы объектов UI (общие) с признаками контейнер/нет, компонент/нет: 
+	 * меню, пункт меню, окна, панели, панели инструментов, кнопки панели инструментов,
+	 * формы ввода, группа полей, радио-группа, поля ввода 
+	 * (поле-метка, текстовое поле, список, чекбокс, радио-кнопка, поле даты, поле времени), 
+	 * атрибуты списков, зависимость полей, гриды, 
+	 * колонки (чекбокс), кнопки и т.д. 
+	 */
 	public static final String VS_UI_OBJ_TYPES = "UI_OBJ_TYPES";
 	/**	!!!Код набора значений: события объектов UI (общие): получение/потеря фокуса, нажите на кнопку, ввод/выбор значения и т.д. */
 	public static final String VS_UI_OBJ_EVENTS = "UI_OBJ_EVENTS";
+
+	/**	!!!Код набора значений: типы бизнесс-правил (сравнение, наличие, отсутствие) */
+	public static final String VS_RULE_TYPES = "RULE_TYPES";
+	/**	!!!Код набора значений: типы сравнения бизнесс-правил (значение, результат запроса, поле ТД, поле формы ввода, выражение) */
+	public static final String VS_RULE_COMPARE_TYPES = "RULE_COMPARE_TYPES";
 	
 	@NotBlank
 	@Column(unique = true)
 	private String code;
+	
 	@NotBlank
 	private String name;
+	
 	private String descr;
+	
 	@NotNull
 	private Boolean isUpdatable = false;
 

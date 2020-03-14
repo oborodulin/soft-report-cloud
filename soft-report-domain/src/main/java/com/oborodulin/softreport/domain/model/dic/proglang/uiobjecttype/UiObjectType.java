@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.model.dic.proglang.uiobject.uievent;
+package com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
-import com.oborodulin.softreport.domain.model.dic.proglang.uiobject.UiObject;
+import com.oborodulin.softreport.domain.model.dic.proglang.ProgLang;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 
 import lombok.Data;
@@ -16,12 +16,12 @@ import lombok.ToString;
 
 @Data
 @Entity
-@Table(name = UiEvent.TABLE_NAME)
-public class UiEvent extends DetailEntity<UiObject, String> {
+@Table(name = UiObjectType.TABLE_NAME)
+public class UiObjectType extends DetailEntity<ProgLang, String> {
 
-	private static final long serialVersionUID = 4118220275040901488L;
+	private static final long serialVersionUID = -5894361677694239614L;
 
-	public static final String TABLE_NAME = "UI_OBJECT_TYPES";
+	protected static final String TABLE_NAME = "UI_OBJECT_TYPES";
 
 	/** Наименование */
 	@NotBlank
@@ -30,10 +30,13 @@ public class UiEvent extends DetailEntity<UiObject, String> {
 	/** Описание */
 	private String descr;
 	
-	/** Тип UI события */
+	/** Тип UI объекта */
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "type_code", nullable = false)
 	@ToString.Exclude
 	private Value type;
 
+	/** UI-объект поле-список: пустое значение */
+	private String emptyValue;
+	
 }

@@ -26,7 +26,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = Project.TABLE_NAME)
 public class Project extends TreeEntity<Project, String> {
 	private static final long serialVersionUID = -3514627948973849043L;
-	public static final String TABLE_NAME = "PROJECTS";
+	protected static final String TABLE_NAME = "PROJECTS";
 
 	@NotBlank
 	@Size(min = 5, message = "Наименование проекта должно состоять как минимум из 5 символов")

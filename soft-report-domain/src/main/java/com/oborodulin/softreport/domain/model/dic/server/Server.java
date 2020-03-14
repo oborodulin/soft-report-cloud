@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
-import com.oborodulin.softreport.domain.model.databaseobject.DataBaseObject;
+import com.oborodulin.softreport.domain.model.dbobject.DbObject;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 
 import lombok.Data;
@@ -27,7 +27,7 @@ public class Server extends AuditableEntity<String> {
 
 	private static final long serialVersionUID = 5526300525843873694L;
 
-	public static final String TABLE_NAME = "SERVERS";
+	protected static final String TABLE_NAME = "SERVERS";
 
 	/** Хост */
 	@NotBlank
@@ -58,6 +58,6 @@ public class Server extends AuditableEntity<String> {
 	/** Список объектов БД, связанных с текущим сервером */
 	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DataBaseObject> dataBaseObjects = new ArrayList<>();
+	private List<DbObject> dbObjects = new ArrayList<>();
 	
 }

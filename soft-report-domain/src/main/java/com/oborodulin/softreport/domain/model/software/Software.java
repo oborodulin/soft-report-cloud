@@ -18,7 +18,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.common.entity.TreeEntity;
-import com.oborodulin.softreport.domain.model.databaseobject.DataBaseObject;
+import com.oborodulin.softreport.domain.model.dbobject.DbObject;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import com.oborodulin.softreport.domain.model.project.Project;
 import com.oborodulin.softreport.domain.model.software.businessobject.BusinessObject;
@@ -32,7 +32,7 @@ import lombok.ToString;
 @Table(name = Software.TABLE_NAME)
 public class Software extends TreeEntity<Software, String> {
 	private static final long serialVersionUID = 3241164622564083658L;
-	public static final String TABLE_NAME = "SOFTWARES";
+	protected static final String TABLE_NAME = "SOFTWARES";
 
 	@NotBlank
 	@Column(unique = true)
@@ -59,8 +59,4 @@ public class Software extends TreeEntity<Software, String> {
 	@EqualsAndHashCode.Exclude
 	private Set<BusinessObject> objects = new HashSet<BusinessObject>();
 
-	@ManyToMany(mappedBy = "softwares", fetch = FetchType.LAZY)
-	//@Size(min = 1, message = "Вы должны выбрать хотя бы одно ПО")
-	private List<DataBaseObject> dataBaseObjects = new ArrayList<>();
-	
 }

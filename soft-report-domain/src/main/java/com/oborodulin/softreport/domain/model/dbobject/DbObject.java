@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.model.databaseobject;
+package com.oborodulin.softreport.domain.model.dbobject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,16 +8,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.oborodulin.softreport.domain.common.entity.TreeEntity;
+import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
+import com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype.UiObjectType;
 import com.oborodulin.softreport.domain.model.dic.server.Server;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
-import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.model.software.businessobject.BusinessObject;
 
 import lombok.Data;
@@ -35,11 +36,11 @@ import lombok.ToString;
  */
 @Data
 @Entity
-@Table(name = DataBaseObject.TABLE_NAME)
-public class DataBaseObject extends TreeEntity<DataBaseObject, String> {
+@Table(name = DbObject.TABLE_NAME)
+public class DbObject extends TreeEntity<DbObject, String> {
 	private static final long serialVersionUID = -5847640757970947607L;
 
-	public static final String TABLE_NAME = "DATABASE_OBJECTS";
+	protected static final String TABLE_NAME = "DB_OBJECTS";
 
 	/** Позиция */
 	@NotBlank
@@ -59,66 +60,83 @@ public class DataBaseObject extends TreeEntity<DataBaseObject, String> {
 	@ToString.Exclude
 	private Value type;
 
-	/** Тип базы данных */
+	/** БД: Тип базы данных */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "db_type_code")
 	@ToString.Exclude
 	private Value dbType;
 
-	/** Сервер */
+	/** БД: Сервер */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "servers_id")
 	@ToString.Exclude
 	private Server server;
 	
-	/** Тип таблицы данных */
+	/** ТД: Тип таблицы данных */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "dt_type_code")
 	@ToString.Exclude
 	private Value dtType;
 
-	/** Бизнес-объект */
+	/** ТД: Бизнес-объект */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "business_objects_id")
 	@ToString.Exclude
 	private BusinessObject businessObject;
 	
-	/** Признак первичного ключа */
+	/** Поле ТД: Признак первичного ключа */
 	@NotNull
 	private Boolean isPrimaryKey = false;
 
-	/** Признак уникального ключа */
+	/** Поле ТД: Признак уникального ключа */
 	@NotNull
 	private Boolean isUniqueKey = false;
 	
-	/** Признак необязательного значения */
+	/** Поле ТД: Признак необязательного значения */
 	@NotNull
 	private Boolean isNullable = false;
 
-	/** Признак предустанавливаемого объекта (объект, 
+	/** 
+	 * Признак предустанавливаемого объекта (объект, 
 	 * который обязательно создаётся под своего главного объекта при его создании, 
-	 * например, поля ТД: первичный ключ и исторические поля) */
+	 * например, поля ТД: первичный ключ и исторические поля) 
+	 */
 	@NotNull
 	private Boolean isPreset = false;
 	
-	/** Значение по умолчанию */
+	/** Поле ТД: Значение по умолчанию */
 	@Column(length = 500)
 	private String defaultValue;
 
-	/** Объект БД ссылки внешнего ключа */
+	/** Поле ТД: Выражение */
+	@Column(length = 500)
+	private String expression;
+
+	/** Представление/процедура/функция: SQL-запрос */
+	@Column(length = 2000)
+	private String sqlQuery;
+	
+	/** Поле ТД: Объект БД ссылки внешнего ключа */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "foreign_key_id")
 	@ToString.Exclude
-	private DataBaseObject foreignKey;
+	private DbObject foreignKey;
 
-	/** Длина (точность) */
+	/** Поле ТД: Тип данных */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "data_types_id")
+	@ToString.Exclude
+	private DataType dataType;
+
+	/** Поле ТД: Длина (точность) */
 	private Integer precision;
 
-	/** Точность (масштаб) */
+	/** Поле ТД: Точность (масштаб) */
 	private Integer scale;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	/** Поле ТД: Список UI объектов, связанных с текущим объектом БД */
+	@OneToMany(mappedBy = "dbObject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<Software> softwares = new ArrayList<>();
+	private List<UiObjectType> uiObjects = new ArrayList<>();
 	
 }

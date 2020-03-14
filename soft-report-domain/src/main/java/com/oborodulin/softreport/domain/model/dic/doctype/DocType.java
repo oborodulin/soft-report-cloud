@@ -26,7 +26,7 @@ import lombok.ToString;
 public class DocType extends AuditableEntity<String> {
 	private static final long serialVersionUID = 8743856478405649207L;
 
-	public static final String TABLE_NAME = "DOC_TYPES";
+	protected static final String TABLE_NAME = "DOC_TYPES";
 
 	/** Имя файла шаблона представления */
 	@NotBlank
