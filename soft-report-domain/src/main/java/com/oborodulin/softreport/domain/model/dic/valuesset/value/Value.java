@@ -17,7 +17,6 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
-import com.oborodulin.softreport.domain.model.dbobject.DbObject;
 import com.oborodulin.softreport.domain.model.dic.doctype.DocType;
 import com.oborodulin.softreport.domain.model.dic.objhierarchy.ObjHierarchy;
 import com.oborodulin.softreport.domain.model.dic.proglang.ProgLang;
@@ -25,6 +24,7 @@ import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
 import com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype.UiObjectType;
 import com.oborodulin.softreport.domain.model.dic.server.Server;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
+import com.oborodulin.softreport.domain.model.docobject.DocObject;
 import com.oborodulin.softreport.domain.model.software.Software;
 
 import lombok.Data;
@@ -113,17 +113,17 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	/** Список объектов БД текущего типа (значения)*/
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DbObject> typeDbObjects = new ArrayList<>();
+	private List<DocObject> typeDbObjects = new ArrayList<>();
 
 	/** Список объектов БД текущего типа таблиц данных (значения)*/
 	@OneToMany(mappedBy = "dtType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DbObject> dtTypeDbObjects = new ArrayList<>();
+	private List<DocObject> dtTypeDbObjects = new ArrayList<>();
 
 	/** Список объектов БД текущего типа базы данных (значения)*/
 	@OneToMany(mappedBy = "dbType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DbObject> dbTypeDbObjects = new ArrayList<>();
+	private List<DocObject> dbTypeDbObjects = new ArrayList<>();
 	
 	/** Язык программирования текущей технологии (значения)*/
 	@OneToOne(mappedBy = "lang")

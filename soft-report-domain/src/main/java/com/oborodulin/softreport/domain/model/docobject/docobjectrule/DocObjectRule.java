@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.model.uiobject.uibusinessrule;
+package com.oborodulin.softreport.domain.model.docobject.docobjectrule;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,21 +7,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
-import com.oborodulin.softreport.domain.model.dbobject.DbObject;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
-import com.oborodulin.softreport.domain.model.uiobject.UiObject;
+import com.oborodulin.softreport.domain.model.docobject.DocObject;
 
 import lombok.Data;
 import lombok.ToString;
 
 @Data
 @Entity
-@Table(name = UiBusinessRule.TABLE_NAME)
-public class UiBusinessRule extends DetailEntity<UiObject, String> {
+@Table(name = DocObjectRule.TABLE_NAME)
+public class DocObjectRule extends DetailEntity<DocObject, String> {
 
 	private static final long serialVersionUID = -6053643593129815794L;
 
-	protected static final String TABLE_NAME = "UI_BUSINESS_RULES";
+	protected static final String TABLE_NAME = "DOC_OBJECT_RULES";
 
 	/** Наименование */
 	private String name;
@@ -60,17 +59,18 @@ public class UiBusinessRule extends DetailEntity<UiObject, String> {
 	@Column(length = 1000)
 	private String conditionValidation;
 
-	/** UI объект */
+	/** UI/БД объект */
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "ui_objects_id")
+	@JoinColumn(name = "doc_objects_id")
 	@ToString.Exclude
-	private UiObject uiObject;
+	private DocObject uiObject;
 	
-	/** Объект БД */
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "db_objects_id")
-	@ToString.Exclude
-	private DbObject dbObject;
-	
+	/** Текст ошибки */
+	@Column(length = 500)
+	private String errMessage;
+
+	/** Текст информационный */
+	@Column(length = 500)
+	private String infoMessage;
 	
 }

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
-import com.oborodulin.softreport.domain.model.dbobject.DbObject;
+import com.oborodulin.softreport.domain.model.docobject.DocObject;
 import com.oborodulin.softreport.domain.model.software.Software;
 
 import lombok.Data;
@@ -32,6 +32,6 @@ public class BusinessObject extends DetailEntity<Software, String> {
 	/** Список объектов БД, связанных с текущим бизнес-объектом */
 	@OneToMany(mappedBy = "businessObject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DbObject> dbObjects = new ArrayList<>();
+	private List<DocObject> dbObjects = new ArrayList<>();
 
 }

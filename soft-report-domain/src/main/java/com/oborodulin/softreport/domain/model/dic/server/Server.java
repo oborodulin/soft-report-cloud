@@ -13,8 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
-import com.oborodulin.softreport.domain.model.dbobject.DbObject;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
+import com.oborodulin.softreport.domain.model.docobject.DocObject;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -58,6 +58,6 @@ public class Server extends AuditableEntity<String> {
 	/** Список объектов БД, связанных с текущим сервером */
 	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DbObject> dbObjects = new ArrayList<>();
+	private List<DocObject> dbObjects = new ArrayList<>();
 	
 }
