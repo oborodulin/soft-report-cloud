@@ -18,11 +18,6 @@
 			th:object="${enterprise}" th:method="POST"
 			id="form-create-enterprise" data-parsley-validate
 			class="form-horizontal form-label-left">
-			<input type="hidden" th:field="*{version}">
-			<th:block th:if="${enterprise.id != null}">
-				<input type="hidden" th:field="*{createdBy}">
-				<input type="hidden" th:field="*{createdDate}">
-			</th:block>
 			<div class="form-group row">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
 					th:text="#{enterprises.parent.label}"></label>

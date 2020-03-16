@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -27,11 +28,12 @@ public class BusinessObject extends DetailEntity<Software, String> {
 	@NotBlank
 	private String name;
 
+	@Column(length = 1000)
 	private String descr;
 
 	/** Список объектов БД, связанных с текущим бизнес-объектом */
 	@OneToMany(mappedBy = "businessObject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DocObject> dbObjects = new ArrayList<>();
+	private List<DocObject> docObjects = new ArrayList<>();
 
 }

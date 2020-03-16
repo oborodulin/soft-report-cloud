@@ -1,15 +1,23 @@
 package com.oborodulin.softreport.domain.model.docobject.docobjectevent;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
+import com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype.uieventtype.UiEventType;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import com.oborodulin.softreport.domain.model.docobject.DocObject;
+import com.oborodulin.softreport.domain.model.project.document.version.Version;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Data
@@ -21,22 +29,39 @@ public class DocObjectEvent extends DetailEntity<DocObject, String> {
 
 	protected static final String TABLE_NAME = "DOC_OBJECT_EVENTS";
 
-	/** Тип правила */
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "type_code")
+	/** Версии */
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@EqualsAndHashCode.Exclude
+	private List<Version> versions = new ArrayList<>();
+
+	/** Тип события */
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "type_code", nullable = false)
 	@ToString.Exclude
 	private Value type;
 
+	/** UI: тип события UI объекта */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ui_event_types_id")
+	@ToString.Exclude
+	private UiEventType uiEventType;
+	
 	/** Действие */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "action_code")
 	@ToString.Exclude
 	private Value action;
 
-	/** UI объект над которым выполняется действие*/
+	/** UI/БД объект, над которым выполняется действие*/
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "ui_doc_objects_id")
+	@JoinColumn(name = "doc_objects_id")
 	@ToString.Exclude
-	private DocObject uiObject;
+	private DocObject docObject;
+
+	/** UI объект (значение поля ТД, списка и пр.), который присваивается объекту, над которым выполняется действие*/
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "val_doc_objects_id")
+	@ToString.Exclude
+	private DocObject valDocObject;
 	
 }

@@ -58,6 +58,6 @@ public class Server extends AuditableEntity<String> {
 	/** Список объектов БД, связанных с текущим сервером */
 	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DocObject> dbObjects = new ArrayList<>();
+	private List<DocObject> docObjects = new ArrayList<>();
 	
 }

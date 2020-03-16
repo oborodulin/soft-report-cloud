@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -11,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
@@ -31,6 +33,11 @@ public class DocType extends AuditableEntity<String> {
 	/** Имя файла шаблона представления */
 	@NotBlank
 	private String template;
+
+	/** Признак формирования документа по текущей версии (а не с первой по последнюю) */
+	@NotNull
+	@Column(columnDefinition = "boolean not null default false")
+	private Boolean isCurrentVersion = false;
 	
 	/** Категория документа */
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)

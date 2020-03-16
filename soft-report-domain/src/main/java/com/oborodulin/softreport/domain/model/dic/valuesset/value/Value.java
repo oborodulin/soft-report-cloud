@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,9 +24,12 @@ import com.oborodulin.softreport.domain.model.dic.objhierarchy.ObjHierarchy;
 import com.oborodulin.softreport.domain.model.dic.proglang.ProgLang;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
 import com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype.UiObjectType;
+import com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype.uieventtype.UiEventType;
 import com.oborodulin.softreport.domain.model.dic.server.Server;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.model.docobject.DocObject;
+import com.oborodulin.softreport.domain.model.docobject.docobjectevent.DocObjectEvent;
+import com.oborodulin.softreport.domain.model.docobject.docobjectrule.DocObjectRule;
 import com.oborodulin.softreport.domain.model.software.Software;
 
 import lombok.Data;
@@ -55,121 +60,156 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	private Date closeDate;
 
-	/** Атрибут №1 значения*/
+	/** Атрибут №1 значения */
 	@Column(length = 500)
 	private String attr1;
 
-	/** Атрибут №2 значения*/
+	/** Атрибут №2 значения */
 	@Column(length = 500)
 	private String attr2;
 
-	/** Атрибут №3 значения*/
+	/** Атрибут №3 значения */
 	@Column(length = 500)
 	private String attr3;
 
-	/** Атрибут №4 значения*/
+	/** Атрибут №4 значения */
 	@Column(length = 500)
 	private String attr4;
 
-	/** Атрибут №5 значения*/
+	/** Атрибут №5 значения */
 	@Column(length = 500)
 	private String attr5;
 
-	/** Атрибут №6 значения*/
+	/** Атрибут №6 значения */
 	@Column(length = 500)
 	private String attr6;
 
-	/** Атрибут №7 значения*/
+	/** Атрибут №7 значения */
 	@Column(length = 500)
 	private String attr7;
 
-	/** Атрибут №8 значения*/
+	/** Атрибут №8 значения */
 	@Column(length = 500)
 	private String attr8;
 
-	/** Атрибут №9 значения*/
+	/** Атрибут №9 значения */
 	@Column(length = 500)
 	private String attr9;
 
-	/** Атрибут №10 значения*/
+	/** Атрибут №10 значения */
 	@Column(length = 500)
 	private String attr10;
 
-	/** Список ПО текущего типа (значения)*/
+	/** Список ПО текущего типа (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<Software> softwares = new ArrayList<>();
 
-	/** Список типов документов текущей категории (значения)*/
+	/** Список типов документов текущей категории (значения) */
 	@OneToMany(mappedBy = "categ", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<DocType> categDocTypes = new ArrayList<>();
 
-	/** Список типов документов текущего типа (значения)*/
+	/** Список типов документов текущего типа (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<DocType> typeDocTypes = new ArrayList<>();
 
-	/** Список объектов БД текущего типа (значения)*/
+	/** Список объектов БД/UI текущего типа (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DocObject> typeDbObjects = new ArrayList<>();
+	private List<DocObject> typeDocObjects = new ArrayList<>();
 
-	/** Список объектов БД текущего типа таблиц данных (значения)*/
-	@OneToMany(mappedBy = "dtType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@EqualsAndHashCode.Exclude
-	private List<DocObject> dtTypeDbObjects = new ArrayList<>();
-
-	/** Список объектов БД текущего типа базы данных (значения)*/
+	/** Список объектов БД текущего типа базы данных (значения) */
 	@OneToMany(mappedBy = "dbType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DocObject> dbTypeDbObjects = new ArrayList<>();
-	
-	/** Язык программирования текущей технологии (значения)*/
+	private List<DocObject> dbTypeDocObjects = new ArrayList<>();
+
+	/** Список объектов БД текущего типа таблиц данных (значения) */
+	@OneToMany(mappedBy = "dtType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<DocObject> dtTypeDocObjects = new ArrayList<>();
+
+	/** Список объектов полей ТД текущего типа поля (значения) */
+	@OneToMany(mappedBy = "columnType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<DocObject> columnTypeDocObjects = new ArrayList<>();
+
+	/** Список объектов БД/UI текущего направления сортировки (значения) */
+	@OneToMany(mappedBy = "defaultSortDirection", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<DocObject> defSortDirDocObjects = new ArrayList<>();
+
+	/** Язык программирования текущей технологии (значения) */
 	@OneToOne(mappedBy = "lang")
 	@EqualsAndHashCode.Exclude
 	private ProgLang progLang;
 
-	/** Список языков программирования текущей архитектуры ПО (значения)*/
+	/** Список языков программирования текущей архитектуры ПО (значения) */
 	@OneToMany(mappedBy = "arch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<ProgLang> archProgLangs = new ArrayList<>();
 
-	/** Список типов данных текущего типа данных (значения)*/
+	/** Список типов данных текущего типа данных (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DataType> typeDataTypes = new ArrayList<>();
+	private List<DataType> dataTypes = new ArrayList<>();
 
-	/** Список серверов текущего типа (значения)*/
+	/** Список серверов текущего типа (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<Server> typeServers = new ArrayList<>();
 
-	/** Список серверов текущего типа окружения (значения)*/
+	/** Список серверов текущего типа окружения (значения) */
 	@OneToMany(mappedBy = "env", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<Server> envServers = new ArrayList<>();
 
-	/** Список объектов иерархии текущей архитектуры ПО (значения)*/
+	/** Список объектов иерархии текущей архитектуры ПО (значения) */
 	@OneToMany(mappedBy = "arch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<ObjHierarchy> archObjHierarches = new ArrayList<>();
 
-	/** Список объектов БД иерархии текущего типа БД (значения)*/
-	@OneToMany(mappedBy = "dbType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	/** Список объектов БД/UI иерархии текущего типа БД/UI (значения) */
+	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<ObjHierarchy> dbTypeObjHierarches = new ArrayList<>();
+	private List<ObjHierarchy> typeObjHierarches = new ArrayList<>();
 
-	/** Список объектов UI иерархии текущего типа UI (значения)*/
-	@OneToMany(mappedBy = "uiType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@EqualsAndHashCode.Exclude
-	private List<ObjHierarchy> uiTypeObjHierarches = new ArrayList<>();
-
-	/** Список объектов UI текущего типа UI (значения)*/
+	/** Список объектов UI текущего типа UI (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<UiObjectType> uiObjectTypes = new ArrayList<>();
-	
+
+	/** Список событий объектов UI текущего типа события (значения) */
+	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<UiEventType> uiEventTypes = new ArrayList<>();
+
+	/** Список типов бизнес-правил текущего типа (значения) */
+	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<DocObjectRule> typeDocObjectRules = new ArrayList<>();
+
+	/** Список операторов бизнес-правил текущего оператора (значения) */
+	@OneToMany(mappedBy = "operator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<DocObjectRule> operatorDocObjectRules = new ArrayList<>();
+
+	/** Список операндов бизнес-правил текущего операнда (значения) */
+	@OneToMany(mappedBy = "operand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<DocObjectRule> operandDocObjectRules = new ArrayList<>();
+
+	/** Список событий объектов текущего события (значения) */
+	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<DocObjectEvent> typeDocObjectEvents = new ArrayList<>();
+
+	/** Список действий событий объектов текущего действия (значения) */
+	@OneToMany(mappedBy = "action", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<DocObjectEvent> actionDocObjectEvents = new ArrayList<>();
+
 	/**
 	 * Возвращает имя и код набора значений.
 	 * 
@@ -183,4 +223,29 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	public String getSetNameAndCode() {
 		return getMaster() != null ? getMaster().getNameAndCode() : null;
 	};
+
+	/**
+	 * Предобработка данных перед созданием и сохранением.
+	 * 
+	 * (Устанавливает значение кода набора значений прописными символами)
+	 * 
+	 * @see #code
+	 */
+	@PrePersist
+	public void prePersist() {
+		this.setCode(code.toUpperCase());
+	}
+
+	/**
+	 * Предобработка данных перед изменением.
+	 * 
+	 * (Устанавливает значение кода набора значений прописными символами)
+	 * 
+	 * @see #code
+	 */
+	@PreUpdate
+	public void preUpdate() {
+		this.setCode(code.toUpperCase());
+	}
+
 }

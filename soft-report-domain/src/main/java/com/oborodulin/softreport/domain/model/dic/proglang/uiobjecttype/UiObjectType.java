@@ -1,17 +1,24 @@
 package com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.dic.proglang.ProgLang;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
+import com.oborodulin.softreport.domain.model.docobject.DocObject;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Data
@@ -38,5 +45,10 @@ public class UiObjectType extends DetailEntity<ProgLang, String> {
 
 	/** UI-объект поле-список: пустое значение */
 	private String emptyValue;
+
+	/** Список UI объектов, связанных с текущим типом */
+	@OneToMany(mappedBy = "uiObjectType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<DocObject> uiObjects = new ArrayList<>();
 	
 }

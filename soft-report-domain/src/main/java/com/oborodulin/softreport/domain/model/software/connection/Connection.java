@@ -16,6 +16,9 @@ public class Connection extends DetailEntity<Software, String> {
 
 	protected static final String TABLE_NAME = "CONNECTIONS";
 
+	/** Наименование */
+	private String name;
+
 	/** URL-соединения */
 	private String url;
 

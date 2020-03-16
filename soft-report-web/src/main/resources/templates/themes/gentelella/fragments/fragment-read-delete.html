@@ -125,5 +125,54 @@
 			<th:block th:replace="${scripts}" />
 		</th:block>
 	</th:block>
+
 </body>
+<table>
+	<tbody>
+		<tr>
+			<td class="a-center"
+				th:fragment="master-buttons(masterHref, master, detailsHref, details)">
+				<a
+				th:href="@{~/{href}/edit/{id}(href=${masterHref},id=${master.id})}"
+				class="btn btn-info btn-sm"
+				style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
+					class="fa fa-pencil fa-xs"></i></a> <a
+				th:href="@{~/{href}/delete/{id}(href=${masterHref},id=${master.id})}"
+				class="btn btn-danger btn-sm"
+				style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
+					class="fa fa-trash-o fa-xs"></i></a> <a
+				th:href="@{~/{href}/{masterId}(href=${detailsHref},masterId=${master.id})}"
+				th:class="${#lists.isEmpty(details)} ? 'btn btn-secondary btn-sm' : 'btn btn-primary btn-sm'"
+				style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
+					class="fa fa-plus-square-o fa-xs"></i></a>
+			</td>
+			<td class=" "
+				th:fragment="detail-buttons(master, detailsHref, detail)">
+				<div style="display: flex;">
+					<a
+						th:href="@{~/{href}/{masterId}/edit/{id}(href=${detailsHref},masterId=${master.id}, id=${detail.id})}"
+						class="btn btn-info btn-sm"
+						style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
+						class="fa fa-pencil fa-xs"></i></a><a
+						th:href="@{~/{href}/{masterId}/delete/{id}(href=${detailsHref},masterId=${master.id}, id=${detail.id})}"
+						class="btn btn-danger btn-sm"
+						style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
+						class="fa fa-trash-o fa-xs"></i></a>
+				</div>
+			</td>
+			<td class=" " th:fragment="grid-row-buttons(href, object)"><div
+					style="display: flex;">
+					<a
+						th:href="@{~/{href}/edit/{id}(href=${href},id=${object.id})}"
+						class="btn btn-info btn-sm"
+						style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
+						class="fa fa-pencil fa-xs"></i></a><a
+						th:href="@{~/{href}/delete/{id}(href=${href},id=${object.id})}"
+						class="btn btn-danger btn-sm"
+						style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
+						class="fa fa-trash-o fa-xs"></i></a>
+				</div></td>
+		</tr>
+	</tbody>
+</table>
 </html>

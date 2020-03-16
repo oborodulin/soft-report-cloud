@@ -11,8 +11,7 @@ import lombok.Data;
 import lombok.ToString;
 
 /**
- * Класс описывает иерархию объектов базы данных (БД) и пользовательского интерфейса (UI),
- * в т.ч. событийную модель.
+ * Класс описывает иерархию объектов базы данных (БД) и пользовательского интерфейса (UI).
  * 
  * @author acs-i
  *
@@ -32,16 +31,10 @@ public class ObjHierarchy extends TreeEntity<ObjHierarchy, String> {
 	@ToString.Exclude
 	private Value arch;
 
-	/** Тип объекта БД */
-	@ManyToOne
-	@JoinColumn(name = "db_type_code")
+	/** Тип объекта БД/UI */
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "type_code")
 	@ToString.Exclude
-	private Value dbType;
+	private Value type;
 
-	/** Тип объекта UI */
-	@ManyToOne
-	@JoinColumn(name = "ui_type_code")
-	@ToString.Exclude
-	private Value uiType;
-	
 }

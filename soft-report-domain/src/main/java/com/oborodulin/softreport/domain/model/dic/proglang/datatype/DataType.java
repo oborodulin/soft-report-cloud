@@ -51,9 +51,9 @@ public class DataType extends DetailEntity<ProgLang, String> {
 	@ToString.Exclude
 	private DataType frontend;
 
-	/** Список объектов БД, связанных с текущим типом данных */
+	/** Список объектов БД/UI, текущего типа данных */
 	@OneToMany(mappedBy = "dataType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DocObject> dbObjects = new ArrayList<>();
+	private List<DocObject> docObjects = new ArrayList<>();
 	
 }

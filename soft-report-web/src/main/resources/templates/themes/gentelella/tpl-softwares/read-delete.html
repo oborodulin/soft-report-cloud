@@ -52,17 +52,9 @@
 				<tr th:class="${rowNum % 2 != 0} ? 'odd pointer' : 'even pointer'">
 					<td class="a-center "><input name="table_records"
 						type="checkbox" th:value="${software.id}" class="flat"></td>
-					<td class=" "><div style="display: flex;">
-							<a th:href="@{~/softwares/edit/{id}(id=${software.id})}"
-								class="btn btn-info btn-sm"
-								style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
-								class="fa fa-pencil fa-xs"></i></a><a
-								th:href="@{~/softwares/delete/{id}(id=${software.id})}"
-								class="btn btn-danger btn-sm"
-								style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
-								class="fa fa-trash-o fa-xs"></i></a>
-						</div></td>
-						<!-- /*https://stackoverflow.com/questions/46595638/adding-padding-to-bootstrap-table-cells*/ -->
+					<td
+						th:replace="fragments/fragment-read-delete :: grid-row-buttons(href='softwares', object=${software})" />
+					<!-- /*https://stackoverflow.com/questions/46595638/adding-padding-to-bootstrap-table-cells*/ -->
 					<td th:with="pl=${level+4}" th:text="${software.code}"
 						th:class="${software.parent == null} ? '' : ${'pl-'+pl}" />
 					<td th:text="${software.name}" class=" " />
