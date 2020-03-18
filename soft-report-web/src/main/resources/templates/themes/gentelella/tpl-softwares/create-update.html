@@ -23,9 +23,9 @@
 				<div class="col-md-6 col-sm-6 ">
 					<select th:field="*{parent}" class="select2_group form-control">
 						<option value="" th:text="#{softwares.opt.empty.label}" />
-						<option th:each="sw : ${softwares}" th:value="${sw.id}"
-							th:text="${sw.name}"
-							th:selected="${software.parent != null} ? ${sw.id == software.parent.id}: 'false'"></option>
+						<option th:each="opt : ${softwares}" th:value="${opt.id}"
+							th:text="${opt.name}"
+							th:selected="${software.parent != null} ? ${opt.id == software.parent.id}: 'false'"></option>
 						<!-- optgroup label="Alaskan/Hawaiian Time Zone">
 												<option value="AK">Alaska</option>
 												<option value="HI">Hawaii</option>
@@ -62,9 +62,9 @@
 					<select th:field="*{type}" required="required"
 						class="select2_group form-control">
 						<option value="" th:text="#{type.opt.empty.label}" />
-						<option th:each="tp : ${types}" th:value="${tp.id}"
-							th:text="${tp.val}"
-							th:selected="${software.type != null} ? ${tp.id == software.type.id}: 'false'"></option>
+						<option th:each="opt : ${types}" th:value="${opt.id}"
+							th:text="${opt.val}"
+							th:selected="${software.type != null} ? ${opt.id == software.type.id}: 'false'"></option>
 					</select>
 				</div>
 			</div>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-read-delete}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
+	</head>
+</th:block>
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<a th:href="@{~/objhierarches/create}" class="btn btn-primary btn-xs"><i
+			class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a>
+
+		<div th:if="${not #lists.isEmpty(objHierarches)}" class="table-responsive">
+			<form th:action="@{~/objhierarches/delete}" th:method="POST"
+				id="form-delete-objHierarches">
+				<table class="table table-striped jambo_table bulk_action">
+					<thead>
+						<tr class="headings">
+							<th><input type="checkbox" id="check-all" class="flat">
+							</th>
+							<th class="column-title"></th>
+							<th class="column-title" th:text="#{arch.label}" />
+							<th class="column-title no-link last"><span class="nobr"
+								th:text="#{type.label}"></span></th>
+							<th class="bulk-actions" colspan="3"><button type="submit"
+									class="btn btn-danger btn-xs">
+									<i class="fa fa-trash-o"></i>
+									<th:block th:text="' '+#{delete.label}" />
+								</button> <a th:href="@{~/objhierarches/[id]/create}"
+								class="btn btn-secondary btn-xs"
+								onclick="bulkActionChecked(this, event, 'table_records');"><i
+									class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a></th>
+						</tr>
+					</thead>
+					<tbody th:with="rowNum=0, level=0">
+						<th:block
+							th:replace="this :: outputTree(${objHierarches}, ${rowNum}, ${level})" />
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+	<th:block th:fragment="outputTree(objHierarches, rowNum, level)">
+		<th:block th:with="rowNum=${rowNum+1}">
+			<th:block th:each="objHierarchy, stat : ${objHierarches}">
+				<tr th:class="${rowNum % 2 != 0} ? 'odd pointer' : 'even pointer'">
+					<td class="a-center "><input name="table_records"
+						type="checkbox" th:value="${objHierarchy.id}" class="flat"></td>
+					<td
+						th:replace="fragments/fragment-read-delete :: grid-row-buttons(href='objhierarches', object=${objHierarchy})" />
+					<!-- /*https://stackoverflow.com/questions/46595638/adding-padding-to-bootstrap-table-cells*/ -->
+					<td th:text="${objHierarchy.arch.val}" class=" " />
+					<td th:with="pl=${level+4}" th:text="${objHierarchy.type.val}"
+						th:class="${objHierarchy.parent == null} ? '' : ${'pl-'+pl}" />
+				</tr>
+				<th:block th:if="${!#lists.isEmpty(objHierarchy.children)}"
+					th:with="level=${level+1}"
+					th:replace="this :: outputTree(${objHierarchy.children}, ${rowNum}, ${level})" />
+			</th:block>
+		</th:block>
+	</th:block>
+	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-read-delete :: body(scripts=~{this :: .custom-script})">
+		</th:block>
+	</th:block>
+</body>
+</html>

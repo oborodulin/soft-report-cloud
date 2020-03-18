@@ -24,9 +24,9 @@
 				<div class="col-md-6 col-sm-6 ">
 					<select th:field="*{parent}" class="select2_group form-control">
 						<option value="" th:text="#{enterprises.opt.empty.label}" />
-						<option th:each="en : ${enterprises}" th:value="${en.id}"
-							th:text="${en.fullName}"
-							th:selected="${enterprise.parent != null} ? ${en.id == enterprise.parent.id}: 'false'"></option>
+						<option th:each="opt : ${enterprises}" th:value="${opt.id}"
+							th:text="${opt.fullName}"
+							th:selected="${enterprise.parent != null} ? ${opt.id == enterprise.parent.id}: 'false'"></option>
 					</select>
 				</div>
 			</div>

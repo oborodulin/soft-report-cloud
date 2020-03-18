@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-create-update}"
+	th:with="titleCurrent=${objHierarchy.id == null} ? ${titleCreate} : ${titleUpdate}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
+	</head>
+</th:block>
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<br />
+		<form
+			th:action="${objHierarchy.id == null} ? (${objHierarchy.parent == null} ? @{~/objhierarches/create/{isContinue}(isContinue='false')}:@{~/objhierarches/{parentId}/create/{isContinue}(parentId=${objHierarchy.parent.id}, isContinue='false')}) : @{~/objhierarches/update/{id}(id=${objHierarchy.id})}"
+			th:object="${objHierarchy}" th:method="POST" id="form-create-objHierarchy"
+			data-parsley-validate class="form-horizontal form-label-left">
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					th:text="#{objHierarches.parent.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<select th:field="*{parent}" class="select2_group form-control">
+						<option value="" th:text="#{objHierarches.opt.empty.label}" />
+						<option th:each="opt : ${objHierarches}" th:value="${opt.id}"
+							th:text="${opt.name}"
+							th:selected="${objHierarchy.parent != null} ? ${opt.id == objHierarchy.parent.id}: 'false'"></option>
+					</select>
+				</div>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="arch" th:text="#{arch.label}"><span class="required">*</span></label>
+				<div class="col-md-6 col-sm-6 ">
+					<select th:field="*{arch}" required="required"
+						class="select2_group form-control">
+						<option value="" th:text="#{arch.opt.empty.label}" />
+						<option th:each="opt : ${archs}" th:value="${opt.id}"
+							th:text="${opt.val}"
+							th:selected="${objHierarchy.arch != null} ? ${opt.id == objHierarchy.arch.id}: 'false'"></option>
+					</select>
+				</div>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="type" th:text="#{type.label}"><span class="required">*</span></label>
+				<div class="col-md-6 col-sm-6 ">
+					<select th:field="*{type}" required="required"
+						class="select2_group form-control">
+						<option value="" th:text="#{type.opt.empty.label}" />
+						<option th:each="opt : ${types}" th:value="${opt.id}"
+							th:text="${opt.val}"
+							th:selected="${objHierarchy.type != null} ? ${opt.id == objHierarchy.type.id}: 'false'"></option>
+					</select>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="ln_solid"></div>
+			<th:block
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/objhierarches}, object=${objHierarchy}, formId='form-create-objHierarchy')" />
+		</form>
+	</div>
+	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})" />
+	</th:block>
+</body>
+</html>

@@ -15,7 +15,7 @@ public interface ValuesSetService extends CommonJpaService<ValuesSet, String> {
 	public List<Value> getServersTypes();
 
 	public List<Value> getEnvTypes();
-	
+
 	public List<Value> getSortDirections();
 
 	public List<Value> getCfgBundleTypes();
@@ -29,4 +29,24 @@ public interface ValuesSetService extends CommonJpaService<ValuesSet, String> {
 	public List<Value> getDocCategs();
 
 	public List<Value> getDocTypes();
+
+	public List<Value> getDbTypes();
+
+	public List<Value> getDtTypes();
+
+	public List<Value> getDbColumnTypes();
+
+	public List<Value> getSqlDataTypes();
+
+	public List<Value> getDocObjTypes();
+
+	public List<Value> getDocObjEvents();
+
+	public List<Value> getDocObjEventActions();
+
+	public List<Value> getRuleTypes();
+
+	public List<Value> getRuleCompareTypes();
+
+	public List<Value> getRuleOperators();
 }

@@ -39,40 +39,80 @@ public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSe
 		return valuesSet.isPresent() ? Optional.ofNullable(valuesSet.get().getValues()) : Optional.empty();
 	}
 
-	public List<Value> getServersTypes(){
+	public List<Value> getServersTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_SERVERS_TYPES);
 	};
 
-	public List<Value> getEnvTypes(){
+	public List<Value> getEnvTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_ENV_TYPES);
 	};
-	
-	public List<Value> getSortDirections(){
+
+	public List<Value> getSortDirections() {
 		return this.findValuesBySetCode(ValuesSet.VS_SORT_DIRECTIONS);
 	};
 
-	public List<Value> getCfgBundleTypes(){
+	public List<Value> getCfgBundleTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_CFG_BUNDLE_TYPES);
 	};
 
-	public List<Value> getSoftwareTypes(){
+	public List<Value> getSoftwareTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_SOFTWARE_TYPES);
 	};
 
-	public List<Value> getSoftwareArchs(){
+	public List<Value> getSoftwareArchs() {
 		return this.findValuesBySetCode(ValuesSet.VS_SOFTWARE_ARCHS);
 	};
 
-	public List<Value> getSoftwareTechs(){
+	public List<Value> getSoftwareTechs() {
 		return this.findValuesBySetCode(ValuesSet.VS_SOFTWARE_TECHS);
 	};
 
-	public List<Value> getDocCategs(){
+	public List<Value> getDocCategs() {
 		return this.findValuesBySetCode(ValuesSet.VS_DOC_CATEGS);
 	};
 
-	public List<Value> getDocTypes(){
+	public List<Value> getDocTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_DOC_TYPES);
 	};
-	
+
+	public List<Value> getDbTypes() {
+		return this.findValuesBySetCode(ValuesSet.VS_DB_TYPES);
+	};
+
+	public List<Value> getDtTypes() {
+		return this.findValuesBySetCode(ValuesSet.VS_DB_DT_TYPES);
+	};
+
+	public List<Value> getDbColumnTypes() {
+		return this.findValuesBySetCode(ValuesSet.VS_DB_COLUMN_TYPES);
+	};
+
+	public List<Value> getSqlDataTypes() {
+		return this.findValuesBySetCode(ValuesSet.VS_DB_SQL_DATA_TYPES);
+	};
+
+	public List<Value> getDocObjTypes() {
+		return this.findValuesBySetCode(ValuesSet.VS_DOC_OBJ_TYPES);
+	};
+
+	public List<Value> getDocObjEvents() {
+		return this.findValuesBySetCode(ValuesSet.VS_DOC_OBJ_EVENTS);
+	};
+
+	public List<Value> getDocObjEventActions() {
+		return this.findValuesBySetCode(ValuesSet.VS_DOC_OBJ_EVENT_ACTIONS);
+	};
+
+	public List<Value> getRuleTypes() {
+		return this.findValuesBySetCode(ValuesSet.VS_RULE_TYPES);
+	};
+
+	public List<Value> getRuleCompareTypes() {
+		return this.findValuesBySetCode(ValuesSet.VS_RULE_COMPARE_TYPES);
+	};
+
+	public List<Value> getRuleOperators() {
+		return this.findValuesBySetCode(ValuesSet.VS_RULE_OPERATORS);
+	};
+
 }
