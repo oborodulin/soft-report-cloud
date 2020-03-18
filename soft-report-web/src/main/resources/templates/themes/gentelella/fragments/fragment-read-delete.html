@@ -57,76 +57,73 @@
 <link href="/css/styles.css" rel="stylesheet">
 </head>
 
-<body>
-	<th:block th:fragment="body(scripts)">
-		<!-- jQuery -->
-		<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
-		<!-- Bootstrap -->
-		<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-		<!-- FastClick -->
-		<script th:src="@{/webjars/fastclick/fastclick.js}"></script>
-		<!-- NProgress -->
-		<script th:src="@{/webjars/nprogress/nprogress.js}"></script>
-		<!-- iCheck -->
-		<script th:src="@{/webjars/iCheck/icheck.min.js}"></script>
-		<!-- Skycons -->
-		<script th:src="@{/webjars/skycons/skycons.js}"></script>
-		<!-- Flot -->
-		<script th:src="@{/webjars/flot/jquery.flot.js}"></script>
-		<script th:src="@{/webjars/flot/jquery.flot.pie.js}"></script>
-		<script th:src="@{/webjars/flot/jquery.flot.time.js}"></script>
-		<script th:src="@{/webjars/flot/jquery.flot.stack.js}"></script>
-		<script th:src="@{/webjars/flot/jquery.flot.resize.js}"></script>
-		<!-- Flot plugins -->
-		<script
-			th:src="@{/webjars/github-com-emmerich-flot-orderBars/jquery.flot.orderBars.js}"></script>
-		<script th:src="@{/webjars/flot-spline/js/jquery.flot.spline.min.js}"></script>
-		<script th:src="@{/webjars/flot.curvedlines/curvedLines.js}"></script>
-		<!-- DateJS -->
-		<script th:src="@{/webjars/datejs/build/date.js}"></script>
-		<!-- popper.js -->
-		<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<th:block th:fragment="body(scripts)">
+	<!-- jQuery -->
+	<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+	<!-- Bootstrap -->
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<!-- FastClick -->
+	<script th:src="@{/webjars/fastclick/fastclick.js}"></script>
+	<!-- NProgress -->
+	<script th:src="@{/webjars/nprogress/nprogress.js}"></script>
+	<!-- iCheck -->
+	<script th:src="@{/webjars/iCheck/icheck.min.js}"></script>
+	<!-- Skycons -->
+	<script th:src="@{/webjars/skycons/skycons.js}"></script>
+	<!-- Flot -->
+	<script th:src="@{/webjars/flot/jquery.flot.js}"></script>
+	<script th:src="@{/webjars/flot/jquery.flot.pie.js}"></script>
+	<script th:src="@{/webjars/flot/jquery.flot.time.js}"></script>
+	<script th:src="@{/webjars/flot/jquery.flot.stack.js}"></script>
+	<script th:src="@{/webjars/flot/jquery.flot.resize.js}"></script>
+	<!-- Flot plugins -->
+	<script
+		th:src="@{/webjars/github-com-emmerich-flot-orderBars/jquery.flot.orderBars.js}"></script>
+	<script th:src="@{/webjars/flot-spline/js/jquery.flot.spline.min.js}"></script>
+	<script th:src="@{/webjars/flot.curvedlines/curvedLines.js}"></script>
+	<!-- DateJS -->
+	<script th:src="@{/webjars/datejs/build/date.js}"></script>
+	<!-- popper.js -->
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 
-		<!-- Datatables -->
-		<script
-			th:src="@{/webjars/datatables.net/js/jquery.dataTables.min.js}"></script>
-		<script
-			th:src="@{/webjars/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
-		<script
-			th:src="@{/webjars/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
-		<script
-			th:src="@{/webjars/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
-		<script
-			th:src="@{/webjars/datatables.net-buttons/js/buttons.flash.min.js}"></script>
-		<script
-			th:src="@{/webjars/datatables.net-buttons/js/buttons.html5.min.js}"></script>
-		<script
-			th:src="@{/webjars/datatables.net-buttons/js/buttons.print.min.js}"></script>
-		<script
-			th:src="@{/webjars/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
-		<script
-			th:src="@{/webjars/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
-		<script
-			th:src="@{/webjars/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
-		<script
-			th:src="@{/webjars/datatables.net-responsive-bs/js/responsive.bootstrap.min.js}"></script>
-		<script
-			th:src="@{/webjars/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
-		<script th:src="@{/webjars/jszip/jszip.min.js}"></script>
-		<script th:src="@{/webjars/pdfmake/build/pdfmake.min.js}"></script>
-		<script th:src="@{/webjars/pdfmake/build/vfs_fonts.js}"></script>
+	<!-- Datatables -->
+	<script th:src="@{/webjars/datatables.net/js/jquery.dataTables.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-buttons/js/buttons.flash.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-buttons/js/buttons.html5.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-buttons/js/buttons.print.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-responsive-bs/js/responsive.bootstrap.min.js}"></script>
+	<script
+		th:src="@{/webjars/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
+	<script th:src="@{/webjars/jszip/jszip.min.js}"></script>
+	<script th:src="@{/webjars/pdfmake/build/pdfmake.min.js}"></script>
+	<script th:src="@{/webjars/pdfmake/build/vfs_fonts.js}"></script>
 
-		<!-- Custom Theme Scripts -->
-		<script src="/themes/gentelella/build/js/custom.min.js"></script>
-		<script src="/js/utils.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="/themes/gentelella/build/js/custom.min.js"></script>
+	<script src="/js/utils.js"></script>
 
-		<!--/* Per-page placeholder for additional scripts */-->
-		<th:block th:if="${scripts != null}">
-			<th:block th:replace="${scripts}" />
-		</th:block>
+	<!--/* Per-page placeholder for additional scripts */-->
+	<th:block th:if="${scripts != null}">
+		<th:block th:replace="${scripts}" />
 	</th:block>
+</th:block>
 
-</body>
 <table>
 	<tbody>
 		<tr>
@@ -162,8 +159,7 @@
 			</td>
 			<td class=" " th:fragment="grid-row-buttons(href, object)"><div
 					style="display: flex;">
-					<a
-						th:href="@{~/{href}/edit/{id}(href=${href},id=${object.id})}"
+					<a th:href="@{~/{href}/edit/{id}(href=${href},id=${object.id})}"
 						class="btn btn-info btn-sm"
 						style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
 						class="fa fa-pencil fa-xs"></i></a><a

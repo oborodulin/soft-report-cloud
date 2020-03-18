@@ -31,6 +31,7 @@ import com.oborodulin.softreport.domain.model.docobject.DocObject;
 import com.oborodulin.softreport.domain.model.docobject.docobjectevent.DocObjectEvent;
 import com.oborodulin.softreport.domain.model.docobject.docobjectrule.DocObjectRule;
 import com.oborodulin.softreport.domain.model.software.Software;
+import com.oborodulin.softreport.domain.model.software.configbundle.ConfigBundle;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -180,7 +181,7 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	@EqualsAndHashCode.Exclude
 	private List<UiObjectType> uiObjectTypes = new ArrayList<>();
 
-	/** Список событий объектов UI текущего типа события (значения) */
+	/** Список событий объектов UI текущего типа (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<UiEventType> uiEventTypes = new ArrayList<>();
@@ -200,7 +201,7 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	@EqualsAndHashCode.Exclude
 	private List<DocObjectRule> operandDocObjectRules = new ArrayList<>();
 
-	/** Список событий объектов текущего события (значения) */
+	/** Список событий объектов текущего типа (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<DocObjectEvent> typeDocObjectEvents = new ArrayList<>();
@@ -209,6 +210,24 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	@OneToMany(mappedBy = "action", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<DocObjectEvent> actionDocObjectEvents = new ArrayList<>();
+
+	/** Список конфигурационных пакетов текущего типа(значения) */
+	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<ConfigBundle> configBundles = new ArrayList<>();
+
+	/**
+	 * Возвращает код набора значений.
+	 * 
+	 * Необходимо для поиска значений по коду набора.
+	 * 
+	 * @return код набора значений
+	 * @see com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet
+	 * @see com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet#code
+	 */
+	public String getValuesSetCode() {
+		return getMaster() != null ? getMaster().getCode() : null;
+	};
 
 	/**
 	 * Возвращает имя и код набора значений.

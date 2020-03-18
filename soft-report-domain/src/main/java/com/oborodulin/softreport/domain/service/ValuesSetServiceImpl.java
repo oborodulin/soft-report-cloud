@@ -5,9 +5,10 @@ import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSetRepository;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,17 +25,54 @@ public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSe
 	}
 
 	@Override
-	public Optional<Set<Value>> findValuesBySetCode(String code) {
-		Optional<ValuesSet> valuesSet = this.repository.findByCode(code);
-
-		return valuesSet.isPresent() ? Optional.ofNullable(valuesSet.get().getValues()) : Optional.empty();
+	public List<Value> findValuesBySetCode(String code) {
+		Comparator<Value> compareByCode = (Value v1, Value v2) -> v1.getCode().compareTo(v2.getCode());
+		List<Value> values = this.repository.findByCode(code).get().getValues();
+		Collections.sort(values, compareByCode);
+		return values;
 	}
 
 	@Override
-	public Optional<Set<Value>> findValuesBySetId(Long id) {
+	public Optional<List<Value>> findValuesBySetId(Long id) {
 		Optional<ValuesSet> valuesSet = this.repository.findById(id);
 
 		return valuesSet.isPresent() ? Optional.ofNullable(valuesSet.get().getValues()) : Optional.empty();
 	}
 
+	public List<Value> getServersTypes(){
+		return this.findValuesBySetCode(ValuesSet.VS_SERVERS_TYPES);
+	};
+
+	public List<Value> getEnvTypes(){
+		return this.findValuesBySetCode(ValuesSet.VS_ENV_TYPES);
+	};
+	
+	public List<Value> getSortDirections(){
+		return this.findValuesBySetCode(ValuesSet.VS_SORT_DIRECTIONS);
+	};
+
+	public List<Value> getCfgBundleTypes(){
+		return this.findValuesBySetCode(ValuesSet.VS_CFG_BUNDLE_TYPES);
+	};
+
+	public List<Value> getSoftwareTypes(){
+		return this.findValuesBySetCode(ValuesSet.VS_SOFTWARE_TYPES);
+	};
+
+	public List<Value> getSoftwareArchs(){
+		return this.findValuesBySetCode(ValuesSet.VS_SOFTWARE_ARCHS);
+	};
+
+	public List<Value> getSoftwareTechs(){
+		return this.findValuesBySetCode(ValuesSet.VS_SOFTWARE_TECHS);
+	};
+
+	public List<Value> getDocCategs(){
+		return this.findValuesBySetCode(ValuesSet.VS_DOC_CATEGS);
+	};
+
+	public List<Value> getDocTypes(){
+		return this.findValuesBySetCode(ValuesSet.VS_DOC_TYPES);
+	};
+	
 }

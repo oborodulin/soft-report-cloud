@@ -69,5 +69,5 @@ public class Document extends DetailEntity<Project, String> {
 	public void addVersion(Version version) {
 		this.versions.add(version);
 	}
-	
+
 }

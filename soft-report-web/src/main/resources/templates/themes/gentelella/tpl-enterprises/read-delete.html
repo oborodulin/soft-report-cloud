@@ -14,7 +14,8 @@
 		<a th:href="@{~/enterprises/create}" class="btn btn-primary btn-xs"><i
 			class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a>
 
-		<div th:if="${not #lists.isEmpty(enterprises)}" class="table-responsive">
+		<div th:if="${not #lists.isEmpty(enterprises)}"
+			class="table-responsive">
 			<form th:action="@{~/enterprises/delete}" th:method="POST"
 				id="form-delete-enterprises">
 				<table class="table table-striped jambo_table bulk_action">
@@ -53,22 +54,14 @@
 				<tr th:class="${rowNum % 2 != 0} ? 'odd pointer' : 'even pointer'">
 					<td class="a-center "><input name="table_records"
 						type="checkbox" th:value="${enterprise.id}" class="flat"></td>
-					<td class=" "><div style="display: flex;">
-							<a th:href="@{~/enterprises/edit/{id}(id=${enterprise.id})}"
-								class="btn btn-info btn-sm"
-								style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
-								class="fa fa-pencil fa-xs"></i></a><a
-								th:href="@{~/enterprises/delete/{id}(id=${enterprise.id})}"
-								class="btn btn-danger btn-sm"
-								style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
-								class="fa fa-trash-o fa-xs"></i></a>
-						</div></td>
+					<td
+						th:replace="fragments/fragment-read-delete :: grid-row-buttons(href='enterprises', object=${enterprise})" />
 						<!-- /*https://stackoverflow.com/questions/46595638/adding-padding-to-bootstrap-table-cells*/ -->
 					<td th:with="pl=${level+4}" th:text="${enterprise.code}"
 						th:class="${enterprise.parent == null} ? '' : ${'pl-'+pl}" />
-							<td th:text="${enterprise.shortName}" class=" "/>
-							<td th:text="${enterprise.fullName}" class=" "/>
-							<td th:text="${enterprise.descr}" class=" "/>
+							<td th:text="${enterprise.shortName}" class=" " />
+							<td th:text="${enterprise.fullName}" class=" " />
+							<td th:text="${enterprise.descr}" class=" " />
 				</tr>
 				<th:block th:if="${!#lists.isEmpty(enterprise.children)}"
 					th:with="level=${level+1}"

@@ -1,8 +1,7 @@
 package com.oborodulin.softreport.domain.model.dic.valuesset;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -47,6 +46,9 @@ public class ValuesSet extends AuditableEntity<String> {
 	/** Код набора значений: Направления сортировки (по возрастанию/убыванию) */
 	public static final String VS_SORT_DIRECTIONS = "SORT_DIRECTIONS";
 
+	/** !!!Код набора значений: Тип конфигурационного пакета (командная строка, окружение, файл, поле ТД) */
+	public static final String VS_CFG_BUNDLE_TYPES = "CFG_BUNDLE_TYPES";
+	
 	/**
 	 * Код набора значений: типы ПО (веб-приложение, десктопное приложение,
 	 * интерфейс, служба)
@@ -136,7 +138,7 @@ public class ValuesSet extends AuditableEntity<String> {
 	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	@NotAudited
-	private Set<Value> values = new HashSet<>();
+	private List<Value> values = new ArrayList<>();
 
 	/**
 	 * Добавляет значение в набор.

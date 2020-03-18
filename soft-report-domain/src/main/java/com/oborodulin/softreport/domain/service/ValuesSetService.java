@@ -1,16 +1,32 @@
 package com.oborodulin.softreport.domain.service;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-
 import com.oborodulin.softreport.domain.common.service.CommonJpaService;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 
 public interface ValuesSetService extends CommonJpaService<ValuesSet, String> {
 
-	public Optional<Set<Value>> findValuesBySetCode(String code);
+	public List<Value> findValuesBySetCode(String code);
 
-	public Optional<Set<Value>> findValuesBySetId(Long id);
+	public Optional<List<Value>> findValuesBySetId(Long id);
 
+	public List<Value> getServersTypes();
+
+	public List<Value> getEnvTypes();
+	
+	public List<Value> getSortDirections();
+
+	public List<Value> getCfgBundleTypes();
+
+	public List<Value> getSoftwareTypes();
+
+	public List<Value> getSoftwareArchs();
+
+	public List<Value> getSoftwareTechs();
+
+	public List<Value> getDocCategs();
+
+	public List<Value> getDocTypes();
 }

@@ -57,7 +57,7 @@ public class Software extends TreeEntity<Software, String> {
 	/** Признак сторонней разработки (подрядчиком) */
 	@NotNull
 	@Column(columnDefinition = "boolean not null default false")
-	private Boolean isСontractor = false;
+	private Boolean isContractor = false;
 	
 	/** Тип ПО */
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

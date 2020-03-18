@@ -1,15 +1,12 @@
 package com.oborodulin.softreport.domain.service;
 
 import com.oborodulin.softreport.domain.common.service.JpaTreeAbstractService;
-import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
-import com.oborodulin.softreport.domain.model.dic.valuesset.value.ValueRepository;
 import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.model.software.SoftwareRepository;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SoftwareServiceImpl extends JpaTreeAbstractService<Software, SoftwareRepository, String>
 		implements SoftwareService {
 	@Autowired
-	private ValueRepository valueRepository;
+	private ValuesSetService valuesSetService;
 
 	@Autowired
 	public SoftwareServiceImpl(SoftwareRepository repository) {
@@ -40,6 +37,6 @@ public class SoftwareServiceImpl extends JpaTreeAbstractService<Software, Softwa
 
 	@Override
 	public List<Value> getTypes() {
-		return valueRepository.findByMasterCode(ValuesSet.VS_SOFTWARE_TYPES, Sort.by("code"));
+		return valuesSetService.getSoftwareTypes();
 	};
 }

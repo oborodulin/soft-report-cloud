@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.dic.proglang.ProgLang;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
@@ -55,5 +56,5 @@ public class DataType extends DetailEntity<ProgLang, String> {
 	@OneToMany(mappedBy = "dataType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> docObjects = new ArrayList<>();
-	
+
 }

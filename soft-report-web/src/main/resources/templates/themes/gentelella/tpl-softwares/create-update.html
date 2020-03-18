@@ -69,6 +69,17 @@
 				</div>
 			</div>
 			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="isContractor" th:text="#{iscontractor.label}"></label>
+				<div class="col-md-3 col-sm-3 ">
+					<div class="checkbox">
+						<input type="checkbox" th:field="*{isContractor}" class="flat">
+					</div>
+				</div>
+				<span th:if="${#fields.hasErrors('isContractor')}"
+					th:errors="*{isContractor}" class="text-danger"></span>
+			</div>
+			<div class="item form-group">
 				<label for="descr"
 					class="col-form-label col-md-3 col-sm-3 label-align"
 					th:text="#{descr.label}"></label>

@@ -26,9 +26,10 @@
 							<th class="column-title" th:text="#{code.label}" />
 							<th class="column-title" th:text="#{name.label}" />
 							<th class="column-title" th:text="#{type.label}" />
+							<th class="column-title" th:text="#{iscontractor.label}" />
 							<th class="column-title no-link last"><span class="nobr"
 								th:text="#{descr.label}"></span></th>
-							<th class="bulk-actions" colspan="5"><button type="submit"
+							<th class="bulk-actions" colspan="6"><button type="submit"
 									class="btn btn-danger btn-xs">
 									<i class="fa fa-trash-o"></i>
 									<th:block th:text="' '+#{delete.label}" />
@@ -59,6 +60,9 @@
 						th:class="${software.parent == null} ? '' : ${'pl-'+pl}" />
 					<td th:text="${software.name}" class=" " />
 					<td th:text="${software.type.val}" class=" " />
+					<td class="a-center"><input type="checkbox" id="isContractor"
+						name="isContractor" disabled="disabled"
+						th:checked="${software.isContractor}" class="flat" /></td>
 					<td th:text="${software.descr}" class=" " />
 				</tr>
 				<th:block th:if="${!#lists.isEmpty(software.children)}"

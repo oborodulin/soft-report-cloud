@@ -61,110 +61,99 @@
 <link href="/css/styles.css" rel="stylesheet">
 </head>
 
-<body>
-	<th:block th:fragment="body(scripts)">
-		<!-- jQuery -->
-		<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
-		<!-- Bootstrap -->
-		<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-		<!-- FastClick -->
-		<script th:src="@{/webjars/fastclick/fastclick.js}"></script>
-		<!-- NProgress -->
-		<script th:src="@{/webjars/nprogress/nprogress.js}"></script>
-		<!-- Chart.js -->
-		<script th:src="@{/webjars/chartjs/Chart.min.js}"></script>
-		<!-- gauge.js -->
-		<!-- script th:src="@{/webjars/gauge.js/dist/gauge.min.js}"></script-->
-		<!-- bootstrap-progressbar -->
-		<script
-			th:src="@{/webjars/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
-		<!-- iCheck -->
-		<script th:src="@{/webjars/iCheck/icheck.min.js}"></script>
-		<!-- Skycons -->
-		<!-- script th:src="@{/webjars/skycons/skycons.js}"></script-->
-		<!-- Flot -->
-		<!-- script th:src="@{/webjars/flot/jquery.flot.js}"></script>
+<th:block th:fragment="body(scripts)">
+	<!-- jQuery -->
+	<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+	<!-- Bootstrap -->
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<!-- FastClick -->
+	<script th:src="@{/webjars/fastclick/fastclick.js}"></script>
+	<!-- NProgress -->
+	<script th:src="@{/webjars/nprogress/nprogress.js}"></script>
+	<!-- Chart.js -->
+	<script th:src="@{/webjars/chartjs/Chart.min.js}"></script>
+	<!-- gauge.js -->
+	<!-- script th:src="@{/webjars/gauge.js/dist/gauge.min.js}"></script-->
+	<!-- bootstrap-progressbar -->
+	<script
+		th:src="@{/webjars/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
+	<!-- iCheck -->
+	<script th:src="@{/webjars/iCheck/icheck.min.js}"></script>
+	<!-- Skycons -->
+	<!-- script th:src="@{/webjars/skycons/skycons.js}"></script-->
+	<!-- Flot -->
+	<!-- script th:src="@{/webjars/flot/jquery.flot.js}"></script>
 	<script th:src="@{/webjars/flot/jquery.flot.pie.js}"></script>
 	<script th:src="@{/webjars/flot/jquery.flot.time.js}"></script>
 	<script th:src="@{/webjars/flot/jquery.flot.stack.js}"></script>
 	<script th:src="@{/webjars/flot/jquery.flot.resize.js}"></script-->
-		<!-- Flot plugins -->
-		<!-- script
+	<!-- Flot plugins -->
+	<!-- script
 		th:src="@{/webjars/github-com-emmerich-flot-orderBars/jquery.flot.orderBars.js}"></script>
 	<script th:src="@{/webjars/flot-spline/js/jquery.flot.spline.min.js}"></script>
 	<script th:src="@{/webjars/flot.curvedlines/curvedLines.js}"></script-->
-		<!-- DateJS -->
-		<script th:src="@{/webjars/datejs/build/date.js}"></script>
-		<!-- JQVMap -->
-		<!-- script th:src="@{/webjars/jqvmap/dist/jquery.vmap.min.js}"></script>
+	<!-- DateJS -->
+	<script th:src="@{/webjars/datejs/build/date.js}"></script>
+	<!-- JQVMap -->
+	<!-- script th:src="@{/webjars/jqvmap/dist/jquery.vmap.min.js}"></script>
 	<script th:src="@{/webjars/jqvmap/dist/maps/jquery.vmap.world.js}"></script>
 	<script
 		th:src="@{/webjars/jqvmap/examples/js/jquery.vmap.sampledata.js}"></script-->
-		<!-- bootstrap-wysiwyg -->
-		<!-- script src="../vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+	<!-- bootstrap-wysiwyg -->
+	<!-- script src="../vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
     <script src="../vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
     <script src="../vendors/google-code-prettify/src/prettify.js"></script-->
-		<!-- jQuery Tags Input -->
-		<script th:src="@{/webjars/jquery-tagsinput/jquery.tagsinput.js}"></script>
-		<!-- Switchery -->
-		<script th:src="@{/webjars/switchery/dist/switchery.min.js}"></script>
-		<!-- Select2 -->
-		<script th:src="@{/webjars/select2/4.0.12/js/select2.full.min.js}"></script>
-		<!-- Parsley -->
-		<script th:src="@{/webjars/parsleyjs/parsley.min.js}"></script>
-		<script th:src="@{/webjars/parsleyjs/i18n/ru.js}"></script>
-		<!-- script src="i18n/"<?= echo $lang ?>".js"></script-->
-		<!-- Autosize -->
-		<script th:src="@{/webjars/autosize/dist/autosize.min.js}"></script>
-		<!-- jQuery autocomplete -->
-		<script
-			th:src="@{/webjars/devbridge-autocomplete/dist/jquery.autocomplete.min.js}"></script>
-		<!-- starrr -->
-		<!-- script
+	<!-- jQuery Tags Input -->
+	<script th:src="@{/webjars/jquery-tagsinput/jquery.tagsinput.js}"></script>
+	<!-- Switchery -->
+	<script th:src="@{/webjars/switchery/dist/switchery.min.js}"></script>
+	<!-- Select2 -->
+	<script th:src="@{/webjars/select2/4.0.12/js/select2.full.min.js}"></script>
+	<!-- Parsley -->
+	<script th:src="@{/webjars/parsleyjs/parsley.min.js}"></script>
+	<script th:src="@{/webjars/parsleyjs/i18n/ru.js}"></script>
+	<!-- script src="i18n/"<?= echo $lang ?>".js"></script-->
+	<!-- Autosize -->
+	<script th:src="@{/webjars/autosize/dist/autosize.min.js}"></script>
+	<!-- jQuery autocomplete -->
+	<script
+		th:src="@{/webjars/devbridge-autocomplete/dist/jquery.autocomplete.min.js}"></script>
+	<!-- starrr -->
+	<!-- script
 		src="@{/webjars/bootstrap-daterangepicker/js/bootstrap-daterangepicker.js}../vendors/starrr/dist/starrr.js"></script-->
-		<!-- bootstrap-duallistbox -->
-		<script
-			th:src="@{/webjars/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js}"></script>
+	<!-- bootstrap-duallistbox -->
+	<script
+		th:src="@{/webjars/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js}"></script>
 
-		<!-- Custom Theme Scripts -->
-		<script src="/themes/gentelella/build/js/custom.min.js"></script>
-		<script src="/js/utils.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="/themes/gentelella/build/js/custom.min.js"></script>
+	<script src="/js/utils.js"></script>
 
-		<!--/* Per-page placeholder for additional scripts */-->
-		<th:block th:if="${scripts != null}">
-			<th:block th:replace="${scripts}" />
-		</th:block>
+	<!--/* Per-page placeholder for additional scripts */-->
+	<th:block th:if="${scripts != null}">
+		<th:block th:replace="${scripts}" />
 	</th:block>
-
-	<div class="item form-group"
-		th:fragment="form-buttons(cancelHref, object, formId)">
-		<!--/* Необходимо добавлять скрытые поля: version - для определения операции создания/обновления, 
-				а created* - для сохранения значений при обновлении*/-->
-		<input type="hidden" th:field="*{version}">
-		<th:block th:if="${object.id != null}">
-			<input type="hidden" th:field="*{createdBy}">
-			<input type="hidden" th:field="*{createdDate}">
-		</th:block>
-		<div class="
+</th:block>
+<div class="item form-group"
+	th:fragment="form-buttons(cancelHref, object, formId)">
+	<div class="
 	col-md-6col-sm-6offset-md-3">
-			<a th:href="${cancelHref}" class="btn btn-primary"> <i
-				class="fa fa-undo"></i> <th:block th:text="' '+#{cancel.label}" />
-			</a>
-			<button type="submit" class="btn btn-success">
-				<i
-					th:class="${object.id == null} ? 'fa fa-sign-out' : 'fa fa-check'"
-					aria-hidden="true"></i>
-				<th:block
-					th:text="' ' + ${object.id == null} ? #{add.label} : #{ok.label}" />
-			</button>
-			<!--/* https://stackoverflow.com/questions/52933002/only-variable-expressions-returning-numbers-or-booleans-are-allowed-in-this-cont */-->
-			<a th:if="${object.id == null}" href="#" class="btn btn-success"
-				th:formId="${formId}"
-				th:onclick="setFormContinueMark(this.getAttribute('formId'));">
-				<i class="fa fa-check" aria-hidden="true"></i> <th:block
-					th:text="' '+#{add.continue.label}" />
-			</a>
-		</div>
+		<a th:href="${cancelHref}" class="btn btn-primary"> <i
+			class="fa fa-undo"></i> <th:block th:text="' '+#{cancel.label}" />
+		</a>
+		<button type="submit" class="btn btn-success">
+			<i th:class="${object.id == null} ? 'fa fa-sign-out' : 'fa fa-check'"
+				aria-hidden="true"></i>
+			<th:block
+				th:text="' ' + ${object.id == null} ? #{add.label} : #{ok.label}" />
+		</button>
+		<!--/* https://stackoverflow.com/questions/52933002/only-variable-expressions-returning-numbers-or-booleans-are-allowed-in-this-cont */-->
+		<a th:if="${object.id == null}" href="#" class="btn btn-success"
+			th:formId="${formId}"
+			th:onclick="setFormContinueMark(this.getAttribute('formId'));"> <i
+			class="fa fa-check" aria-hidden="true"></i> <th:block
+				th:text="' '+#{add.continue.label}" />
+		</a>
 	</div>
-</body>
+</div>
 </html>

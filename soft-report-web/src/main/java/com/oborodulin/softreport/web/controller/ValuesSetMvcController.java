@@ -39,7 +39,7 @@ public class ValuesSetMvcController extends AbstractMvcController<ValuesSet, Val
 	public String showList(Locale locale, Model model) {
 		List<ValuesSet> valuesSets = this.service.findAll();
 		/*
-		 * Optional<Set<Value>> values =
+		 * Optional<List<Value>> values =
 		 * this.service.getValuesBySetCode(ValuesSet.VS_SOFTWARE_TYPES); if
 		 * (values.isPresent()) { for (Value value : values.get())
 		 * log.info(value.toString()); }

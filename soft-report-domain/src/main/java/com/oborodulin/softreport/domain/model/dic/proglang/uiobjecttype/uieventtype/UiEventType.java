@@ -47,5 +47,5 @@ public class UiEventType extends DetailEntity<UiObjectType, String> {
 	@OneToMany(mappedBy = "uiEventType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<DocObjectEvent> docObjectEvents = new ArrayList<>();
-	
+
 }

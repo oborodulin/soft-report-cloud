@@ -34,6 +34,10 @@ public class DocType extends AuditableEntity<String> {
 	@NotBlank
 	private String template;
 
+	/** Описание */
+	@Column(length = 500)
+	private String descr;
+	
 	/** Признак формирования документа по текущей версии (а не с первой по последнюю) */
 	@NotNull
 	@Column(columnDefinition = "boolean not null default false")

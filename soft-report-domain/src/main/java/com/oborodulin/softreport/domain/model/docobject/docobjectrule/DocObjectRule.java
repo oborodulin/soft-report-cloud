@@ -90,5 +90,5 @@ public class DocObjectRule extends DetailEntity<DocObject, String> {
 	/** Текст информационный */
 	@Column(length = 500)
 	private String infoMessage;
-	
+
 }

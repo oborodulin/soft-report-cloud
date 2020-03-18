@@ -12,4 +12,6 @@ import org.springframework.data.domain.Sort;
 public interface ValueRepository extends CommonDetailRepository<ValuesSet, Value, String> {
 	public List<Value> findByMasterCode(String code, Sort sort);
 
+	public List<Value> findByValuesSetCode(String code, Sort sort);
+	
 }

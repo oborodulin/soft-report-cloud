@@ -50,5 +50,5 @@ public class UiObjectType extends DetailEntity<ProgLang, String> {
 	@OneToMany(mappedBy = "uiObjectType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> uiObjects = new ArrayList<>();
-	
+
 }

@@ -6,15 +6,19 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
 import com.oborodulin.softreport.domain.model.docobject.DocObject;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -25,6 +29,11 @@ public class DataFormat extends DetailEntity<DataType, String> {
 
 	protected static final String TABLE_NAME = "DATA_FORMATS";
 
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "master_id", nullable = false)
+	@ToString.Exclude
+	private DataType master;
+	
 	/** Наименование языка программирования или технологии */
 	@NotBlank
 	private String format;
@@ -39,5 +48,5 @@ public class DataFormat extends DetailEntity<DataType, String> {
 	@OneToMany(mappedBy = "format", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> docObjects = new ArrayList<>();
-	
+
 }

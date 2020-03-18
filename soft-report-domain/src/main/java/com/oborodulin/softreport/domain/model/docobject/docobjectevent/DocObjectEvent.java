@@ -63,5 +63,5 @@ public class DocObjectEvent extends DetailEntity<DocObject, String> {
 	@JoinColumn(name = "val_doc_objects_id")
 	@ToString.Exclude
 	private DocObject valDocObject;
-	
+
 }
