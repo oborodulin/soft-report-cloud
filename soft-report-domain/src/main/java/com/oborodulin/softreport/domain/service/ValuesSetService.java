@@ -44,6 +44,8 @@ public interface ValuesSetService extends CommonJpaService<ValuesSet, String> {
 
 	public List<Value> getDocObjEventActions();
 
+	public List<Value> getUiControlTypes();
+
 	public List<Value> getRuleTypes();
 
 	public List<Value> getRuleCompareTypes();

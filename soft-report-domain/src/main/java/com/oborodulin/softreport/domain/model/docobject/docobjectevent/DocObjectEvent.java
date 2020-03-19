@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -29,20 +30,25 @@ public class DocObjectEvent extends DetailEntity<DocObject, String> {
 
 	protected static final String TABLE_NAME = "DOC_OBJECT_EVENTS";
 
+	/** Описание результата события */
+	@Column(length = 2000)
+	private String resultDescr;
+	
 	/** Версии */
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@EqualsAndHashCode.Exclude
 	private List<Version> versions = new ArrayList<>();
 
 	/** Тип события */
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	/*@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "type_code", nullable = false)
 	@ToString.Exclude
 	private Value type;
+	*/
 
 	/** UI: тип события UI объекта */
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "ui_event_types_id")
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "ui_event_types_id", nullable = false)
 	@ToString.Exclude
 	private UiEventType uiEventType;
 	

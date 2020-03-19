@@ -5,6 +5,7 @@ import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSetRepository;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -26,9 +27,13 @@ public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSe
 
 	@Override
 	public List<Value> findValuesBySetCode(String code) {
-		Comparator<Value> compareByCode = (Value v1, Value v2) -> v1.getCode().compareTo(v2.getCode());
-		List<Value> values = this.repository.findByCode(code).get().getValues();
-		Collections.sort(values, compareByCode);
+		Optional<ValuesSet> valuesSet = this.repository.findByCode(code);
+		List<Value> values = new ArrayList<>();
+		if (valuesSet.isPresent()) {
+			Comparator<Value> compareByCode = (Value v1, Value v2) -> v1.getCode().compareTo(v2.getCode());
+			values = this.repository.findByCode(code).get().getValues();
+			Collections.sort(values, compareByCode);
+		}
 		return values;
 	}
 
@@ -101,6 +106,10 @@ public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSe
 
 	public List<Value> getDocObjEventActions() {
 		return this.findValuesBySetCode(ValuesSet.VS_DOC_OBJ_EVENT_ACTIONS);
+	};
+
+	public List<Value> getUiControlTypes(){
+		return this.findValuesBySetCode(ValuesSet.VS_UI_CONTROL_TYPES);
 	};
 
 	public List<Value> getRuleTypes() {

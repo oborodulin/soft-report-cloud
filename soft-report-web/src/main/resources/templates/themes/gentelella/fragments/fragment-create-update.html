@@ -136,6 +136,13 @@
 </th:block>
 <div class="item form-group"
 	th:fragment="form-buttons(cancelHref, object, formId)">
+	<!--/* Необходимо добавлять скрытые поля: version - для определения операции создания/обновления, 
+				а created* - для сохранения значений при обновлении*/-->
+	<input type="hidden" th:field="*{version}"> -
+	<th:block th:if="${object.id != null}">
+		<input type="hidden" th:field="*{createdBy}">
+		<input type="hidden" th:field="*{createdDate}">
+	</th:block>
 	<div class="
 	col-md-6col-sm-6offset-md-3">
 		<a th:href="${cancelHref}" class="btn btn-primary"> <i

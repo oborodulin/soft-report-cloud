@@ -141,6 +141,11 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> defSortDirDocObjects = new ArrayList<>();
 
+	/** Список объектов UI текущего типа управляющего элемента (значения) */
+	@OneToMany(mappedBy = "controlType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<DocObject> ctrlTypeDocObjects = new ArrayList<>();
+	
 	/** Язык программирования текущей технологии (значения) */
 	@OneToOne(mappedBy = "lang")
 	@EqualsAndHashCode.Exclude
@@ -202,9 +207,9 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	private List<DocObjectRule> operandDocObjectRules = new ArrayList<>();
 
 	/** Список событий объектов текущего типа (значения) */
-	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	/*@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DocObjectEvent> typeDocObjectEvents = new ArrayList<>();
+	private List<DocObjectEvent> typeDocObjectEvents = new ArrayList<>();*/
 
 	/** Список действий событий объектов текущего действия (значения) */
 	@OneToMany(mappedBy = "action", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

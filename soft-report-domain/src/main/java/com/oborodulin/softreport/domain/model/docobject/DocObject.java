@@ -188,6 +188,10 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@ToString.Exclude
 	private DocObject similarObject;
 	
+	/** UI объекты: Признак активности элемента по умолчнаию */
+	@NotNull
+	private Boolean isDefaultActive = true;
+
 	/** Форма: Признак немедленной валидации (после ввода значения в каждое поле, или после отправки данных формы на сервер) */
 	@NotNull
 	private Boolean isImmediateValidation = false;
@@ -197,6 +201,12 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@JoinColumn(name = "data_formats_id")
 	@ToString.Exclude
 	private DataFormat format;
+
+	/** Поле/колонка: тип элемента управления */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "control_type_code")
+	@ToString.Exclude
+	private Value controlType;
 
 	/** Поле/колонка: Признак обновляемого/редактируемого значения */
 	@NotNull
@@ -248,5 +258,9 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@JoinColumn(name = "sort_direction_code")
 	@ToString.Exclude
 	private Value defaultSortDirection;
+
+	/** Поле формы/Колонка: Признак вмещаемого текста */
+	@NotNull
+	private Boolean isInnerText = false;
 	
 }
