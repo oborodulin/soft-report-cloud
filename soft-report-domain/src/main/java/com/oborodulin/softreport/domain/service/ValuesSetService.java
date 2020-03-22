@@ -40,6 +40,12 @@ public interface ValuesSetService extends CommonJpaService<ValuesSet, String> {
 
 	public List<Value> getDocObjTypes();
 
+	public List<Value> getDocObjСontainerTypes();
+
+	public List<Value> getParentObjHierarchyСontainerTypes(String archMark);
+
+	public List<Value> getDocObjComponentTypes();
+
 	public List<Value> getDocObjEvents();
 
 	public List<Value> getDocObjEventActions();

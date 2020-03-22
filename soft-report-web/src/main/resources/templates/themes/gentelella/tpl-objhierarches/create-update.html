@@ -15,17 +15,21 @@
 		<br />
 		<form
 			th:action="${objHierarchy.id == null} ? (${objHierarchy.parent == null} ? @{~/objhierarches/create/{isContinue}(isContinue='false')}:@{~/objhierarches/{parentId}/create/{isContinue}(parentId=${objHierarchy.parent.id}, isContinue='false')}) : @{~/objhierarches/update/{id}(id=${objHierarchy.id})}"
-			th:object="${objHierarchy}" th:method="POST" id="form-create-objHierarchy"
-			data-parsley-validate class="form-horizontal form-label-left">
+			th:object="${objHierarchy}" th:method="POST"
+			id="form-create-objHierarchy" data-parsley-validate
+			class="form-horizontal form-label-left">
 			<div class="form-group row">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
 					th:text="#{objhierarches.parent.label}"></label>
 				<div class="col-md-6 col-sm-6 ">
-					<select th:field="*{parent}" class="select2_group form-control">
+					<!--/* https://github.com/geekonjava/filterselect */-->
+					<select data-target="secondList" th:field="*{parent}"
+						class="select2_group form-control firstList selectFilter">
 						<option value="" th:text="#{objhierarches.opt.empty.label}" />
 						<option th:each="opt : ${objHierarches}" th:value="${opt.id}"
 							th:text="${opt.type.val}"
-							th:selected="${objHierarchy.parent != null} ? ${opt.id == objHierarchy.parent.id}: 'false'"></option>
+							th:selected="${objHierarchy.parent != null} ? ${opt.id == objHierarchy.parent.id}: 'false'"
+							th:data-ref="${opt.type.attr1}"></option>
 					</select>
 				</div>
 			</div>
@@ -33,12 +37,15 @@
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
 					for="arch" th:text="#{arch.label}"><span class="required">*</span></label>
 				<div class="col-md-6 col-sm-6 ">
-					<select th:field="*{arch}" required="required"
-						class="select2_group form-control">
+					<!-- th:disabled="${#lists.size(archs) == 1}" -->
+					<select data-target="thirdList" th:field="*{arch}"
+						required="required"
+						class="select2_group form-control secondList selectFilter">
 						<option value="" th:text="#{arch.opt.empty.label}" />
 						<option th:each="opt : ${archs}" th:value="${opt.id}"
 							th:text="${opt.val}"
-							th:selected="${objHierarchy.arch != null} ? ${opt.id == objHierarchy.arch.id}: 'false'"></option>
+							th:selected="${objHierarchy.arch != null} ? ${opt.id == objHierarchy.arch.id}: 'false'"
+							th:data-ref="${opt.attr1}" th:data-belong="${opt.attr1}"></option>
 					</select>
 				</div>
 			</div>
@@ -47,11 +54,12 @@
 					for="type" th:text="#{type.label}"><span class="required">*</span></label>
 				<div class="col-md-6 col-sm-6 ">
 					<select th:field="*{type}" required="required"
-						class="select2_group form-control">
+						class="select2_group form-control thirdList selectFilter">
 						<option value="" th:text="#{type.opt.empty.label}" />
 						<option th:each="opt : ${types}" th:value="${opt.id}"
 							th:text="${opt.val}"
-							th:selected="${objHierarchy.type != null} ? ${opt.id == objHierarchy.type.id}: 'false'"></option>
+							th:selected="${objHierarchy.type != null} ? ${opt.id == objHierarchy.type.id}: 'false'"
+							th:data-belong="${opt.attr1}"></option>
 					</select>
 				</div>
 			</div>
@@ -65,6 +73,7 @@
 	<th:block th:fragment="body-scripts">
 		<th:block
 			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})" />
+		<script class="custom-script" src="/js/selectFilter.min.js"></script>
 	</th:block>
 </body>
 </html>

@@ -43,6 +43,12 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	private static final long serialVersionUID = 639613089661707969L;
 	protected static final String TABLE_NAME = "VALS";
 
+	/** Значение атрибута: YES */
+	public static final String AV_YES = "Y";
+
+	/** Значение атрибута: NO */
+	public static final String AV_NO = "N";
+
 	/** Уникальный код значения */
 	@NotBlank
 	@Column(unique = true)
@@ -145,7 +151,7 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	@OneToMany(mappedBy = "controlType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> ctrlTypeDocObjects = new ArrayList<>();
-	
+
 	/** Язык программирования текущей технологии (значения) */
 	@OneToOne(mappedBy = "lang")
 	@EqualsAndHashCode.Exclude
@@ -207,9 +213,13 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	private List<DocObjectRule> operandDocObjectRules = new ArrayList<>();
 
 	/** Список событий объектов текущего типа (значения) */
-	/*@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@EqualsAndHashCode.Exclude
-	private List<DocObjectEvent> typeDocObjectEvents = new ArrayList<>();*/
+	/*
+	 * @OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade =
+	 * CascadeType.ALL)
+	 * 
+	 * @EqualsAndHashCode.Exclude private List<DocObjectEvent> typeDocObjectEvents =
+	 * new ArrayList<>();
+	 */
 
 	/** Список действий событий объектов текущего действия (значения) */
 	@OneToMany(mappedBy = "action", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

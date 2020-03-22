@@ -25,7 +25,7 @@ public class ValueServiceImpl
 
 	@Override
 	public List<Value> findByValuesSetCode(String code, Sort sort) {
-		return this.repository.findByMasterCode(code, sort);
+		return this.repository.findByMaster_Code(code, sort);
 	}
 
 	@Override

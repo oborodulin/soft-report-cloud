@@ -21,7 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping(ObjHierarchyMvcController.BASE_URL)
-public class ObjHierarchyMvcController extends AbstractMvcTreeController<ObjHierarchy, ObjHierarchyServiceImpl, String> {
+public class ObjHierarchyMvcController
+		extends AbstractMvcTreeController<ObjHierarchy, ObjHierarchyServiceImpl, String> {
 
 	public static final String BASE_URL = "/objhierarches";
 	private static final String VN_PATH = "tpl-objhierarches/";
@@ -49,8 +50,9 @@ public class ObjHierarchyMvcController extends AbstractMvcTreeController<ObjHier
 
 	@GetMapping(URL_CREATE)
 	public String showCreateForm(Locale locale, Model model) {
+		log.info("Create objHierarchy");
 		model.addAttribute("titleCreate", this.ms.getMessage("objhierarches.title.create", null, locale));
-		model.addAttribute("objHierarches", this.service.findAll());
+		model.addAttribute("objHierarches", this.service.findAllСontainerObjects());
 		model.addAttribute("archs", this.service.getArchs());
 		model.addAttribute("types", this.service.getTypes());
 		model.addAttribute("objHierarchy", new ObjHierarchy());
@@ -59,11 +61,14 @@ public class ObjHierarchyMvcController extends AbstractMvcTreeController<ObjHier
 
 	@GetMapping(URL_CREATE_CHILD)
 	public String showCreateChildForm(@PathVariable(PV_PARENT_ID) Long parentId, Locale locale, Model model) {
+		ObjHierarchy objHierarchy = this.service.createChild(parentId);
+		log.info("objHierarchy parent Id = " + objHierarchy.getParent().getId() + "; arch = "
+				+ objHierarchy.getParent().getArch().getAttr1());
 		model.addAttribute("titleCreate", this.ms.getMessage("objhierarches.title.create", null, locale));
-		model.addAttribute("objHierarches", this.service.findAll());
-		model.addAttribute("archs", this.service.getArchs());
-		model.addAttribute("types", this.service.getTypes());
-		model.addAttribute("objHierarchy", this.service.createChild(parentId));
+		model.addAttribute("objHierarches", this.service.findAllParentСontainerObjects(objHierarchy));
+		model.addAttribute("archs", this.service.getParentArchs(objHierarchy));
+		model.addAttribute("types", this.service.getComponentTypes());
+		model.addAttribute("objHierarchy", objHierarchy);
 		return this.getViewNameCreateUpdate();
 	}
 
@@ -71,6 +76,7 @@ public class ObjHierarchyMvcController extends AbstractMvcTreeController<ObjHier
 	public String showUpdateForm(@PathVariable(PV_ID) Long id, Locale locale, Model model) {
 		model.addAttribute("titleUpdate", this.ms.getMessage("objhierarches.title.update", null, locale));
 		model.addAttribute("objHierarches", this.service.findByIdIsNot(id));
+		model.addAttribute("archs", this.service.getArchs());
 		model.addAttribute("types", this.service.getTypes());
 		model.addAttribute("objHierarchy", this.service.getById(id));
 		return this.getViewNameCreateUpdate();

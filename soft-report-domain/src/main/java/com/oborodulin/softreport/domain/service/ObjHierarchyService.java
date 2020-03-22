@@ -8,7 +8,17 @@ import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 
 public interface ObjHierarchyService extends CommonJpaTreeService<ObjHierarchy, String> {
 
+	public List<ObjHierarchy> findAllСontainerObjects();
+
+	public List<ObjHierarchy> findAllParentСontainerObjects(ObjHierarchy childObj);
+
+	public List<Value> getParentArchs(ObjHierarchy childObj);
+
 	public List<Value> getArchs();
 
 	public List<Value> getTypes();
+
+	public List<Value> getСontainerTypes();
+
+	public List<Value> getComponentTypes();
 }
