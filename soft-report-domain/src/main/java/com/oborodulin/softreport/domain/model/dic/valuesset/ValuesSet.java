@@ -23,6 +23,15 @@ import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Класс описывает набор значений.
+ * 
+ * Набор значений обеспечивает хранение значений, централизовано используемых для всех объектов доменной
+ * модели.
+ * 
+ * @author acs-i
+ *
+ */
 @Data
 @Entity
 @Table(name = ValuesSet.TABLE_NAME)

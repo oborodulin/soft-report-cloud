@@ -25,7 +25,7 @@ public class ValueMvcController
 		extends AbstractMvcDetailController<ValuesSet, Value, ValuesSetServiceImpl, ValueServiceImpl, String> {
 
 	protected static final String BASE_URL = "/values";
-	private static final String VN_PATH = "tpl-valuessets/values/";
+	private static final String VN_PATH = ValuesSetMvcController.VN_PATH.concat("values/");
 
 	@Autowired
 	public ValueMvcController(ValuesSetServiceImpl masterService, ValueServiceImpl service) {

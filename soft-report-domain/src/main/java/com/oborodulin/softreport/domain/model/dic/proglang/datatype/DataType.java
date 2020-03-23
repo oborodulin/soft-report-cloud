@@ -35,7 +35,7 @@ public class DataType extends DetailEntity<ProgLang, String> {
 	/** Описание */
 	private String descr;
 
-	/** Тип данных */
+	/** Тип данных SQL */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "type_code")
 	@ToString.Exclude

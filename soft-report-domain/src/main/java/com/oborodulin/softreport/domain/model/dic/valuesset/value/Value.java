@@ -49,6 +49,12 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	/** Значение атрибута: NO */
 	public static final String AV_NO = "N";
 
+	/** Значение атрибута: LANG (язык программирования) */
+	public static final String AV_LANG = "L";
+
+	/** Значение атрибута: TECH (технология) */
+	public static final String AV_TECH = "T";
+	
 	/** Уникальный код значения */
 	@NotBlank
 	@Column(unique = true)

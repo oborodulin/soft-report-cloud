@@ -19,7 +19,7 @@ import com.oborodulin.softreport.web.support.MessageHelper;
 @RequestMapping(DocTypeMvcController.BASE_URL)
 public class DocTypeMvcController extends AbstractMvcController<DocType, DocTypeServiceImpl, String>{
 
-	public static final String BASE_URL = "/doctypes";
+	protected static final String BASE_URL = "/doctypes";
 	private static final String VN_PATH = "tpl-doctypes/";
 
 	@Autowired

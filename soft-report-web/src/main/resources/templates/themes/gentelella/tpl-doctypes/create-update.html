@@ -17,13 +17,6 @@
 			th:action="${docType.id == null} ? @{~/doctypes/create/{isContinue}(isContinue='false')} : @{~/doctypes/update/{id}(id=${docType.id})}"
 			th:object="${docType}" th:method="POST" id="form-create-docType"
 			data-parsley-validate class="form-horizontal form-label-left">
-			<!--/* Необходимо добавлять скрытые поля: version - для определения операции создания/обновления, 
-				а created* - для сохранения значений при обновлении*/-->
-			<input type="hidden" th:field="*{version}">
-			<th:block th:if="${docType.id != null}">
-				<input type="hidden" th:field="*{createdBy}">
-				<input type="hidden" th:field="*{createdDate}">
-			</th:block>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
 					for="categ" th:text="#{categ.label}"><span class="required">*</span></label>
@@ -31,9 +24,9 @@
 					<select th:field="*{categ}" required="required"
 						class="select2_group form-control">
 						<option value="" th:text="#{categ.opt.empty.label}" />
-						<option th:each="ct : ${categs}" th:value="${ct.id}"
-							th:text="${ct.val}"
-							th:selected="${docType.categ != null} ? ${ct.id == docType.categ.id}: 'false'"></option>
+						<option th:each="opt : ${categs}" th:value="${opt.id}"
+							th:text="${opt.val}"
+							th:selected="${docType.categ != null} ? ${opt.id == docType.categ.id}: 'false'"></option>
 					</select>
 				</div>
 			</div>
@@ -44,9 +37,9 @@
 					<select th:field="*{type}" required="required"
 						class="select2_group form-control">
 						<option value="" th:text="#{type.opt.empty.label}" />
-						<option th:each="tp : ${types}" th:value="${tp.id}"
-							th:text="${tp.val}"
-							th:selected="${docType.type != null} ? ${tp.id == docType.type.id}: 'false'"></option>
+						<option th:each="opt : ${types}" th:value="${opt.id}"
+							th:text="${opt.val}"
+							th:selected="${docType.type != null} ? ${opt.id == docType.type.id}: 'false'"></option>
 					</select>
 				</div>
 			</div>

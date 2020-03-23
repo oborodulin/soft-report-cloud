@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(SoftwareMvcController.BASE_URL)
 public class SoftwareMvcController extends AbstractMvcTreeController<Software, SoftwareServiceImpl, String> {
 
-	public static final String BASE_URL = "/softwares";
+	protected static final String BASE_URL = "/softwares";
 	private static final String VN_PATH = "tpl-softwares/";
 
 	@Autowired

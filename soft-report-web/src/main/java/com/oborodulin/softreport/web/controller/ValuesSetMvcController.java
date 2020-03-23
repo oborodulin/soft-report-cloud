@@ -22,8 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(ValuesSetMvcController.BASE_URL)
 public class ValuesSetMvcController extends AbstractMvcController<ValuesSet, ValuesSetServiceImpl, String>{
 
-	public static final String BASE_URL = "/valuessets";
-	private static final String VN_PATH = "tpl-valuessets/";
+	protected static final String BASE_URL = "/valuessets";
+	public static final String VN_PATH = "tpl-valuessets/";
 
 	@Autowired
 	public ValuesSetMvcController(ValuesSetServiceImpl service) {

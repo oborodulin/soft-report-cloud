@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-read-delete}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
+	</head>
+</th:block>
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<a th:href="@{~/proglangs/create}" class="btn btn-primary btn-xs"><i
+			class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a>
+
+		<div th:if="${not #lists.isEmpty(progLangs)}" class="table-responsive">
+			<form th:action="@{~/proglangs/delete}" th:method="POST"
+				id="form-delete-progLangs">
+				<table class="table table-striped jambo_table bulk_action">
+					<thead>
+						<tr class="headings">
+							<th><input type="checkbox" id="check-all" class="flat">
+							</th>
+							<th class="column-title"></th>
+							<th class="column-title" th:text="#{lang.label}" />
+							<th class="column-title" th:text="#{arch.label}" />
+							<th class="column-title no-link last"><span class="nobr"
+								th:text="#{softwarecodes.label}"></span></th>
+							<th class="bulk-actions" colspan="4">
+								<button type="submit" class="btn btn-danger btn-xs">
+									<i class="fa fa-trash-o"></i>
+									<th:block th:text="' '+#{delete.label}" />
+								</button>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="progLang, rowStat : ${progLangs}"
+							th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
+							<td class="a-center"><input id="table_records"
+								name="table_records" type="checkbox" th:value="${progLang.id}"
+								class="flat"></td>
+							<td
+								th:replace="fragments/fragment-read-delete :: grid-row-buttons(href='proglangs', object=${progLang})" />
+							<td th:text="${progLang.lang.val}" class=" " />
+							<td th:text="${progLang.arch.val}" class=" " />
+							<td th:text="${progLang.softwareCodes}" class=" " />
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-read-delete :: body(scripts=~{this :: .custom-script})">
+		</th:block>
+	</th:block>
+</body>
+</html>

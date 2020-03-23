@@ -9,13 +9,21 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.envers.NotAudited;
+
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
+import com.oborodulin.softreport.domain.common.entity.DetailEntity;
+import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
+import com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype.UiObjectType;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import com.oborodulin.softreport.domain.model.software.Software;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
@@ -45,7 +53,36 @@ public class ProgLang extends AuditableEntity<String> {
 	@ToString.Exclude
 	private Value arch;
 
+	/** Список типов данных текущего языка программирования */
+	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	@NotAudited
+	private List<DataType> dataTypes = new ArrayList<>();
+
+	/** Список типов UI объектов текущего языка программирования */
+	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	@NotAudited
+	private List<UiObjectType> uiObjectTypes = new ArrayList<>();
+	
 	/** Список ПО, использующих текущий язык программирования */
 	@ManyToMany(mappedBy = "progLangs", fetch = FetchType.LAZY)
 	private List<Software> softwares = new ArrayList<>();
+
+	/** 
+	 * Возвращает строку-перечень кодов ПО через запятую
+	 * 
+	 * @return строка-перечень кодов ПО
+	 */
+	public String getSoftwareCodes() {
+		StringBuilder sbString = new StringBuilder("");
+		for (Software software : this.softwares) {
+			sbString.append(software.getCode()).append(",");
+		}
+		String softwareCodes = sbString.toString();
+		if (softwareCodes.length() > 0) {
+			softwareCodes = softwareCodes.substring(0, softwareCodes.length() - 1);
+		}
+		return softwareCodes;
+	}
 }

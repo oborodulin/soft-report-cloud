@@ -1,7 +1,6 @@
 package com.oborodulin.softreport.domain.service;
 
 import com.oborodulin.softreport.domain.common.service.JpaAbstractService;
-import com.oborodulin.softreport.domain.model.dic.objhierarchy.ObjHierarchy;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSetRepository;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
@@ -78,6 +77,16 @@ public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSe
 	@Override
 	public List<Value> getSoftwareTechs() {
 		return this.findValuesBySetCode(ValuesSet.VS_SOFTWARE_TECHS);
+	};
+
+	public List<Value> getProgramLangs() {
+		List<Value> progLangs = new ArrayList<>();
+		for (Value val : this.getSoftwareTechs()) {
+			if (val.getAttr1().equals(Value.AV_LANG)) {
+				progLangs.add(val);
+			}
+		}
+		return progLangs;
 	};
 
 	@Override

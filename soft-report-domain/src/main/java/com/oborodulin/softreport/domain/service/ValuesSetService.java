@@ -26,6 +26,8 @@ public interface ValuesSetService extends CommonJpaService<ValuesSet, String> {
 
 	public List<Value> getSoftwareTechs();
 
+	public List<Value> getProgramLangs();
+	
 	public List<Value> getDocCategs();
 
 	public List<Value> getDocTypes();

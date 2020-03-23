@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ObjHierarchyMvcController
 		extends AbstractMvcTreeController<ObjHierarchy, ObjHierarchyServiceImpl, String> {
 
-	public static final String BASE_URL = "/objhierarches";
+	protected static final String BASE_URL = "/objhierarches";
 	private static final String VN_PATH = "tpl-objhierarches/";
 
 	@Autowired
