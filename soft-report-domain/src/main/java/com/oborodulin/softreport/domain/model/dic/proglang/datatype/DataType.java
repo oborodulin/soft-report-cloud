@@ -37,20 +37,20 @@ public class DataType extends DetailEntity<ProgLang, String> {
 
 	/** Тип данных SQL */
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "type_code")
+	@JoinColumn(name = "sql_type_code")
 	@ToString.Exclude
-	private Value type;
+	private Value sqlType;
 
 	/** Описание */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "backend_id")
 	@ToString.Exclude
-	private DataType backend;
+	private DataType backendType;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "frontend_id")
 	@ToString.Exclude
-	private DataType frontend;
+	private DataType frontendType;
 
 	/** Список объектов БД/UI, текущего типа данных */
 	@OneToMany(mappedBy = "dataType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

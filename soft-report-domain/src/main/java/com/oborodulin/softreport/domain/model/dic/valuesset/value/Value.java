@@ -54,7 +54,19 @@ public class Value extends DetailEntity<ValuesSet, String> {
 
 	/** Значение атрибута: TECH (технология) */
 	public static final String AV_TECH = "T";
-	
+
+	/** Значение атрибута (архитектура ПО): DB (БД) */
+	public static final String AV_ARCH_DB = "DB";
+
+	/** Значение атрибута (архитектура ПО): FRONT (фронтенд) */
+	public static final String AV_ARCH_FRONT = "FRONT";
+
+	/** Значение атрибута (архитектура ПО): FRONT (бэкенд) */
+	public static final String AV_ARCH_BACK = "BACK";
+
+	/** Значение атрибута (архитектура ПО): REP (отчёты) */
+	public static final String AV_ARCH_REP = "REP";
+
 	/** Уникальный код значения */
 	@NotBlank
 	@Column(unique = true)
@@ -168,8 +180,8 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	@EqualsAndHashCode.Exclude
 	private List<ProgLang> archProgLangs = new ArrayList<>();
 
-	/** Список типов данных текущего типа данных (значения) */
-	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	/** Список типов данных текущего SQL-типа данных (значения) */
+	@OneToMany(mappedBy = "sqlType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<DataType> dataTypes = new ArrayList<>();
 

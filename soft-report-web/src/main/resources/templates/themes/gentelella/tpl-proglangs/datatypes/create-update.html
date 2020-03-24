@@ -3,19 +3,10 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout-create-update}"
-	th:with="titleCurrent=${value.id == null} ? ${titleCreate} : ${titleUpdate}">
+	th:with="titleCurrent=${dataType.id == null} ? ${titleCreate} : ${titleUpdate}">
 <th:block th:fragment="header">
 	<head
 		th:replace="fragments/fragment-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
-<!-- bootstrap-daterangepicker -->
-<link class="custom-link"
-	th:href="@{/webjars/bootstrap-daterangepicker/css/bootstrap-daterangepicker.css}"
-	rel="stylesheet">
-	</head>
-	<!-- bootstrap-datetimepicker -->
-	<link class="custom-link"
-		th:href="@{/webjars/Eonasdan-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}"
-		rel="stylesheet">
 </th:block>
 
 <body class="nav-md">
@@ -23,42 +14,32 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${value.id == null} ? @{~/values/{masterId}/create/{isContinue}(masterId=${value.master.id}, isContinue='false')} : @{~/values/{masterId}/update/{id}(masterId=${value.master.id}, id=${value.id})}"
-			th:object="${value}" th:method="POST" id="form-create-value"
+			th:action="${not #lists.isEmpty(progLangs)} ? ${dataType.id == null} ? @{~/datatypes/create/{isContinue}(isContinue='false')} : @{~/datatypes/update/{id}(id=${dataType.id})} : ${dataType.id == null} ? @{~/datatypes/{masterId}/create/{isContinue}(masterId=${dataType.master.id}, isContinue='false')} : @{~/datatypes/{masterId}/update/{id}(masterId=${dataType.master.id}, id=${dataType.id})}"
+			th:object="${dataType}" th:method="POST" id="form-create-dataType"
 			data-parsley-validate class="form-horizontal form-label-left">
-			<div class="item form-group">
+			<div th:if="${not #lists.isEmpty(progLangs)}" class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="code"><th:block th:text="#{code.label}" /><span
-					class="required">*</span> </label>
+					for="master" th:text="#{lang.label}"><span class="required">*</span></label>
 				<div class="col-md-6 col-sm-6 ">
-					<input type="text" th:field="*{code}" required="required"
-						class="form-control ">
+					<select th:field="*{master}" required="required"
+						class="select2_group form-control">
+						<option value="" th:text="#{lang.opt.empty.label}" />
+						<option th:each="opt : ${progLangs}" th:value="${opt.id}"
+							th:text="${opt.val}"
+							th:selected="${dataType.master != null} ? ${opt.id == dataType.master.id}: 'false'"></option>
+					</select>
 				</div>
-				<span th:if="${#fields.hasErrors('code')}" th:errors="*{code}"
-					class="text-danger"></span>
 			</div>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="val"><th:block th:text="#{val.label}" /><span
+					for="name"><th:block th:text="#{name.label}" /><span
 					class="required">*</span> </label>
 				<div class="col-md-6 col-sm-6 ">
-					<input type="text" th:field="*{val}" required="required"
+					<input type="text" th:field="*{name}" required="required"
 						class="form-control ">
 				</div>
-				<span th:if="${#fields.hasErrors('val')}" th:errors="*{val}"
+				<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
 					class="text-danger"></span>
-			</div>
-			<div class="item form-group">
-				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="closeDate" th:text="#{closeDate.label}"></label>
-				<div class='input-group date col-md-3 col-sm-3'
-					id='closeDatetimepicker'>
-					<input type='text' th:field="*{closeDate}" class="form-control" />
-					<span class="input-group-addon"><i
-						class="fa fa-calendar fa-lg"></i></span>
-				</div>
-				<span th:if="${#fields.hasErrors('closeDate')}"
-					th:errors="*{closeDate}" class="text-danger"></span>
 			</div>
 			<div class="item form-group">
 				<label for="descr"
@@ -70,35 +51,56 @@
 			</div>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="attr1" th:text="#{attr1.label}"></label>
+					for="sqlType" th:text="#{sqltype.label}"><span
+					class="required">*</span></label>
 				<div class="col-md-6 col-sm-6 ">
-					<input type="text" th:field="*{attr1}" class="form-control ">
+					<select th:field="*{sqlType}" required="required"
+						class="select2_group form-control">
+						<option value="" th:text="#{sqltype.opt.empty.label}" />
+						<option th:each="opt : ${sqlTypes}" th:value="${opt.id}"
+							th:text="${opt.val}"
+							th:selected="${dataType.sqlType != null} ? ${opt.id == dataType.sqlType.id}: 'false'"></option>
+					</select>
 				</div>
-				<span th:if="${#fields.hasErrors('attr1')}" th:errors="*{attr1}"
-					class="text-danger"></span>
 			</div>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="attr2" th:text="#{attr2.label}"></label>
+					for="backendType" th:text="#{backendtype.label}"><span
+					class="required">*</span></label>
 				<div class="col-md-6 col-sm-6 ">
-					<input type="text" th:field="*{attr2}" class="form-control ">
+					<select th:field="*{backendType}" required="required"
+						class="select2_group form-control">
+						<option value="" th:text="#{backendtype.opt.empty.label}" />
+						<optgroup th:each="entry : ${backendTypes.entrySet()}"
+							th:with="details=${entry.value}" th:label="${entry.key}">
+							<option th:each="opt : ${details}" th:value="${opt.id}"
+								th:text="${opt.val}"
+								th:selected="${dataType.backendType != null} ? ${opt.id == dataType.backendType.id}: 'false'"></option>
+						</optgroup>
+					</select>
 				</div>
-				<span th:if="${#fields.hasErrors('attr2')}" th:errors="*{attr2}"
-					class="text-danger"></span>
 			</div>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="attr3" th:text="#{attr3.label}"></label>
+					for="frontendType" th:text="#{frontendtype.label}"><span
+					class="required">*</span></label>
 				<div class="col-md-6 col-sm-6 ">
-					<input type="text" th:field="*{attr3}" class="form-control ">
+					<select th:field="*{frontendType}" required="required"
+						class="select2_group form-control">
+						<option value="" th:text="#{frontendtype.opt.empty.label}" />
+						<optgroup th:each="entry : ${frontendTypes.entrySet()}"
+							th:with="details=${entry.value}" th:label="${entry.key}">
+							<option th:each="opt : ${details}" th:value="${opt.id}"
+								th:text="${opt.val}"
+								th:selected="${dataType.frontendType != null} ? ${opt.id == dataType.frontendType.id}: 'false'"></option>
+						</optgroup>
+					</select>
 				</div>
-				<span th:if="${#fields.hasErrors('attr3')}" th:errors="*{attr3}"
-					class="text-danger"></span>
 			</div>
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
 			<th:block
-				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/values/{masterId}(masterId=${value.master.id})}, object=${value}, formId='form-create-value')" />
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=${not #lists.isEmpty(progLangs)} ? @{~/datatypes} : @{~/datatypes/{masterId}(masterId=${dataType.master.id})}, object=${dataType}, formId='form-create-dataType')" />
 		</form>
 	</div>
 	<!-- /page content -->
@@ -106,23 +108,6 @@
 		<th:block
 			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})">
 		</th:block>
-		<!-- bootstrap-daterangepicker -->
-		<script class="custom-script" src="/js/moment-with-locales.min.js"></script>
-		<!-- script class="custom-script" th:src="@{/webjars/momentjs/min/moment.min.js}"></script-->
-		<script class="custom-script"
-			th:src="@{/webjars/bootstrap-daterangepicker/js/bootstrap-daterangepicker.js}"></script>
-		<!-- bootstrap-datetimepicker -->
-		<script class="custom-script"
-			th:src="@{/webjars/Eonasdan-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}"></script>
-		<!-- Initialize datetimepicker 	format:'d.m.Y H:i',-->
-		<script class="custom-script" type="text/javascript">
-			$(function() {
-				moment().locale('ru');
-				$('#closeDatetimepicker').datetimepicker({
-					format : "DD.MM.YYYY"
-				});
-			});
-		</script>
 	</th:block>
 </body>
 </html>

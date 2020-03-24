@@ -11,69 +11,62 @@
 <body class="nav-md">
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
-		<a th:href="@{~/valuessets}" class="btn btn-secondary btn-xs"><i
-			class="fa fa-arrow-left"></i> <th:block
-				th:text="' '+#{backto.label}+' '+${valuesSet.name}" /></a> <a
-			th:href="@{~/values/{masterId}/create(masterId=${valuesSet.id})}"
-			class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> <th:block
-				th:text="' '+#{add.label}" /></a>
-
-		<div th:if="${not #lists.isEmpty(values)}" class="table-responsive">
+		<th:block th:if="${progLang == null}">
+			<a th:href="@{~/datatypes/create}" class="btn btn-primary btn-xs"><i
+				class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a>
+		</th:block>
+		<th:block th:unless="${progLang == null}">
+			<a th:href="@{~/proglangs}" class="btn btn-secondary btn-xs"><i
+				class="fa fa-arrow-left"></i> <th:block
+					th:text="' '+#{backto.label}+' '+${progLang.lang.val}" /></a>
+			<a
+				th:href="@{~/datatypes/{masterId}/create(masterId=${progLang.id})}"
+				class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> <th:block
+					th:text="' '+#{add.label}" /></a>
+		</th:block>
+		<div th:if="${not #lists.isEmpty(dataTypes)}" class="table-responsive">
 			<form
-				th:action="@{~/values/{masterId}/delete(masterId=${valuesSet.id})}"
-				th:method="POST" id="form-delete-values">
+				th:action="${progLang == null} ? @{~/datatypes/delete} : @{~/datatypes/{masterId}/delete(masterId=${progLang.id})}"
+				th:method="POST" id="form-delete-dataTypes">
 				<table class="table table-striped jambo_table bulk_action">
 					<thead>
 						<tr class="headings">
 							<th><input type="checkbox" id="check-all" class="flat">
 							</th>
 							<th class="column-title" />
-							<th class="column-title" th:text="#{code.label}" />
-							<th class="column-title" th:text="#{val.label}" />
-							<th class="column-title" th:text="#{closeDate.label}" />
+							<th class="column-title" th:text="#{name.label}" />
 							<th class="column-title" th:text="#{descr.label}" />
-							<th class="column-title" th:text="#{attr1.label}" />
-							<th class="column-title" th:text="#{attr2.label}" />
-							<th class="column-title" th:text="#{attr3.label}" />
-							<th class="column-title" th:text="#{attr4.label}" />
-							<th class="column-title" th:text="#{attr5.label}" />
-							<th class="column-title" th:text="#{attr6.label}" />
-							<th class="column-title" th:text="#{attr7.label}" />
-							<th class="column-title" th:text="#{attr8.label}" />
-							<th class="column-title" th:text="#{attr9.label}" />
+							<th class="column-title" th:text="#{sqltype.label}" />
+							<th class="column-title" th:text="#{backend.label}" />
 							<th class="column-title no-link last"><span class="nobr"
-								th:text="#{attr10.label}"></span></th>
-							<th class="bulk-actions" colspan="16">
+								th:text="#{frontend.label}"></span></th>
+							<th class="bulk-actions" colspan="6">
 								<button type="submit" class="btn btn-danger btn-xs">
-									<i class="fa fa-trash-o"></i><span
-										th:text="' '+#{delete.label}"></span>
+									<i class="fa fa-trash-o"></i>
+									<th:block th:text="' '+#{delete.label}" />
 								</button>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="value, rowStat : ${values}"
+						<tr th:each="dataType, rowStat : ${dataTypes}"
 							th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
 							<td class="a-center "><input id="table_records"
-								name="table_records" type="checkbox" th:value="${value.id}"
+								name="table_records" type="checkbox" th:value="${dataType.id}"
 								class="flat"></td>
 							<td
-								th:replace="fragments/fragment-read-delete :: detail-buttons(master=${value.master}, detailsHref='values', detail=${value})" />
-							<td th:text="${value.code}" class=" " />
-							<td th:text="${value.val}" class=" " />
-							<td th:text="${#dates.format(value.closeDate, 'dd.MM.yyyy')}"
+								th:replace="fragments/fragment-read-delete :: detail-buttons(master=${dataType.master}, detailsHref='datatypes', detail=${dataType})" />
+							<td th:text="${dataType.name}" class=" " />
+							<td th:text="${dataType.descr}" class=" " />
+							<td
+								th:text="${dataType.sqlType != null} ? ${dataType.sqlType.val}"
 								class=" " />
-							<td th:text="${value.descr}" class=" " />
-							<td th:text="${value.attr1}" class=" " />
-							<td th:text="${value.attr2}" class=" " />
-							<td th:text="${value.attr3}" class=" " />
-							<td th:text="${value.attr4}" class=" " />
-							<td th:text="${value.attr5}" class=" " />
-							<td th:text="${value.attr6}" class=" " />
-							<td th:text="${value.attr7}" class=" " />
-							<td th:text="${value.attr8}" class=" " />
-							<td th:text="${value.attr9}" class=" " />
-							<td th:text="${value.attr10}" class=" " />
+							<td
+								th:text="${dataType.backend != null} ? ${dataType.backend.name}"
+								class=" " />
+							<td
+								th:text="${dataType.frontend != null} ? ${dataType.frontend.name}"
+								class=" " />
 						</tr>
 					</tbody>
 				</table>

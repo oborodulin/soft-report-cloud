@@ -7,8 +7,9 @@ import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataTypeRepository;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,24 @@ public class DataTypeServiceImpl
 	@Override
 	public List<Value> getSqlTypes() {
 		return valuesSetService.getSqlDataTypes();
+	};
+
+	public Map<String, List<DataType>> getDataTypes(String archMark) {
+		Map<String, List<DataType>> backendTypes = new HashMap<>();
+		for (ProgLang backendProgLang : masterRepository.findByArch_Attr1OrderByArch_ValAsc(archMark)) {
+			backendTypes.put(backendProgLang.getLang().getVal(), backendProgLang.getDataTypes());
+		}
+		return backendTypes;
+	};
+
+	@Override
+	public Map<String, List<DataType>> getBackendTypes() {
+		return this.getDataTypes(Value.AV_ARCH_BACK);
+	};
+
+	@Override
+	public Map<String, List<DataType>> getFrontendTypes() {
+		return this.getDataTypes(Value.AV_ARCH_FRONT);
 	};
 
 }

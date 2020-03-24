@@ -54,6 +54,8 @@ public class DataTypeMvcController
 		model.addAttribute("titleCreate", this.ms.getMessage("datatypes.title.create", null, locale));
 		model.addAttribute("progLangs", this.masterService.findAll());
 		model.addAttribute("sqlTypes", this.service.getSqlTypes());
+		model.addAttribute("backendTypes", this.service.getBackendTypes());
+		model.addAttribute("frontendTypes", this.service.getFrontendTypes());
 		model.addAttribute("dataType", new DataType());
 		return this.getViewNameCreateUpdate();
 	}
@@ -63,6 +65,8 @@ public class DataTypeMvcController
 		model.addAttribute("titleUpdate", this.ms.getMessage("datatypes.title.update", null, locale));
 		model.addAttribute("progLangs", this.masterService.findAll());
 		model.addAttribute("sqlTypes", this.service.getSqlTypes());
+		model.addAttribute("backendTypes", this.service.getBackendTypes());
+		model.addAttribute("frontendTypes", this.service.getFrontendTypes());
 		model.addAttribute("dataType", this.service.getById(id));
 		return this.getViewNameCreateUpdate();
 	}

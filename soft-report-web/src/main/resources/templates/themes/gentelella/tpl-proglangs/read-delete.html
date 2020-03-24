@@ -31,7 +31,16 @@
 								<button type="submit" class="btn btn-danger btn-xs">
 									<i class="fa fa-trash-o"></i>
 									<th:block th:text="' '+#{delete.label}" />
-								</button>
+								</button> <a th:href="@{~/datatypes/[id]}"
+								class="btn btn-secondary btn-xs"
+								onclick="bulkActionChecked(this, event, 'table_records');"><i
+									class="fa fa-plus"></i> <th:block
+										th:text="' '+#{todatatypes.label}" /></a> <a
+								th:href="@{~/uiobjecttypes/[id]}"
+								class="btn btn-secondary btn-xs"
+								onclick="bulkActionChecked(this, event, 'table_records');"><i
+									class="fa fa-plus"></i> <th:block
+										th:text="' '+#{touiobjecttypes.label}" /></a>
 							</th>
 						</tr>
 					</thead>
