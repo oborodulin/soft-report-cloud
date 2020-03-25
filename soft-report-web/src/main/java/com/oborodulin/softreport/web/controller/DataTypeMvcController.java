@@ -26,7 +26,7 @@ public class DataTypeMvcController
 		extends AbstractMvcDetailController<ProgLang, DataType, ProgLangServiceImpl, DataTypeServiceImpl, String> {
 
 	protected static final String BASE_URL = "/datatypes";
-	private static final String VN_PATH = ProgLangMvcController.VN_PATH.concat("datatypes/");
+	public static final String VN_PATH = ProgLangMvcController.VN_PATH.concat("datatypes/");
 
 	@Autowired
 	public DataTypeMvcController(ProgLangServiceImpl masterService, DataTypeServiceImpl service) {
@@ -80,6 +80,8 @@ public class DataTypeMvcController
 		model.addAttribute("titleMaster", progLang.getLang().getVal());
 		model.addAttribute("titleRead", this.ms.getMessage("datatypes.title.read", null, locale));
 		model.addAttribute("progLang", progLang);
+		model.addAttribute("backendTypes", this.service.getBackendTypes());
+		model.addAttribute("frontendTypes", this.service.getFrontendTypes());
 		model.addAttribute("dataTypes", progLang.getDataTypes());
 		return this.getViewNameReadDelete();
 	}
@@ -89,6 +91,8 @@ public class DataTypeMvcController
 		DataType dataType = this.service.create(masterId);
 		model.addAttribute("titleMaster", dataType.getMaster().getLang().getVal());
 		model.addAttribute("titleCreate", this.ms.getMessage("datatypes.title.create", null, locale));
+		model.addAttribute("backendTypes", this.service.getBackendTypes());
+		model.addAttribute("frontendTypes", this.service.getFrontendTypes());
 		model.addAttribute("dataType", dataType);
 		return this.getViewNameCreateUpdate();
 	}
@@ -99,6 +103,8 @@ public class DataTypeMvcController
 		DataType dataType = this.service.getById(id);
 		model.addAttribute("titleMaster", dataType.getMaster().getLang().getVal());
 		model.addAttribute("titleUpdate", this.ms.getMessage("datatypes.title.update", null, locale));
+		model.addAttribute("backendTypes", this.service.getBackendTypes());
+		model.addAttribute("frontendTypes", this.service.getFrontendTypes());
 		model.addAttribute("dataType", dataType);
 		return this.getViewNameCreateUpdate();
 	}

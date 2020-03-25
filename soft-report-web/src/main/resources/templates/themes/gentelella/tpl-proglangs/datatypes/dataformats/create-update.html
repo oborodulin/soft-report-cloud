@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-create-update}"
+	th:with="titleCurrent=${dataFormat.id == null} ? ${titleCreate} : ${titleUpdate}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
+</th:block>
+
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<br />
+		<form
+			th:action="${dataFormat.id == null} ? @{~/dataformats/{masterId}/create/{isContinue}(masterId=${dataFormat.master.id}, isContinue='false')} : @{~/dataformats/{masterId}/update/{id}(masterId=${dataFormat.master.id}, id=${dataFormat.id})}"
+			th:object="${dataFormat}" th:method="POST"
+			id="form-create-dataFormat" data-parsley-validate
+			class="form-horizontal form-label-left">
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="format"><th:block th:text="#{format.label}" /><span
+					class="required">*</span> </label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{format}" required="required"
+						class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('format')}" th:errors="*{format}"
+					class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="sample"><th:block th:text="#{sample.label}" /> </label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{sample}" class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('sample')}" th:errors="*{sample}"
+					class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label for="descr"
+					class="col-form-label col-md-3 col-sm-3 label-align"
+					th:text="#{descr.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<textarea th:field="*{descr}" class="form-control" rows="3"></textarea>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="ln_solid"></div>
+			<th:block
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/dataformats/{masterId}(masterId=${dataFormat.master.id})}, object=${dataFormat}, formId='form-create-dataFormat')" />
+		</form>
+	</div>
+	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})">
+		</th:block>
+	</th:block>
+</body>
+</html>

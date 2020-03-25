@@ -55,16 +55,16 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	/** Значение атрибута: TECH (технология) */
 	public static final String AV_TECH = "T";
 
-	/** Значение атрибута (архитектура ПО): DB (БД) */
+	/** Значение атрибута (архитектура ПО): БД */
 	public static final String AV_ARCH_DB = "DB";
 
-	/** Значение атрибута (архитектура ПО): FRONT (фронтенд) */
-	public static final String AV_ARCH_FRONT = "FRONT";
+	/** Значение атрибута (архитектура ПО): Фронтенд */
+	public static final String AV_ARCH_FRONT = "UI";
 
-	/** Значение атрибута (архитектура ПО): FRONT (бэкенд) */
-	public static final String AV_ARCH_BACK = "BACK";
+	/** Значение атрибута (архитектура ПО): Бэкенд */
+	public static final String AV_ARCH_BACK = "BE";
 
-	/** Значение атрибута (архитектура ПО): REP (отчёты) */
+	/** Значение атрибута (архитектура ПО): Отчёты */
 	public static final String AV_ARCH_REP = "REP";
 
 	/** Уникальный код значения */

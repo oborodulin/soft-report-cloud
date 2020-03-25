@@ -14,7 +14,7 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${not #lists.isEmpty(progLangs)} ? ${dataType.id == null} ? @{~/datatypes/create/{isContinue}(isContinue='false')} : @{~/datatypes/update/{id}(id=${dataType.id})} : ${dataType.id == null} ? @{~/datatypes/{masterId}/create/{isContinue}(masterId=${dataType.master.id}, isContinue='false')} : @{~/datatypes/{masterId}/update/{id}(masterId=${dataType.master.id}, id=${dataType.id})}"
+			th:action="${not #lists.isEmpty(progLangs)} ? (${dataType.id == null} ? @{~/datatypes/create/{isContinue}(isContinue='false')} : @{~/datatypes/update/{id}(id=${dataType.id})}) : (${dataType.id == null} ? @{~/datatypes/{masterId}/create/{isContinue}(masterId=${dataType.master.id}, isContinue='false')} : @{~/datatypes/{masterId}/update/{id}(masterId=${dataType.master.id}, id=${dataType.id})})"
 			th:object="${dataType}" th:method="POST" id="form-create-dataType"
 			data-parsley-validate class="form-horizontal form-label-left">
 			<div th:if="${not #lists.isEmpty(progLangs)}" class="item form-group">
@@ -25,18 +25,16 @@
 						class="select2_group form-control">
 						<option value="" th:text="#{lang.opt.empty.label}" />
 						<option th:each="opt : ${progLangs}" th:value="${opt.id}"
-							th:text="${opt.val}"
+							th:text="${opt.lang.val}"
 							th:selected="${dataType.master != null} ? ${opt.id == dataType.master.id}: 'false'"></option>
 					</select>
 				</div>
 			</div>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="name"><th:block th:text="#{name.label}" /><span
-					class="required">*</span> </label>
+					for="name"><th:block th:text="#{name.label}" /></label>
 				<div class="col-md-6 col-sm-6 ">
-					<input type="text" th:field="*{name}" required="required"
-						class="form-control ">
+					<input type="text" th:field="*{name}" class="form-control ">
 				</div>
 				<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
 					class="text-danger"></span>
@@ -51,11 +49,9 @@
 			</div>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="sqlType" th:text="#{sqltype.label}"><span
-					class="required">*</span></label>
+					for="sqlType" th:text="#{sqltype.label}"></label>
 				<div class="col-md-6 col-sm-6 ">
-					<select th:field="*{sqlType}" required="required"
-						class="select2_group form-control">
+					<select th:field="*{sqlType}" class="select2_group form-control">
 						<option value="" th:text="#{sqltype.opt.empty.label}" />
 						<option th:each="opt : ${sqlTypes}" th:value="${opt.id}"
 							th:text="${opt.val}"
@@ -65,16 +61,15 @@
 			</div>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="backendType" th:text="#{backendtype.label}"><span
-					class="required">*</span></label>
+					for="backendType" th:text="#{backendtype.label}"></label>
 				<div class="col-md-6 col-sm-6 ">
-					<select th:field="*{backendType}" required="required"
+					<select th:field="*{backendType}"
 						class="select2_group form-control">
 						<option value="" th:text="#{backendtype.opt.empty.label}" />
 						<optgroup th:each="entry : ${backendTypes.entrySet()}"
 							th:with="details=${entry.value}" th:label="${entry.key}">
 							<option th:each="opt : ${details}" th:value="${opt.id}"
-								th:text="${opt.val}"
+								th:text="${opt.name}"
 								th:selected="${dataType.backendType != null} ? ${opt.id == dataType.backendType.id}: 'false'"></option>
 						</optgroup>
 					</select>
@@ -82,16 +77,15 @@
 			</div>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="frontendType" th:text="#{frontendtype.label}"><span
-					class="required">*</span></label>
+					for="frontendType" th:text="#{frontendtype.label}"></label>
 				<div class="col-md-6 col-sm-6 ">
-					<select th:field="*{frontendType}" required="required"
+					<select th:field="*{frontendType}"
 						class="select2_group form-control">
 						<option value="" th:text="#{frontendtype.opt.empty.label}" />
 						<optgroup th:each="entry : ${frontendTypes.entrySet()}"
 							th:with="details=${entry.value}" th:label="${entry.key}">
 							<option th:each="opt : ${details}" th:value="${opt.id}"
-								th:text="${opt.val}"
+								th:text="${opt.name}"
 								th:selected="${dataType.frontendType != null} ? ${opt.id == dataType.frontendType.id}: 'false'"></option>
 						</optgroup>
 					</select>

@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.dic.proglang.ProgLang;
+import com.oborodulin.softreport.domain.model.dic.proglang.datatype.dataformat.DataFormat;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import com.oborodulin.softreport.domain.model.docobject.DocObject;
 
@@ -52,6 +53,10 @@ public class DataType extends DetailEntity<ProgLang, String> {
 	@ToString.Exclude
 	private DataType frontendType;
 
+	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<DataFormat> formats = new ArrayList<>();
+	
 	/** Список объектов БД/UI, текущего типа данных */
 	@OneToMany(mappedBy = "dataType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude

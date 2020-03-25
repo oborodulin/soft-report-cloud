@@ -157,6 +157,24 @@
 						class="fa fa-trash-o fa-xs"></i></a>
 				</div>
 			</td>
+			<td class=" "
+				th:fragment="master-detail-buttons(masterHref, master, detailsHref, details, detail)">
+				<div style="display: flex;">
+					<a
+						th:href="@{~/{href}/{masterId}/edit/{id}(href=${detailsHref},masterId=${master.id}, id=${detail.id})}"
+						class="btn btn-info btn-sm"
+						style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
+						class="fa fa-pencil fa-xs"></i></a><a
+						th:href="@{~/{href}/{masterId}/delete/{id}(href=${detailsHref},masterId=${master.id}, id=${detail.id})}"
+						class="btn btn-danger btn-sm"
+						style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
+						class="fa fa-trash-o fa-xs"></i></a><a
+						th:href="@{~/{href}/{masterId}(href=${detailsHref},masterId=${master.id})}"
+						th:class="${#lists.isEmpty(details)} ? 'btn btn-secondary btn-sm' : 'btn btn-primary btn-sm'"
+						style="margin: 0px; padding-top: 0px; padding-bottom: 0px;"><i
+						class="fa fa-plus-square-o fa-xs"></i></a>
+				</div>
+			</td>
 			<td class=" " th:fragment="grid-row-buttons(href, object)"><div
 					style="display: flex;">
 					<a th:href="@{~/{href}/edit/{id}(href=${href},id=${object.id})}"

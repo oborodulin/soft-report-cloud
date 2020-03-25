@@ -13,8 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.envers.NotAudited;
-
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
@@ -56,13 +54,11 @@ public class ProgLang extends AuditableEntity<String> {
 	/** Список типов данных текущего языка программирования */
 	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	@NotAudited
 	private List<DataType> dataTypes = new ArrayList<>();
 
 	/** Список типов UI объектов текущего языка программирования */
 	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	@NotAudited
 	private List<UiObjectType> uiObjectTypes = new ArrayList<>();
 	
 	/** Список ПО, использующих текущий язык программирования */
