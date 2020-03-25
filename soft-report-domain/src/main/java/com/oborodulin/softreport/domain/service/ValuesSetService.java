@@ -44,7 +44,7 @@ public interface ValuesSetService extends CommonJpaService<ValuesSet, String> {
 
 	public List<Value> getDocObjСontainerTypes();
 
-	public List<Value> getParentObjHierarchyСontainerTypes(String archMark);
+	public List<Value> getParentObjHierarchyСontainerTypes(String archCode);
 
 	public List<Value> getDocObjComponentTypes();
 

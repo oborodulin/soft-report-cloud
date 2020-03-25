@@ -41,7 +41,7 @@ public class ObjHierarchyServiceImpl extends JpaTreeAbstractService<ObjHierarchy
 		// return
 		// this.valueRepository.findByMaster_CodeAndAttr1AndAttr2OrderByCodeAsc(ValuesSet.VS_DOC_OBJ_TYPES,
 		// childObj.getParent().getArch().getAttr1(), Value.AV_YES);
-		return this.repository.findByType_Attr1AndType_Attr2(childObj.getParent().getArch().getAttr1(), Value.AV_YES);
+		return this.repository.findByType_Attr1AndType_Attr2(childObj.getParent().getArch().getCode(), Value.AV_YES);
 	};
 
 	@Override

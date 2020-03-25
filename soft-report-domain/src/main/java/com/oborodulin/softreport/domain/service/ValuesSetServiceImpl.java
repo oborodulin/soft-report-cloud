@@ -136,10 +136,10 @@ public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSe
 	};
 
 	@Override
-	public List<Value> getParentObjHierarchyСontainerTypes(String archMark) {
+	public List<Value> getParentObjHierarchyСontainerTypes(String archCode) {
 		List<Value> parentTypes = new ArrayList<>();
 		for (Value val : this.findValuesBySetCode(ValuesSet.VS_DOC_OBJ_TYPES)) {
-			if (val.getAttr1().equals(archMark) && val.getAttr2().equals(Value.AV_YES)) {
+			if (val.getAttr1().equals(archCode) && val.getAttr2().equals(Value.AV_YES)) {
 				parentTypes.add(val);
 			}
 		}

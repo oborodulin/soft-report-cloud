@@ -49,23 +49,23 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	/** Значение атрибута: NO */
 	public static final String AV_NO = "N";
 
-	/** Значение атрибута: LANG (язык программирования) */
+	/** Значение атрибута: Язык программирования */
 	public static final String AV_LANG = "L";
 
-	/** Значение атрибута: TECH (технология) */
+	/** Значение атрибута: Технология */
 	public static final String AV_TECH = "T";
 
-	/** Значение атрибута (архитектура ПО): БД */
-	public static final String AV_ARCH_DB = "DB";
+	/** Значение кода атрибута (архитектура ПО): БД */
+	public static final String AV_ARCH_DB = "SA_DB";
 
-	/** Значение атрибута (архитектура ПО): Фронтенд */
-	public static final String AV_ARCH_FRONT = "UI";
+	/** Значение кода атрибута (архитектура ПО): Фронтенд */
+	public static final String AV_ARCH_FRONT = "SA_FRONT";
 
-	/** Значение атрибута (архитектура ПО): Бэкенд */
-	public static final String AV_ARCH_BACK = "BE";
+	/** Значение кода атрибута (архитектура ПО): Бэкенд */
+	public static final String AV_ARCH_BACK = "SA_BACK";
 
-	/** Значение атрибута (архитектура ПО): Отчёты */
-	public static final String AV_ARCH_REP = "REP";
+	/** Значение кода атрибута (архитектура ПО): Отчёты */
+	public static final String AV_ARCH_REP = "SA_REPORT";
 
 	/** Уникальный код значения */
 	@NotBlank

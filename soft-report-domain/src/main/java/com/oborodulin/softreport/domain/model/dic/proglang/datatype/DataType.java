@@ -33,6 +33,9 @@ public class DataType extends DetailEntity<ProgLang, String> {
 	/** Наименование */
 	private String name;
 
+	/** Выражение получения значения по умолчанию */
+	private String defValExpr;
+
 	/** Описание */
 	private String descr;
 

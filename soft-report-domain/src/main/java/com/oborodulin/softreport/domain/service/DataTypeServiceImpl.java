@@ -33,9 +33,9 @@ public class DataTypeServiceImpl
 		return valuesSetService.getSqlDataTypes();
 	};
 
-	public Map<String, List<DataType>> getDataTypes(String archMark) {
+	public Map<String, List<DataType>> getDataTypes(String archCode) {
 		Map<String, List<DataType>> backendTypes = new HashMap<>();
-		for (ProgLang backendProgLang : masterRepository.findByArch_Attr1OrderByArch_ValAsc(archMark)) {
+		for (ProgLang backendProgLang : masterRepository.findByArch_CodeOrderByArch_ValAsc(archCode)) {
 			backendTypes.put(backendProgLang.getLang().getVal(), backendProgLang.getDataTypes());
 		}
 		return backendTypes;
