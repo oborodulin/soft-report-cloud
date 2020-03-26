@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.model.project.document.version;
+package com.oborodulin.softreport.domain.model.software.document.version;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +11,8 @@ import javax.validation.constraints.NotEmpty;
 
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.docobject.DocObject;
-import com.oborodulin.softreport.domain.model.docobject.docobjectevent.DocObjectEvent;
-import com.oborodulin.softreport.domain.model.docobject.docobjectrule.DocObjectRule;
-import com.oborodulin.softreport.domain.model.project.document.Document;
+import com.oborodulin.softreport.domain.model.software.document.Document;
+
 import lombok.Data;
 
 /**
@@ -48,14 +47,6 @@ public class Version extends DetailEntity<Document, String> {
 	@ManyToMany(mappedBy = "versions", fetch = FetchType.LAZY)
 	private List<DocObject> docObjects = new ArrayList<>();
 
-	/** Бизнес-правила объектов БД/UI */
-	@ManyToMany(mappedBy = "versions", fetch = FetchType.LAZY)
-	private List<DocObjectRule> docObjectRules = new ArrayList<>();
-
-	/**События объектов БД/UI */
-	@ManyToMany(mappedBy = "versions", fetch = FetchType.LAZY)
-	private List<DocObjectEvent> docObjectEvents = new ArrayList<>();
-	
 	/**
 	 * Возвращает семантический номер версии в формате (x.y.z)
 	 * 

@@ -28,8 +28,6 @@ import com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype.uieventt
 import com.oborodulin.softreport.domain.model.dic.server.Server;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.model.docobject.DocObject;
-import com.oborodulin.softreport.domain.model.docobject.docobjectevent.DocObjectEvent;
-import com.oborodulin.softreport.domain.model.docobject.docobjectrule.DocObjectRule;
 import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.model.software.configbundle.ConfigBundle;
 
@@ -55,17 +53,17 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	/** Значение атрибута: Технология */
 	public static final String AV_TECH = "T";
 
-	/** Значение кода атрибута (архитектура ПО): БД */
-	public static final String AV_ARCH_DB = "SA_DB";
+	/** Код значения (архитектура ПО): БД */
+	public static final String VC_ARCH_DB = "SA_DB";
 
-	/** Значение кода атрибута (архитектура ПО): Фронтенд */
-	public static final String AV_ARCH_FRONT = "SA_FRONT";
+	/** Код значения (архитектура ПО): Фронтенд */
+	public static final String VC_ARCH_FRONT = "SA_FRONT";
 
-	/** Значение кода атрибута (архитектура ПО): Бэкенд */
-	public static final String AV_ARCH_BACK = "SA_BACK";
+	/** Код значения (архитектура ПО): Бэкенд */
+	public static final String VC_ARCH_BACK = "SA_BACK";
 
-	/** Значение кода атрибута (архитектура ПО): Отчёты */
-	public static final String AV_ARCH_REP = "SA_REPORT";
+	/** Код значения (архитектура ПО): Отчёты */
+	public static final String VC_ARCH_REPORT = "SA_REPORT";
 
 	/** Уникальный код значения */
 	@NotBlank
@@ -216,19 +214,19 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	private List<UiEventType> uiEventTypes = new ArrayList<>();
 
 	/** Список типов бизнес-правил текущего типа (значения) */
-	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "ruleType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DocObjectRule> typeDocObjectRules = new ArrayList<>();
+	private List<DocObject> typeDocObjectRules = new ArrayList<>();
 
 	/** Список операторов бизнес-правил текущего оператора (значения) */
-	@OneToMany(mappedBy = "operator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "ruleOperator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DocObjectRule> operatorDocObjectRules = new ArrayList<>();
+	private List<DocObject> operatorDocObjectRules = new ArrayList<>();
 
 	/** Список операндов бизнес-правил текущего операнда (значения) */
-	@OneToMany(mappedBy = "operand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "ruleOperand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DocObjectRule> operandDocObjectRules = new ArrayList<>();
+	private List<DocObject> operandDocObjectRules = new ArrayList<>();
 
 	/** Список событий объектов текущего типа (значения) */
 	/*
@@ -240,9 +238,9 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	 */
 
 	/** Список действий событий объектов текущего действия (значения) */
-	@OneToMany(mappedBy = "action", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "eventAction", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DocObjectEvent> actionDocObjectEvents = new ArrayList<>();
+	private List<DocObject> actionDocObjectEvents = new ArrayList<>();
 
 	/** Список конфигурационных пакетов текущего типа(значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

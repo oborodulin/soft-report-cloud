@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SoftwareMvcController extends AbstractMvcTreeController<Software, SoftwareServiceImpl, String> {
 
 	protected static final String BASE_URL = "/softwares";
-	private static final String VN_PATH = "tpl-softwares/";
+	public static final String VN_PATH = "tpl-softwares/";
 
 	@Autowired
 	public SoftwareMvcController(SoftwareServiceImpl service) {

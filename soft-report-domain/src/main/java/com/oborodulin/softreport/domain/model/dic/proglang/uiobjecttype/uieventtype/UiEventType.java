@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype.UiObjectType;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
-import com.oborodulin.softreport.domain.model.docobject.docobjectevent.DocObjectEvent;
+import com.oborodulin.softreport.domain.model.docobject.DocObject;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -36,7 +36,7 @@ public class UiEventType extends DetailEntity<UiObjectType, String> {
 
 	/** Описание */
 	private String descr;
-	
+
 	/** Тип UI события */
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "type_code", nullable = false)
@@ -46,6 +46,6 @@ public class UiEventType extends DetailEntity<UiObjectType, String> {
 	/** Список событий, связанных с текущим типом */
 	@OneToMany(mappedBy = "uiEventType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
-	private List<DocObjectEvent> docObjectEvents = new ArrayList<>();
+	private List<DocObject> docObjects = new ArrayList<>();
 
 }

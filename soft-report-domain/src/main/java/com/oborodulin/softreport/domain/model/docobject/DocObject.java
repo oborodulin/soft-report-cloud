@@ -19,10 +19,11 @@ import com.oborodulin.softreport.domain.common.entity.TreeEntity;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.dataformat.DataFormat;
 import com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype.UiObjectType;
+import com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype.uieventtype.UiEventType;
 import com.oborodulin.softreport.domain.model.dic.server.Server;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
-import com.oborodulin.softreport.domain.model.project.document.version.Version;
 import com.oborodulin.softreport.domain.model.software.businessobject.BusinessObject;
+import com.oborodulin.softreport.domain.model.software.document.version.Version;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -128,7 +129,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@Column(length = 2000)
 	private String defaultValue;
 
-	/** Представление/процедура/функция: SQL-запрос */
+	/** Представление/процедура/функция/Бизнес-правило: SQL-запрос */
 	@Column(length = 2000)
 	private String sqlQuery;
 
@@ -262,5 +263,67 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	/** Поле формы/Колонка: Признак вмещаемого текста */
 	@NotNull
 	private Boolean isInnerText = false;
+
+	/** Бизнес-правило: тип */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "rule_type_code")
+	@ToString.Exclude
+	private Value ruleType;
+
+	/** Бизнес-правило: оператор */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "operator_code")
+	@ToString.Exclude
+	private Value ruleOperator;
+
+	/** Бизнес-правило: операнд */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "operand_code")
+	@ToString.Exclude
+	private Value ruleOperand;
+
+	/** Бизнес-правило: значение операнда */
+	@Column(length = 500)
+	private String ruleOperandValue;
+
+	/** Бизнес-правило: условие выполнения правила */
+	@Column(length = 1000)
+	private String ruleCondValid;
+
+	/** Бизнес-правило/Событие (объект, над которым выполняется действие): UI объект */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ui_objects_id")
+	@ToString.Exclude
+	private DocObject uiObject;
+	
+	/** Бизнес-правило: текст ошибки */
+	@Column(length = 500)
+	private String ruleErrMessage;
+
+	/** Бизнес-правило: текст информационный */
+	@Column(length = 500)
+	private String ruleInfoMessage;
+
+	/** Событие: описание результата события */
+	@Column(length = 2000)
+	private String eventResultDescr;
+
+	/** Событие: тип события UI объекта */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ui_event_types_id")
+	@ToString.Exclude
+	private UiEventType uiEventType;
+	
+	/** Событие: действие */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "event_action_code")
+	@ToString.Exclude
+	private Value eventAction;
+
+	/** Событие: UI объект (значение поля ТД, списка и пр.), который присваивается объекту, над которым выполняется действие*/
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "event_val_doc_objects_id")
+	@ToString.Exclude
+	private DocObject eventValDocObject;
 	
 }

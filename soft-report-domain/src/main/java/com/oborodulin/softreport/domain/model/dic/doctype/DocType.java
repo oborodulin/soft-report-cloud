@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
-import com.oborodulin.softreport.domain.model.project.document.Document;
+import com.oborodulin.softreport.domain.model.software.document.Document;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

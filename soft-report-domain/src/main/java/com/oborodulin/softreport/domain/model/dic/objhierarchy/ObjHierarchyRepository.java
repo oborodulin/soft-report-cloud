@@ -11,6 +11,6 @@ public interface ObjHierarchyRepository extends CommonTreeRepository<ObjHierarch
 
 	public List<ObjHierarchy> findByType_Attr2(String containerMark);
 
-	public List<ObjHierarchy> findByType_Attr1AndType_Attr2(String archMark, String containerMark);
+	public List<ObjHierarchy> findByType_Attr1AndType_Attr2(String archCode, String containerMark);
 
 }

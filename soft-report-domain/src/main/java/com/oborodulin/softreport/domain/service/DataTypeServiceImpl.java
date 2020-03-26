@@ -43,12 +43,12 @@ public class DataTypeServiceImpl
 
 	@Override
 	public Map<String, List<DataType>> getBackendTypes() {
-		return this.getDataTypes(Value.AV_ARCH_BACK);
+		return this.getDataTypes(Value.VC_ARCH_BACK);
 	};
 
 	@Override
 	public Map<String, List<DataType>> getFrontendTypes() {
-		return this.getDataTypes(Value.AV_ARCH_FRONT);
+		return this.getDataTypes(Value.VC_ARCH_FRONT);
 	};
 
 }

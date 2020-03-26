@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.model.project.document;
+package com.oborodulin.softreport.domain.model.software.document;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -19,8 +19,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.dic.doctype.DocType;
-import com.oborodulin.softreport.domain.model.project.Project;
-import com.oborodulin.softreport.domain.model.project.document.version.Version;
+import com.oborodulin.softreport.domain.model.software.Software;
+import com.oborodulin.softreport.domain.model.software.document.version.Version;
 import com.oborodulin.softreport.domain.model.term.Term;
 
 import lombok.Data;
@@ -30,7 +30,7 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = Document.TABLE_NAME)
-public class Document extends DetailEntity<Project, String> {
+public class Document extends DetailEntity<Software, String> {
 
 	private static final long serialVersionUID = -1155211422959024301L;
 
