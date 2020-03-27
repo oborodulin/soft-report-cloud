@@ -1,10 +1,10 @@
 package com.oborodulin.softreport.web;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 
 public interface CommonMvcController<E extends AuditableEntity<U>, U> {
@@ -20,6 +20,12 @@ public interface CommonMvcController<E extends AuditableEntity<U>, U> {
 	public String viewReadDelete();
 
 	public String viewCreateUpdate();
+
+	public String showList(Locale locale, Model model);
+
+	public String showUpdateForm(Long id, Locale locale, Model model);
+
+	public String showCreateForm(Locale locale, Model model);
 
 	public String create(boolean isContinue, E entity, Errors errors, Model model);
 

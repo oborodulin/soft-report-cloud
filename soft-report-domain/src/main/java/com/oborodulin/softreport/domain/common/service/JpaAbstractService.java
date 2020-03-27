@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class JpaAbstractService<E extends AuditableEntity<U>, R extends CommonRepository<E, U>, U>
 		implements CommonJpaService<E, U> {
+	protected Class<E> clazz;
 	protected final R repository;
 
 	@Autowired
@@ -19,6 +20,12 @@ public abstract class JpaAbstractService<E extends AuditableEntity<U>, R extends
 		this.repository = repository;
 	}
 
+	@Autowired
+	public JpaAbstractService(R repository, Class<E> clazz) {
+		this.repository = repository;
+		this.clazz = clazz;
+	}
+	
 	@Transactional(readOnly = true)
 	@Override
 	public List<E> findAll() {
@@ -34,6 +41,19 @@ public abstract class JpaAbstractService<E extends AuditableEntity<U>, R extends
 	@Override
 	public E getById(Long id) {
 		return this.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid entity Id:" + id));
+	}
+
+	@Override
+	@Transactional
+	public E create() {
+		E entity = null;
+		try {
+			entity = this.clazz.getDeclaredConstructor().newInstance();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return entity;
 	}
 
 	@Override

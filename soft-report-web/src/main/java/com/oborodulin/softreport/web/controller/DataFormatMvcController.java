@@ -32,7 +32,7 @@ public class DataFormatMvcController
 		super(masterService, service, BASE_URL, VN_PATH);
 	}
 
-	@ModelAttribute(name = "titleParent")
+	@ModelAttribute(name = MA_TITLE_PARENT)
 	public String titleParent(Locale locale) {
 		return this.ms.getMessage("datatypes.title.parent", null, locale);
 	}
@@ -43,8 +43,8 @@ public class DataFormatMvcController
 		if (dataType.getFormats().isEmpty()) {
 			MessageHelper.addInfoAttribute(model, "dataformats.info.empty", dataType.getName());
 		}
-		model.addAttribute("titleMaster", dataType.getName());
-		model.addAttribute("titleRead", this.ms.getMessage("dataformats.title.read", null, locale));
+		model.addAttribute(MA_TITLE_MASTER, dataType.getName());
+		model.addAttribute(MA_TITLE_READ, this.ms.getMessage("dataformats.title.read", null, locale));
 		model.addAttribute("dataType", dataType);
 		model.addAttribute("dataFormats", dataType.getFormats());
 		return this.getViewNameReadDelete();
@@ -53,8 +53,8 @@ public class DataFormatMvcController
 	@GetMapping(URL_DTL_CREATE)
 	public String showCreateForm(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
 		DataFormat dataFormat = this.service.create(masterId);
-		model.addAttribute("titleMaster", dataFormat.getMaster().getName());
-		model.addAttribute("titleCreate", this.ms.getMessage("dataformats.title.create", null, locale));
+		model.addAttribute(MA_TITLE_MASTER, dataFormat.getMaster().getName());
+		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage("dataformats.title.create", null, locale));
 		model.addAttribute("dataFormat", dataFormat);
 		return this.getViewNameCreateUpdate();
 	}
@@ -63,8 +63,8 @@ public class DataFormatMvcController
 	public String showUpdateForm(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_ID) Long id, Locale locale,
 			Model model) {
 		DataFormat dataFormat = this.service.getById(id);
-		model.addAttribute("titleMaster", dataFormat.getMaster().getName());
-		model.addAttribute("titleUpdate", this.ms.getMessage("dataformats.title.update", null, locale));
+		model.addAttribute(MA_TITLE_MASTER, dataFormat.getMaster().getName());
+		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("dataformats.title.update", null, locale));
 		model.addAttribute("dataFormat", dataFormat);
 		return this.getViewNameCreateUpdate();
 	}

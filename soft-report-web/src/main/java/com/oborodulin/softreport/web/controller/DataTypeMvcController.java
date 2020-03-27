@@ -33,7 +33,7 @@ public class DataTypeMvcController
 		super(masterService, service, BASE_URL, VN_PATH);
 	}
 
-	@ModelAttribute(name = "titleParent")
+	@ModelAttribute(name = MA_TITLE_PARENT)
 	public String titleParent(Locale locale) {
 		return this.ms.getMessage("proglangs.title.parent", null, locale);
 	}
@@ -44,14 +44,14 @@ public class DataTypeMvcController
 		if (dataTypes.isEmpty()) {
 			MessageHelper.addInfoAttribute(model, "datatypes.info.empty");
 		}
-		model.addAttribute("titleRead", this.ms.getMessage("datatypes.title.read", null, locale));
+		model.addAttribute(MA_TITLE_READ, this.ms.getMessage("datatypes.title.read", null, locale));
 		model.addAttribute("dataTypes", dataTypes);
 		return this.getViewNameReadDelete();
 	}
 
 	@GetMapping(URL_CREATE)
 	public String showCreateForm(Locale locale, Model model) {
-		model.addAttribute("titleCreate", this.ms.getMessage("datatypes.title.create", null, locale));
+		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage("datatypes.title.create", null, locale));
 		model.addAttribute("progLangs", this.masterService.findAll());
 		model.addAttribute("sqlTypes", this.service.getSqlTypes());
 		model.addAttribute("backendTypes", this.service.getBackendTypes());
@@ -62,7 +62,7 @@ public class DataTypeMvcController
 
 	@GetMapping(URL_EDIT)
 	public String showUpdateForm(@PathVariable(PV_ID) Long id, Locale locale, Model model) {
-		model.addAttribute("titleUpdate", this.ms.getMessage("datatypes.title.update", null, locale));
+		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("datatypes.title.update", null, locale));
 		model.addAttribute("progLangs", this.masterService.findAll());
 		model.addAttribute("sqlTypes", this.service.getSqlTypes());
 		model.addAttribute("backendTypes", this.service.getBackendTypes());
@@ -75,10 +75,10 @@ public class DataTypeMvcController
 	public String showChildrenList(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
 		ProgLang progLang = this.masterService.getById(masterId);
 		if (progLang.getDataTypes().isEmpty()) {
-			MessageHelper.addInfoAttribute(model, "proglang.datatypes.info.empty", progLang.getLang().getVal());
+			MessageHelper.addInfoAttribute(model, "datatypes.master.info.empty", progLang.getLang().getVal());
 		}
-		model.addAttribute("titleMaster", progLang.getLang().getVal());
-		model.addAttribute("titleRead", this.ms.getMessage("datatypes.title.read", null, locale));
+		model.addAttribute(MA_TITLE_MASTER, progLang.getLang().getVal());
+		model.addAttribute(MA_TITLE_READ, this.ms.getMessage("datatypes.title.read", null, locale));
 		model.addAttribute("progLang", progLang);
 		model.addAttribute("backendTypes", this.service.getBackendTypes());
 		model.addAttribute("frontendTypes", this.service.getFrontendTypes());
@@ -89,8 +89,8 @@ public class DataTypeMvcController
 	@GetMapping(URL_DTL_CREATE)
 	public String showCreateForm(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
 		DataType dataType = this.service.create(masterId);
-		model.addAttribute("titleMaster", dataType.getMaster().getLang().getVal());
-		model.addAttribute("titleCreate", this.ms.getMessage("datatypes.title.create", null, locale));
+		model.addAttribute(MA_TITLE_MASTER, dataType.getMaster().getLang().getVal());
+		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage("datatypes.title.create", null, locale));
 		model.addAttribute("backendTypes", this.service.getBackendTypes());
 		model.addAttribute("frontendTypes", this.service.getFrontendTypes());
 		model.addAttribute("dataType", dataType);
@@ -101,8 +101,8 @@ public class DataTypeMvcController
 	public String showUpdateForm(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_ID) Long id, Locale locale,
 			Model model) {
 		DataType dataType = this.service.getById(id);
-		model.addAttribute("titleMaster", dataType.getMaster().getLang().getVal());
-		model.addAttribute("titleUpdate", this.ms.getMessage("datatypes.title.update", null, locale));
+		model.addAttribute(MA_TITLE_MASTER, dataType.getMaster().getLang().getVal());
+		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("datatypes.title.update", null, locale));
 		model.addAttribute("backendTypes", this.service.getBackendTypes());
 		model.addAttribute("frontendTypes", this.service.getFrontendTypes());
 		model.addAttribute("dataType", dataType);

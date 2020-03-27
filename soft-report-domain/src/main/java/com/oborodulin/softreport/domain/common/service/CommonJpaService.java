@@ -12,6 +12,8 @@ public interface CommonJpaService<E extends AuditableEntity<U>, U> {
 
 	E getById(Long id);
 
+	public E create();
+
 	Optional<E> save(E entity);
 
 	void delete(E entity);

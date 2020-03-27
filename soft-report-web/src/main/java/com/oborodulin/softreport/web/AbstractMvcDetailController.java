@@ -31,11 +31,20 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 	public static final String URL_DTL_DELETE = "/{masterId}/delete";
 	public static final String URL_DTL_DELETE_BY_ID = "/{masterId}/delete/{id}";
 
+	public static final String MA_TITLE_MASTER = "titleMaster";
+
 	protected final M masterService;
 
 	@Autowired
 	protected AbstractMvcDetailController(M masterService, S service, String baseUrl, String viewPath) {
 		super(service, baseUrl, viewPath);
+		this.masterService = masterService;
+	}
+
+	@Autowired
+	protected AbstractMvcDetailController(M masterService, S service, String baseUrl, String viewPath, String objName,
+			String collectObjName) {
+		super(service, baseUrl, viewPath, objName, collectObjName);
 		this.masterService = masterService;
 	}
 

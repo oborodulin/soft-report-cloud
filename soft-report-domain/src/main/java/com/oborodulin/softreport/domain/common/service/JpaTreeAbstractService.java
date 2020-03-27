@@ -12,12 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class JpaTreeAbstractService<E extends TreeEntity<E, U>, R extends CommonTreeRepository<E, U>, U>
 		extends JpaAbstractService<E, R, U> implements CommonJpaTreeService<E, U> {
-	private Class<E> clazz;
 
 	@Autowired
 	public JpaTreeAbstractService(R repository, Class<E> clazz) {
-		super(repository);
-		this.clazz = clazz;
+		super(repository, clazz);
 	}
 
 	@Override
@@ -35,7 +33,7 @@ public abstract class JpaTreeAbstractService<E extends TreeEntity<E, U>, R exten
 	public E createChild(Long parentId) {
 		E entity = null;
 		try {
-			entity = this.clazz.getDeclaredConstructor().newInstance();
+			entity = this.create();
 			entity.setParent(this.repository.findById(parentId)
 					.orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + parentId)));
 		} catch (Exception e) {

@@ -30,7 +30,7 @@ public class ValuesSetMvcController extends AbstractMvcController<ValuesSet, Val
 		super(service, BASE_URL, VN_PATH);
 	}
 
-	@ModelAttribute(name = "titleParent")
+	@ModelAttribute(name = MA_TITLE_PARENT)
 	public String titleParent(Locale locale) {
 		return this.ms.getMessage("valuessets.title.parent", null, locale);
 	}
@@ -48,7 +48,7 @@ public class ValuesSetMvcController extends AbstractMvcController<ValuesSet, Val
 			MessageHelper.addInfoAttribute(model, "valuessets.info.empty");
 		}
 		//model.addAttribute("viewReadDelete", this.getViewNameReadDelete());
-		model.addAttribute("titleRead", this.ms.getMessage("valuessets.title.read", null, locale));
+		model.addAttribute(MA_TITLE_READ, this.ms.getMessage("valuessets.title.read", null, locale));
 		model.addAttribute("valuesSets", valuesSets);
 		return this.getViewNameReadDelete();
 	}
@@ -56,7 +56,7 @@ public class ValuesSetMvcController extends AbstractMvcController<ValuesSet, Val
 	@GetMapping(URL_CREATE)
 	public String showCreateForm(Locale locale, Model model) {
 		//model.addAttribute("viewCreateUpdate", this.getViewNameCreateUpdate());
-		model.addAttribute("titleCreate", this.ms.getMessage("valuessets.title.create", null, locale));
+		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage("valuessets.title.create", null, locale));
 		model.addAttribute("valuesSet", new ValuesSet());
 		return this.getViewNameCreateUpdate();
 	}
@@ -64,7 +64,7 @@ public class ValuesSetMvcController extends AbstractMvcController<ValuesSet, Val
 	@GetMapping(URL_EDIT)
 	public String showUpdateForm(@PathVariable(PV_ID) Long id, Locale locale, Model model) {
 		//model.addAttribute("viewCreateUpdate", this.getViewNameCreateUpdate());
-		model.addAttribute("titleUpdate", this.ms.getMessage("valuessets.title.update", null, locale));
+		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("valuessets.title.update", null, locale));
 		model.addAttribute("valuesSet", this.service.getById(id));
 		return this.getViewNameCreateUpdate();
 	}

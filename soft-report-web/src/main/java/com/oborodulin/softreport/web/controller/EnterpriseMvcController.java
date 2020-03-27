@@ -30,22 +30,22 @@ public class EnterpriseMvcController extends AbstractMvcTreeController<Enterpris
 		super(service, BASE_URL, VN_PATH);
 	}
 
-	@ModelAttribute(name = "titleParent")
+	@ModelAttribute(name = MA_TITLE_PARENT)
 	public String titleParent(Locale locale) {
 		return this.ms.getMessage("enterprises.title.parent", null, locale);
 	}
 
-	@ModelAttribute(name = "titleRead")
+	@ModelAttribute(name = MA_TITLE_READ)
 	public String titleRead(Locale locale) {
 		return this.ms.getMessage("enterprises.title.read", null, locale);
 	}
 
-	@ModelAttribute(name = "titleCreate")
+	@ModelAttribute(name = MA_TITLE_CREATE)
 	public String titleCreate(Locale locale) {
 		return this.ms.getMessage("enterprises.title.create", null, locale);
 	}
 
-	@ModelAttribute(name = "titleUpdate")
+	@ModelAttribute(name = MA_TITLE_UPDATE)
 	public String titleUpdate(Locale locale) {
 		return this.ms.getMessage("enterprises.title.update", null, locale);
 	}

@@ -32,7 +32,7 @@ public class ObjHierarchyMvcController
 		super(service, BASE_URL, VN_PATH);
 	}
 
-	@ModelAttribute(name = "titleParent")
+	@ModelAttribute(name = MA_TITLE_PARENT)
 	public String titleParent(Locale locale) {
 		return this.ms.getMessage("objhierarches.title.parent", null, locale);
 	}
@@ -43,7 +43,7 @@ public class ObjHierarchyMvcController
 		if (objHierarches.isEmpty()) {
 			MessageHelper.addInfoAttribute(model, "objhierarches.info.empty");
 		}
-		model.addAttribute("titleRead", this.ms.getMessage("objhierarches.title.read", null, locale));
+		model.addAttribute(MA_TITLE_READ, this.ms.getMessage("objhierarches.title.read", null, locale));
 		model.addAttribute("objHierarches", objHierarches);
 		return this.getViewNameReadDelete();
 	}
@@ -51,7 +51,7 @@ public class ObjHierarchyMvcController
 	@GetMapping(URL_CREATE)
 	public String showCreateForm(Locale locale, Model model) {
 		log.info("Create objHierarchy");
-		model.addAttribute("titleCreate", this.ms.getMessage("objhierarches.title.create", null, locale));
+		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage("objhierarches.title.create", null, locale));
 		model.addAttribute("objHierarches", this.service.findAllСontainerObjects());
 		model.addAttribute("archs", this.service.getArchs());
 		model.addAttribute("types", this.service.getTypes());
@@ -64,7 +64,7 @@ public class ObjHierarchyMvcController
 		ObjHierarchy objHierarchy = this.service.createChild(parentId);
 		log.info("objHierarchy parent Id = " + objHierarchy.getParent().getId() + "; arch = "
 				+ objHierarchy.getParent().getArch().getAttr1());
-		model.addAttribute("titleCreate", this.ms.getMessage("objhierarches.title.create", null, locale));
+		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage("objhierarches.title.create", null, locale));
 		model.addAttribute("objHierarches", this.service.findAllParentСontainerObjects(objHierarchy));
 		model.addAttribute("archs", this.service.getParentArchs(objHierarchy));
 		model.addAttribute("types", this.service.getComponentTypes());
@@ -74,7 +74,7 @@ public class ObjHierarchyMvcController
 
 	@GetMapping(URL_EDIT)
 	public String showUpdateForm(@PathVariable(PV_ID) Long id, Locale locale, Model model) {
-		model.addAttribute("titleUpdate", this.ms.getMessage("objhierarches.title.update", null, locale));
+		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("objhierarches.title.update", null, locale));
 		model.addAttribute("objHierarches", this.service.findByIdIsNot(id));
 		model.addAttribute("archs", this.service.getArchs());
 		model.addAttribute("types", this.service.getTypes());

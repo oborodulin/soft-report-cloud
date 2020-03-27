@@ -27,7 +27,7 @@ public class DocTypeMvcController extends AbstractMvcController<DocType, DocType
 		super(service, BASE_URL, VN_PATH);
 	}
 
-	@ModelAttribute(name = "titleParent")
+	@ModelAttribute(name = MA_TITLE_PARENT)
 	public String titleParent(Locale locale) {
 		return this.ms.getMessage("doctypes.title.parent", null, locale);
 	}
@@ -38,14 +38,14 @@ public class DocTypeMvcController extends AbstractMvcController<DocType, DocType
 		if (docTypes.isEmpty()) {
 			MessageHelper.addInfoAttribute(model, "doctypes.info.empty");
 		}
-		model.addAttribute("titleRead", this.ms.getMessage("doctypes.title.read", null, locale));
+		model.addAttribute(MA_TITLE_READ, this.ms.getMessage("doctypes.title.read", null, locale));
 		model.addAttribute("docTypes", docTypes);
 		return this.getViewNameReadDelete();
 	}
 
 	@GetMapping(URL_CREATE)
 	public String showCreateForm(Locale locale, Model model) {
-		model.addAttribute("titleCreate", this.ms.getMessage("doctypes.title.create", null, locale));
+		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage("doctypes.title.create", null, locale));
 		model.addAttribute("categs", this.service.getCategs());
 		model.addAttribute("types", this.service.getTypes());
 		model.addAttribute("docType", new DocType());
@@ -54,7 +54,7 @@ public class DocTypeMvcController extends AbstractMvcController<DocType, DocType
 
 	@GetMapping(URL_EDIT)
 	public String showUpdateForm(@PathVariable(PV_ID) Long id, Locale locale, Model model) {
-		model.addAttribute("titleUpdate", this.ms.getMessage("doctypes.title.update", null, locale));
+		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("doctypes.title.update", null, locale));
 		model.addAttribute("categs", this.service.getCategs());
 		model.addAttribute("types", this.service.getTypes());
 		model.addAttribute("docType", this.service.getById(id));

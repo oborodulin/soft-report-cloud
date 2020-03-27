@@ -30,7 +30,7 @@ public class SoftwareMvcController extends AbstractMvcTreeController<Software, S
 		super(service, BASE_URL, VN_PATH);
 	}
 
-	@ModelAttribute(name = "titleParent")
+	@ModelAttribute(name = MA_TITLE_PARENT)
 	public String titleParent(Locale locale) {
 		return this.ms.getMessage("softwares.title.parent", null, locale);
 	}
@@ -41,7 +41,7 @@ public class SoftwareMvcController extends AbstractMvcTreeController<Software, S
 		if (softwares.isEmpty()) {
 			MessageHelper.addInfoAttribute(model, "softwares.info.empty");
 		}
-		model.addAttribute("titleRead", this.ms.getMessage("softwares.title.read", null, locale));
+		model.addAttribute(MA_TITLE_READ, this.ms.getMessage("softwares.title.read", null, locale));
 		model.addAttribute("softwares", softwares);
 		return this.getViewNameReadDelete();
 	}
@@ -49,7 +49,7 @@ public class SoftwareMvcController extends AbstractMvcTreeController<Software, S
 	@GetMapping(URL_CREATE)
 	public String showCreateForm(Locale locale, Model model) {
 		log.info("Отображение формы создания системы");
-		model.addAttribute("titleCreate", this.ms.getMessage("softwares.title.create", null, locale));
+		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage("softwares.title.create", null, locale));
 		model.addAttribute("softwares", this.service.findAll());
 		model.addAttribute("types", this.service.getTypes());
 		model.addAttribute("software", new Software());
@@ -58,7 +58,7 @@ public class SoftwareMvcController extends AbstractMvcTreeController<Software, S
 
 	@GetMapping(URL_CREATE_CHILD)
 	public String showCreateChildForm(@PathVariable(PV_PARENT_ID) Long parentId, Locale locale, Model model) {
-		model.addAttribute("titleCreate", this.ms.getMessage("softwares.title.create", null, locale));
+		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage("softwares.title.create", null, locale));
 		model.addAttribute("softwares", this.service.findAll());
 		model.addAttribute("types", this.service.getTypes());
 		model.addAttribute("software", this.service.createChild(parentId));
@@ -68,7 +68,7 @@ public class SoftwareMvcController extends AbstractMvcTreeController<Software, S
 
 	@GetMapping(URL_EDIT)
 	public String showUpdateForm(@PathVariable(PV_ID) Long id, Locale locale, Model model) {
-		model.addAttribute("titleUpdate", this.ms.getMessage("softwares.title.update", null, locale));
+		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("softwares.title.update", null, locale));
 		model.addAttribute("softwares", this.service.findByIdIsNot(id));
 		model.addAttribute("types", this.service.getTypes());
 		model.addAttribute("software", this.service.getById(id));

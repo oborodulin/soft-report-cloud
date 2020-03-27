@@ -33,7 +33,7 @@ public class TaskMvcController
 		super(masterService, service, BASE_URL, VN_PATH);
 	}
 
-	@ModelAttribute(name = "titleParent")
+	@ModelAttribute(name = MA_TITLE_PARENT)
 	public String titleParent(Locale locale) {
 		return this.ms.getMessage("valuessets.title.parent", null, locale);
 	}
@@ -44,7 +44,7 @@ public class TaskMvcController
 		if (tasks.isEmpty()) {
 			MessageHelper.addInfoAttribute(model, "tasks.info.empty");
 		}
-		model.addAttribute("titleRead", this.ms.getMessage("tasks.title.read", null, locale));
+		model.addAttribute(MA_TITLE_READ, this.ms.getMessage("tasks.title.read", null, locale));
 		model.addAttribute("tasks", tasks);
 		return this.getViewNameReadDelete();
 	}
@@ -57,10 +57,10 @@ public class TaskMvcController
 		if (project.getTasks().isEmpty()) {
 			MessageHelper.addInfoAttribute(model, "tasks.info.empty", project.getName());
 		}
-		model.addAttribute("titleMaster", project.getName());
-		// model.addAttribute("titleRead", this.ms.getMessage("tasks.title.read",
+		model.addAttribute(MA_TITLE_MASTER, project.getName());
+		// model.addAttribute(MA_TITLE_READ, this.ms.getMessage("tasks.title.read",
 		// new Object[] {project.getCode()}, locale));
-		model.addAttribute("titleRead", this.ms.getMessage("tasks.title.read", null, locale));
+		model.addAttribute(MA_TITLE_READ, this.ms.getMessage("tasks.title.read", null, locale));
 		model.addAttribute("project", project);
 		model.addAttribute("tasks", project.getTasks());
 		return this.getViewNameReadDelete();
@@ -68,15 +68,15 @@ public class TaskMvcController
 
 	@GetMapping(URL_CREATE)
 	public String showCreateForm(Locale locale, Model model) {
-		model.addAttribute("titleCreate", this.ms.getMessage("tasks.title.create", null, locale));
+		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage("tasks.title.create", null, locale));
 		model.addAttribute("task", new Task());
 		return this.getViewNameCreateUpdate();
 	}
 	@GetMapping(URL_DTL_CREATE)
 	public String showDetailCreateForm(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
 		Task task = this.service.create(masterId);
-		model.addAttribute("titleMaster", task.getMaster().getName());
-		model.addAttribute("titleCreate", this.ms.getMessage("tasks.title.create", null, locale));
+		model.addAttribute(MA_TITLE_MASTER, task.getMaster().getName());
+		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage("tasks.title.create", null, locale));
 		model.addAttribute("task", task);
 		return this.getViewNameCreateUpdate();
 	}
@@ -85,8 +85,8 @@ public class TaskMvcController
 	public String showUpdateForm(@PathVariable(PV_ID) Long id, Locale locale,
 			Model model) {
 		Task task = this.service.getById(id);
-		model.addAttribute("titleMaster", task.getName());
-		model.addAttribute("titleUpdate", this.ms.getMessage("tasks.title.update", null, locale));
+		model.addAttribute(MA_TITLE_MASTER, task.getName());
+		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("tasks.title.update", null, locale));
 		model.addAttribute("task", task);
 		return this.getViewNameCreateUpdate();
 	}
@@ -95,8 +95,8 @@ public class TaskMvcController
 	public String showDetailUpdateForm(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_ID) Long id, Locale locale,
 			Model model) {
 		Task task = this.service.getById(id);
-		model.addAttribute("titleMaster", task.getMaster().getName());
-		model.addAttribute("titleUpdate", this.ms.getMessage("tasks.title.update", null, locale));
+		model.addAttribute(MA_TITLE_MASTER, task.getMaster().getName());
+		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("tasks.title.update", null, locale));
 		model.addAttribute("task", task);
 		return this.getViewNameCreateUpdate();
 	}

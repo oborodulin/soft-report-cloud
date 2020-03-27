@@ -1,5 +1,6 @@
 package com.oborodulin.softreport.domain.common.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +10,7 @@ import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.common.repository.CommonDetailRepository;
 import com.oborodulin.softreport.domain.common.repository.CommonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 
 public abstract class JpaDetailAbstractService<E extends AuditableEntity<U>, D extends DetailEntity<E, U>, M extends CommonRepository<E, U>, R extends CommonDetailRepository<E, D, U>, U>
 		extends JpaAbstractService<D, R, U> implements CommonJpaDetailService<E, D, U> {
@@ -21,6 +23,18 @@ public abstract class JpaDetailAbstractService<E extends AuditableEntity<U>, D e
 		this.masterRepository = masterRepository;
 		this.clazz = clazz;
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<D> findByMaster(E master, Sort sort) {
+		return repository.findByMaster(master, sort);
+	};
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<D> findByMasterId(Long id, Sort sort) {
+		return repository.findByMasterId(id, sort);
+	};
 
 	@Override
 	@Transactional

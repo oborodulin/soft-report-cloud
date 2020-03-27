@@ -32,7 +32,7 @@ public class ValueMvcController
 		super(masterService, service, BASE_URL, VN_PATH);
 	}
 
-	@ModelAttribute(name = "titleParent")
+	@ModelAttribute(name = MA_TITLE_PARENT)
 	public String titleParent(Locale locale) {
 		return this.ms.getMessage("valuessets.title.parent", null, locale);
 	}
@@ -45,10 +45,10 @@ public class ValueMvcController
 		if (valuesSet.getValues().isEmpty()) {
 			MessageHelper.addInfoAttribute(model, "values.info.empty", valuesSet.getName());
 		}
-		model.addAttribute("titleMaster", valuesSet.getNameAndCode());
-		// model.addAttribute("titleRead", this.ms.getMessage("values.title.read",
+		model.addAttribute(MA_TITLE_MASTER, valuesSet.getNameAndCode());
+		// model.addAttribute(MA_TITLE_READ, this.ms.getMessage("values.title.read",
 		// new Object[] {valuesSet.getCode()}, locale));
-		model.addAttribute("titleRead", this.ms.getMessage("values.title.read", null, locale));
+		model.addAttribute(MA_TITLE_READ, this.ms.getMessage("values.title.read", null, locale));
 		model.addAttribute("valuesSet", valuesSet);
 		model.addAttribute("values", valuesSet.getValues());
 		return this.getViewNameReadDelete();
@@ -57,8 +57,8 @@ public class ValueMvcController
 	@GetMapping(URL_DTL_CREATE)
 	public String showCreateForm(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
 		Value value = this.service.create(masterId);
-		model.addAttribute("titleMaster", value.getSetNameAndCode());
-		model.addAttribute("titleCreate", this.ms.getMessage("values.title.create", null, locale));
+		model.addAttribute(MA_TITLE_MASTER, value.getSetNameAndCode());
+		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage("values.title.create", null, locale));
 		model.addAttribute("value", value);
 		return this.getViewNameCreateUpdate();
 	}
@@ -67,8 +67,8 @@ public class ValueMvcController
 	public String showUpdateForm(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_ID) Long id, Locale locale,
 			Model model) {
 		Value value = this.service.getById(id);
-		model.addAttribute("titleMaster", value.getSetNameAndCode());
-		model.addAttribute("titleUpdate", this.ms.getMessage("values.title.update", null, locale));
+		model.addAttribute(MA_TITLE_MASTER, value.getSetNameAndCode());
+		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("values.title.update", null, locale));
 		model.addAttribute("value", value);
 		return this.getViewNameCreateUpdate();
 	}
