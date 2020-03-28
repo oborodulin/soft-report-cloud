@@ -30,7 +30,7 @@ public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSe
 		Optional<ValuesSet> valuesSet = this.repository.findByCode(code);
 		List<Value> values = new ArrayList<>();
 		if (valuesSet.isPresent()) {
-			Comparator<Value> compareByCode = (Value v1, Value v2) -> v1.getCode().compareTo(v2.getCode());
+			Comparator<Value> compareByCode = (Value v1, Value v2) -> v1.getCodeId().compareTo(v2.getCodeId());
 			values = this.repository.findByCode(code).get().getValues();
 			Collections.sort(values, compareByCode);
 		}

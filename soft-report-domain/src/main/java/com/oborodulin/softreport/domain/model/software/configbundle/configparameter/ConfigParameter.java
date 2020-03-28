@@ -23,4 +23,12 @@ public class ConfigParameter extends DetailEntity<ConfigBundle, String> {
 	@Column(length = 1000)
 	private String descr;
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.name;
+	}
+	
 }

@@ -11,9 +11,10 @@ import lombok.Data;
 import lombok.ToString;
 
 /**
- * Класс описывает иерархию объектов базы данных (БД) и пользовательского интерфейса (UI).
+ * Класс описывает иерархию объектов базы данных (БД) и пользовательского
+ * интерфейса (UI).
  * 
- * @author acs-i
+ * @author Oleg Borodulin
  *
  */
 @Data
@@ -36,5 +37,13 @@ public class ObjHierarchy extends TreeEntity<ObjHierarchy, String> {
 	@JoinColumn(name = "type_code")
 	@ToString.Exclude
 	private Value type;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.arch.getVal().concat(" :: ").concat(this.type.getVal());
+	}
 
 }

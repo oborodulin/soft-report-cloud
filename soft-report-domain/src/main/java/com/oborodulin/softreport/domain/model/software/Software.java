@@ -33,7 +33,7 @@ import lombok.ToString;
  * 
  * Наследуемые ПО получают доступ к бизнес-объектам родительского ПО.
  * 
- * @author acs-i
+ * @author Oleg Borodulin
  *
  */
 @Data
@@ -85,6 +85,14 @@ public class Software extends TreeEntity<Software, String> {
 	@EqualsAndHashCode.Exclude
 	private List<ProgLang> progLangs = new ArrayList<>();
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.code;
+	}
+	
 	/**
 	 * Добавляет к ПО документ
 	 * 

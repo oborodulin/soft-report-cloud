@@ -59,5 +59,13 @@ public class Server extends AuditableEntity<String> {
 	@OneToMany(mappedBy = "server", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> docObjects = new ArrayList<>();
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.host;
+	}
 	
 }

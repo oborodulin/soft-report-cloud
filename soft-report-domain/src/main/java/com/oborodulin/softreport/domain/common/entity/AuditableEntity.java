@@ -16,7 +16,7 @@ import java.util.Date;
 @Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class AuditableEntity<U> implements Serializable {
+public abstract class AuditableEntity<U> implements Serializable,  Auditable{
 	private static final long serialVersionUID = -9180531813274000726L;
 
 	@Id
@@ -48,4 +48,5 @@ public abstract class AuditableEntity<U> implements Serializable {
 	@LastModifiedDate
 	@Temporal(TemporalType.TIMESTAMP)
 	protected Date lastModifiedDate;
+
 }

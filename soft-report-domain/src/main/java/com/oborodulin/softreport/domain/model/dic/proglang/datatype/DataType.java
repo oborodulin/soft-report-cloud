@@ -59,10 +59,18 @@ public class DataType extends DetailEntity<ProgLang, String> {
 	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<DataFormat> formats = new ArrayList<>();
-	
+
 	/** Список объектов БД/UI, текущего типа данных */
 	@OneToMany(mappedBy = "dataType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> docObjects = new ArrayList<>();
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.name;
+	}
 
 }

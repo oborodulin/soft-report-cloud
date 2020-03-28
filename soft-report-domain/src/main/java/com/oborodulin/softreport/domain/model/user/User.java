@@ -37,6 +37,14 @@ public class User extends AuditableEntity<String> { // implements UserDetails {
 	private final String zip;
 	private final String phoneNumber;
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.username;
+	}
+	
 	/*
 	 * @Override public Collection<? extends GrantedAuthority> getAuthorities() {
 	 * return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")); }

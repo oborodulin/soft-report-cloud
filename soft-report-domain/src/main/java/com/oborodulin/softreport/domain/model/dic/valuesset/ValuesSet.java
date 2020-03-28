@@ -29,7 +29,7 @@ import lombok.EqualsAndHashCode;
  * Набор значений обеспечивает хранение значений, централизовано используемых для всех объектов доменной
  * модели.
  * 
- * @author acs-i
+ * @author Oleg Borodulin
  *
  */
 @Data
@@ -168,16 +168,12 @@ public class ValuesSet extends AuditableEntity<String> {
 	}
 
 	/**
-	 * Возвращает имя и код набора значений в формате <code>Name [Code]</code>.
-	 * 
-	 * Необходимо для отображения с целью визуальной идентификации набора значений,
-	 * которому принадлежит текущее или будет принадлежать новое значение.
-	 * 
-	 * @return имя и код набора значений
+	 * {@inheritDoc}
 	 */
-	public String getNameAndCode() {
-		return getName().concat(" [").concat(getCode()).concat("]");
-	};
+	@Override
+	public String getCodeId() {
+		return this.getName().concat(" [").concat(this.getCode()).concat("]");
+	}
 
 	/**
 	 * Предобработка данных перед созданием и сохранением.

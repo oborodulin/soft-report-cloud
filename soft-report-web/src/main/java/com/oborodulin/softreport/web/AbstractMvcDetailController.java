@@ -1,6 +1,8 @@
 package com.oborodulin.softreport.web;
 
+import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -11,12 +13,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.domain.Sort;
 
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.common.service.CommonJpaDetailService;
 import com.oborodulin.softreport.domain.common.service.CommonJpaService;
+import com.oborodulin.softreport.web.support.MessageHelper;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, D extends DetailEntity<E, U>, M extends CommonJpaService<E, U>, S extends CommonJpaDetailService<E, D, U>, U>
 		extends AbstractMvcController<D, S, U> implements CommonMvcDetailController<E, D, U> {
 	public static final String PV_MASTER_ID = "masterId";
@@ -31,16 +37,35 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 	public static final String URL_DTL_DELETE = "/{masterId}/delete";
 	public static final String URL_DTL_DELETE_BY_ID = "/{masterId}/delete/{id}";
 
+	public static final String MA_MASTER = "master";
 	public static final String MA_TITLE_MASTER = "titleMaster";
+
+	protected static final String RM_DTL_READ = "details-read";
 
 	protected final M masterService;
 
+	/**
+	 * Конструктор. Инстанцирует объект.
+	 * 
+	 * @param masterService сервис главного объекта доменной модели
+	 * @param service       сервис подчинённого объекта доменной модели
+	 * @param baseUrl       базовый URL контроллера
+	 * @param viewPath      путь к CRUD-шаблонам контроллера (каталог)
+	 */
 	@Autowired
 	protected AbstractMvcDetailController(M masterService, S service, String baseUrl, String viewPath) {
 		super(service, baseUrl, viewPath);
 		this.masterService = masterService;
 	}
 
+	/**
+	 * Конструктор. Инстанцирует объект.
+	 * 
+	 * @param masterService сервис главного объекта доменной модели
+	 * @param service       сервис подчинённого объекта доменной модели
+	 * @param baseUrl       базовый URL контроллера
+	 * @param viewPath      путь к CRUD-шаблонам контроллера (каталог)
+	 */
 	@Autowired
 	protected AbstractMvcDetailController(M masterService, S service, String baseUrl, String viewPath, String objName,
 			String collectObjName) {
@@ -64,6 +89,86 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 		return this.getRedirectToRead(masterId).concat(URL_CREATE);
 	}
 
+	/**
+	 * Возвращает строковый идентификатор главного объекта.
+	 * 
+	 * @param master главный объект
+	 * @param isCode признак возврата значения кода {@code getCode()} или
+	 *               наименование {@code getName()}
+	 * @return строковый идентификатор главного объекта (код или наименование)
+	 */
+	private String getMasterIdentifier(E master) {
+		Object result = null;
+		try {
+			Class<?> clazz = master.getClass();
+			if (clazz != null) {
+				Method method = null;
+				/*switch (this.titleMaster) {
+				case CODE:
+					method = clazz.getDeclaredMethod("getCode", master.getClass());
+					break;
+				case NAME:
+					method = clazz.getDeclaredMethod("getName", master.getClass());
+				}*/
+				result = method.invoke(null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (String) result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@GetMapping(URL_DTL_READ)
+	public String showList(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
+		E master = this.masterService.getById(masterId);
+		List<D> details = this.service.findByMasterId(masterId, Sort.by(Sort.Direction.ASC, "name"));
+		if (details.isEmpty()) {
+			MessageHelper.addInfoAttribute(model, this.msPrefix.concat(".master.info.empty"),
+					this.getMasterIdentifier(master));
+		}
+		model.mergeAttributes(this.getModelAttributes(RM_DTL_READ));
+//		model.addAttribute(MA_TITLE_MASTER, this.getMasterIdentifier(master));
+		model.addAttribute(MA_TITLE_MASTER, master.getCodeId());
+		model.addAttribute(MA_TITLE_READ, this.ms.getMessage(this.msPrefix.concat(".title.read"), null, locale));
+		model.addAttribute(MA_MASTER, master);
+		model.addAttribute(this.collectObjName, details);
+		return this.getViewNameReadDelete();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@GetMapping(URL_DTL_CREATE)
+	public String showCreateForm(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
+		D detail = this.service.create(masterId);
+		model.addAttribute(MA_TITLE_MASTER, detail.getMaster().getCodeId());
+		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage(this.msPrefix.concat(".title.create"), null, locale));
+		model.addAttribute(this.objName, detail);
+		return this.getViewNameCreateUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@GetMapping(URL_DTL_EDIT)
+	public String showUpdateForm(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_ID) Long id, Locale locale,
+			Model model) {
+		D detail = this.service.getById(id);
+		model.addAttribute(MA_TITLE_MASTER, detail.getMaster().getCodeId());
+		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("businessobjects.title.update", null, locale));
+		model.addAttribute(this.objName, detail);
+		return this.getViewNameCreateUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@PostMapping(URL_DTL_CREATE_CONTINUE)
 	public String create(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_IS_CONTINUE) boolean isContinue,
@@ -81,6 +186,9 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 		return this.getRedirectToRead(masterId);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@PostMapping(URL_DTL_UPDATE)
 	public String update(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_ID) Long id, @Valid D entity,
@@ -93,6 +201,9 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 		return this.getRedirectToRead(masterId);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@PostMapping(URL_DTL_DELETE)
 	public String delete(@PathVariable(PV_MASTER_ID) Long masterId,
@@ -105,6 +216,9 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 		return this.getRedirectToRead(masterId);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@GetMapping(URL_DTL_DELETE_BY_ID)
 	public String deleteById(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_ID) Long id) {

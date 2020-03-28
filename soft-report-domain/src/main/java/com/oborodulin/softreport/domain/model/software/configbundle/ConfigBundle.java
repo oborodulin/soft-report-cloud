@@ -39,4 +39,12 @@ public class ConfigBundle extends DetailEntity<Software, String> {
 	@ToString.Exclude
 	private DocObject dtColumn;
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.name;
+	}
+	
 }

@@ -23,4 +23,12 @@ public class Enterprise extends TreeEntity<Enterprise, String> {
 	@NotBlank
 	private String fullName;
 	private String descr;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.code;
+	}
 }

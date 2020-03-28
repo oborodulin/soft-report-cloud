@@ -62,4 +62,13 @@ public class Project extends TreeEntity<Project, String> {
 	public void addSoftware(Software software) {
 		this.softwares.add(software);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.name;
+	}
+	
 }

@@ -36,8 +36,16 @@ public class Term extends AuditableEntity<String> {
 	@EqualsAndHashCode.Exclude
 	private List<Document> documents = new ArrayList<>();
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.name;
+	}
+	
 	public void addDocument(Document document) {
 		this.documents.add(document);
 	}
-
+	
 }

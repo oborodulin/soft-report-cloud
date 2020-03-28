@@ -48,4 +48,12 @@ public class UiEventType extends DetailEntity<UiObjectType, String> {
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> docObjects = new ArrayList<>();
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.name;
+	}
+	
 }

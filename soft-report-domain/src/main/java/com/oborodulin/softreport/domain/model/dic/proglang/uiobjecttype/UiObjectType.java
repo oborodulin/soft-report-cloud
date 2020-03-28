@@ -51,4 +51,12 @@ public class UiObjectType extends DetailEntity<ProgLang, String> {
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> uiObjects = new ArrayList<>();
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.name;
+	}
+	
 }

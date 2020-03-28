@@ -44,5 +44,13 @@ public class Task extends DetailEntity<Project, String> {
 	public static enum Priority {
 		LOW, NORMAL, HIGH, URGENT, IMMEDIATE
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.name;
+	}
 	
 }

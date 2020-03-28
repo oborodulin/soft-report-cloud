@@ -257,22 +257,16 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	 * @see com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet#code
 	 */
 	public String getValuesSetCode() {
-		return getMaster() != null ? getMaster().getCode() : null;
+		return getMaster() != null ? getMaster().getCodeId() : null;
 	};
 
 	/**
-	 * Возвращает имя и код набора значений.
-	 * 
-	 * Необходимо для отображения с целью визуальной идентификации набора значений,
-	 * которому принадлежит или будет принадлежать текущее значение.
-	 * 
-	 * @return имя и код набора значений
-	 * @see com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet
-	 * @see com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet#getNameAndCode()
+	 * {@inheritDoc}
 	 */
-	public String getSetNameAndCode() {
-		return getMaster() != null ? getMaster().getNameAndCode() : null;
-	};
+	@Override
+	public String getCodeId() {
+		return this.getMaster() != null ? this.getMaster().getCodeId().concat(" :: ").concat(this.getVal()) : null;
+	}
 
 	/**
 	 * Предобработка данных перед созданием и сохранением.

@@ -37,12 +37,14 @@ public class DocType extends AuditableEntity<String> {
 	/** Описание */
 	@Column(length = 500)
 	private String descr;
-	
-	/** Признак формирования документа по текущей версии (а не с первой по последнюю) */
+
+	/**
+	 * Признак формирования документа по текущей версии (а не с первой по последнюю)
+	 */
 	@NotNull
 	@Column(columnDefinition = "boolean not null default false")
 	private Boolean isCurrentVersion = false;
-	
+
 	/** Категория документа */
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "categ_code", nullable = false)
@@ -59,4 +61,13 @@ public class DocType extends AuditableEntity<String> {
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<Document> documents = new ArrayList<>();
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.categ.getVal().concat(" :: ").concat(this.type.getVal());
+	}
+
 }

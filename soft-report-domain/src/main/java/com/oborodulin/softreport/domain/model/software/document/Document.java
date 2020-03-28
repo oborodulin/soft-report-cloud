@@ -62,6 +62,14 @@ public class Document extends DetailEntity<Software, String> {
 	@EqualsAndHashCode.Exclude
 	private Set<Version> versions = new HashSet<>();
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.name;
+	}
+
 	public void addTerm(Term term) {
 		this.terms.add(term);
 	}

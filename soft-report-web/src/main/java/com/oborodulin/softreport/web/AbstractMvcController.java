@@ -1,6 +1,5 @@
 package com.oborodulin.softreport.web;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -17,12 +16,15 @@ import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 import com.oborodulin.softreport.domain.common.service.CommonJpaService;
 import com.oborodulin.softreport.web.support.MessageHelper;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Slf4j
 public abstract class AbstractMvcController<E extends AuditableEntity<U>, S extends CommonJpaService<E, U>, U>
 		implements CommonMvcController<E, U> {
 	private static final String VN_READ_DELETE = "read-delete";
@@ -49,8 +51,9 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	protected static final String MA_TITLE_CREATE = "titleCreate";
 	protected static final String MA_TITLE_UPDATE = "titleUpdate";
 
-	protected static final String RM_SHOW_LIST = "showList";
-	protected static final String RM_SHOW_UPDATE_FORM = "showUpdateForm";
+	protected static final String RM_CREATE = "create";
+	protected static final String RM_READ = "read";
+	protected static final String RM_UPDATE = "update";
 
 	/** Основной сервис контроллера */
 	protected final S service;
@@ -77,7 +80,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	private Map<String, Map<String, Object>> modelAttributes = new HashMap<>();
 
 	/**
-	 * Конструктор инстанцирует объект
+	 * Конструктор. Инстанцирует объект
 	 * 
 	 * @param service  сервис доменной модели
 	 * @param baseUrl  базовый URL контроллера
@@ -91,6 +94,15 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 		this.viewPath = viewPath;
 	}
 
+	/**
+	 * Конструктор. Инстанцирует объект
+	 * 
+	 * @param service        сервис доменной модели
+	 * @param baseUrl        базовый URL контроллера
+	 * @param viewPath       путь к CRUD-шаблонам контроллера (каталог)
+	 * @param objName        наименование объекта контроллера
+	 * @param collectObjName наименование коллекции объектов контроллера
+	 */
 	@Autowired
 	protected AbstractMvcController(S service, String baseUrl, String viewPath, String objName, String collectObjName) {
 		this(service, baseUrl, viewPath);
@@ -99,28 +111,35 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 		this.msPrefix = collectObjName.toLowerCase();
 	}
 
-	protected void presetModelAttributes(String requestMethName, Map<String, Object> modelAttributes) {
+	/**
+	 * Предустанавливает атрибуты модели.
+	 * <p>
+	 * Используется в конструкторе
+	 * 
+	 * @param requestMethName идентификатор Request-метода, в котором
+	 * @param modelAttributes ассоциативный список атрибутов
+	 * @see #RM_SHOW_LIST
+	 * @see #RM_SHOW_UPDATE_FORM
+	 */
+	protected void setModelAttributes(String requestMethName, Map<String, Object> modelAttributes) {
 		this.modelAttributes.put(requestMethName, modelAttributes);
 	}
 
-	private Map<String, Object> getModelAttributes(String requestMethName) {
+	/**
+	 * Возвращает асоциативный список атрибутов модели по зданному идентификатору
+	 * Request-метода
+	 * 
+	 * @param requestMethName идентификатор Request-метода
+	 * @return асоциативный список атрибутов модели
+	 * @see #RM_SHOW_LIST
+	 * @see #RM_SHOW_UPDATE_FORM
+	 */
+	protected Map<String, Object> getModelAttributes(String requestMethName) {
 		return modelAttributes.get(requestMethName);
 	}
 
-	private void setModelAttributes(String requestMethName, Model model) {
-		Map<String, Object> ma = getModelAttributes(requestMethName);
-		if (ma == null) {
-			return;
-		}
-		for (Map.Entry<String, Object> entry : ma.entrySet()) {
-			model.addAttribute(entry.getKey(), entry.getValue());
-		}
-	}
-
 	/**
-	 * Возвращает путь к шаблону "чтение-удаление"
-	 * 
-	 * @return путь к шаблону "чтение-удаление"
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getViewNameReadDelete() {
@@ -128,9 +147,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	}
 
 	/**
-	 * Возвращает путь к шаблону "создание-обновление"
-	 * 
-	 * @return путь к шаблону "создание-обновление"
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getViewNameCreateUpdate() {
@@ -138,9 +155,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	}
 
 	/**
-	 * Возвращает перенаправление на функцию "ЧТЕНИЕ" (базовый URL)
-	 * 
-	 * @return строка перенаправления на функцию "ЧТЕНИЕ" (базовый URL)
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getRedirectToRead() {
@@ -165,15 +180,16 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	}
 
 	/**
-	 * Возвращает перенаправление на функцию "СОЗДАНИЕ"
-	 * 
-	 * @return строка перенаправления на функцию "СОЗДАНИЕ"
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getRedirectToCreate() {
 		return this.getRedirectToRead().concat(URL_CREATE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@GetMapping
 	public String showList(Locale locale, Model model) {
@@ -181,29 +197,39 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 		if (entities.isEmpty()) {
 			MessageHelper.addInfoAttribute(model, this.msPrefix.concat(".info.empty"));
 		}
+		model.mergeAttributes(this.getModelAttributes(RM_READ));
 		model.addAttribute(MA_TITLE_READ, this.ms.getMessage(this.msPrefix.concat(".title.read"), null, locale));
-		this.setModelAttributes(RM_SHOW_LIST, model);
 		model.addAttribute(this.collectObjName, entities);
 		return this.getViewNameReadDelete();
 	}
 
-	@Override
-	@GetMapping(URL_EDIT)
-	public String showUpdateForm(@PathVariable(PV_ID) Long id, Locale locale, Model model) {
-		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage(this.msPrefix.concat(".title.update"), null, locale));
-		this.setModelAttributes(RM_SHOW_UPDATE_FORM, model);
-		model.addAttribute(this.objName, this.service.getById(id));
-		return this.getViewNameCreateUpdate();
-	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@GetMapping(URL_CREATE)
 	public String showCreateForm(Locale locale, Model model) {
+		model.mergeAttributes(this.getModelAttributes(RM_CREATE));
 		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage(this.msPrefix.concat(".title.create"), null, locale));
 		model.addAttribute(this.objName, this.service.create());
 		return this.getViewNameCreateUpdate();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@GetMapping(URL_EDIT)
+	public String showUpdateForm(@PathVariable(PV_ID) Long id, Locale locale, Model model) {
+		model.mergeAttributes(this.getModelAttributes(RM_UPDATE));
+		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage(this.msPrefix.concat(".title.update"), null, locale));
+		model.addAttribute(this.objName, this.service.getById(id));
+		return this.getViewNameCreateUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@PostMapping(URL_CREATE_CONTINUE)
 	public String create(@PathVariable(PV_IS_CONTINUE) boolean isContinue, @Valid E entity, Errors errors,
@@ -219,6 +245,9 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 		return this.getRedirectToRead();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@PostMapping(URL_UPDATE)
 	public String update(@PathVariable(PV_ID) Long id, @Valid E entity, Errors errors, Model model) {
@@ -230,6 +259,9 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 		return this.getRedirectToRead();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@PostMapping(URL_DELETE)
 	public String delete(@RequestParam(RV_CHK_TABLE_RECORDS) List<String> ids) {
@@ -241,6 +273,9 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 		return this.getRedirectToRead();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@GetMapping(URL_DELETE_BY_ID)
 	public String deleteById(@PathVariable(PV_ID) Long id) {

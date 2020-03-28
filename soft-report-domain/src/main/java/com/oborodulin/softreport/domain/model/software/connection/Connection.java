@@ -32,4 +32,12 @@ public class Connection extends DetailEntity<Software, String> {
 	/** Пароль */
 	private String password;
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.name;
+	}
+	
 }

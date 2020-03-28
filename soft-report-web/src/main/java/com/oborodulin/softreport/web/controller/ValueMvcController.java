@@ -45,7 +45,7 @@ public class ValueMvcController
 		if (valuesSet.getValues().isEmpty()) {
 			MessageHelper.addInfoAttribute(model, "values.info.empty", valuesSet.getName());
 		}
-		model.addAttribute(MA_TITLE_MASTER, valuesSet.getNameAndCode());
+		model.addAttribute(MA_TITLE_MASTER, valuesSet.getCodeId());
 		// model.addAttribute(MA_TITLE_READ, this.ms.getMessage("values.title.read",
 		// new Object[] {valuesSet.getCode()}, locale));
 		model.addAttribute(MA_TITLE_READ, this.ms.getMessage("values.title.read", null, locale));
@@ -57,7 +57,7 @@ public class ValueMvcController
 	@GetMapping(URL_DTL_CREATE)
 	public String showCreateForm(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
 		Value value = this.service.create(masterId);
-		model.addAttribute(MA_TITLE_MASTER, value.getSetNameAndCode());
+		model.addAttribute(MA_TITLE_MASTER, value.getCodeId());
 		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage("values.title.create", null, locale));
 		model.addAttribute("value", value);
 		return this.getViewNameCreateUpdate();
@@ -67,7 +67,7 @@ public class ValueMvcController
 	public String showUpdateForm(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_ID) Long id, Locale locale,
 			Model model) {
 		Value value = this.service.getById(id);
-		model.addAttribute(MA_TITLE_MASTER, value.getSetNameAndCode());
+		model.addAttribute(MA_TITLE_MASTER, value.getCodeId());
 		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("values.title.update", null, locale));
 		model.addAttribute("value", value);
 		return this.getViewNameCreateUpdate();

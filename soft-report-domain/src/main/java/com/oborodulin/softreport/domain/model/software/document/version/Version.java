@@ -21,7 +21,7 @@ import lombok.Data;
  * Используется семантическое версионирование 2.0.0
  * (https://semver.org/lang/ru/)
  * 
- * @author acs-i
+ * @author Oleg Borodulin
  */
 @Data
 @Entity
@@ -46,6 +46,14 @@ public class Version extends DetailEntity<Document, String> {
 	/** Объекты БД/UI */
 	@ManyToMany(mappedBy = "versions", fetch = FetchType.LAZY)
 	private List<DocObject> docObjects = new ArrayList<>();
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.getSemVer();
+	}
 
 	/**
 	 * Возвращает семантический номер версии в формате (x.y.z)
@@ -88,4 +96,5 @@ public class Version extends DetailEntity<Document, String> {
 	public void incPatch() {
 		setPatch(getPatch() + 1);
 	}
+
 }

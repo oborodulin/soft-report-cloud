@@ -27,7 +27,7 @@ import lombok.ToString;
 /**
  * Класс реализует описание и хранение языков программирования.
  * 
- * @author acs-i
+ * @author Oleg Borodulin
  *
  */
 @Data
@@ -60,12 +60,12 @@ public class ProgLang extends AuditableEntity<String> {
 	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<UiObjectType> uiObjectTypes = new ArrayList<>();
-	
+
 	/** Список ПО, использующих текущий язык программирования */
 	@ManyToMany(mappedBy = "progLangs", fetch = FetchType.LAZY)
 	private List<Software> softwares = new ArrayList<>();
 
-	/** 
+	/**
 	 * Возвращает строку-перечень кодов ПО через запятую
 	 * 
 	 * @return строка-перечень кодов ПО
@@ -73,7 +73,7 @@ public class ProgLang extends AuditableEntity<String> {
 	public String getSoftwareCodes() {
 		StringBuilder sbString = new StringBuilder("");
 		for (Software software : this.softwares) {
-			sbString.append(software.getCode()).append(",");
+			sbString.append(software.getCodeId()).append(",");
 		}
 		String softwareCodes = sbString.toString();
 		if (softwareCodes.length() > 0) {
@@ -81,4 +81,13 @@ public class ProgLang extends AuditableEntity<String> {
 		}
 		return softwareCodes;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.lang.getVal();
+	}
+
 }

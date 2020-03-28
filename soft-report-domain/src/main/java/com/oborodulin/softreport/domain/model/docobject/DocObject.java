@@ -36,7 +36,7 @@ import lombok.ToString;
  * представления, процедуры, формы, панели, поля,
  * таблицы, колонки, кнопки и т.д.
  * 
- * @author acs-i
+ * @author Oleg Borodulin
  *
  */
 @Data
@@ -325,5 +325,13 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@JoinColumn(name = "event_val_doc_objects_id")
 	@ToString.Exclude
 	private DocObject eventValDocObject;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.type.getVal();
+	}
 	
 }

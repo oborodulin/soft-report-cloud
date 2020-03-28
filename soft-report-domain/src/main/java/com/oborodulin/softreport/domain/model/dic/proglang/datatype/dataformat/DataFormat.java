@@ -41,4 +41,12 @@ public class DataFormat extends DetailEntity<DataType, String> {
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> docObjects = new ArrayList<>();
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCodeId() {
+		return this.format;
+	}
+	
 }
