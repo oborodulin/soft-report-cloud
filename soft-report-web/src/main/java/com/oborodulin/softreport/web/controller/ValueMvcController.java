@@ -30,6 +30,7 @@ public class ValueMvcController
 	@Autowired
 	public ValueMvcController(ValuesSetServiceImpl masterService, ValueServiceImpl service) {
 		super(masterService, service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
+		this.setDtlSortPropName("code");
 	}
 
 }

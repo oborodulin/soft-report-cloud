@@ -13,15 +13,15 @@
 	<div class="x_content" layout:fragment="page-content">
 		<a th:href="@{~/datatypes}" class="btn btn-secondary btn-xs"><i
 			class="fa fa-arrow-left"></i> <th:block
-				th:text="' '+#{backto.label}+' '+${dataType.name}" /></a> <a
-			th:href="@{~/dataformats/{masterId}/create(masterId=${dataType.id})}"
+				th:text="' '+#{backto.label}+' '+${master.name}" /></a> <a
+			th:href="@{~/dataformats/{masterId}/create(masterId=${master.id})}"
 			class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> <th:block
 				th:text="' '+#{add.label}" /></a>
 
 		<div th:if="${not #lists.isEmpty(dataFormats)}"
 			class="table-responsive">
 			<form
-				th:action="@{~/dataformats/{masterId}/delete(masterId=${dataType.id})}"
+				th:action="@{~/dataformats/{masterId}/delete(masterId=${master.id})}"
 				th:method="POST" id="form-delete-dataFormats">
 				<table class="table table-striped jambo_table bulk_action">
 					<thead>

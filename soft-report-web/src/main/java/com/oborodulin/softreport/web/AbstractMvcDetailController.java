@@ -43,6 +43,8 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 
 	protected final M masterService;
 
+	private String dtlSortPropName = "name";
+
 	/**
 	 * Конструктор. Инстанцирует объект.
 	 * 
@@ -57,6 +59,17 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 		super(service, baseUrl, viewPath, objName, collectObjName);
 		this.masterService = masterService;
 	}
+
+
+	public String getDtlSortPropName() {
+		return dtlSortPropName;
+	}
+
+
+	protected void setDtlSortPropName(String dtlSortPropName) {
+		this.dtlSortPropName = dtlSortPropName;
+	}
+
 
 	/**
 	 * {@inheritDoc}
@@ -106,7 +119,7 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 	@GetMapping(URL_DTL_READ)
 	public String showList(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
 		E master = this.masterService.getById(masterId);
-		List<D> details = this.service.findByMasterId(masterId, Sort.by(Sort.Direction.ASC, "name"));
+		List<D> details = this.service.findByMasterId(masterId, Sort.by(Sort.Direction.ASC, this.dtlSortPropName));
 		if (details.isEmpty()) {
 			MessageHelper.addInfoAttribute(model, this.msPrefix.concat(".master.info.empty"), master.getCodeId());
 		}
