@@ -1,6 +1,5 @@
 package com.oborodulin.softreport.web;
 
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,20 +52,6 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 	 * @param viewPath      путь к CRUD-шаблонам контроллера (каталог)
 	 */
 	@Autowired
-	protected AbstractMvcDetailController(M masterService, S service, String baseUrl, String viewPath) {
-		super(service, baseUrl, viewPath);
-		this.masterService = masterService;
-	}
-
-	/**
-	 * Конструктор. Инстанцирует объект.
-	 * 
-	 * @param masterService сервис главного объекта доменной модели
-	 * @param service       сервис подчинённого объекта доменной модели
-	 * @param baseUrl       базовый URL контроллера
-	 * @param viewPath      путь к CRUD-шаблонам контроллера (каталог)
-	 */
-	@Autowired
 	protected AbstractMvcDetailController(M masterService, S service, String baseUrl, String viewPath, String objName,
 			String collectObjName) {
 		super(service, baseUrl, viewPath, objName, collectObjName);
@@ -78,7 +63,9 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 	 */
 	@Override
 	public String getRedirectToRead(Long masterId) {
-		return "redirect:".concat(this.baseUrl).concat("/").concat(Long.toString(masterId));
+		String redirect = "redirect:".concat(this.baseUrl).concat("/").concat(Long.toString(masterId));
+		log.info("Redirect to: " + redirect);
+		return redirect;
 	}
 
 	/**
@@ -86,7 +73,9 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 	 */
 	@Override
 	public String getRedirectToCreate(Long masterId) {
-		return this.getRedirectToRead(masterId).concat(URL_CREATE);
+		String redirect = this.getRedirectToRead(masterId).concat(URL_CREATE);
+		log.info("Redirect to: " + redirect);
+		return redirect;
 	}
 
 	/**
@@ -97,26 +86,18 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 	 *               наименование {@code getName()}
 	 * @return строковый идентификатор главного объекта (код или наименование)
 	 */
-	private String getMasterIdentifier(E master) {
-		Object result = null;
-		try {
-			Class<?> clazz = master.getClass();
-			if (clazz != null) {
-				Method method = null;
-				/*switch (this.titleMaster) {
-				case CODE:
-					method = clazz.getDeclaredMethod("getCode", master.getClass());
-					break;
-				case NAME:
-					method = clazz.getDeclaredMethod("getName", master.getClass());
-				}*/
-				result = method.invoke(null);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return (String) result;
-	}
+	/*
+	 * private String getMasterIdentifier(E master) { Object result = null; try {
+	 * Class<?> clazz = master.getClass(); if (clazz != null) { Method method =
+	 * null;
+	 * 
+	 * switch (this.titleMaster) { case CODE: method =
+	 * clazz.getDeclaredMethod("getCode", master.getClass()); break; case NAME:
+	 * method = clazz.getDeclaredMethod("getName", master.getClass()); }
+	 * 
+	 * result = method.invoke(null); } } catch (Exception e) { e.printStackTrace();
+	 * } return (String) result; }
+	 */
 
 	/**
 	 * {@inheritDoc}
@@ -127,15 +108,16 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 		E master = this.masterService.getById(masterId);
 		List<D> details = this.service.findByMasterId(masterId, Sort.by(Sort.Direction.ASC, "name"));
 		if (details.isEmpty()) {
-			MessageHelper.addInfoAttribute(model, this.msPrefix.concat(".master.info.empty"),
-					this.getMasterIdentifier(master));
+			MessageHelper.addInfoAttribute(model, this.msPrefix.concat(".master.info.empty"), master.getCodeId());
 		}
 		model.mergeAttributes(this.getModelAttributes(RM_DTL_READ));
-//		model.addAttribute(MA_TITLE_MASTER, this.getMasterIdentifier(master));
 		model.addAttribute(MA_TITLE_MASTER, master.getCodeId());
 		model.addAttribute(MA_TITLE_READ, this.ms.getMessage(this.msPrefix.concat(".title.read"), null, locale));
 		model.addAttribute(MA_MASTER, master);
-		model.addAttribute(this.collectObjName, details);
+		model.addAttribute(this.objCollectName, details);
+		// model.addAttribute(MA_TITLE_READ, this.ms.getMessage("tasks.title.read",
+		// new Object[] {project.getCode()}, locale));
+		log.info(this.objCollectName + " [" + URL_DTL_READ + "]: " + details.size() + " counts");
 		return this.getViewNameReadDelete();
 	}
 
@@ -149,6 +131,7 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 		model.addAttribute(MA_TITLE_MASTER, detail.getMaster().getCodeId());
 		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage(this.msPrefix.concat(".title.create"), null, locale));
 		model.addAttribute(this.objName, detail);
+		log.info(this.objName + " [" + URL_DTL_CREATE + "]: masterId = " + masterId + "; detail = " + detail);
 		return this.getViewNameCreateUpdate();
 	}
 
@@ -163,6 +146,7 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 		model.addAttribute(MA_TITLE_MASTER, detail.getMaster().getCodeId());
 		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("businessobjects.title.update", null, locale));
 		model.addAttribute(this.objName, detail);
+		log.info(this.objName + " [" + URL_DTL_EDIT + "]: masterId = " + masterId + "; detail = " + detail);
 		return this.getViewNameCreateUpdate();
 	}
 
@@ -175,6 +159,8 @@ public abstract class AbstractMvcDetailController<E extends AuditableEntity<U>, 
 			@Valid D entity, Errors errors, Model model
 	// , RedirectAttributes redirectAttributes
 	) {
+		log.info(this.objName + " [" + URL_DTL_EDIT + "]: masterId = " + masterId + "; isContinue = " + isContinue
+				+ "; entity = " + entity);
 		if (errors.hasErrors()) {
 			return this.getViewNameCreateUpdate();
 		}

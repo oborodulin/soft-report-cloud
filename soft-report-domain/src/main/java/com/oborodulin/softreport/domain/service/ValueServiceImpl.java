@@ -30,6 +30,6 @@ public class ValueServiceImpl
 
 	@Override
 	public List<Value> findByValuesSetId(Long id, Sort sort) {
-		return this.repository.findByMasterId(id, sort);
+		return this.repository.findByMaster_Id(id, sort);
 	}
 }

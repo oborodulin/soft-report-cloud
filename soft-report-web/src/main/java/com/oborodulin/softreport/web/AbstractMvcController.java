@@ -37,6 +37,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	public static final String PV_ID = "id";
 	public static final String PV_IS_CONTINUE = "isContinue";
 
+	public static final String URL_READ = "/read";
 	public static final String URL_CREATE = "/create";
 	public static final String URL_CREATE_CONTINUE = "/create/{isContinue}";
 	public static final String URL_CREATE_CHILD = "/{parentId}/create";
@@ -71,7 +72,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	protected String objName;
 
 	/** Наименование коллекции объектов контроллера */
-	protected String collectObjName;
+	protected String objCollectName;
 
 	/** Префикс строковых ресурсов источника сообщений */
 	protected String msPrefix;
@@ -82,33 +83,20 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	/**
 	 * Конструктор. Инстанцирует объект
 	 * 
-	 * @param service  сервис доменной модели
-	 * @param baseUrl  базовый URL контроллера
-	 * @param viewPath путь к CRUD-шаблонам контроллера (каталог)
-	 */
-	@Deprecated
-	@Autowired
-	protected AbstractMvcController(S service, String baseUrl, String viewPath) {
-		this.service = service;
-		this.baseUrl = baseUrl;
-		this.viewPath = viewPath;
-	}
-
-	/**
-	 * Конструктор. Инстанцирует объект
-	 * 
 	 * @param service        сервис доменной модели
 	 * @param baseUrl        базовый URL контроллера
 	 * @param viewPath       путь к CRUD-шаблонам контроллера (каталог)
 	 * @param objName        наименование объекта контроллера
-	 * @param collectObjName наименование коллекции объектов контроллера
+	 * @param objCollectName наименование коллекции объектов контроллера
 	 */
 	@Autowired
-	protected AbstractMvcController(S service, String baseUrl, String viewPath, String objName, String collectObjName) {
-		this(service, baseUrl, viewPath);
+	protected AbstractMvcController(S service, String baseUrl, String viewPath, String objName, String objCollectName) {
+		this.service = service;
+		this.baseUrl = baseUrl;
+		this.viewPath = viewPath;
 		this.objName = objName;
-		this.collectObjName = collectObjName;
-		this.msPrefix = collectObjName.toLowerCase();
+		this.objCollectName = objCollectName;
+		this.msPrefix = objCollectName.toLowerCase();
 	}
 
 	/**
@@ -135,7 +123,11 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 * @see #RM_SHOW_UPDATE_FORM
 	 */
 	protected Map<String, Object> getModelAttributes(String requestMethName) {
-		return modelAttributes.get(requestMethName);
+		Map<String, Object> ma = modelAttributes.get(requestMethName);
+		if (ma != null) {
+			ma.forEach((key, value) -> log.info(key + ":" + value));
+		}
+		return ma;
 	}
 
 	/**
@@ -143,7 +135,9 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public String getViewNameReadDelete() {
-		return this.viewPath.concat(VN_READ_DELETE);
+		String viewName = this.viewPath.concat(VN_READ_DELETE);
+		log.info("Go to view: " + viewName);
+		return viewName;
 	}
 
 	/**
@@ -151,7 +145,9 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public String getViewNameCreateUpdate() {
-		return this.viewPath.concat(VN_CREATE_UPDATE);
+		String viewName = this.viewPath.concat(VN_CREATE_UPDATE);
+		log.info("Go to view: " + viewName);
+		return viewName;
 	}
 
 	/**
@@ -159,7 +155,9 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public String getRedirectToRead() {
-		return "redirect:".concat(this.baseUrl);
+		String redirect = "redirect:".concat(this.baseUrl);
+		log.info("Redirect to: " + redirect);
+		return redirect;
 	}
 
 	@ModelAttribute(name = MA_TITLE_PARENT)
@@ -184,7 +182,9 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public String getRedirectToCreate() {
-		return this.getRedirectToRead().concat(URL_CREATE);
+		String redirect = this.getRedirectToRead().concat(URL_CREATE);
+		log.info("Redirect to: " + redirect);
+		return redirect;
 	}
 
 	/**
@@ -197,9 +197,10 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 		if (entities.isEmpty()) {
 			MessageHelper.addInfoAttribute(model, this.msPrefix.concat(".info.empty"));
 		}
+		log.info(this.objCollectName + " [/]: " + entities.size() + " counts");
 		model.mergeAttributes(this.getModelAttributes(RM_READ));
 		model.addAttribute(MA_TITLE_READ, this.ms.getMessage(this.msPrefix.concat(".title.read"), null, locale));
-		model.addAttribute(this.collectObjName, entities);
+		model.addAttribute(this.objCollectName, entities);
 		return this.getViewNameReadDelete();
 	}
 
@@ -212,6 +213,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 		model.mergeAttributes(this.getModelAttributes(RM_CREATE));
 		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage(this.msPrefix.concat(".title.create"), null, locale));
 		model.addAttribute(this.objName, this.service.create());
+		log.info(this.objName + " [" + URL_CREATE + "]");
 		return this.getViewNameCreateUpdate();
 	}
 
@@ -224,6 +226,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 		model.mergeAttributes(this.getModelAttributes(RM_UPDATE));
 		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage(this.msPrefix.concat(".title.update"), null, locale));
 		model.addAttribute(this.objName, this.service.getById(id));
+		log.info(this.objName + " [" + URL_EDIT + "]: id = " + id);
 		return this.getViewNameCreateUpdate();
 	}
 
@@ -239,6 +242,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 			return this.getViewNameCreateUpdate();
 		}
 		this.service.save(entity);
+		log.info(this.objName + " [" + URL_CREATE_CONTINUE + "]: entity = " + entity + "; isContinue = " + isContinue);
 		if (isContinue) {
 			return this.getRedirectToCreate();
 		}
@@ -251,6 +255,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	@Override
 	@PostMapping(URL_UPDATE)
 	public String update(@PathVariable(PV_ID) Long id, @Valid E entity, Errors errors, Model model) {
+		log.info(this.objName + " [" + URL_UPDATE + "]: id = " + id + "; entity = " + entity);
 		if (errors.hasErrors()) {
 			entity.setId(id);
 			return this.getViewNameCreateUpdate();
@@ -270,6 +275,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 				this.service.deleteById(Long.parseLong(idsStr));
 			}
 		}
+		log.info(this.objCollectName + " [" + URL_DELETE + "]: ids = " + ids);
 		return this.getRedirectToRead();
 	}
 
@@ -280,6 +286,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	@GetMapping(URL_DELETE_BY_ID)
 	public String deleteById(@PathVariable(PV_ID) Long id) {
 		this.service.deleteById(id);
+		log.info(this.objName + " [" + URL_DELETE_BY_ID + "]: id = " + id);
 		return this.getRedirectToRead();
 	}
 

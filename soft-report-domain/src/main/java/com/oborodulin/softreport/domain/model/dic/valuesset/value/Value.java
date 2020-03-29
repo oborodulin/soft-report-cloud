@@ -33,6 +33,7 @@ import com.oborodulin.softreport.domain.model.software.configbundle.ConfigBundle
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -125,106 +126,127 @@ public class Value extends DetailEntity<ValuesSet, String> {
 
 	/** Список ПО текущего типа (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<Software> softwares = new ArrayList<>();
 
 	/** Список типов документов текущей категории (значения) */
 	@OneToMany(mappedBy = "categ", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DocType> categDocTypes = new ArrayList<>();
 
 	/** Список типов документов текущего типа (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DocType> typeDocTypes = new ArrayList<>();
 
 	/** Список объектов БД/UI текущего типа (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> typeDocObjects = new ArrayList<>();
 
 	/** Список объектов БД текущего типа базы данных (значения) */
 	@OneToMany(mappedBy = "dbType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> dbTypeDocObjects = new ArrayList<>();
 
 	/** Список объектов БД текущего типа таблиц данных (значения) */
 	@OneToMany(mappedBy = "dtType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> dtTypeDocObjects = new ArrayList<>();
 
 	/** Список объектов полей ТД текущего типа поля (значения) */
 	@OneToMany(mappedBy = "columnType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> columnTypeDocObjects = new ArrayList<>();
 
 	/** Список объектов БД/UI текущего направления сортировки (значения) */
 	@OneToMany(mappedBy = "defaultSortDirection", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> defSortDirDocObjects = new ArrayList<>();
 
 	/** Список объектов UI текущего типа управляющего элемента (значения) */
 	@OneToMany(mappedBy = "controlType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> ctrlTypeDocObjects = new ArrayList<>();
 
 	/** Язык программирования текущей технологии (значения) */
 	@OneToOne(mappedBy = "lang")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private ProgLang progLang;
 
 	/** Список языков программирования текущей архитектуры ПО (значения) */
 	@OneToMany(mappedBy = "arch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<ProgLang> archProgLangs = new ArrayList<>();
 
 	/** Список типов данных текущего SQL-типа данных (значения) */
 	@OneToMany(mappedBy = "sqlType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DataType> dataTypes = new ArrayList<>();
 
 	/** Список серверов текущего типа (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<Server> typeServers = new ArrayList<>();
 
 	/** Список серверов текущего типа окружения (значения) */
 	@OneToMany(mappedBy = "env", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<Server> envServers = new ArrayList<>();
 
 	/** Список объектов иерархии текущей архитектуры ПО (значения) */
 	@OneToMany(mappedBy = "arch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<ObjHierarchy> archObjHierarches = new ArrayList<>();
 
 	/** Список объектов БД/UI иерархии текущего типа БД/UI (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<ObjHierarchy> typeObjHierarches = new ArrayList<>();
 
 	/** Список объектов UI текущего типа UI (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<UiObjectType> uiObjectTypes = new ArrayList<>();
 
 	/** Список событий объектов UI текущего типа (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<UiEventType> uiEventTypes = new ArrayList<>();
 
 	/** Список типов бизнес-правил текущего типа (значения) */
 	@OneToMany(mappedBy = "ruleType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> typeDocObjectRules = new ArrayList<>();
 
 	/** Список операторов бизнес-правил текущего оператора (значения) */
 	@OneToMany(mappedBy = "ruleOperator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> operatorDocObjectRules = new ArrayList<>();
 
 	/** Список операндов бизнес-правил текущего операнда (значения) */
 	@OneToMany(mappedBy = "ruleOperand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> operandDocObjectRules = new ArrayList<>();
 
@@ -239,11 +261,13 @@ public class Value extends DetailEntity<ValuesSet, String> {
 
 	/** Список действий событий объектов текущего действия (значения) */
 	@OneToMany(mappedBy = "eventAction", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> actionDocObjectEvents = new ArrayList<>();
 
 	/** Список конфигурационных пакетов текущего типа(значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<ConfigBundle> configBundles = new ArrayList<>();
 

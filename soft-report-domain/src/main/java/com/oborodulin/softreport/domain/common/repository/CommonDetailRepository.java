@@ -13,6 +13,6 @@ public interface CommonDetailRepository<E extends AuditableEntity<U>, D extends 
 
 	public List<D> findByMaster(E master, Sort sort);
 
-	public List<D> findByMasterId(Long id, Sort sort);
+	public List<D> findByMaster_Id(Long id, Sort sort);
 
 }

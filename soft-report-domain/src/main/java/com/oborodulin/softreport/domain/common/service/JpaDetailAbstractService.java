@@ -27,14 +27,27 @@ public abstract class JpaDetailAbstractService<E extends AuditableEntity<U>, D e
 	@Override
 	@Transactional(readOnly = true)
 	public List<D> findByMaster(E master, Sort sort) {
-		return repository.findByMaster(master, sort);
+		return this.repository.findByMaster(master, sort);
 	};
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<D> findByMasterId(Long id, Sort sort) {
-		return repository.findByMasterId(id, sort);
+		return this.repository.findByMaster_Id(id, sort);
 	};
+
+	@Override
+	@Transactional
+	public D create() {
+		D entity = null;
+		try {
+			entity = this.clazz.getDeclaredConstructor().newInstance();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return entity;
+	}
 
 	@Override
 	@Transactional

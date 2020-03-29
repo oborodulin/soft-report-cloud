@@ -18,20 +18,21 @@ import com.oborodulin.softreport.web.AbstractMvcDetailController;
 public class DataTypeMvcController
 		extends AbstractMvcDetailController<ProgLang, DataType, ProgLangServiceImpl, DataTypeServiceImpl, String> {
 
+	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/datatypes";
 	/** Наименование объекта контроллера (Controller Objects Name) */
 	private static final String CO_NAME = "dataType";
 	/**
-	 * Наименование коллекции объектов контроллера (Controller Collection Objects
+	 * Наименование коллекции объектов контроллера (Controller Objects Collection
 	 * Name)
 	 */
-	private static final String CCO_NAME = "dataTypes";
+	private static final String COC_NAME = "dataTypes";
 	/** Путь к шаблонам (каталог) */
-	public static final String VN_PATH = ProgLangMvcController.VN_PATH.concat(CCO_NAME.toLowerCase()).concat("/");
+	public static final String VN_PATH = ProgLangMvcController.VN_PATH.concat(COC_NAME.toLowerCase()).concat("/");
 
 	@Autowired
 	public DataTypeMvcController(ProgLangServiceImpl masterService, DataTypeServiceImpl service) {
-		super(masterService, service, BASE_URL, VN_PATH, CO_NAME, CCO_NAME);
+		super(masterService, service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
 		Map<String, Object> ma = new HashMap<>();
 		ma.put("progLangs", masterService.findAll());
 		ma.put("sqlTypes", this.service.getSqlTypes());

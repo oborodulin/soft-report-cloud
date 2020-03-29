@@ -15,19 +15,20 @@ import com.oborodulin.softreport.web.AbstractMvcDetailController;
 public class DocumentMvcController
 		extends AbstractMvcDetailController<Software, Document, SoftwareServiceImpl, DocumentServiceImpl, String> {
 
+	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/documents";
 	/** Наименование объекта контроллера (Controller Objects Name) */
 	private static final String CO_NAME = "document";
 	/**
-	 * Наименование коллекции объектов контроллера (Controller Collection Objects
+	 * Наименование коллекции объектов контроллера (Controller Objects Collection
 	 * Name)
 	 */
-	private static final String CCO_NAME = "documents";
-	private static final String VN_PATH = SoftwareMvcController.VN_PATH.concat(CCO_NAME.toLowerCase()).concat("/");
+	private static final String COC_NAME = "documents";
+	private static final String VN_PATH = SoftwareMvcController.VN_PATH.concat(COC_NAME.toLowerCase()).concat("/");
 
 	@Autowired
 	public DocumentMvcController(SoftwareServiceImpl masterService, DocumentServiceImpl service) {
-		super(masterService, service, BASE_URL, VN_PATH, CO_NAME, CCO_NAME);
+		super(masterService, service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
 	}
 
 }

@@ -13,14 +13,14 @@
 	<div class="x_content" layout:fragment="page-content">
 		<a th:href="@{~/valuessets}" class="btn btn-secondary btn-xs"><i
 			class="fa fa-arrow-left"></i> <th:block
-				th:text="' '+#{backto.label}+' '+${valuesSet.name}" /></a> <a
-			th:href="@{~/values/{masterId}/create(masterId=${valuesSet.id})}"
+				th:text="' '+#{backto.label}+' '+${master.name}" /></a> <a
+			th:href="@{~/values/{masterId}/create(masterId=${master.id})}"
 			class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> <th:block
 				th:text="' '+#{add.label}" /></a>
 
 		<div th:if="${not #lists.isEmpty(values)}" class="table-responsive">
 			<form
-				th:action="@{~/values/{masterId}/delete(masterId=${valuesSet.id})}"
+				th:action="@{~/values/{masterId}/delete(masterId=${master.id})}"
 				th:method="POST" id="form-delete-values">
 				<table class="table table-striped jambo_table bulk_action">
 					<thead>

@@ -11,16 +11,16 @@
 <body class="nav-md">
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
-		<a th:if="${project != null}" th:href="@{~/projects}" class="btn btn-secondary btn-xs"><i
+		<a th:if="${master != null}" th:href="@{~/projects}" class="btn btn-secondary btn-xs"><i
 			class="fa fa-arrow-left"></i> <th:block
-				th:text="' '+#{backto.label}+' '+${project.name}" /></a> <a
-			th:href="${project != null} ? @{~/tasks/{masterId}/create(masterId=${project.id}) : @{~/tasks/create}"
+				th:text="' '+#{backto.label}+' '+${master.name}" /></a> <a
+			th:href="${master != null} ? @{~/tasks/{masterId}/create(masterId=${master.id}) : @{~/tasks/create}"
 			class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> <th:block
 				th:text="' '+#{add.label}" /></a>
 
 		<div th:if="${not #lists.isEmpty(tasks)}" class="table-responsive">
 			<form
-				th:action="@{~/tasks/{masterId}/delete(masterId=${project.id})}"
+				th:action="@{~/tasks/{masterId}/delete(masterId=${master.id})}"
 				th:method="POST" id="form-delete-tasks">
 				<table class="table table-striped jambo_table bulk_action">
 					<thead>

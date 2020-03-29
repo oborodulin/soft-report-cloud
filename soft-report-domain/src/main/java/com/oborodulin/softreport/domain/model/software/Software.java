@@ -68,20 +68,24 @@ public class Software extends TreeEntity<Software, String> {
 
 	/** Проекты */
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<Project> projects = new ArrayList<>();
 	
 	/** Бизнес-объекты */
 	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<BusinessObject> businessObjects = new HashSet<BusinessObject>();
 
 	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<Document> documents = new ArrayList<>();
 	
 	/** Список языков программирования */
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<ProgLang> progLangs = new ArrayList<>();
 

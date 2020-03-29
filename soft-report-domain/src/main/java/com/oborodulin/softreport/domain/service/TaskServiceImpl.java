@@ -24,6 +24,6 @@ public class TaskServiceImpl
 
 	@Override
 	public List<Task> findByProjectId(Long id, Sort sort) {
-		return this.repository.findByMasterId(id, sort);
+		return this.repository.findByMaster_Id(id, sort);
 	}
 }
