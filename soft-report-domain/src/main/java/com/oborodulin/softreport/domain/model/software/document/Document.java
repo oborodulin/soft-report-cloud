@@ -34,6 +34,7 @@ public class Document extends DetailEntity<Software, String> {
 
 	private static final long serialVersionUID = -1155211422959024301L;
 
+	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "DOCUMENTS";
 
 	@Column(length = 1000)

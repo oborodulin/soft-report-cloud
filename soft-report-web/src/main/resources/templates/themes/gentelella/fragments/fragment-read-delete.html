@@ -189,4 +189,23 @@
 		</tr>
 	</tbody>
 </table>
+<!-- Кнопки "Вернуться к..." и/или "Добавить". Используется для главных и подчинённых объектов доменной модели -->
+<th:block
+	th:fragment="panel-master-buttons(masterHref, master, detailsHref)">
+	<th:block th:if="${master == null}">
+		<a th:href="@{~/{href}/create(href=${detailsHref})}"
+			class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> <th:block
+				th:text="' '+#{add.label}" /></a>
+	</th:block>
+	<th:block th:unless="${master == null}">
+		<a th:href="${masterHref}" class="btn btn-secondary btn-xs"><i
+			class="fa fa-arrow-left"></i> <th:block
+				th:text="' '+#{backto.label}+' '+${master.codeId}" /></a>
+		<a
+			th:href="@{~/{href}/{masterId}/create(href=${detailsHref}, masterId=${master.id})}"
+			class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> <th:block
+				th:text="' '+#{add.label}" /></a>
+	</th:block>
+</th:block>
+
 </html>

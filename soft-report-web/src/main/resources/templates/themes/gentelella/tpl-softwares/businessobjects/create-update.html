@@ -19,11 +19,11 @@
 			data-parsley-validate class="form-horizontal form-label-left">
 			<div th:if="${not #lists.isEmpty(softwares)}" class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="master" th:text="#{lang.label}"><span class="required">*</span></label>
+					for="master" th:text="#{software.label}"><span class="required">*</span></label>
 				<div class="col-md-6 col-sm-6 ">
 					<select th:field="*{master}" required="required"
 						class="select2_group form-control">
-						<option value="" th:text="#{lang.opt.empty.label}" />
+						<option value="" th:text="#{software.opt.empty.label}" />
 						<option th:each="opt : ${softwares}" th:value="${opt.id}"
 							th:text="${opt.name}"
 							th:selected="${businessObject.master != null} ? ${opt.id == businessObject.master.id}: 'false'"></option>

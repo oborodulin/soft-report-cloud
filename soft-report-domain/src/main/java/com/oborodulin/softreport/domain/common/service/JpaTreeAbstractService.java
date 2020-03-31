@@ -9,6 +9,7 @@ import com.oborodulin.softreport.domain.common.entity.TreeEntity;
 import com.oborodulin.softreport.domain.common.repository.CommonTreeRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 
 public abstract class JpaTreeAbstractService<E extends TreeEntity<E, U>, R extends CommonTreeRepository<E, U>, U>
 		extends JpaAbstractService<E, R, U> implements CommonJpaTreeService<E, U> {
@@ -24,9 +25,50 @@ public abstract class JpaTreeAbstractService<E extends TreeEntity<E, U>, R exten
 	};
 
 	@Override
+	public List<E> findByParentId(Long parentId, Sort sort) {
+		return this.repository.findByParentId(parentId, sort);
+	};
+
+	@Override
 	public List<E> findByIdIsNot(Long id) {
 		return this.repository.findByIdIsNot(id);
 	};
+
+	@Override
+	@Transactional
+	public E create() {
+		E entity = null;
+		try {
+			entity = this.clazz.getDeclaredConstructor().newInstance();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return entity;
+	}
+
+	@Override
+	@Transactional
+	public E create(Long parentId) {
+		E entity = null;
+		try {
+			entity = this.clazz.getDeclaredConstructor().newInstance();
+			entity.setParent(this.repository.findById(parentId)
+					.orElseThrow(() -> new IllegalArgumentException("Invalid master Id:" + parentId)));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return entity;
+	}
+
+	@Override
+	@Transactional
+	public Optional<E> save(Long parentId, E entity) {
+		entity.setParent(this.repository.findById(parentId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + parentId)));
+		return Optional.of(this.repository.save(entity));
+	}
 
 	@Override
 	@Transactional

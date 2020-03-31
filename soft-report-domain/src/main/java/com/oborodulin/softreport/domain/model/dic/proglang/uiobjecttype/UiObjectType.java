@@ -28,6 +28,7 @@ public class UiObjectType extends DetailEntity<ProgLang, String> {
 
 	private static final long serialVersionUID = -5894361677694239614L;
 
+	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "UI_OBJECT_TYPES";
 
 	/** Наименование */

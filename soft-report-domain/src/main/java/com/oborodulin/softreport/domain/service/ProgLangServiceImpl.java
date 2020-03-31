@@ -20,7 +20,7 @@ public class ProgLangServiceImpl extends JpaAbstractService<ProgLang, ProgLangRe
 
 	@Autowired
 	public ProgLangServiceImpl(ProgLangRepository repository) {
-		super(repository);
+		super(repository, ProgLang.class);
 	}
 
 	@Override

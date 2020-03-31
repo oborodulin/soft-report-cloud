@@ -29,12 +29,10 @@
 					<li><a href="form_validation.html">Рисунки</a></li>
 					<li><a>Модели данных<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<li class="sub_menu"><a href="level2.html">БД</a></li>
-							<li><a href="#level2_1">Схемы</a></li>
-							<li><a href="#level2_1">Таблицы</a></li>
-							<li><a href="#level2_1">Поля</a></li>
-							<li><a href="#level2_1">Представления</a></li>
-							<li><a href="#level2_1">Процедуры</a></li>
+							<li class="sub_menu"><a th:href="@{~/databases}">БД</a></li>
+							<li><a th:href="@{~/datatables}">Таблицы</a></li>
+							<li><a th:href="@{~/views}">Представления</a></li>
+							<li><a th:href="@{~/procedures}">Процедуры</a></li>
 						</ul></li>
 					<li><a href="form_upload.html">Элементы UI</a></li>
 					<li><a href="form_buttons.html">Отчёты</a></li>

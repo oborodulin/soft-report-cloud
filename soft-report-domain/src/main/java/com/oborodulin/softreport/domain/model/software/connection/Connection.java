@@ -14,6 +14,7 @@ import lombok.Data;
 public class Connection extends DetailEntity<Software, String> {
 	private static final long serialVersionUID = 552064751437275103L;
 
+	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "CONNECTIONS";
 
 	/** Наименование */

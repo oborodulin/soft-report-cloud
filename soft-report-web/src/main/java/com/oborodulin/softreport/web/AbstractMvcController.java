@@ -34,6 +34,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	private static final String MA_CREATE_UPDATE = "viewCreateUpdate";
 
 	public static final String RV_CHK_TABLE_RECORDS = "table_records";
+	public static final String PV_PARENT_ID = "parentId";
 	public static final String PV_ID = "id";
 	public static final String PV_IS_CONTINUE = "isContinue";
 

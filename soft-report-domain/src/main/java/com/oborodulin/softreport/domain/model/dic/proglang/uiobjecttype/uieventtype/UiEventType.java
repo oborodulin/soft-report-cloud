@@ -28,6 +28,7 @@ public class UiEventType extends DetailEntity<UiObjectType, String> {
 
 	private static final long serialVersionUID = 4118220275040901488L;
 
+	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "UI_EVENT_TYPES";
 
 	/** Наименование */

@@ -38,6 +38,8 @@ import lombok.EqualsAndHashCode;
 @Audited
 public class ValuesSet extends AuditableEntity<String> {
 	private static final long serialVersionUID = 951472411985160909L;
+
+	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "VALS_SETS";
 
 	/**

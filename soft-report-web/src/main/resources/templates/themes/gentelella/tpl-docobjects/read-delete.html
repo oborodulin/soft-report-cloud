@@ -19,28 +19,30 @@
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
 		<th:block
-			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/objhierarches/tree}, master=${master}, detailsHref='objhierarches')" />
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/docobjects/tree}, master=${master}, detailsHref='docobjects')" />
 
-		<div th:if="${not #lists.isEmpty(objHierarches)}"
+		<div th:if="${not #lists.isEmpty(docObjects)}"
 			class="table-responsive">
-			<form th:action="@{~/objhierarches/delete}" th:method="POST"
-				id="form-delete-objHierarches">
-				<table id="objHierarches-tree-table"
+			<form th:action="@{~/docobjects/delete}" th:method="POST"
+				id="form-delete-docObjects">
+				<table id="docObjects-tree-table"
 					class="table table-striped jambo_table bulk_action">
 					<thead>
 						<tr class="headings">
 							<th style="width: 5%"><input type="checkbox" id="check-all"
 								class="flat"></th>
 							<th class="column-title" style="width: 10%"></th>
-							<th class="column-title" th:text="#{arch.label}"
-								style="width: 15%" />
-							<th class="column-title no-link last" style="width: 70%"><span
-								class="nobr" th:text="#{type.label}"></span></th>
+							<th class="column-title" th:text="#{name.label}"
+								style="width: 25%" />
+							<th class="column-title" th:text="#{type.label}"
+								style="width: 10%" />
+							<th class="column-title no-link last" style="width: 55%"><span
+								class="nobr" th:text="#{descr.label}"></span></th>
 							<th class="bulk-actions" colspan="3"><button type="submit"
 									class="btn btn-danger btn-xs">
 									<i class="fa fa-trash-o"></i>
 									<th:block th:text="' '+#{delete.label}" />
-								</button> <a th:href="@{~/objhierarches/[id]/create}"
+								</button> <a th:href="@{~/docobjects/[id]/create}"
 								class="btn btn-secondary btn-xs"
 								onclick="bulkActionChecked(this, event, 'table_records');"><i
 									class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a></th>
@@ -48,27 +50,27 @@
 					</thead>
 					<tbody th:with="rowNum=0">
 						<th:block
-							th:replace="this :: outputTree(${objHierarches}, ${rowNum})" />
+							th:replace="this :: outputTree(${docObjects}, ${rowNum})" />
 					</tbody>
 				</table>
 			</form>
 		</div>
 	</div>
-	<th:block th:fragment="outputTree(objHierarches, rowNum)">
+	<th:block th:fragment="outputTree(docObjects, rowNum)">
 		<th:block th:with="rowNum=${rowNum+1}">
-			<th:block th:each="objHierarchy, stat : ${objHierarches}">
-				<tr th:data-tt-id="${objHierarchy.id}"
-					th:attrappend="data-tt-parent-id=${objHierarchy.parent != null} ? ${objHierarchy.parent.id}"
+			<th:block th:each="docObject, stat : ${docObjects}">
+				<tr th:data-tt-id="${docObject.id}"
+					th:attrappend="data-tt-parent-id=${docObject.parent != null} ? ${docObject.parent.id}"
 					th:class="${rowNum % 2 != 0} ? 'odd pointer' : 'even pointer'">
 					<td class="a-center "><input name="table_records"
-						type="checkbox" th:value="${objHierarchy.id}" class="flat"></td>
+						type="checkbox" th:value="${docObject.id}" class="flat"></td>
 					<td
-						th:replace="fragments/fragment-read-delete :: grid-row-buttons(href='objhierarches', object=${objHierarchy})" />
-					<td th:text="${objHierarchy.arch.val}" class=" " />
-					<td th:text="${objHierarchy.type.val}" class=" " />
+						th:replace="fragments/fragment-read-delete :: grid-row-buttons(href='docobjects', object=${docObject})" />
+					<td th:text="${docObject.name}" class=" " />
+					<td th:text="${docObject.descr}" class=" " />
 				</tr>
-				<th:block th:if="${!#lists.isEmpty(objHierarchy.children)}"
-					th:replace="this :: outputTree(${objHierarchy.children}, ${rowNum})" />
+				<th:block th:if="${!#lists.isEmpty(docObject.children)}"
+					th:replace="this :: outputTree(${docObject.children}, ${rowNum})" />
 			</th:block>
 		</th:block>
 	</th:block>
@@ -81,9 +83,8 @@
 			th:src="@{/webjars/jquery-treetable/jquery.treetable.js}"></script>
 		<!-- Initialize jquery.treetable -->
 		<script class="custom-script" type="text/javascript">
-			$("#objHierarches-tree-table").treetable({
+			$("#docObjects-tree-table").treetable({
 				expandable : true,
-				column : 3,
 				initialState : "expanded",
 				clickableNodeNames : true
 			});

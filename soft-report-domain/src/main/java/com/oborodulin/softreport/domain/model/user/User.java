@@ -26,6 +26,8 @@ import lombok.RequiredArgsConstructor;
 @Table(name = User.TABLE_NAME)
 public class User extends AuditableEntity<String> { // implements UserDetails {
 	private static final long serialVersionUID = 7756405628663026131L;
+
+	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "USERS";
 
 	private final String username;

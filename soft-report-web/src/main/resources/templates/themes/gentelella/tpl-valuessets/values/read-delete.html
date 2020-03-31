@@ -11,12 +11,8 @@
 <body class="nav-md">
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
-		<a th:href="@{~/valuessets}" class="btn btn-secondary btn-xs"><i
-			class="fa fa-arrow-left"></i> <th:block
-				th:text="' '+#{backto.label}+' '+${master.name}" /></a> <a
-			th:href="@{~/values/{masterId}/create(masterId=${master.id})}"
-			class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> <th:block
-				th:text="' '+#{add.label}" /></a>
+		<th:block
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/valuessets}, master=${master}, detailsHref='values')" />
 
 		<div th:if="${not #lists.isEmpty(values)}" class="table-responsive">
 			<form

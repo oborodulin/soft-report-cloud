@@ -14,6 +14,7 @@ import lombok.Data;
 public class ConfigParameter extends DetailEntity<ConfigBundle, String> {
 	private static final long serialVersionUID = 7387119975449292007L;
 
+	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "CONFIG_PARAMETERS";
 
 	/** Наименование */

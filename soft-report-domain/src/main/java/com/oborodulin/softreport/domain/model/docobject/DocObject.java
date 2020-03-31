@@ -45,6 +45,7 @@ import lombok.ToString;
 public class DocObject extends TreeEntity<DocObject, String> {
 	private static final long serialVersionUID = -5847640757970947607L;
 
+	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "DOC_OBJECTS";
 
 	/** Поле ТД/параметр поиска/поле формы ввода/: Позиция */
@@ -90,10 +91,10 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	private Value dtType;
 
 	/** ТД: Бизнес-объект */
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "business_objects_id")
-	@ToString.Exclude
-	private BusinessObject businessObject;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@EqualsAndHashCode.Exclude
+//	@JoinColumn(name = "business_objects_id")
+	private BusinessObject businessObjects;
 
 	/** Поле ТД: Признак первичного ключа */
 	@NotNull

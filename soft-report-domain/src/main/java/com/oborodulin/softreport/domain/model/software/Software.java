@@ -41,6 +41,8 @@ import lombok.ToString;
 @Table(name = Software.TABLE_NAME)
 public class Software extends TreeEntity<Software, String> {
 	private static final long serialVersionUID = 3241164622564083658L;
+
+	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "SOFTWARES";
 
 	/** Уникальный код */

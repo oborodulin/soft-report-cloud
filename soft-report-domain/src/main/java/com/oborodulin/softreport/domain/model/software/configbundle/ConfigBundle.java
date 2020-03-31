@@ -21,6 +21,7 @@ public class ConfigBundle extends DetailEntity<Software, String> {
 
 	private static final long serialVersionUID = 4401547574205093586L;
 
+	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "CONFIG_BUNDLES";
 
 	/** Наименование */

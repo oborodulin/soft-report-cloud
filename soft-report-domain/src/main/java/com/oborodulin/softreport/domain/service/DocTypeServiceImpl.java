@@ -20,7 +20,7 @@ public class DocTypeServiceImpl extends JpaAbstractService<DocType, DocTypeRepos
 
 	@Autowired
 	public DocTypeServiceImpl(DocTypeRepository repository) {
-		super(repository);
+		super(repository, DocType.class);
 	}
 
 	@Override

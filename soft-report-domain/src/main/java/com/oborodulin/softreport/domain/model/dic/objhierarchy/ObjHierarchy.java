@@ -24,6 +24,7 @@ public class ObjHierarchy extends TreeEntity<ObjHierarchy, String> {
 
 	private static final long serialVersionUID = 3850158095617591531L;
 
+	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "OBJ_HIERARCHES";
 
 	/** Тип архитектуры ПО */

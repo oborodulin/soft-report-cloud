@@ -13,6 +13,8 @@ import lombok.Data;
 @Table(name = Enterprise.TABLE_NAME)
 public class Enterprise extends TreeEntity<Enterprise, String> {
 	private static final long serialVersionUID = -510145406646880694L;
+
+	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "ENTERPRISES";
 
 	@NotBlank

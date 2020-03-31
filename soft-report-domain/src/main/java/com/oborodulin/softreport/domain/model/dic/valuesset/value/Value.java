@@ -40,6 +40,8 @@ import lombok.ToString;
 @Table(name = Value.TABLE_NAME)
 public class Value extends DetailEntity<ValuesSet, String> {
 	private static final long serialVersionUID = 639613089661707969L;
+
+	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "VALS";
 
 	/** Значение атрибута: YES */

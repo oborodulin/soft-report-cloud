@@ -2,6 +2,7 @@ package com.oborodulin.softreport.domain.common.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import com.oborodulin.softreport.domain.common.entity.TreeEntity;
@@ -13,4 +14,6 @@ public interface CommonTreeRepository<E extends TreeEntity<E, U>, U> extends Com
 
 	public List<E> findByParentIsNull();
 
+	public List<E> findByParentId(Long parentId, Sort sort);
+	
 }

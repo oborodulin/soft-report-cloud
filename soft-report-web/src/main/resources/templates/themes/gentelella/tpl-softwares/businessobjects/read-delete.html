@@ -11,20 +11,9 @@
 <body class="nav-md">
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
-		<th:block th:if="${master == null}">
-			<a th:href="@{~/businessobjects/create}"
-				class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> <th:block
-					th:text="' '+#{add.label}" /></a>
-		</th:block>
-		<th:block th:unless="${master == null}">
-			<a th:href="@{~/softwares}" class="btn btn-secondary btn-xs"><i
-				class="fa fa-arrow-left"></i> <th:block
-					th:text="' '+#{backto.label}+' '+${master.code}" /></a>
-			<a
-				th:href="@{~/businessobjects/{masterId}/create(masterId=${master.id})}"
-				class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> <th:block
-					th:text="' '+#{add.label}" /></a>
-		</th:block>
+		<th:block
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/softwares/tree}, master=${master}, detailsHref='businessobjects')" />
+
 		<div th:if="${not #lists.isEmpty(businessObjects)}"
 			class="table-responsive">
 			<form
@@ -37,7 +26,7 @@
 							</th>
 							<th class="column-title" />
 							<th th:if="${master == null}" class="column-title"
-								th:text="#{master.label}" />
+								th:text="#{software.label}" />
 							<th class="column-title" th:text="#{name.label}" />
 							<th class="column-title no-link last"><span class="nobr"
 								th:text="#{descr.label}"></span></th>
@@ -58,7 +47,7 @@
 							<td
 								th:replace="fragments/fragment-read-delete :: grid-row-buttons(href='businessobjects', object=${businessObject})" />
 							<td th:if="${master == null}"
-								th:text="${businessObject.master.code}" class=" " />
+								th:text="${businessObject.master.codeId}" class=" " />
 							<td th:text="${businessObject.name}" class=" " />
 							<td th:text="${businessObject.descr}" class=" " />
 						</tr>

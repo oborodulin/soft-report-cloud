@@ -26,6 +26,8 @@ import lombok.EqualsAndHashCode;
 @Table(name = Project.TABLE_NAME)
 public class Project extends TreeEntity<Project, String> {
 	private static final long serialVersionUID = -3514627948973849043L;
+
+	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "PROJECTS";
 
 	@NotBlank

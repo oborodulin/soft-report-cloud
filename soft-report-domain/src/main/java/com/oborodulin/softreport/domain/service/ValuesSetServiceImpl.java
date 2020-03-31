@@ -22,7 +22,7 @@ public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSe
 
 	@Autowired
 	public ValuesSetServiceImpl(ValuesSetRepository repository) {
-		super(repository);
+		super(repository, ValuesSet.class);
 	}
 
 	@Override

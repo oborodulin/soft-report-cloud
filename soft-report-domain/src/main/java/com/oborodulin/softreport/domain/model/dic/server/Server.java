@@ -27,6 +27,7 @@ public class Server extends AuditableEntity<String> {
 
 	private static final long serialVersionUID = 5526300525843873694L;
 
+	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "SERVERS";
 
 	/** Хост */
