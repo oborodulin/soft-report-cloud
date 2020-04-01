@@ -10,7 +10,7 @@ import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.model.software.businessobject.BusinessObject;
 import com.oborodulin.softreport.domain.service.BusinessObjectServiceImpl;
 import com.oborodulin.softreport.domain.service.SoftwareServiceImpl;
-import com.oborodulin.softreport.web.AbstractMvcDetailController;
+import com.oborodulin.softreport.web.AbstractMasterDetailMvcController;
 
 /**
  * Класс MVC-контроллера взаимодействия с бизнес-объектами программного
@@ -27,7 +27,7 @@ import com.oborodulin.softreport.web.AbstractMvcDetailController;
 @Controller
 @RequestMapping(BusinessObjectMvcController.BASE_URL)
 public class BusinessObjectMvcController extends
-		AbstractMvcDetailController<Software, BusinessObject, SoftwareServiceImpl, BusinessObjectServiceImpl, String> {
+		AbstractMasterDetailMvcController<Software, BusinessObject, SoftwareServiceImpl, BusinessObjectServiceImpl, String> {
 
 	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/businessobjects";

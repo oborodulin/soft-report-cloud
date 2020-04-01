@@ -5,11 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.oborodulin.softreport.domain.model.enterprise.Enterprise;
 import com.oborodulin.softreport.domain.service.EnterpriseServiceImpl;
-import com.oborodulin.softreport.web.AbstractMvcTreeController;
+import com.oborodulin.softreport.web.AbstractTreeMvcController;
 
 @Controller
 @RequestMapping(EnterpriseMvcController.BASE_URL)
-public class EnterpriseMvcController extends AbstractMvcTreeController<Enterprise, EnterpriseServiceImpl, String> {
+public class EnterpriseMvcController extends AbstractTreeMvcController<Enterprise, EnterpriseServiceImpl, String> {
 
 	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/enterprises";

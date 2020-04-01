@@ -8,12 +8,12 @@ import com.oborodulin.softreport.domain.model.project.Project;
 import com.oborodulin.softreport.domain.model.project.task.Task;
 import com.oborodulin.softreport.domain.service.ProjectServiceImpl;
 import com.oborodulin.softreport.domain.service.TaskServiceImpl;
-import com.oborodulin.softreport.web.AbstractMvcDetailController;
+import com.oborodulin.softreport.web.AbstractMasterDetailMvcController;
 
 @Controller
 @RequestMapping(TaskMvcController.BASE_URL)
 public class TaskMvcController
-		extends AbstractMvcDetailController<Project, Task, ProjectServiceImpl, TaskServiceImpl, String> {
+		extends AbstractMasterDetailMvcController<Project, Task, ProjectServiceImpl, TaskServiceImpl, String> {
 
 	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/tasks";

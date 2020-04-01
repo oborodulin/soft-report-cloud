@@ -8,11 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.service.SoftwareServiceImpl;
-import com.oborodulin.softreport.web.AbstractMvcTreeController;
+import com.oborodulin.softreport.web.AbstractTreeMvcController;
 
 @Controller
 @RequestMapping(SoftwareMvcController.BASE_URL)
-public class SoftwareMvcController extends AbstractMvcTreeController<Software, SoftwareServiceImpl, String> {
+public class SoftwareMvcController extends AbstractTreeMvcController<Software, SoftwareServiceImpl, String> {
 
 	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/softwares";

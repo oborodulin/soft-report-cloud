@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oborodulin.softreport.domain.model.docobject.DocObject;
 import com.oborodulin.softreport.domain.service.DocObjectServiceImpl;
-import com.oborodulin.softreport.web.AbstractMvcTreeController;
+import com.oborodulin.softreport.web.AbstractTreeMvcController;
 
 @Controller
 @RequestMapping(DocObjectMvcController.BASE_URL)
 public class DocObjectMvcController
-		extends AbstractMvcTreeController<DocObject, DocObjectServiceImpl, String> {
+		extends AbstractTreeMvcController<DocObject, DocObjectServiceImpl, String> {
 
 	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/docobjects";

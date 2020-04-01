@@ -8,12 +8,12 @@ import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.model.software.document.Document;
 import com.oborodulin.softreport.domain.service.DocumentServiceImpl;
 import com.oborodulin.softreport.domain.service.SoftwareServiceImpl;
-import com.oborodulin.softreport.web.AbstractMvcDetailController;
+import com.oborodulin.softreport.web.AbstractMasterDetailMvcController;
 
 @Controller
 @RequestMapping(DocumentMvcController.BASE_URL)
 public class DocumentMvcController
-		extends AbstractMvcDetailController<Software, Document, SoftwareServiceImpl, DocumentServiceImpl, String> {
+		extends AbstractMasterDetailMvcController<Software, Document, SoftwareServiceImpl, DocumentServiceImpl, String> {
 
 	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/documents";

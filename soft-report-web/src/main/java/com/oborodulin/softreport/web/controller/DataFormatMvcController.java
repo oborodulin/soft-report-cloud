@@ -8,12 +8,12 @@ import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.dataformat.DataFormat;
 import com.oborodulin.softreport.domain.service.DataFormatServiceImpl;
 import com.oborodulin.softreport.domain.service.DataTypeServiceImpl;
-import com.oborodulin.softreport.web.AbstractMvcDetailController;
+import com.oborodulin.softreport.web.AbstractMasterDetailMvcController;
 
 @Controller
 @RequestMapping(DataFormatMvcController.BASE_URL)
 public class DataFormatMvcController
-		extends AbstractMvcDetailController<DataType, DataFormat, DataTypeServiceImpl, DataFormatServiceImpl, String> {
+		extends AbstractMasterDetailMvcController<DataType, DataFormat, DataTypeServiceImpl, DataFormatServiceImpl, String> {
 
 	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/dataformats";

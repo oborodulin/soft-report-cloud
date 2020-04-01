@@ -8,12 +8,12 @@ import com.oborodulin.softreport.domain.service.ValueServiceImpl;
 import com.oborodulin.softreport.domain.service.ValuesSetServiceImpl;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
-import com.oborodulin.softreport.web.AbstractMvcDetailController;
+import com.oborodulin.softreport.web.AbstractMasterDetailMvcController;
 
 @Controller
 @RequestMapping(ValueMvcController.BASE_URL)
 public class ValueMvcController
-		extends AbstractMvcDetailController<ValuesSet, Value, ValuesSetServiceImpl, ValueServiceImpl, String> {
+		extends AbstractMasterDetailMvcController<ValuesSet, Value, ValuesSetServiceImpl, ValueServiceImpl, String> {
 
 	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/values";

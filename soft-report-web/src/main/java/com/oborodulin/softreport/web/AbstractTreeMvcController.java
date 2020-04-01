@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Slf4j
-public abstract class AbstractMvcTreeController<E extends TreeEntity<E, U>, S extends CommonJpaTreeService<E, U>, U>
-		extends AbstractMvcController<E, S, U> implements CommonMvcTreeController<E, U> {
+public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S extends CommonJpaTreeService<E, U>, U>
+		extends AbstractMvcController<E, S, U> implements CommonTreeMvcController<E, U> {
 
 	public static final String PV_PARENT_ID = "parentId";
 
@@ -40,7 +40,7 @@ public abstract class AbstractMvcTreeController<E extends TreeEntity<E, U>, S ex
 	 * @param viewPath путь к CRUD-шаблонам контроллера (каталог)
 	 */
 	@Autowired
-	protected AbstractMvcTreeController(S service, String baseUrl, String viewPath, String objName,
+	protected AbstractTreeMvcController(S service, String baseUrl, String viewPath, String objName,
 			String objCollectName) {
 		super(service, baseUrl, viewPath, objName, objCollectName);
 	}

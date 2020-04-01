@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oborodulin.softreport.domain.model.project.Project;
 import com.oborodulin.softreport.domain.service.ProjectServiceImpl;
-import com.oborodulin.softreport.web.AbstractMvcTreeController;
+import com.oborodulin.softreport.web.AbstractTreeMvcController;
 
 @Controller
 @RequestMapping(ProjectMvcController.BASE_URL)
-public class ProjectMvcController extends AbstractMvcTreeController<Project, ProjectServiceImpl, String> {
+public class ProjectMvcController extends AbstractTreeMvcController<Project, ProjectServiceImpl, String> {
 
 	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/projects";

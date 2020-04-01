@@ -11,12 +11,12 @@ import com.oborodulin.softreport.domain.service.DataTypeServiceImpl;
 import com.oborodulin.softreport.domain.service.ProgLangServiceImpl;
 import com.oborodulin.softreport.domain.model.dic.proglang.ProgLang;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
-import com.oborodulin.softreport.web.AbstractMvcDetailController;
+import com.oborodulin.softreport.web.AbstractMasterDetailMvcController;
 
 @Controller
 @RequestMapping(DataTypeMvcController.BASE_URL)
 public class DataTypeMvcController
-		extends AbstractMvcDetailController<ProgLang, DataType, ProgLangServiceImpl, DataTypeServiceImpl, String> {
+		extends AbstractMasterDetailMvcController<ProgLang, DataType, ProgLangServiceImpl, DataTypeServiceImpl, String> {
 
 	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/datatypes";

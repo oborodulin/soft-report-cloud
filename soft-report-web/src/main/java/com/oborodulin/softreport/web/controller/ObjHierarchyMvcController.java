@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oborodulin.softreport.domain.model.dic.objhierarchy.ObjHierarchy;
 import com.oborodulin.softreport.domain.service.ObjHierarchyServiceImpl;
-import com.oborodulin.softreport.web.AbstractMvcTreeController;
+import com.oborodulin.softreport.web.AbstractTreeMvcController;
 
 @Controller
 @RequestMapping(ObjHierarchyMvcController.BASE_URL)
 public class ObjHierarchyMvcController
-		extends AbstractMvcTreeController<ObjHierarchy, ObjHierarchyServiceImpl, String> {
+		extends AbstractTreeMvcController<ObjHierarchy, ObjHierarchyServiceImpl, String> {
 
 	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/objhierarches";
