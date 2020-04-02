@@ -13,4 +13,25 @@ public interface ValueService extends CommonJpaDetailService<ValuesSet, Value, S
 
 	public List<Value> findByValuesSetId(Long id, Sort sort);
 
+	public Value getDocObjectDataBaseType();
+
+	public Value getDocObjectSchemaType();
+
+	public Value getDocObjectDataTableType();
+
+	public Value getDocObjectDataTableColumnType();
+
+	public Value getDocObjectDataTableColumnValueType();
+	
+	public Value getDocObjectDataTableTriggerType();
+
+	public Value getDocObjectDataBaseViewType();
+
+	public Value getDocObjectDataBaseViewColumnType();
+
+	public Value getDocObjectDataBaseFuncType();
+
+	public Value getDocObjectDataBaseProcType();
+
+	public Value getServerDbType();
 }

@@ -34,7 +34,7 @@ public class BusinessObject extends DetailEntity<Software, String> {
 	private String descr;
 
 	/** Список объектов БД, связанных с текущим бизнес-объектом */
-	@ManyToMany(mappedBy = "businessObject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "businessObjects", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> docObjects = new ArrayList<>();
 

@@ -1,5 +1,9 @@
 package com.oborodulin.softreport.web.controller.docobject;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +31,30 @@ public class DataBaseMvcController extends AbstractMvcController<DocObject, DocO
 	@Autowired
 	public DataBaseMvcController(DocObjectServiceImpl service) {
 		super(service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
+		Map<String, Object> ma = new HashMap<>();
+		ma.put("dbTypes", this.service.getDbTypes());
+		ma.put("servers", this.service.getDbServers());
+		
+		this.setModelAttributes(RM_CREATE, ma);
+		this.setModelAttributes(RM_UPDATE, ma);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * Возвращает список баз данных
+	 */
+	@Override
+	public List<DocObject> getShowListEntities() {
+		return this.service.findDataBases();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DocObject getNewEntity() {
+		return this.service.createDataBase();
+	}
+	
 }

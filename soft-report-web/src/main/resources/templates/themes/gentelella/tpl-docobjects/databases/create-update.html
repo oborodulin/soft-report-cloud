@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout-create-update}"
-	th:with="titleCurrent=${valuesSet.id == null} ? ${titleCreate} : ${titleUpdate}">
+	th:with="titleCurrent=${dataBase.id == null} ? ${titleCreate} : ${titleUpdate}">
 <th:block th:fragment="header">
 	<head
 		th:replace="fragments/fragment-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
@@ -14,20 +14,9 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${valuesSet.id == null} ? @{~/valuessets/create/{isContinue}(isContinue='false')} : @{~/valuessets/update/{id}(id=${valuesSet.id})}"
-			th:object="${valuesSet}" th:method="POST" id="form-create-valuesSet"
+			th:action="${dataBase.id == null} ? @{~/databases/create/{isContinue}(isContinue='false')} : @{~/databases/update/{id}(id=${dataBase.id})}"
+			th:object="${dataBase}" th:method="POST" id="form-create-dataBase"
 			data-parsley-validate class="form-horizontal form-label-left">
-			<div class="item form-group">
-				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="code"><th:block th:text="#{code.label}" /><span
-					class="required">*</span> </label>
-				<div class="col-md-6 col-sm-6 ">
-					<input type="text" th:field="*{code}" required="required"
-						class="form-control ">
-				</div>
-				<span th:if="${#fields.hasErrors('code')}" th:errors="*{code}"
-					class="text-danger"></span>
-			</div>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
 					for="name"><th:block th:text="#{name.label}" /><span
@@ -41,14 +30,29 @@
 			</div>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="isUpdatable" th:text="#{isupdatable.label}"></label>
-				<div class="col-md-3 col-sm-3 ">
-					<div class="checkbox">
-						<input type="checkbox" th:field="*{isUpdatable}" class="flat">
-					</div>
+					for="dbType" th:text="#{dbtype.label}"><span
+					class="required">*</span></label>
+				<div class="col-md-6 col-sm-6 ">
+					<select th:field="*{dbType}" required="required"
+						class="select2_group form-control">
+						<option value="" th:text="#{dbtype.opt.empty.label}" />
+						<option th:each="opt : ${dbTypes}" th:value="${opt.id}"
+							th:text="${opt.val}"
+							th:selected="${dataBase.dbType != null} ? ${opt.id == dataBase.dbType.id}: 'false'"></option>
+					</select>
 				</div>
-				<span th:if="${#fields.hasErrors('isUpdatable')}"
-					th:errors="*{isUpdatable}" class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="server" th:text="#{server.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<select th:field="*{server}" class="select2_group form-control">
+						<option value="" th:text="#{server.opt.empty.label}" />
+						<option th:each="opt : ${servers}" th:value="${opt.id}"
+							th:text="${opt.host}"
+							th:selected="${dataBase.server != null} ? ${opt.id == dataBase.server.id}: 'false'"></option>
+					</select>
+				</div>
 			</div>
 			<div class="item form-group">
 				<label for="descr"
@@ -58,10 +62,12 @@
 					<textarea th:field="*{descr}" class="form-control" rows="3"></textarea>
 				</div>
 			</div>
+			<input type="hidden" th:field="*{type}">
+			<input type="hidden" th:field="*{pos}">
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
 			<th:block
-				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/valuessets}, object=${valuesSet}, formId='form-create-valuesSet')" />
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/databases}, object=${dataBase}, formId='form-create-dataBase')" />
 		</form>
 	</div>
 	<!-- /page content -->

@@ -49,7 +49,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	protected static final String TABLE_NAME = "DOC_OBJECTS";
 
 	/** Поле ТД/параметр поиска/поле формы ввода/: Позиция */
-	@NotBlank
+	@NotNull
 	private Integer pos = 1;
 
 	/** Наименование объекта БД/Значение поля БД (колонка наименование)/Метка UI объекта */
@@ -94,7 +94,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@EqualsAndHashCode.Exclude
 //	@JoinColumn(name = "business_objects_id")
-	private BusinessObject businessObjects;
+	private List<BusinessObject> businessObjects;
 
 	/** Поле ТД: Признак первичного ключа */
 	@NotNull

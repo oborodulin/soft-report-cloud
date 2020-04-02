@@ -56,6 +56,7 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	/** Значение атрибута: Технология */
 	public static final String AV_TECH = "T";
 
+//Архитектуры ПО:	
 	/** Код значения (архитектура ПО): БД */
 	public static final String VC_ARCH_DB = "SA_DB";
 
@@ -67,6 +68,41 @@ public class Value extends DetailEntity<ValuesSet, String> {
 
 	/** Код значения (архитектура ПО): Отчёты */
 	public static final String VC_ARCH_REPORT = "SA_REPORT";
+
+	// Типы серверов:
+	/** Код значения (тип сервера): БД */
+	public static final String VC_ST_DB = "ST_DB";
+
+	// Типы объекта документа:
+	/** Код значения (тип объекта документа): БД */
+	public static final String VC_DOT_DB = "DOT_DB";
+
+	/** Код значения (тип объекта документа): ТД */
+	public static final String VC_DOT_DT = "DOT_DT";
+
+	/** Код значения (тип объекта документа): Поле ТД */
+	public static final String VC_DOT_DTCOLUMN = "DOT_DTCOLUMN";
+
+	/** Код значения (тип объекта документа): Значение поля ТД */
+	public static final String VC_DOT_CLNMVAL = "DOT_CLNMVAL";
+
+	/** Код значения (тип объекта документа): Функция БД */
+	public static final String VC_DOT_FUNC = "DOT_FUNC";
+
+	/** Код значения (тип объекта документа): Хранимая процедура БД */
+	public static final String VC_DOT_PROC = "DOT_PROC";
+
+	/** Код значения (тип объекта документа): Хранимая процедура БД */
+	public static final String VC_DOT_SCHEMA = "DOT_SCHEMA";
+
+	/** Код значения (тип объекта документа): Триггер ТД */
+	public static final String VC_DOT_TRIGGER = "DOT_TRIGGER";
+
+	/** Код значения (тип объекта документа): Представление БД */
+	public static final String VC_DOT_VIEW = "DOT_VIEW";
+
+	/** Код значения (тип объекта документа): Поле представления БД */
+	public static final String VC_DOT_VWCOLUMN = "DOT_VWCOLUMN";
 
 	/** Уникальный код значения */
 	@NotBlank

@@ -23,20 +23,20 @@ import lombok.extern.slf4j.Slf4j;
 public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, U>, S extends CommonJpaTreeService<T, U>, U>
 		extends AbstractMvcController<T, S, U> implements CommonTreeChildrenMvcController<T, U> {
 
-	public static final String URL_DTL_READ = "/{parentId}";
-	public static final String URL_DTL_CREATE = "/{parentId}/create";
-	public static final String URL_DTL_CREATE_CONTINUE = "/{parentId}/create/{isContinue}";
-	public static final String URL_DTL_CREATE_CHILD = "/{parentId}/{parentId}/create";
-	public static final String URL_DTL_CREATE_CHILD_CONTINUE = "/{parentId}/{parentId}/create/{isContinue}";
-	public static final String URL_DTL_EDIT = "/{parentId}/edit/{id}";
-	public static final String URL_DTL_UPDATE = "/{parentId}/update/{id}";
-	public static final String URL_DTL_DELETE = "/{parentId}/delete";
-	public static final String URL_DTL_DELETE_BY_ID = "/{parentId}/delete/{id}";
+	public static final String URL_CHLD_READ = "/{parentId}";
+	public static final String URL_CHLD_CREATE = "/{parentId}/create";
+	public static final String URL_CHLD_CREATE_CONTINUE = "/{parentId}/create/{isContinue}";
+	public static final String URL_CHLD_CREATE_CHILD = "/{parentId}/{parentId}/create";
+	public static final String URL_CHLD_CREATE_CHILD_CONTINUE = "/{parentId}/{parentId}/create/{isContinue}";
+	public static final String URL_CHLD_EDIT = "/{parentId}/edit/{id}";
+	public static final String URL_CHLD_UPDATE = "/{parentId}/update/{id}";
+	public static final String URL_CHLD_DELETE = "/{parentId}/delete";
+	public static final String URL_CHLD_DELETE_BY_ID = "/{parentId}/delete/{id}";
 
 	public static final String MA_PARENT = "parent";
 	public static final String MA_TITLE_MASTER = "titleMaster";
 
-	protected static final String RM_DTL_READ = "details-read";
+	protected static final String RM_CHLD_READ = "children-read";
 
 	private String dtlSortPropName = "name";
 
@@ -110,21 +110,21 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	 * {@inheritDoc}
 	 */
 	@Override
-	@GetMapping(URL_DTL_READ)
+	@GetMapping(URL_CHLD_READ)
 	public String showList(@PathVariable(PV_PARENT_ID) Long parentId, Locale locale, Model model) {
 		T parent = this.service.getById(parentId);
-		List<T> details = this.service.findByParentId(parentId, Sort.by(Sort.Direction.ASC, this.dtlSortPropName));
-		if (details.isEmpty()) {
+		List<T> children = this.service.findByParentId(parentId, Sort.by(Sort.Direction.ASC, this.dtlSortPropName));
+		if (children.isEmpty()) {
 			MessageHelper.addInfoAttribute(model, this.msPrefix.concat(".parent.info.empty"), parent.getCodeId());
 		}
-		model.mergeAttributes(this.getModelAttributes(RM_DTL_READ));
+		model.mergeAttributes(this.getModelAttributes(RM_CHLD_READ));
 		model.addAttribute(MA_TITLE_MASTER, parent.getCodeId());
 		model.addAttribute(MA_TITLE_READ, this.ms.getMessage(this.msPrefix.concat(".title.read"), null, locale));
 		model.addAttribute(MA_PARENT, parent);
-		model.addAttribute(this.objCollectName, details);
+		model.addAttribute(this.objCollectName, children);
 		// model.addAttribute(MA_TITLE_READ, this.ms.getMessage("tasks.title.read",
 		// new Object[] {project.getCode()}, locale));
-		log.info(this.objCollectName + " [" + URL_DTL_READ + "]: " + details.size() + " counts");
+		log.info(this.objCollectName + " [" + URL_CHLD_READ + "]: " + children.size() + " counts");
 		return this.getViewNameReadDelete();
 	}
 
@@ -132,13 +132,13 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	 * {@inheritDoc}
 	 */
 	@Override
-	@GetMapping(URL_DTL_CREATE)
+	@GetMapping(URL_CHLD_CREATE)
 	public String showCreateForm(@PathVariable(PV_PARENT_ID) Long parentId, Locale locale, Model model) {
 		T detail = this.service.create(parentId);
 		model.addAttribute(MA_TITLE_MASTER, detail.getParent().getCodeId());
 		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage(this.msPrefix.concat(".title.create"), null, locale));
 		model.addAttribute(this.objName, detail);
-		log.info(this.objName + " [" + URL_DTL_CREATE + "]: parentId = " + parentId + "; detail = " + detail);
+		log.info(this.objName + " [" + URL_CHLD_CREATE + "]: parentId = " + parentId + "; detail = " + detail);
 		return this.getViewNameCreateUpdate();
 	}
 
@@ -146,14 +146,14 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	 * {@inheritDoc}
 	 */
 	@Override
-	@GetMapping(URL_DTL_EDIT)
+	@GetMapping(URL_CHLD_EDIT)
 	public String showUpdateForm(@PathVariable(PV_PARENT_ID) Long parentId, @PathVariable(PV_ID) Long id, Locale locale,
 			Model model) {
 		T detail = this.service.getById(id);
 		model.addAttribute(MA_TITLE_MASTER, detail.getParent().getCodeId());
 		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("businessobjects.title.update", null, locale));
 		model.addAttribute(this.objName, detail);
-		log.info(this.objName + " [" + URL_DTL_EDIT + "]: parentId = " + parentId + "; detail = " + detail);
+		log.info(this.objName + " [" + URL_CHLD_EDIT + "]: parentId = " + parentId + "; detail = " + detail);
 		return this.getViewNameCreateUpdate();
 	}
 
@@ -161,12 +161,12 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	 * {@inheritDoc}
 	 */
 	@Override
-	@PostMapping(URL_DTL_CREATE_CONTINUE)
+	@PostMapping(URL_CHLD_CREATE_CONTINUE)
 	public String create(@PathVariable(PV_PARENT_ID) Long parentId, @PathVariable(PV_IS_CONTINUE) boolean isContinue,
 			@Valid T entity, Errors errors, Model model
 	// , RedirectAttributes redirectAttributes
 	) {
-		log.info(this.objName + " [" + URL_DTL_EDIT + "]: parentId = " + parentId + "; isContinue = " + isContinue
+		log.info(this.objName + " [" + URL_CHLD_EDIT + "]: parentId = " + parentId + "; isContinue = " + isContinue
 				+ "; entity = " + entity);
 		if (errors.hasErrors()) {
 			return this.getViewNameCreateUpdate();
@@ -183,7 +183,7 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	 * {@inheritDoc}
 	 */
 	@Override
-	@PostMapping(URL_DTL_UPDATE)
+	@PostMapping(URL_CHLD_UPDATE)
 	public String update(@PathVariable(PV_PARENT_ID) Long parentId, @PathVariable(PV_ID) Long id, @Valid T entity,
 			Errors errors, Model model) {
 		if (errors.hasErrors()) {
@@ -198,7 +198,7 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	 * {@inheritDoc}
 	 */
 	@Override
-	@PostMapping(URL_DTL_DELETE)
+	@PostMapping(URL_CHLD_DELETE)
 	public String delete(@PathVariable(PV_PARENT_ID) Long parentId,
 			@RequestParam(RV_CHK_TABLE_RECORDS) List<String> ids) {
 		if (ids != null) {
@@ -213,7 +213,7 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	 * {@inheritDoc}
 	 */
 	@Override
-	@GetMapping(URL_DTL_DELETE_BY_ID)
+	@GetMapping(URL_CHLD_DELETE_BY_ID)
 	public String deleteById(@PathVariable(PV_PARENT_ID) Long parentId, @PathVariable(PV_ID) Long id) {
 		this.service.deleteById(id);
 		return this.getRedirectToRead(parentId);

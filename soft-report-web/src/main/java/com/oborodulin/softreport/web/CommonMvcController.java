@@ -41,6 +41,21 @@ public interface CommonMvcController<E extends AuditableEntity<U>, U> {
 
 	public String viewCreateUpdate();
 
+	/**
+	 * Возвращает список объектов доменной модели для последующего отображения в
+	 * слое представления.
+	 * 
+	 * @return список объектов доменной модели
+	 */
+	public List<E> getShowListEntities();
+
+	/**
+	 * Создаёт и возвращает новый доменный объект.
+	 * 
+	 * @return новый доменный объект
+	 */
+	public E getNewEntity();
+
 	public String showList(Locale locale, Model model);
 
 	public String showUpdateForm(Long id, Locale locale, Model model);

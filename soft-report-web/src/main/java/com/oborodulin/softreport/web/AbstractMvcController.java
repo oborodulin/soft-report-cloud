@@ -192,9 +192,25 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<E> getShowListEntities() {
+		return this.service.findAll();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public E getNewEntity() {
+		return this.service.create();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@GetMapping
 	public String showList(Locale locale, Model model) {
-		List<E> entities = this.service.findAll();
+		List<E> entities = this.getShowListEntities();
 		if (entities.isEmpty()) {
 			MessageHelper.addInfoAttribute(model, this.msPrefix.concat(".info.empty"));
 		}
@@ -213,7 +229,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	public String showCreateForm(Locale locale, Model model) {
 		model.mergeAttributes(this.getModelAttributes(RM_CREATE));
 		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage(this.msPrefix.concat(".title.create"), null, locale));
-		model.addAttribute(this.objName, this.service.create());
+		model.addAttribute(this.objName, this.getNewEntity());
 		log.info(this.objName + " [" + URL_CREATE + "]");
 		return this.getViewNameCreateUpdate();
 	}

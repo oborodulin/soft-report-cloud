@@ -23,13 +23,107 @@ public class ValueServiceImpl
 		super(masterRepository, repository, Value.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> findByValuesSetCode(String code, Sort sort) {
 		return this.repository.findByMaster_Code(code, sort);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> findByValuesSetId(Long id, Sort sort) {
 		return this.repository.findByMaster_Id(id, sort);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Value getDocObjectDataBaseType() {
+		return this.repository.findByCode(Value.VC_DOT_DB);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Value getDocObjectSchemaType() {
+		return this.repository.findByCode(Value.VC_DOT_SCHEMA);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Value getDocObjectDataTableType() {
+		return this.repository.findByCode(Value.VC_DOT_DT);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Value getDocObjectDataTableColumnType() {
+		return this.repository.findByCode(Value.VC_DOT_DTCOLUMN);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Value getDocObjectDataTableColumnValueType() {
+		return this.repository.findByCode(Value.VC_DOT_CLNMVAL);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Value getDocObjectDataTableTriggerType() {
+		return this.repository.findByCode(Value.VC_DOT_TRIGGER);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Value getDocObjectDataBaseViewType() {
+		return this.repository.findByCode(Value.VC_DOT_VIEW);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Value getDocObjectDataBaseViewColumnType() {
+		return this.repository.findByCode(Value.VC_DOT_VWCOLUMN);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Value getDocObjectDataBaseFuncType() {
+		return this.repository.findByCode(Value.VC_DOT_FUNC);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Value getDocObjectDataBaseProcType() {
+		return this.repository.findByCode(Value.VC_DOT_PROC);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public Value getServerDbType() {
+		return this.repository.findByCode(Value.VC_ST_DB);
+	}
+	
 }
