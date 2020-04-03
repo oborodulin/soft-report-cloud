@@ -3,6 +3,10 @@ package com.oborodulin.softreport.domain.model.software.connection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.software.Software;
 
@@ -11,6 +15,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = Connection.TABLE_NAME)
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class Connection extends DetailEntity<Software, String> {
 	private static final long serialVersionUID = 552064751437275103L;
 

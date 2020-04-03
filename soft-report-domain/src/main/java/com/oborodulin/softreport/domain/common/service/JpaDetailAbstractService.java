@@ -24,18 +24,27 @@ public abstract class JpaDetailAbstractService<E extends AuditableEntity<U>, D e
 		this.clazz = clazz;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public List<D> findByMaster(E master, Sort sort) {
 		return this.repository.findByMaster(master, sort);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public List<D> findByMasterId(Long id, Sort sort) {
 		return this.repository.findByMaster_Id(id, sort);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public D create() {
@@ -49,6 +58,9 @@ public abstract class JpaDetailAbstractService<E extends AuditableEntity<U>, D e
 		return entity;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public D create(Long masterId) {
@@ -64,12 +76,15 @@ public abstract class JpaDetailAbstractService<E extends AuditableEntity<U>, D e
 		return entity;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public Optional<D> save(Long masterId, D entity) {
 		entity.setMaster(this.masterRepository.findById(masterId)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid master Id:" + masterId)));
-		return Optional.of(this.repository.save(entity));
+		return this.save(entity);
 	}
 
 }

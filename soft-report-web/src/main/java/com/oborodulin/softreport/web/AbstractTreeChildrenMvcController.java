@@ -86,6 +86,13 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T createChildEntity(Long parentId) {
+		return this.service.getById(parentId);
+	}
+	/**
 	 * Возвращает строковый идентификатор главного объекта.
 	 * 
 	 * @param parent главный объект
@@ -112,7 +119,7 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	@Override
 	@GetMapping(URL_CHLD_READ)
 	public String showList(@PathVariable(PV_PARENT_ID) Long parentId, Locale locale, Model model) {
-		T parent = this.service.getById(parentId);
+		T parent = this.service.getById(parentId);;
 		List<T> children = this.service.findByParentId(parentId, Sort.by(Sort.Direction.ASC, this.dtlSortPropName));
 		if (children.isEmpty()) {
 			MessageHelper.addInfoAttribute(model, this.msPrefix.concat(".parent.info.empty"), parent.getCodeId());
@@ -134,11 +141,11 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	@Override
 	@GetMapping(URL_CHLD_CREATE)
 	public String showCreateForm(@PathVariable(PV_PARENT_ID) Long parentId, Locale locale, Model model) {
-		T detail = this.service.create(parentId);
-		model.addAttribute(MA_TITLE_MASTER, detail.getParent().getCodeId());
+		T child = this.createChildEntity(parentId);
+		model.addAttribute(MA_TITLE_MASTER, child.getParent().getCodeId());
 		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage(this.msPrefix.concat(".title.create"), null, locale));
-		model.addAttribute(this.objName, detail);
-		log.info(this.objName + " [" + URL_CHLD_CREATE + "]: parentId = " + parentId + "; detail = " + detail);
+		model.addAttribute(this.objName, child);
+		log.info(this.objName + " [" + URL_CHLD_CREATE + "]: parentId = " + parentId + "; child = " + child);
 		return this.getViewNameCreateUpdate();
 	}
 
@@ -149,11 +156,11 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	@GetMapping(URL_CHLD_EDIT)
 	public String showUpdateForm(@PathVariable(PV_PARENT_ID) Long parentId, @PathVariable(PV_ID) Long id, Locale locale,
 			Model model) {
-		T detail = this.service.getById(id);
-		model.addAttribute(MA_TITLE_MASTER, detail.getParent().getCodeId());
-		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("businessobjects.title.update", null, locale));
-		model.addAttribute(this.objName, detail);
-		log.info(this.objName + " [" + URL_CHLD_EDIT + "]: parentId = " + parentId + "; detail = " + detail);
+		T child = this.service.getById(id);
+		model.addAttribute(MA_TITLE_MASTER, child.getParent().getCodeId());
+		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage(this.msPrefix.concat(".title.update"), null, locale));
+		model.addAttribute(this.objName, child);
+		log.info(this.objName + " [" + URL_CHLD_EDIT + "]: parentId = " + parentId + "; child = " + child);
 		return this.getViewNameCreateUpdate();
 	}
 

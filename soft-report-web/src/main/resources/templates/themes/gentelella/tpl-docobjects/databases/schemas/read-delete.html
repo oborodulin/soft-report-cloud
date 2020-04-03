@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-read-delete}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
+	</head>
+</th:block>
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<th:block
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/databases}, master=${parent}, detailsHref='schemas')" />
+
+		<div th:if="${not #lists.isEmpty(schemas)}" class="table-responsive">
+			<form
+				th:action="@{~/schemas/{parentId}/delete(parentId=${parent.id})}"
+				th:method="POST" id="form-delete-schemas">
+				<table class="table table-striped jambo_table bulk_action">
+					<thead>
+						<tr class="headings">
+							<th><input type="checkbox" id="check-all" class="flat">
+							</th>
+							<th class="column-title" />
+							<th class="column-title" th:text="#{name.label}" />
+							<th class="column-title no-link last"><span class="nobr"
+								th:text="#{descr.label}"></span></th>
+							<th class="bulk-actions" colspan="16">
+								<button type="submit" class="btn btn-danger btn-xs">
+									<i class="fa fa-trash-o"></i><span
+										th:text="' '+#{delete.label}"></span>
+								</button>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="schema, rowStat : ${schemas}"
+							th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
+							<td class="a-center "><input id="table_records"
+								name="table_records" type="checkbox" th:value="${schema.id}"
+								class="flat"></td>
+							<td
+								th:replace="fragments/fragment-read-delete :: detail-buttons(master=${schema.parent}, detailsHref='schemas', detail=${schema})" />
+							<td th:text="${schema.name}" class=" " />
+							<td th:text="${schema.descr}" class=" " />
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-read-delete :: body(scripts=~{this :: .custom-script})">
+		</th:block>
+	</th:block>
+</body>
+</html>

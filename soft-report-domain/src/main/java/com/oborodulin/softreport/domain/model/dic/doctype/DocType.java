@@ -14,6 +14,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import com.oborodulin.softreport.domain.model.software.document.Document;
@@ -22,9 +25,24 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * Класс описывает составной типы документов на основании его категории и
+ * уникального типа.
+ * <p>
+ * Позволяет работать с несколькими документами в одной категории. Например, с
+ * несколькими шаблонами ТЗ, руководств, инструкций и т.д.
+ * <p>
+ * Категории и уникальные типы представлены в виде наборов значений.
+ * 
+ * @author Oleg Borodulin
+ *
+ * @see com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet#VS_DOC_CATEGS
+ * @see com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet#VS_DOC_TYPES
+ */
 @Data
 @Entity
 @Table(name = DocType.TABLE_NAME)
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class DocType extends AuditableEntity<String> {
 	private static final long serialVersionUID = 8743856478405649207L;
 
@@ -52,19 +70,24 @@ public class DocType extends AuditableEntity<String> {
 	@ToString.Exclude
 	private Value categ;
 
-	/** Тип документа */
+	/** Уникальный тип документа */
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "type_code", nullable = false)
 	@ToString.Exclude
 	private Value type;
 
-	/** Список документов текущего типа */
+	/** Список документов текущего составного типа */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private List<Document> documents = new ArrayList<>();
 
 	/**
 	 * {@inheritDoc}
+	 * <p>
+	 * Для составного типа документа это "категория :: уникльный тип".
+	 * 
+	 * @see #categ
+	 * @see #type
 	 */
 	@Override
 	public String getCodeId() {

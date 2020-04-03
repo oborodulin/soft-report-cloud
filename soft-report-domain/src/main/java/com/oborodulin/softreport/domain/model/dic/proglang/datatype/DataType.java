@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.dic.proglang.ProgLang;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.dataformat.DataFormat;
@@ -24,6 +27,7 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = DataType.TABLE_NAME)
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class DataType extends DetailEntity<ProgLang, String> {
 
 	private static final long serialVersionUID = -2045805271638510988L;

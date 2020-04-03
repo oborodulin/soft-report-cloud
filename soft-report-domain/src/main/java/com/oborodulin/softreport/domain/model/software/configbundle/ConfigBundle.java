@@ -6,6 +6,9 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.envers.Audited;
+
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import com.oborodulin.softreport.domain.model.docobject.DocObject;
@@ -17,6 +20,7 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = ConfigBundle.TABLE_NAME)
+@Audited
 public class ConfigBundle extends DetailEntity<Software, String> {
 
 	private static final long serialVersionUID = 4401547574205093586L;

@@ -23,11 +23,17 @@ public class ProgLangServiceImpl extends JpaAbstractService<ProgLang, ProgLangRe
 		super(repository, ProgLang.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getLangs() {
 		return valuesSetService.getProgramLangs();
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getArchs() {
 		return valuesSetService.getSoftwareArchs();

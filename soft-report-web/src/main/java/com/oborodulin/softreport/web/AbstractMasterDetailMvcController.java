@@ -157,7 +157,7 @@ public abstract class AbstractMasterDetailMvcController<E extends AuditableEntit
 			Model model) {
 		D detail = this.service.getById(id);
 		model.addAttribute(MA_TITLE_MASTER, detail.getMaster().getCodeId());
-		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage("businessobjects.title.update", null, locale));
+		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage(this.msPrefix.concat(".title.update"), null, locale));
 		model.addAttribute(this.objName, detail);
 		log.info(this.objName + " [" + URL_DTL_EDIT + "]: masterId = " + masterId + "; detail = " + detail);
 		return this.getViewNameCreateUpdate();

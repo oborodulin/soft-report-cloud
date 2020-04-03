@@ -23,11 +23,17 @@ public class SoftwareServiceImpl extends JpaTreeAbstractService<Software, Softwa
 		super(repository, Software.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Software> findByTypeCode(String typeCode) {
 		return this.repository.findByTypeCode(typeCode);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Software createChild(Long parentId) {
 		Software software = super.createChild(parentId);
@@ -35,6 +41,9 @@ public class SoftwareServiceImpl extends JpaTreeAbstractService<Software, Softwa
 		return software;
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getTypes() {
 		return valuesSetService.getSoftwareTypes();

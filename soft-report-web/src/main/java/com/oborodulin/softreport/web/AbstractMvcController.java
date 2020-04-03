@@ -200,7 +200,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 * {@inheritDoc}
 	 */
 	@Override
-	public E getNewEntity() {
+	public E createEntity() {
 		return this.service.create();
 	}
 
@@ -229,7 +229,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	public String showCreateForm(Locale locale, Model model) {
 		model.mergeAttributes(this.getModelAttributes(RM_CREATE));
 		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage(this.msPrefix.concat(".title.create"), null, locale));
-		model.addAttribute(this.objName, this.getNewEntity());
+		model.addAttribute(this.objName, this.createEntity());
 		log.info(this.objName + " [" + URL_CREATE + "]");
 		return this.getViewNameCreateUpdate();
 	}

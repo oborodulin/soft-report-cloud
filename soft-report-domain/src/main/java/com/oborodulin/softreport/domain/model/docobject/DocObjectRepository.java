@@ -14,5 +14,11 @@ public interface DocObjectRepository extends CommonTreeRepository<DocObject, Str
 	public List<DocObject> findByType(Value type, Sort sort);
 
 	public List<DocObject> findByTypeCode(String typeCode);
+	
+	public DocObject findFirstByTypeAndParentIsNullOrderByPosDesc(Value type);
 
+	public DocObject findFirstByTypeAndParentIdOrderByPosDesc(Value type, Long parentId);
+	
+	public List<DocObject> findByPosGreaterThanEqual(Integer pos);
+	
 }

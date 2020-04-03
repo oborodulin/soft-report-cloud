@@ -15,6 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
@@ -30,6 +33,7 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = Document.TABLE_NAME)
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class Document extends DetailEntity<Software, String> {
 
 	private static final long serialVersionUID = -1155211422959024301L;

@@ -5,6 +5,10 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 import com.oborodulin.softreport.domain.common.entity.TreeEntity;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import lombok.Data;
@@ -20,6 +24,7 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = ObjHierarchy.TABLE_NAME)
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class ObjHierarchy extends TreeEntity<ObjHierarchy, String> {
 
 	private static final long serialVersionUID = 3850158095617591531L;

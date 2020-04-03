@@ -13,6 +13,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
@@ -33,6 +36,7 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = ProgLang.TABLE_NAME)
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class ProgLang extends AuditableEntity<String> {
 
 	private static final long serialVersionUID = -2566233527997372728L;

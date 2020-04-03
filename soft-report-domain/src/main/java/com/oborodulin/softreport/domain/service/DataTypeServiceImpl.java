@@ -28,12 +28,18 @@ public class DataTypeServiceImpl
 		super(masterRepository, repository, DataType.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getSqlTypes() {
 		return valuesSetService.getSqlDataTypes();
 	};
 
-	public Map<String, List<DataType>> getDataTypes(String archCode) {
+	/**
+	 * {@inheritDoc}
+	 */
+	private Map<String, List<DataType>> getDataTypes(String archCode) {
 		Map<String, List<DataType>> backendTypes = new HashMap<>();
 		for (ProgLang backendProgLang : masterRepository.findByArch_CodeOrderByArch_ValAsc(archCode)) {
 			backendTypes.put(backendProgLang.getLang().getVal(), backendProgLang.getDataTypes());
@@ -41,11 +47,17 @@ public class DataTypeServiceImpl
 		return backendTypes;
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Map<String, List<DataType>> getBackendTypes() {
 		return this.getDataTypes(Value.VC_ARCH_BACK);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Map<String, List<DataType>> getFrontendTypes() {
 		return this.getDataTypes(Value.VC_ARCH_FRONT);

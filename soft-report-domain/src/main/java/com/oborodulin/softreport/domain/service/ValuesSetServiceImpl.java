@@ -25,6 +25,9 @@ public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSe
 		super(repository, ValuesSet.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> findValuesBySetCode(String code) {
 		Optional<ValuesSet> valuesSet = this.repository.findByCode(code);
@@ -37,6 +40,9 @@ public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSe
 		return values;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Optional<List<Value>> findValuesBySetId(Long id) {
 		Optional<ValuesSet> valuesSet = this.repository.findById(id);
@@ -44,41 +50,65 @@ public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSe
 		return valuesSet.isPresent() ? Optional.ofNullable(valuesSet.get().getValues()) : Optional.empty();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getServersTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_SERVERS_TYPES);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getEnvTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_ENV_TYPES);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getSortDirections() {
 		return this.findValuesBySetCode(ValuesSet.VS_SORT_DIRECTIONS);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getCfgBundleTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_CFG_BUNDLE_TYPES);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getSoftwareTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_SOFTWARE_TYPES);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getSoftwareArchs() {
 		return this.findValuesBySetCode(ValuesSet.VS_SOFTWARE_ARCHS);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getSoftwareTechs() {
 		return this.findValuesBySetCode(ValuesSet.VS_SOFTWARE_TECHS);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public List<Value> getProgramLangs() {
 		List<Value> progLangs = new ArrayList<>();
 		for (Value val : this.getSoftwareTechs()) {
@@ -89,41 +119,65 @@ public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSe
 		return progLangs;
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getDocCategs() {
 		return this.findValuesBySetCode(ValuesSet.VS_DOC_CATEGS);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getDocTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_DOC_TYPES);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getDbTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_DB_TYPES);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getDtTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_DB_DT_TYPES);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getDbColumnTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_DB_COLUMN_TYPES);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getSqlDataTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_DB_SQL_DATA_TYPES);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getDocObjTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_DOC_OBJ_TYPES);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getDocObjСontainerTypes() {
 		List<Value> containerTypes = new ArrayList<>();
@@ -135,6 +189,9 @@ public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSe
 		return containerTypes;
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getParentObjHierarchyСontainerTypes(String archCode) {
 		List<Value> parentTypes = new ArrayList<>();
@@ -146,6 +203,9 @@ public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSe
 		return parentTypes;
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getDocObjComponentTypes() {
 		List<Value> componentTypes = new ArrayList<>();
@@ -157,31 +217,49 @@ public class ValuesSetServiceImpl extends JpaAbstractService<ValuesSet, ValuesSe
 		return componentTypes;
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getDocObjEvents() {
 		return this.findValuesBySetCode(ValuesSet.VS_DOC_OBJ_EVENTS);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getDocObjEventActions() {
 		return this.findValuesBySetCode(ValuesSet.VS_DOC_OBJ_EVENT_ACTIONS);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getUiControlTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_UI_CONTROL_TYPES);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getRuleTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_RULE_TYPES);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getRuleCompareTypes() {
 		return this.findValuesBySetCode(ValuesSet.VS_RULE_COMPARE_TYPES);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getRuleOperators() {
 		return this.findValuesBySetCode(ValuesSet.VS_RULE_OPERATORS);

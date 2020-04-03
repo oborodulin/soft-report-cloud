@@ -9,6 +9,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.docobject.DocObject;
 import com.oborodulin.softreport.domain.model.software.document.Document;
@@ -26,6 +29,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = Version.TABLE_NAME)
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class Version extends DetailEntity<Document, String> {
 	private static final long serialVersionUID = 81758010780885142L;
 

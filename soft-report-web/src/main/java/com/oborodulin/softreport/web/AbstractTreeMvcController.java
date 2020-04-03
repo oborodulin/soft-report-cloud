@@ -127,6 +127,9 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 		return this.getViewNameCreateUpdate();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@GetMapping(URL_EDIT_TREE)
 	public String showUpdateForm(@PathVariable(PV_ID) Long id, Model model) {
@@ -137,6 +140,9 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 		return this.getViewNameCreateUpdate();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@PostMapping(URL_CREATE_CHILD_CONTINUE)
 	public String createChild(@PathVariable(PV_PARENT_ID) Long parentId,

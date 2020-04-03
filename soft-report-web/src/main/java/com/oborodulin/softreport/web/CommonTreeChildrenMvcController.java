@@ -10,7 +10,7 @@ import com.oborodulin.softreport.domain.common.entity.TreeEntity;
 public interface CommonTreeChildrenMvcController<T extends TreeEntity<T, U>, U> extends CommonMvcController<T, U> {
 
 	/**
-	 * Возвращает перенаправление на функцию "ЧТЕНИЕ" (базовый URL) подчинённых
+	 * Возвращает перенаправление на функцию "ЧТЕНИЕ" (базовый URL) дочерних
 	 * объектов.
 	 * 
 	 * @param parentId идентификатор родительского объекта
@@ -27,7 +27,15 @@ public interface CommonTreeChildrenMvcController<T extends TreeEntity<T, U>, U> 
 	public String getRedirectToCreate(Long parentId);
 
 	/**
-	 * Формирует и возвращает перечень подчинённых объектов.
+	 * Создаёт и возвращает дочерний объект.
+	 * 
+	 * @param parentId идентификатор родительского объекта
+	 * @return путь к шаблону "чтение-удаление"
+	 */
+	public T createChildEntity(Long parentId);
+
+	/**
+	 * Формирует и возвращает перечень дочерних объектов.
 	 * 
 	 * @param parentId идентификатор родительского объекта
 	 * @param locale   локаль
@@ -37,7 +45,7 @@ public interface CommonTreeChildrenMvcController<T extends TreeEntity<T, U>, U> 
 	public String showList(Long parentId, Locale locale, Model model);
 
 	/**
-	 * Создаёт новый и возвращает для наполнения данными подчинённый объект
+	 * Создаёт новый и возвращает для наполнения данными дочерний объект
 	 * 
 	 * @param parentId идентификатор родительского объекта
 	 * @param locale   локаль
@@ -47,7 +55,7 @@ public interface CommonTreeChildrenMvcController<T extends TreeEntity<T, U>, U> 
 	public String showCreateForm(Long parentId, Locale locale, Model model);
 
 	/**
-	 * Возвращает для изменения существующий подчинённый объект
+	 * Возвращает для изменения существующий дочерний объект
 	 * 
 	 * @param parentId идентификатор родительского объекта
 	 * @param locale   локаль

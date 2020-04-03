@@ -9,6 +9,10 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 import com.oborodulin.softreport.domain.model.software.document.Document;
 
@@ -18,6 +22,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @Table(name = Term.TABLE_NAME)
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class Term extends AuditableEntity<String> {
 	private static final long serialVersionUID = 8683776013314541231L;
 

@@ -23,11 +23,17 @@ public class DocTypeServiceImpl extends JpaAbstractService<DocType, DocTypeRepos
 		super(repository, DocType.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getCategs() {
 		return valuesSetService.getDocCategs();
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getTypes() {
 		return valuesSetService.getDocTypes();

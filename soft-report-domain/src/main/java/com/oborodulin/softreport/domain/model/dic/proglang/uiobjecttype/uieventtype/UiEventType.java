@@ -12,6 +12,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype.UiObjectType;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
@@ -24,6 +27,7 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = UiEventType.TABLE_NAME)
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class UiEventType extends DetailEntity<UiObjectType, String> {
 
 	private static final long serialVersionUID = 4118220275040901488L;

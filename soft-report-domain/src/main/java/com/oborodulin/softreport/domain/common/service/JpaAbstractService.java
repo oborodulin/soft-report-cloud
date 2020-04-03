@@ -26,23 +26,35 @@ public abstract class JpaAbstractService<E extends AuditableEntity<U>, R extends
 		this.clazz = clazz;
 	}
 	
-	@Transactional(readOnly = true)
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
+	@Transactional(readOnly = true)
 	public List<E> findAll() {
 		return this.repository.findAll();
 	}
 
-	@Transactional(readOnly = true)
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
+	@Transactional(readOnly = true)
 	public Optional<E> findById(Long id) {
 		return this.repository.findById(id);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public E getById(Long id) {
 		return this.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid entity Id:" + id));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public E create() {
@@ -56,18 +68,27 @@ public abstract class JpaAbstractService<E extends AuditableEntity<U>, R extends
 		return entity;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public Optional<E> save(E entity) {
 		return Optional.of(this.repository.save(entity));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void delete(E entity) {
 		this.repository.delete(entity);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void deleteById(Long id) {
 		this.repository.deleteById(id);

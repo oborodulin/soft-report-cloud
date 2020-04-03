@@ -15,6 +15,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+
 import com.oborodulin.softreport.domain.common.entity.TreeEntity;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.dataformat.DataFormat;
@@ -42,6 +45,7 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = DocObject.TABLE_NAME)
+@Audited
 public class DocObject extends TreeEntity<DocObject, String> {
 	private static final long serialVersionUID = -5847640757970947607L;
 
@@ -50,7 +54,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 
 	/** Поле ТД/параметр поиска/поле формы ввода/: Позиция */
 	@NotNull
-	private Integer pos = 1;
+	private Integer pos = 0;
 
 	/** Наименование объекта БД/Значение поля БД (колонка наименование)/Метка UI объекта */
 	@NotBlank
@@ -64,6 +68,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	/** Версии */
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@EqualsAndHashCode.Exclude
+	@NotAudited
 	private List<Version> versions = new ArrayList<>();
 
 	/** Тип объекта */
@@ -94,6 +99,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@EqualsAndHashCode.Exclude
 //	@JoinColumn(name = "business_objects_id")
+	@NotAudited
 	private List<BusinessObject> businessObjects;
 
 	/** Поле ТД: Признак первичного ключа */
@@ -182,6 +188,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	/** Поле ТД: Список UI объектов, связанных с текущим объектом БД */
 	@OneToMany(mappedBy = "dbObject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
+	@NotAudited
 	private List<DocObject> uiObjects = new ArrayList<>();
 
 	/** Все объекты (БД/UI): аналогичный объект (те же самые параметры) */
@@ -332,7 +339,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	 */
 	@Override
 	public String getCodeId() {
-		return this.type.getVal();
+		return this.name;
 	}
 	
 }

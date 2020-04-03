@@ -19,21 +19,33 @@ public abstract class JpaTreeAbstractService<E extends TreeEntity<E, U>, R exten
 		super(repository, clazz);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<E> findByParentIsNull() {
 		return this.repository.findByParentIsNull();
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<E> findByParentId(Long parentId, Sort sort) {
 		return this.repository.findByParentId(parentId, sort);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<E> findByIdIsNot(Long id) {
 		return this.repository.findByIdIsNot(id);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public E create() {
@@ -47,6 +59,9 @@ public abstract class JpaTreeAbstractService<E extends TreeEntity<E, U>, R exten
 		return entity;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public E create(Long parentId) {
@@ -62,6 +77,9 @@ public abstract class JpaTreeAbstractService<E extends TreeEntity<E, U>, R exten
 		return entity;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public Optional<E> save(Long parentId, E entity) {
@@ -70,6 +88,9 @@ public abstract class JpaTreeAbstractService<E extends TreeEntity<E, U>, R exten
 		return Optional.of(this.repository.save(entity));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public E createChild(Long parentId) {
@@ -85,12 +106,15 @@ public abstract class JpaTreeAbstractService<E extends TreeEntity<E, U>, R exten
 		return entity;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public Optional<E> saveChild(Long parentId, E entity) {
 		entity.setParent(this.repository.findById(parentId)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid software parent Id:" + parentId)));
-		return Optional.of(this.repository.save(entity));
+		return this.save(entity);
 	};
 
 }

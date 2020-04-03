@@ -11,10 +11,16 @@ public interface DocObjectService extends CommonJpaTreeService<DocObject, String
 
 	public List<DocObject> findDataBases();
 
-	public DocObject createDataBase();
+	public List<DocObject> findDataTables();
 
 	public List<Value> getDbTypes();
-	
+
 	public List<Server> getDbServers();
-	
+
+	public DocObject createDataBase();
+
+	public DocObject createSchema(Long parentId);
+
+	public DocObject createDataTable(Long parentId);
+
 }

@@ -53,7 +53,7 @@ public class DataBaseMvcController extends AbstractMvcController<DocObject, DocO
 	 * {@inheritDoc}
 	 */
 	@Override
-	public DocObject getNewEntity() {
+	public DocObject createEntity() {
 		return this.service.createDataBase();
 	}
 	

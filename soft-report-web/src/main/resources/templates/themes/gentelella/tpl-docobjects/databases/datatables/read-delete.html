@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-read-delete}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
+	</head>
+</th:block>
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<th:block
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/datatables}, master=${parent}, detailsHref='datatables')" />
+
+		<div th:if="${not #lists.isEmpty(dataTables)}" class="table-responsive">
+			<form th:action="@{~/datatables/delete}" th:method="POST"
+				id="form-delete-dataTables">
+				<table class="table table-striped jambo_table bulk_action">
+					<thead>
+						<tr class="headings">
+							<th><input type="checkbox" id="check-all" class="flat" /></th>
+							<th class="column-title" />
+							<th class="column-title" th:text="#{db.label}" />
+							<th class="column-title" th:text="#{schema.label}" />
+							<th class="column-title" th:text="#{name.label}" />
+							<th class="column-title" th:text="#{type.label}" />
+							<th class="column-title" th:text="#{businessobject.label}" />
+							<th class="column-title no-link last"><span class="nobr"
+								th:text="#{descr.label}"></span></th>
+							<th class="bulk-actions" colspan="5">
+								<button type="submit" class="btn btn-danger btn-xs">
+									<i class="fa fa-trash-o"></i>
+									<th:block th:text="' '+#{delete.label}" />
+								</button>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="dataTable, rowStat : ${dataTables}"
+							th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
+							<td class="a-center"><input id="table_records"
+								name="table_records" type="checkbox" th:value="${dataTable.id}"
+								class="flat"></td>
+							<td
+								th:replace="fragments/fragment-read-delete :: master-buttons(masterHref='datatables', master=${dataTable}, detailsHref='dtcolumns', details=${dataTable.children})" />
+							<td th:text="${dataTable.parent.type.code == 'DOT_DB'} ? ${dataTable.parent.name} : ${dataTable.parent.parent.name}"
+								class=" " />
+							<td th:text="${dataTable.parent.type.code == 'DOT_SCHEMA'} ? ${dataTable.parent.name} : ''"
+								class=" " />
+							<td th:text="${dataTable.name}" class=" " />
+							<td th:text="${dataTable.dtType.val}" class=" " />
+							<td th:text="${dataTable.businessObjectsList}"
+								class=" " />
+							<td th:text="${dataTable.descr}" class=" " />
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-read-delete :: body(scripts=~{this :: .custom-script})">
+		</th:block>
+	</th:block>
+</body>
+</html>

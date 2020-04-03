@@ -25,6 +25,9 @@ public class ObjHierarchyServiceImpl extends JpaTreeAbstractService<ObjHierarchy
 		super(repository, ObjHierarchy.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<ObjHierarchy> findAllСontainerObjects() {
 		// return
@@ -33,6 +36,9 @@ public class ObjHierarchyServiceImpl extends JpaTreeAbstractService<ObjHierarchy
 		return this.repository.findByType_Attr2(Value.AV_YES);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<ObjHierarchy> findAllParentСontainerObjects(ObjHierarchy childObj) {
 		// return
@@ -44,6 +50,9 @@ public class ObjHierarchyServiceImpl extends JpaTreeAbstractService<ObjHierarchy
 		return this.repository.findByType_Attr1AndType_Attr2(childObj.getParent().getArch().getCodeId(), Value.AV_YES);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getParentArchs(ObjHierarchy childObj) {
 		List<Value> parentArchs = new ArrayList<>();
@@ -53,6 +62,9 @@ public class ObjHierarchyServiceImpl extends JpaTreeAbstractService<ObjHierarchy
 		return parentArchs;
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ObjHierarchy createChild(Long parentId) {
 		ObjHierarchy objHierarchy = super.createChild(parentId);
@@ -60,21 +72,33 @@ public class ObjHierarchyServiceImpl extends JpaTreeAbstractService<ObjHierarchy
 		return objHierarchy;
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getArchs() {
 		return valuesSetService.getSoftwareArchs();
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getTypes() {
 		return valuesSetService.getDocObjTypes();
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getСontainerTypes() {
 		return valuesSetService.getDocObjСontainerTypes();
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getComponentTypes() {
 		return valuesSetService.getDocObjComponentTypes();

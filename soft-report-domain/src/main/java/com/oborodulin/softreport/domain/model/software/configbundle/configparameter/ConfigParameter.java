@@ -3,6 +3,9 @@ package com.oborodulin.softreport.domain.model.software.configbundle.configparam
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import org.hibernate.envers.Audited;
+
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.software.configbundle.ConfigBundle;
 
@@ -11,6 +14,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = ConfigParameter.TABLE_NAME)
+@Audited
 public class ConfigParameter extends DetailEntity<ConfigBundle, String> {
 	private static final long serialVersionUID = 7387119975449292007L;
 

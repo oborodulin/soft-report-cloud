@@ -11,6 +11,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.docobject.DocObject;
 import com.oborodulin.softreport.domain.model.software.Software;
@@ -21,6 +24,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @Table(name = BusinessObject.TABLE_NAME)
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class BusinessObject extends DetailEntity<Software, String> {
 	private static final long serialVersionUID = 5906310013237888996L;
 

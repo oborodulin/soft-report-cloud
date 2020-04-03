@@ -54,7 +54,7 @@ public interface CommonMvcController<E extends AuditableEntity<U>, U> {
 	 * 
 	 * @return новый доменный объект
 	 */
-	public E getNewEntity();
+	public E createEntity();
 
 	public String showList(Locale locale, Model model);
 

@@ -22,6 +22,9 @@ public class TaskServiceImpl
 		super(masterRepository, repository, Task.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Task> findByProjectId(Long id, Sort sort) {
 		return this.repository.findByMaster_Id(id, sort);

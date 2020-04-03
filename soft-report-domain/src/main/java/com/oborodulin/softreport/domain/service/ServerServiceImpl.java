@@ -25,16 +25,25 @@ public class ServerServiceImpl extends JpaAbstractService<Server, ServerReposito
 		super(repository, Server.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getTypes() {
 		return valuesSetService.getServersTypes();
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Value> getEnvTypes() {
 		return valuesSetService.getEnvTypes();
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Server> getDbServers() {
 		return repository.findByType(this.valueService.getServerDbType(), Sort.by("host"));
