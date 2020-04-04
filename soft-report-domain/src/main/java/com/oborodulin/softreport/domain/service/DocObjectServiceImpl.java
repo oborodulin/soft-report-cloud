@@ -1,6 +1,6 @@
 package com.oborodulin.softreport.domain.service;
 
-import com.oborodulin.softreport.domain.common.service.JpaTreeAbstractService;
+import com.oborodulin.softreport.domain.common.service.AbstractJpaTreeService;
 import com.oborodulin.softreport.domain.model.dic.server.Server;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import com.oborodulin.softreport.domain.model.docobject.DocObject;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("jpaDocObjectService")
 @Transactional
-public class DocObjectServiceImpl extends JpaTreeAbstractService<DocObject, DocObjectRepository, String>
+public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocObjectRepository, String>
 		implements DocObjectService {
 	@Autowired
 	private ValuesSetService valuesSetService;
@@ -96,7 +96,7 @@ public class DocObjectServiceImpl extends JpaTreeAbstractService<DocObject, DocO
 	 */
 	@Override
 	public DocObject createSchema(Long parentId) {
-		DocObject entity = this.createChild(parentId);
+		DocObject entity = this.create(parentId);
 		entity.setType(this.valueService.getDocObjectSchemaType());
 		entity.setPos(this.getNewPos(entity));
 		return entity;
@@ -107,7 +107,7 @@ public class DocObjectServiceImpl extends JpaTreeAbstractService<DocObject, DocO
 	 */
 	@Override
 	public DocObject createDataTable(Long parentId) {
-		DocObject entity = this.createChild(parentId);
+		DocObject entity = this.create(parentId);
 		entity.setType(this.valueService.getDocObjectDataTableType());
 		entity.setPos(this.getNewPos(entity));
 		return entity;

@@ -1,6 +1,6 @@
 package com.oborodulin.softreport.domain.service;
 
-import com.oborodulin.softreport.domain.common.service.JpaTreeAbstractService;
+import com.oborodulin.softreport.domain.common.service.AbstractJpaTreeService;
 import com.oborodulin.softreport.domain.model.dic.objhierarchy.ObjHierarchy;
 import com.oborodulin.softreport.domain.model.dic.objhierarchy.ObjHierarchyRepository;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("jpaObjHierarchyService")
 @Transactional
-public class ObjHierarchyServiceImpl extends JpaTreeAbstractService<ObjHierarchy, ObjHierarchyRepository, String>
+public class ObjHierarchyServiceImpl extends AbstractJpaTreeService<ObjHierarchy, ObjHierarchyRepository, String>
 		implements ObjHierarchyService {
 	@Autowired
 	private ValuesSetService valuesSetService;
@@ -66,8 +66,8 @@ public class ObjHierarchyServiceImpl extends JpaTreeAbstractService<ObjHierarchy
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ObjHierarchy createChild(Long parentId) {
-		ObjHierarchy objHierarchy = super.createChild(parentId);
+	public ObjHierarchy create(Long parentId) {
+		ObjHierarchy objHierarchy = super.create(parentId);
 		objHierarchy.setArch(objHierarchy.getParent().getArch());
 		return objHierarchy;
 	};

@@ -12,17 +12,15 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import org.hibernate.envers.Audited;
-import org.hibernate.envers.RelationTargetAuditMode;
-
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.common.entity.TreeEntity;
+import com.oborodulin.softreport.domain.model.project.document.Document;
 import com.oborodulin.softreport.domain.model.project.task.Task;
 import com.oborodulin.softreport.domain.model.software.Software;
-import com.oborodulin.softreport.domain.model.software.document.Document;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -40,9 +38,15 @@ public class Project extends TreeEntity<Project, String> {
 	private String descr;
 
 	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<Task> tasks = new ArrayList<>();
 
+	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
+	private List<Document> documents = new ArrayList<>();
+	
 	@ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
 	// @ManyToMany(targetEntity = Software.class)
 	@Size(min = 1, message = "Вы должны выбрать хотя бы одно ПО")
@@ -56,6 +60,16 @@ public class Project extends TreeEntity<Project, String> {
 	 */
 	public void addTask(Task task) {
 		this.tasks.add(task);
+	}
+
+	/**
+	 * Добавляет к проекту документ
+	 * 
+	 * @param document документ
+	 * @see com.oborodulin.softreport.domain.model.project.document.Document
+	 */
+	public void addDocument(Document document) {
+		this.documents.add(document);
 	}
 
 	/**

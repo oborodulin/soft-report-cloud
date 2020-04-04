@@ -1,6 +1,6 @@
 package com.oborodulin.softreport.domain.service;
 
-import com.oborodulin.softreport.domain.common.service.JpaDetailAbstractService;
+import com.oborodulin.softreport.domain.common.service.AbstractJpaDetailService;
 import com.oborodulin.softreport.domain.model.project.Project;
 import com.oborodulin.softreport.domain.model.project.ProjectRepository;
 import com.oborodulin.softreport.domain.model.project.task.Task;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("jpaTaskService")
 @Transactional
 public class TaskServiceImpl
-		extends JpaDetailAbstractService<Project, Task, ProjectRepository, TaskRepository, String>
+		extends AbstractJpaDetailService<Project, Task, ProjectRepository, TaskRepository, String>
 		implements TaskService {
 	@Autowired
 	public TaskServiceImpl(ProjectRepository masterRepository, TaskRepository repository) {

@@ -11,11 +11,11 @@ import com.oborodulin.softreport.domain.common.repository.CommonTreeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
-public abstract class JpaTreeAbstractService<E extends TreeEntity<E, U>, R extends CommonTreeRepository<E, U>, U>
-		extends JpaAbstractService<E, R, U> implements CommonJpaTreeService<E, U> {
+public abstract class AbstractJpaTreeService<E extends TreeEntity<E, U>, R extends CommonTreeRepository<E, U>, U>
+		extends AbstractJpaService<E, R, U> implements CommonJpaTreeService<E, U> {
 
 	@Autowired
-	public JpaTreeAbstractService(R repository, Class<E> clazz) {
+	public AbstractJpaTreeService(R repository, Class<E> clazz) {
 		super(repository, clazz);
 	}
 
@@ -67,35 +67,6 @@ public abstract class JpaTreeAbstractService<E extends TreeEntity<E, U>, R exten
 	public E create(Long parentId) {
 		E entity = null;
 		try {
-			entity = this.clazz.getDeclaredConstructor().newInstance();
-			entity.setParent(this.repository.findById(parentId)
-					.orElseThrow(() -> new IllegalArgumentException("Invalid master Id:" + parentId)));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return entity;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@Transactional
-	public Optional<E> save(Long parentId, E entity) {
-		entity.setParent(this.repository.findById(parentId)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + parentId)));
-		return Optional.of(this.repository.save(entity));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@Transactional
-	public E createChild(Long parentId) {
-		E entity = null;
-		try {
 			entity = this.create();
 			entity.setParent(this.repository.findById(parentId)
 					.orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + parentId)));
@@ -111,7 +82,7 @@ public abstract class JpaTreeAbstractService<E extends TreeEntity<E, U>, R exten
 	 */
 	@Override
 	@Transactional
-	public Optional<E> saveChild(Long parentId, E entity) {
+	public Optional<E> save(Long parentId, E entity) {
 		entity.setParent(this.repository.findById(parentId)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid software parent Id:" + parentId)));
 		return this.save(entity);

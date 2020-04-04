@@ -1,6 +1,6 @@
 package com.oborodulin.softreport.domain.service;
 
-import com.oborodulin.softreport.domain.common.service.JpaDetailAbstractService;
+import com.oborodulin.softreport.domain.common.service.AbstractJpaDetailService;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSetRepository;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("jpaValueService")
 @Transactional
 public class ValueServiceImpl
-		extends JpaDetailAbstractService<ValuesSet, Value, ValuesSetRepository, ValueRepository, String>
+		extends AbstractJpaDetailService<ValuesSet, Value, ValuesSetRepository, ValueRepository, String>
 		implements ValueService {
 	@Autowired
 	public ValueServiceImpl(ValuesSetRepository masterRepository, ValueRepository repository) {

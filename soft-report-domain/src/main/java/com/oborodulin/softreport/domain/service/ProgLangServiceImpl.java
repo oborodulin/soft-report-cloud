@@ -1,6 +1,6 @@
 package com.oborodulin.softreport.domain.service;
 
-import com.oborodulin.softreport.domain.common.service.JpaAbstractService;
+import com.oborodulin.softreport.domain.common.service.AbstractJpaService;
 import com.oborodulin.softreport.domain.model.dic.proglang.ProgLang;
 import com.oborodulin.softreport.domain.model.dic.proglang.ProgLangRepository;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("jpaProgLangService")
 @Transactional
-public class ProgLangServiceImpl extends JpaAbstractService<ProgLang, ProgLangRepository, String>
+public class ProgLangServiceImpl extends AbstractJpaService<ProgLang, ProgLangRepository, String>
 		implements ProgLangService {
 	@Autowired
 	private ValuesSetService valuesSetService;

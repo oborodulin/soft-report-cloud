@@ -1,6 +1,6 @@
 package com.oborodulin.softreport.domain.service;
 
-import com.oborodulin.softreport.domain.common.service.JpaDetailAbstractService;
+import com.oborodulin.softreport.domain.common.service.AbstractJpaDetailService;
 import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.model.software.SoftwareRepository;
 import com.oborodulin.softreport.domain.model.software.businessobject.BusinessObject;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("jpaBusinessObjectService")
 @Transactional
 public class BusinessObjectServiceImpl
-		extends JpaDetailAbstractService<Software, BusinessObject, SoftwareRepository, BusinessObjectRepository, String>
+		extends AbstractJpaDetailService<Software, BusinessObject, SoftwareRepository, BusinessObjectRepository, String>
 		implements BusinessObjectService {
 	@Autowired
 	public BusinessObjectServiceImpl(SoftwareRepository masterRepository, BusinessObjectRepository repository) {

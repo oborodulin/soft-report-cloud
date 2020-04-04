@@ -26,6 +26,6 @@ public interface CommonTreeMvcController<E extends TreeEntity<E, U>, U> extends 
 
 	public String showUpdateForm(Long id, Model model);
 
-	public String createChild(Long parentId, boolean isContinue, E entity, Errors errors, Model model);
+	public String create(Long parentId, boolean isContinue, E entity, Errors errors, Model model);
 
 }

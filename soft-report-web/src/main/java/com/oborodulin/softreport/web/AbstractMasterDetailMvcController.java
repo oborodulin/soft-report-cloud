@@ -24,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class AbstractMasterDetailMvcController<E extends AuditableEntity<U>, D extends DetailEntity<E, U>, M extends CommonJpaService<E, U>, S extends CommonJpaDetailService<E, D, U>, U>
 		extends AbstractMvcController<D, S, U> implements CommonMasterDetailMvcController<E, D, U> {
-	public static final String PV_MASTER_ID = "masterId";
 
 	public static final String URL_DTL_READ = "/{masterId}";
 	public static final String URL_DTL_CREATE = "/{masterId}/create";

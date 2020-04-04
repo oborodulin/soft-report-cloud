@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.model.software.document;
+package com.oborodulin.softreport.domain.model.project.document;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -20,10 +20,10 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.oborodulin.softreport.domain.common.entity.DetailEntity;
+import com.oborodulin.softreport.domain.common.entity.DetailTreeEntity;
 import com.oborodulin.softreport.domain.model.dic.doctype.DocType;
-import com.oborodulin.softreport.domain.model.software.Software;
-import com.oborodulin.softreport.domain.model.software.document.version.Version;
+import com.oborodulin.softreport.domain.model.project.Project;
+import com.oborodulin.softreport.domain.model.project.document.version.Version;
 import com.oborodulin.softreport.domain.model.term.Term;
 
 import lombok.Data;
@@ -34,7 +34,7 @@ import lombok.ToString;
 @Entity
 @Table(name = Document.TABLE_NAME)
 @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
-public class Document extends DetailEntity<Software, String> {
+public class Document extends DetailTreeEntity<Project, Document, String> {
 
 	private static final long serialVersionUID = -1155211422959024301L;
 

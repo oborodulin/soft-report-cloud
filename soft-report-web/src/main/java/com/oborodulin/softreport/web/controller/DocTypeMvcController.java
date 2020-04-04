@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oborodulin.softreport.domain.model.dic.doctype.DocType;
 import com.oborodulin.softreport.domain.service.DocTypeServiceImpl;
-import com.oborodulin.softreport.web.AbstractMvcController;
+import com.oborodulin.softreport.web.AbstractTreeMvcController;
 
 @Controller
 @RequestMapping(DocTypeMvcController.BASE_URL)
-public class DocTypeMvcController extends AbstractMvcController<DocType, DocTypeServiceImpl, String> {
+public class DocTypeMvcController extends AbstractTreeMvcController<DocType, DocTypeServiceImpl, String> {
 
 	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/doctypes";

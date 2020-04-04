@@ -11,7 +11,7 @@ import com.oborodulin.softreport.domain.common.repository.CommonRepository;
 import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class EmAbstractService<E extends AuditableEntity<U>, R extends CommonRepository<E, U>, U>
+public abstract class AbstractEmService<E extends AuditableEntity<U>, R extends CommonRepository<E, U>, U>
 		implements CommonEmService<E, U> {
 	@Autowired
 	private EntityManager em;

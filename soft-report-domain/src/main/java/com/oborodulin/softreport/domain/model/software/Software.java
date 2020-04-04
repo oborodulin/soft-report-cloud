@@ -26,7 +26,6 @@ import com.oborodulin.softreport.domain.model.dic.proglang.ProgLang;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import com.oborodulin.softreport.domain.model.project.Project;
 import com.oborodulin.softreport.domain.model.software.businessobject.BusinessObject;
-import com.oborodulin.softreport.domain.model.software.document.Document;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -85,11 +84,6 @@ public class Software extends TreeEntity<Software, String> {
 	@EqualsAndHashCode.Exclude
 	private Set<BusinessObject> businessObjects = new HashSet<BusinessObject>();
 
-	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@ToString.Exclude
-	@EqualsAndHashCode.Exclude
-	private List<Document> documents = new ArrayList<>();
-	
 	/** Список языков программирования */
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@ToString.Exclude
@@ -102,16 +96,6 @@ public class Software extends TreeEntity<Software, String> {
 	@Override
 	public String getCodeId() {
 		return this.code;
-	}
-	
-	/**
-	 * Добавляет к ПО документ
-	 * 
-	 * @param document документ
-	 * @see com.oborodulin.softreport.domain.model.software.document.Document
-	 */
-	public void addDocument(Document document) {
-		this.documents.add(document);
 	}
 	
 }

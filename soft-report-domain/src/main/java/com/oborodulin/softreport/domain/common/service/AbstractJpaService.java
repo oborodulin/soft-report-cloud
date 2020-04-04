@@ -10,18 +10,18 @@ import com.oborodulin.softreport.domain.common.repository.CommonRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class JpaAbstractService<E extends AuditableEntity<U>, R extends CommonRepository<E, U>, U>
+public abstract class AbstractJpaService<E extends AuditableEntity<U>, R extends CommonRepository<E, U>, U>
 		implements CommonJpaService<E, U> {
 	protected Class<E> clazz;
 	protected final R repository;
 
 	@Autowired
-	public JpaAbstractService(R repository) {
+	public AbstractJpaService(R repository) {
 		this.repository = repository;
 	}
 
 	@Autowired
-	public JpaAbstractService(R repository, Class<E> clazz) {
+	public AbstractJpaService(R repository, Class<E> clazz) {
 		this.repository = repository;
 		this.clazz = clazz;
 	}

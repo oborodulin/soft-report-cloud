@@ -17,9 +17,9 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
 
-import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
+import com.oborodulin.softreport.domain.common.entity.TreeEntity;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
-import com.oborodulin.softreport.domain.model.software.document.Document;
+import com.oborodulin.softreport.domain.model.project.document.Document;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -43,7 +43,7 @@ import lombok.ToString;
 @Entity
 @Table(name = DocType.TABLE_NAME)
 @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
-public class DocType extends AuditableEntity<String> {
+public class DocType extends TreeEntity<DocType, String> {
 	private static final long serialVersionUID = 8743856478405649207L;
 
 	/** Наименование таблицы данных доменного объекта (сущности) */

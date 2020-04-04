@@ -19,8 +19,4 @@ public interface CommonJpaTreeService<E extends TreeEntity<E, U>, U> extends Com
 
 	public Optional<E> save(Long parentId, E entity);
 
-	public E createChild(Long parentId);
-
-	public Optional<E> saveChild(Long parentId, E entity);
-
 }

@@ -17,7 +17,8 @@ import lombok.ToString;
 
 @Data
 @MappedSuperclass
-public abstract class TreeEntity<E extends AuditableEntity<U>, U> extends AuditableEntity<U> implements Serializable {
+public abstract class TreeEntity<E extends TreeEntity<E, U>, U> extends AuditableEntity<U>
+		implements Treelike<E, U>, Serializable {
 
 	private static final long serialVersionUID = 1765221099472416762L;
 
@@ -31,12 +32,11 @@ public abstract class TreeEntity<E extends AuditableEntity<U>, U> extends Audita
 	private List<E> children = new ArrayList<>();
 
 	/**
-	 * Добавляет подчинённую сущность к текущей
-	 * 
-	 * @param child подчинённая сущность
+	 * {@inheritDoc}
 	 */
-	public void addСhild(TreeEntity <E, U> child) {
-//		this.children.add(child.setParent(this));
+	@Override
+	public void addСhild(E child) {
+		this.children.add(child);
 	}
-	
+
 }

@@ -122,7 +122,7 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	public String showCreateChildForm(@PathVariable(PV_PARENT_ID) Long parentId, Model model) {
 		model.mergeAttributes(this.getCreateChildModelAttributes(parentId));
 		model.mergeAttributes(this.getModelAttributes(RM_CREATE_CHILD));
-		model.addAttribute(this.objName, this.service.createChild(parentId));
+		model.addAttribute(this.objName, this.service.create(parentId));
 		log.info(this.objName + " [" + URL_CREATE_CHILD + "]: parentId = " + parentId);
 		return this.getViewNameCreateUpdate();
 	}
@@ -145,12 +145,12 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	 */
 	@Override
 	@PostMapping(URL_CREATE_CHILD_CONTINUE)
-	public String createChild(@PathVariable(PV_PARENT_ID) Long parentId,
+	public String create(@PathVariable(PV_PARENT_ID) Long parentId,
 			@PathVariable(PV_IS_CONTINUE) boolean isContinue, @Valid E entity, Errors errors, Model model) {
 		if (errors.hasErrors()) {
 			return this.getViewNameCreateUpdate();
 		}
-		this.service.saveChild(parentId, entity);
+		this.service.save(parentId, entity);
 		if (isContinue) {
 			log.info(this.objName + " [" + URL_CREATE_CHILD_CONTINUE + "]: entity = " + entity);
 			return this.getRedirectToCreateChild(parentId);

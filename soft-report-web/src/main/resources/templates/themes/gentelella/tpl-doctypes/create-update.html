@@ -14,9 +14,21 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${docType.id == null} ? @{~/doctypes/create/{isContinue}(isContinue='false')} : @{~/doctypes/update/{id}(id=${docType.id})}"
+			th:action="${docType.id == null} ? (${docType.parent == null} ? @{~/doctypes/create/{isContinue}(isContinue='false')}:@{~/doctypes/{parentId}/create/{isContinue}(parentId=${docType.parent.id}, isContinue='false')}) : @{~/doctypes/update/{id}(id=${docType.id})}"
 			th:object="${docType}" th:method="POST" id="form-create-docType"
 			data-parsley-validate class="form-horizontal form-label-left">
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="parent" th:text="#{doctypes.parent.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<select th:field="*{parent}" class="select2_group form-control">
+						<option value="" th:text="#{doctype.opt.empty.label}" />
+						<option th:each="opt : ${docTypes}" th:value="${opt.id}"
+							th:text="${opt.codeId}"
+							th:selected="${docType.parent != null} ? ${opt.id == docType.parent.id}: 'false'"></option>
+					</select>
+				</div>
+			</div>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
 					for="categ" th:text="#{categ.label}"><span class="required">*</span></label>
@@ -76,14 +88,13 @@
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
 			<th:block
-				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/doctypes}, object=${docType}, formId='form-create-docType')" />
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/doctypes/tree}, object=${docType}, formId='form-create-docType')" />
 		</form>
 	</div>
 	<!-- /page content -->
 	<th:block th:fragment="body-scripts">
 		<th:block
-			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})">
-		</th:block>
+			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})" />
 	</th:block>
 </body>
 </html>

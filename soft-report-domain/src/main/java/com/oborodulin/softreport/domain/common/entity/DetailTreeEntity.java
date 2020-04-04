@@ -10,10 +10,10 @@ import lombok.ToString;
 
 @Data
 @MappedSuperclass
-public abstract class DetailEntity<E extends AuditableEntity<U>, U> extends AuditableEntity<U>
-		implements Detailable<E, U>, Serializable {
+public abstract class DetailTreeEntity<E extends AuditableEntity<U>, T extends TreeEntity<T, U>, U>
+		extends TreeEntity<T, U> implements Detailable<E, U>, Treelike<T, U>, Serializable {
 
-	private static final long serialVersionUID = 912543733349823018L;
+	private static final long serialVersionUID = 630272255210589996L;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "master_id", nullable = false)

@@ -25,8 +25,8 @@ import com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype.UiObject
 import com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype.uieventtype.UiEventType;
 import com.oborodulin.softreport.domain.model.dic.server.Server;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
+import com.oborodulin.softreport.domain.model.project.document.version.Version;
 import com.oborodulin.softreport.domain.model.software.businessobject.BusinessObject;
-import com.oborodulin.softreport.domain.model.software.document.version.Version;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,4 +1,4 @@
-package com.oborodulin.softreport.domain.model.software.document.version;
+package com.oborodulin.softreport.domain.model.project.document.version;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import org.hibernate.envers.RelationTargetAuditMode;
 
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.docobject.DocObject;
-import com.oborodulin.softreport.domain.model.software.document.Document;
+import com.oborodulin.softreport.domain.model.project.document.Document;
 
 import lombok.Data;
 

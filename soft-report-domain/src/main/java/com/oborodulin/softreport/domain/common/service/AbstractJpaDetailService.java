@@ -12,13 +12,13 @@ import com.oborodulin.softreport.domain.common.repository.CommonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
-public abstract class JpaDetailAbstractService<E extends AuditableEntity<U>, D extends DetailEntity<E, U>, M extends CommonRepository<E, U>, R extends CommonDetailRepository<E, D, U>, U>
-		extends JpaAbstractService<D, R, U> implements CommonJpaDetailService<E, D, U> {
+public abstract class AbstractJpaDetailService<E extends AuditableEntity<U>, D extends DetailEntity<E, U>, M extends CommonRepository<E, U>, R extends CommonDetailRepository<E, D, U>, U>
+		extends AbstractJpaService<D, R, U> implements CommonJpaDetailService<E, D, U> {
 	protected final M masterRepository;
 	private Class<D> clazz;
 
 	@Autowired
-	public JpaDetailAbstractService(M masterRepository, R repository, Class<D> clazz) {
+	public AbstractJpaDetailService(M masterRepository, R repository, Class<D> clazz) {
 		super(repository);
 		this.masterRepository = masterRepository;
 		this.clazz = clazz;

@@ -1,6 +1,6 @@
 package com.oborodulin.softreport.domain.service;
 
-import com.oborodulin.softreport.domain.common.service.JpaTreeAbstractService;
+import com.oborodulin.softreport.domain.common.service.AbstractJpaTreeService;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.model.software.SoftwareRepository;
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("jpaSoftwareService")
 @Transactional
-public class SoftwareServiceImpl extends JpaTreeAbstractService<Software, SoftwareRepository, String>
+public class SoftwareServiceImpl extends AbstractJpaTreeService<Software, SoftwareRepository, String>
 		implements SoftwareService {
 	@Autowired
 	private ValuesSetService valuesSetService;
@@ -35,8 +35,8 @@ public class SoftwareServiceImpl extends JpaTreeAbstractService<Software, Softwa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Software createChild(Long parentId) {
-		Software software = super.createChild(parentId);
+	public Software create(Long parentId) {
+		Software software = super.create(parentId);
 		software.setType(software.getParent().getType());
 		return software;
 	};

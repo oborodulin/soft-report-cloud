@@ -6,64 +6,97 @@
 <th:block th:fragment="header">
 	<head
 		th:replace="fragments/fragment-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
+<!-- query.treetable -->
+<link class="custom-link"
+	th:href="@{/webjars/jquery-treetable/css/jquery.treetable.css}"
+	rel="stylesheet">
+<link class="custom-link"
+	href="/css/jquery-treetable/jquery.treetable.theme.default.css"
+	rel="stylesheet">
 	</head>
 </th:block>
 <body class="nav-md">
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
-		<a th:href="@{~/doctypes/create}" class="btn btn-primary btn-xs"><i
-			class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a>
+		<th:block
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/doctypes/tree}, master=${master}, detailsHref='doctypes')" />
 
 		<div th:if="${not #lists.isEmpty(docTypes)}" class="table-responsive">
 			<form th:action="@{~/doctypes/delete}" th:method="POST"
 				id="form-delete-docTypes">
-				<table class="table table-striped jambo_table bulk_action">
+				<table id="docTypes-tree-table"
+					class="table table-striped jambo_table bulk_action">
 					<thead>
 						<tr class="headings">
-							<th><input type="checkbox" id="check-all" class="flat">
-							</th>
-							<th class="column-title"></th>
-							<th class="column-title" th:text="#{categ.label}" />
-							<th class="column-title" th:text="#{type.label}" />
-							<th class="column-title" th:text="#{template.label}" />
-							<th class="column-title" th:text="#{iscurrentversion.label}" />
-							<th class="column-title no-link last"><span class="nobr"
-								th:text="#{descr.label}"></span></th>
-							<th class="bulk-actions" colspan="6">
-								<button type="submit" class="btn btn-danger btn-xs">
+							<th style="width: 5%"><input type="checkbox" id="check-all"
+								class="flat"></th>
+							<th class="column-title" style="width: 10%"></th>
+							<th class="column-title" th:text="#{categ.label}"
+								style="width: 15%" />
+							<th class="column-title" th:text="#{type.label}"
+								style="width: 15%" />
+							<th class="column-title" th:text="#{template.label}"
+								style="width: 10%" />
+							<th class="column-title" th:text="#{iscurrentversion.label}"
+								style="width: 10%" />
+							<th class="column-title no-link last" style="width: 35%"><span
+								class="nobr" th:text="#{descr.label}"></span></th>
+							<th class="bulk-actions" colspan="6"><button type="submit"
+									class="btn btn-danger btn-xs">
 									<i class="fa fa-trash-o"></i>
 									<th:block th:text="' '+#{delete.label}" />
-								</button>
-							</th>
+								</button> <a th:href="@{~/doctypes/[id]/create}"
+								class="btn btn-secondary btn-xs"
+								onclick="bulkActionChecked(this, event, 'table_records');"><i
+									class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a></th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr th:each="docType, rowStat : ${docTypes}"
-							th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
-							<td class="a-center"><input id="table_records"
-								name="table_records" type="checkbox" th:value="${docType.id}"
-								class="flat"></td>
-							<td
-								th:replace="fragments/fragment-read-delete :: grid-row-buttons(href='doctypes', object=${docType})" />
-							<td th:text="${docType.categ.val}" class=" " />
-							<td th:text="${docType.type.val}" class=" " />
-							<td th:text="${docType.template}" class=" " />
-							<td class="a-center"><input type="checkbox"
-								id="isCurrentVersion" name="isCurrentVersion"
-								disabled="disabled" th:checked="${docType.isCurrentVersion}"
-								class="flat" /></td>
-							<td th:text="${docType.descr}" class=" " />
-						</tr>
+					<tbody th:with="rowNum=0">
+						<th:block th:replace="this :: outputTree(${docTypes}, ${rowNum})" />
 					</tbody>
 				</table>
 			</form>
 		</div>
 	</div>
+	<th:block th:fragment="outputTree(docTypes, rowNum)">
+		<th:block th:with="rowNum=${rowNum+1}">
+			<th:block th:each="docType, stat : ${docTypes}">
+				<tr th:data-tt-id="${docType.id}"
+					th:attrappend="data-tt-parent-id=${docType.parent != null} ? ${docType.parent.id}"
+					th:class="${rowNum % 2 != 0} ? 'odd pointer' : 'even pointer'">
+					<td class="a-center "><input name="table_records"
+						type="checkbox" th:value="${docType.id}" class="flat"></td>
+					<td
+						th:replace="fragments/fragment-read-delete :: grid-row-buttons(href='doctypes', object=${docType})" />
+					<td th:text="${docType.categ.val}" class=" " />
+					<td th:text="${docType.type.val}" class=" " />
+					<td th:text="${docType.template}" class=" " />
+					<td class="a-center"><input type="checkbox"
+						id="isCurrentVersion" name="isCurrentVersion" disabled="disabled"
+						th:checked="${docType.isCurrentVersion}" class="flat" /></td>
+					<td th:text="${docType.descr}" class=" " />
+				</tr>
+				<th:block th:if="${!#lists.isEmpty(docType.children)}"
+					th:replace="this :: outputTree(${docType.children}, ${rowNum})" />
+			</th:block>
+		</th:block>
+	</th:block>
 	<!-- /page content -->
 	<th:block th:fragment="body-scripts">
 		<th:block
 			th:replace="fragments/fragment-read-delete :: body(scripts=~{this :: .custom-script})">
 		</th:block>
+		<script class="custom-script"
+			th:src="@{/webjars/jquery-treetable/jquery.treetable.js}"></script>
+		<!-- Initialize jquery.treetable -->
+		<script class="custom-script" type="text/javascript">
+			$("#docTypes-tree-table").treetable({
+				expandable : true,
+				column : 3,
+				initialState : "expanded",
+				clickableNodeNames : true
+			});
+		</script>
 	</th:block>
 </body>
 </html>

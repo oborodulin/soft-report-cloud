@@ -14,7 +14,7 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
 
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
-import com.oborodulin.softreport.domain.model.software.document.Document;
+import com.oborodulin.softreport.domain.model.project.document.Document;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
