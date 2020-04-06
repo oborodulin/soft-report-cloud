@@ -33,11 +33,12 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Класс описывает объект базы данных (БД) и объект пользовательского интерфейса (UI).
+ * Класс описывает объект базы данных (БД) и объект пользовательского интерфейса
+ * (UI).
  * 
- * Позволяет работать со всеми возможными объектами БД/UI: схемы, таблицы (поля),
- * представления, процедуры, формы, панели, поля,
- * таблицы, колонки, кнопки и т.д.
+ * Позволяет работать со всеми возможными объектами БД/UI: схемы, таблицы
+ * (поля), представления, процедуры, формы, панели, поля, таблицы, колонки,
+ * кнопки и т.д.
  * 
  * @author Oleg Borodulin
  *
@@ -56,7 +57,10 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@NotNull
 	private Integer pos = 0;
 
-	/** Наименование объекта БД/Значение поля БД (колонка наименование)/Метка UI объекта */
+	/**
+	 * Наименование объекта БД/Значение поля БД (колонка наименование)/Метка UI
+	 * объекта
+	 */
 	@NotBlank
 	@Column(length = 1000)
 	private String name;
@@ -110,14 +114,16 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@NotNull
 	private Boolean isUniqueKey = false;
 
-	/** Поле ТД (NULLable)/Поле формы/колонка грида: Признак обязательного значения */
+	/**
+	 * Поле ТД (NULLable)/Поле формы/колонка грида: Признак обязательного значения
+	 */
 	@NotNull
 	private Boolean isRequired = false;
 
 	/** Поле ТД: Признак поля логического (мягкого) удаления */
 	@NotNull
 	private Boolean isLogicDelete = false;
-	
+
 	/**
 	 * Признак предустанавливаемого объекта (объект, который обязательно создаётся
 	 * под своего главного объекта при его создании, например, поля ТД: первичный
@@ -126,7 +132,10 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@NotNull
 	private Boolean isPreset = false;
 
-	/** Поле ТД: Тип служебного поля (исторические/версия/логическое (мягкое) удаление) */
+	/**
+	 * Поле ТД: Тип служебного поля (исторические/версия/логическое (мягкое)
+	 * удаление)
+	 */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "column_type_code")
 	@ToString.Exclude
@@ -140,7 +149,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@Column(length = 2000)
 	private String sqlQuery;
 
-	/** Поле ТД: Объект БД ссылки внешнего ключа (ТД)*/
+	/** Поле ТД: Объект БД ссылки внешнего ключа (ТД) */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "foreign_key_id")
 	@ToString.Exclude
@@ -179,7 +188,10 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@ToString.Exclude
 	private UiObjectType uiObjectType;
 
-	/** Форма/поле(список)/колонка: Объект БД (если поле ТД для списка, то из этого поля берутся значения для списка при их наличие)*/
+	/**
+	 * Форма/поле(список)/колонка: Объект БД (если поле ТД для списка, то из этого
+	 * поля берутся значения для списка при их наличие)
+	 */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "db_objects_id")
 	@ToString.Exclude
@@ -196,15 +208,18 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@JoinColumn(name = "similar_objects_id")
 	@ToString.Exclude
 	private DocObject similarObject;
-	
+
 	/** UI объекты: Признак активности элемента по умолчнаию */
 	@NotNull
 	private Boolean isDefaultActive = true;
 
-	/** Форма: Признак немедленной валидации (после ввода значения в каждое поле, или после отправки данных формы на сервер) */
+	/**
+	 * Форма: Признак немедленной валидации (после ввода значения в каждое поле, или
+	 * после отправки данных формы на сервер)
+	 */
 	@NotNull
 	private Boolean isImmediateValidation = false;
-	
+
 	/** Поле/колонка: Формат данных, основанный на типе объекта БД */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "data_formats_id")
@@ -235,7 +250,10 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@NotNull
 	private Boolean isDisplayAttribute = false;
 
-	/** Поле-чекбокс/поле радио-кнопка: Значение по умолчанию "Отмечено"/"Не отмечено" */
+	/**
+	 * Поле-чекбокс/поле радио-кнопка: Значение по умолчанию "Отмечено"/"Не
+	 * отмечено"
+	 */
 	@NotNull
 	private Boolean isDefaultChecked = false;
 
@@ -262,7 +280,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@NotNull
 	private Boolean isDefaultSort = false;
 
-	/** Колонка: Направление сортировки по умолчанию*/
+	/** Колонка: Направление сортировки по умолчанию */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "sort_direction_code")
 	@ToString.Exclude
@@ -298,12 +316,14 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@Column(length = 1000)
 	private String ruleCondValid;
 
-	/** Бизнес-правило/Событие (объект, над которым выполняется действие): UI объект */
+	/**
+	 * Бизнес-правило/Событие (объект, над которым выполняется действие): UI объект
+	 */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ui_objects_id")
 	@ToString.Exclude
 	private DocObject uiObject;
-	
+
 	/** Бизнес-правило: текст ошибки */
 	@Column(length = 500)
 	private String ruleErrMessage;
@@ -321,14 +341,17 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@JoinColumn(name = "ui_event_types_id")
 	@ToString.Exclude
 	private UiEventType uiEventType;
-	
+
 	/** Событие: действие */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "event_action_code")
 	@ToString.Exclude
 	private Value eventAction;
 
-	/** Событие: UI объект (значение поля ТД, списка и пр.), который присваивается объекту, над которым выполняется действие*/
+	/**
+	 * Событие: UI объект (значение поля ТД, списка и пр.), который присваивается
+	 * объекту, над которым выполняется действие
+	 */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "event_val_doc_objects_id")
 	@ToString.Exclude
@@ -341,5 +364,22 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	public String getCodeId() {
 		return this.name;
 	}
-	
+
+	/**
+	 * Возвращает строку-перечень наименованний бизнес-объектов через запятую
+	 * 
+	 * @return строка-перечень наименованний бизнес-объектов
+	 */
+	public String getBusinessObjectsNames() {
+		StringBuilder sbString = new StringBuilder("");
+		for (BusinessObject businessObject : this.businessObjects) {
+			sbString.append(businessObject.getCodeId()).append(", ");
+		}
+		String businessObjectsNames = sbString.toString();
+		if (businessObjectsNames.length() > 0) {
+			businessObjectsNames = businessObjectsNames.substring(0, businessObjectsNames.length() - 2);
+		}
+		return businessObjectsNames;
+	}
+
 }

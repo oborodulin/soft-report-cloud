@@ -19,7 +19,7 @@
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
 		<th:block
-			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/doctypes/tree}, master=${master}, detailsHref='doctypes')" />
+			th:replace="fragments/fragment-read-delete :: panel-buttons(detailsHref='doctypes')" />
 
 		<div th:if="${not #lists.isEmpty(docTypes)}" class="table-responsive">
 			<form th:action="@{~/doctypes/delete}" th:method="POST"
@@ -41,14 +41,9 @@
 								style="width: 10%" />
 							<th class="column-title no-link last" style="width: 35%"><span
 								class="nobr" th:text="#{descr.label}"></span></th>
-							<th class="bulk-actions" colspan="6"><button type="submit"
-									class="btn btn-danger btn-xs">
-									<i class="fa fa-trash-o"></i>
-									<th:block th:text="' '+#{delete.label}" />
-								</button> <a th:href="@{~/doctypes/[id]/create}"
-								class="btn btn-secondary btn-xs"
-								onclick="bulkActionChecked(this, event, 'table_records');"><i
-									class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a></th>
+							<th class="bulk-actions" colspan="6"><th:block
+									th:replace="fragments/fragment-read-delete :: grid-tree-buttons(baseHref='doctypes')" />
+							</th>
 						</tr>
 					</thead>
 					<tbody th:with="rowNum=0">

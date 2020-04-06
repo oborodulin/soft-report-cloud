@@ -11,8 +11,8 @@
 <body class="nav-md">
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
-		<a th:href="@{~/proglangs/create}" class="btn btn-primary btn-xs"><i
-			class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a>
+		<th:block
+			th:replace="fragments/fragment-read-delete :: panel-buttons(detailsHref='proglangs')" />
 
 		<div th:if="${not #lists.isEmpty(progLangs)}" class="table-responsive">
 			<form th:action="@{~/proglangs/delete}" th:method="POST"
@@ -27,11 +27,9 @@
 							<th class="column-title" th:text="#{arch.label}" />
 							<th class="column-title no-link last"><span class="nobr"
 								th:text="#{software.label}"></span></th>
-							<th class="bulk-actions" colspan="4">
-								<button type="submit" class="btn btn-danger btn-xs">
-									<i class="fa fa-trash-o"></i>
-									<th:block th:text="' '+#{delete.label}" />
-								</button> <a th:href="@{~/datatypes/[id]}"
+							<th class="bulk-actions" colspan="4"><th:block
+									th:replace="fragments/fragment-read-delete :: grid-buttons" />
+								<a th:href="@{~/datatypes/[id]}"
 								class="btn btn-secondary btn-xs"
 								onclick="bulkActionChecked(this, event, 'table_records');"><i
 									class="fa fa-arrow-right"></i> <th:block
@@ -40,8 +38,7 @@
 								class="btn btn-secondary btn-xs"
 								onclick="bulkActionChecked(this, event, 'table_records');"><i
 									class="fa fa-arrow-right"></i> <th:block
-										th:text="' '+#{touiobjecttypes.label}" /></a>
-							</th>
+										th:text="' '+#{touiobjecttypes.label}" /></a></th>
 						</tr>
 					</thead>
 					<tbody>

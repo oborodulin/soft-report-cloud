@@ -123,6 +123,18 @@
 		<th:block th:replace="${scripts}" />
 	</th:block>
 </th:block>
+<!-- Кнопки грида, в т.ч. массовых операций, например "Удалить" -->
+<th:block th:fragment="grid-tree-buttons(baseHref)">
+	<button th:fragment="grid-buttons" type="submit"
+		class="btn btn-danger btn-xs">
+		<i class="fa fa-trash-o"></i>
+		<th:block th:text="' '+#{delete.label}" />
+	</button>
+	<a th:href="@{~/{href}/[id]/create(href=${baseHref})}"
+		class="btn btn-secondary btn-xs"
+		onclick="bulkActionChecked(this, event, 'table_records');"><i
+		class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a>
+</th:block>
 
 <table>
 	<tbody>
@@ -193,9 +205,11 @@
 <th:block
 	th:fragment="panel-master-buttons(masterHref, master, detailsHref)">
 	<th:block th:if="${master == null}">
-		<a th:href="@{~/{href}/create(href=${detailsHref})}"
-			class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> <th:block
-				th:text="' '+#{add.label}" /></a>
+		<th:block th:fragment="panel-buttons(detailsHref)">
+			<a th:href="@{~/{href}/create(href=${detailsHref})}"
+				class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> <th:block
+					th:text="' '+#{add.label}" /></a>
+		</th:block>
 	</th:block>
 	<th:block th:unless="${master == null}">
 		<a th:href="${masterHref}" class="btn btn-secondary btn-xs"><i

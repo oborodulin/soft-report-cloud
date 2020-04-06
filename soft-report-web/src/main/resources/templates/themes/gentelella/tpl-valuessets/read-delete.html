@@ -12,7 +12,7 @@
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
 		<th:block
-			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/valuessets}, master=${master}, detailsHref='valuessets')" />
+			th:replace="fragments/fragment-read-delete :: panel-buttons(detailsHref='valuessets')" />
 
 		<div th:if="${not #lists.isEmpty(valuesSets)}"
 			class="table-responsive">
@@ -28,11 +28,8 @@
 							<th class="column-title" th:text="#{isupdatable.label}" />
 							<th class="column-title no-link last"><span class="nobr"
 								th:text="#{descr.label}"></span></th>
-							<th class="bulk-actions" colspan="5">
-								<button type="submit" class="btn btn-danger btn-xs">
-									<i class="fa fa-trash-o"></i>
-									<th:block th:text="' '+#{delete.label}" />
-								</button>
+							<th class="bulk-actions" colspan="5"><th:block
+									th:replace="fragments/fragment-read-delete :: grid-buttons" />
 							</th>
 						</tr>
 					</thead>

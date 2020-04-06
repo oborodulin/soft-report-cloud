@@ -12,7 +12,7 @@
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
 		<th:block
-			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/datatables}, master=${parent}, detailsHref='datatables')" />
+			th:replace="fragments/fragment-read-delete :: panel-buttons(detailsHref='datatables')" />
 
 		<div th:if="${not #lists.isEmpty(dataTables)}" class="table-responsive">
 			<form th:action="@{~/datatables/delete}" th:method="POST"
@@ -51,7 +51,7 @@
 								class=" " />
 							<td th:text="${dataTable.name}" class=" " />
 							<td th:text="${dataTable.dtType.val}" class=" " />
-							<td th:text="${dataTable.businessObjectsList}"
+							<td th:text="${dataTable.businessObjectsNames}"
 								class=" " />
 							<td th:text="${dataTable.descr}" class=" " />
 						</tr>

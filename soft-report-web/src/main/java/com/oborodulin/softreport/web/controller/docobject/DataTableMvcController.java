@@ -1,6 +1,8 @@
 package com.oborodulin.softreport.web.controller.docobject;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,15 @@ public class DataTableMvcController extends AbstractTreeChildrenMvcController<Do
 	@Autowired
 	public DataTableMvcController(DocObjectServiceImpl masterService, DocObjectServiceImpl service) {
 		super(service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
+		Map<String, Object> ma = new HashMap<>();
+		ma.put("dataBases", this.service.findDataBases());
+		ma.put("schemas", this.service.getSchemas());
+		ma.put("dtTypes", this.service.getDtTypes());
+		ma.put("softwares", this.service.getSoftwares());
+		ma.put("businessObjects", this.service.getBusinessObjects());
+		
+		this.setModelAttributes(RM_CREATE, ma);
+		this.setModelAttributes(RM_UPDATE, ma);
 	}
 
 	/**

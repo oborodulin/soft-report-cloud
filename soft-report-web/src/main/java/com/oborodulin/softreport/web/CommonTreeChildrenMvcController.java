@@ -27,6 +27,16 @@ public interface CommonTreeChildrenMvcController<T extends TreeEntity<T, U>, U> 
 	public String getRedirectToCreate(Long parentId);
 
 	/**
+	 * Возвращает список дочерних объектов по заданному идентификатору родительского
+	 * объекта.
+	 * 
+	 * @param parentId идентификатор родительского объекта
+	 * @return список дочерних объектов
+	 * @see 
+	 */
+	public List<T> getShowListChildren(Long parentId);
+
+	/**
 	 * Создаёт и возвращает дочерний объект.
 	 * 
 	 * @param parentId идентификатор родительского объекта

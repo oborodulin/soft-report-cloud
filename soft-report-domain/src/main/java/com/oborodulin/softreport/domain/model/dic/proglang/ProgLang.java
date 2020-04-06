@@ -78,11 +78,11 @@ public class ProgLang extends AuditableEntity<String> {
 	public String getSoftwareCodes() {
 		StringBuilder sbString = new StringBuilder("");
 		for (Software software : this.softwares) {
-			sbString.append(software.getCodeId()).append(",");
+			sbString.append(software.getCodeId()).append(", ");
 		}
 		String softwareCodes = sbString.toString();
 		if (softwareCodes.length() > 0) {
-			softwareCodes = softwareCodes.substring(0, softwareCodes.length() - 1);
+			softwareCodes = softwareCodes.substring(0, softwareCodes.length() - 2);
 		}
 		return softwareCodes;
 	}

@@ -5,6 +5,8 @@ import com.oborodulin.softreport.domain.model.dic.server.Server;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import com.oborodulin.softreport.domain.model.docobject.DocObject;
 import com.oborodulin.softreport.domain.model.docobject.DocObjectRepository;
+import com.oborodulin.softreport.domain.model.software.Software;
+import com.oborodulin.softreport.domain.model.software.businessobject.BusinessObject;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +27,11 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	private ValueService valueService;
 	@Autowired
 	private ServerService serverService;
+	@Autowired
+	private SoftwareService softwareService;
+
+	@Autowired
+	private BusinessObjectService businessObjectService;
 
 	@Autowired
 	public DocObjectServiceImpl(DocObjectRepository repository) {
@@ -43,10 +50,19 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<DocObject> findSchemasByDataBaseId(Long dataBaseId){
+		return this.repository.findByParentIdAndType(dataBaseId, this.valueService.getDocObjectSchemaType(), Sort.by("name"));
+	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<DocObject> findDataTables() {
 		return this.repository.findByType(this.valueService.getDocObjectDataTableType(), Sort.by("name"));
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -58,8 +74,33 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<Server> getDbServers() {
 		return this.serverService.getDbServers();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Value> getDtTypes() {
+		return this.valuesSetService.getDtTypes();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Software> getSoftwares() {
+		return this.softwareService.findAll();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<BusinessObject> getBusinessObjects() {
+		return this.businessObjectService.findAll();
 	}
 
 	/**

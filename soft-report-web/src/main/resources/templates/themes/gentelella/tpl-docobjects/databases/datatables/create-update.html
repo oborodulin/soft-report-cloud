@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout-create-update}"
-	th:with="titleCurrent=${dataBase.id == null} ? ${titleCreate} : ${titleUpdate}">
+	th:with="titleCurrent=${dataTable.id == null} ? ${titleCreate} : ${titleUpdate}">
 <th:block th:fragment="header">
 	<head
 		th:replace="fragments/fragment-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
@@ -14,8 +14,8 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${dataBase.id == null} ? @{~/databases/create/{isContinue}(isContinue='false')} : @{~/databases/update/{id}(id=${dataBase.id})}"
-			th:object="${dataBase}" th:method="POST" id="form-create-dataBase"
+			th:action="${dataTable.id == null} ? @{~/datatables/create/{isContinue}(isContinue='false')} : @{~/datatables/update/{id}(id=${dataTable.id})}"
+			th:object="${dataTable}" th:method="POST" id="form-create-dataTable"
 			data-parsley-validate class="form-horizontal form-label-left">
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
@@ -38,7 +38,7 @@
 						<option value="" th:text="#{dbtype.opt.empty.label}" />
 						<option th:each="opt : ${dbTypes}" th:value="${opt.id}"
 							th:text="${opt.val}"
-							th:selected="${dataBase.dbType != null} ? ${opt.id == dataBase.dbType.id}: 'false'"></option>
+							th:selected="${dataTable.dbType != null} ? ${opt.id == dataTable.dbType.id}: 'false'"></option>
 					</select>
 				</div>
 			</div>
@@ -50,7 +50,7 @@
 						<option value="" th:text="#{server.opt.empty.label}" />
 						<option th:each="opt : ${servers}" th:value="${opt.id}"
 							th:text="${opt.host}"
-							th:selected="${dataBase.server != null} ? ${opt.id == dataBase.server.id}: 'false'"></option>
+							th:selected="${dataTable.server != null} ? ${opt.id == dataTable.server.id}: 'false'"></option>
 					</select>
 				</div>
 			</div>
@@ -67,7 +67,7 @@
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
 			<th:block
-				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/databases}, object=${dataBase}, formId='form-create-dataBase')" />
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/datatables}, object=${dataTable}, formId='form-create-dataTable')" />
 		</form>
 	</div>
 	<!-- /page content -->

@@ -11,12 +11,8 @@
 <body class="nav-md">
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
-		<a th:href="@{~/datatypes}" class="btn btn-secondary btn-xs"><i
-			class="fa fa-arrow-left"></i> <th:block
-				th:text="' '+#{backto.label}+' '+${master.name}" /></a> <a
-			th:href="@{~/dataformats/{masterId}/create(masterId=${master.id})}"
-			class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> <th:block
-				th:text="' '+#{add.label}" /></a>
+		<th:block
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/datatypes}, master=${master}, detailsHref='dataformats')" />
 
 		<div th:if="${not #lists.isEmpty(dataFormats)}"
 			class="table-responsive">
@@ -33,11 +29,8 @@
 							<th class="column-title" th:text="#{sample.label}" />
 							<th class="column-title no-link last"><span class="nobr"
 								th:text="#{descr.label}"></span></th>
-							<th class="bulk-actions" colspan="4">
-								<button type="submit" class="btn btn-danger btn-xs">
-									<i class="fa fa-trash-o"></i><span
-										th:text="' '+#{delete.label}"></span>
-								</button>
+							<th class="bulk-actions" colspan="4"><th:block
+									th:replace="fragments/fragment-read-delete :: grid-buttons" />
 							</th>
 						</tr>
 					</thead>

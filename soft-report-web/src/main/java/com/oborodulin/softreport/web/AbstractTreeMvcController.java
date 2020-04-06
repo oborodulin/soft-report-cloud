@@ -2,7 +2,6 @@ package com.oborodulin.softreport.web;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -13,8 +12,6 @@ import org.springframework.validation.Errors;
 
 import com.oborodulin.softreport.domain.common.entity.TreeEntity;
 import com.oborodulin.softreport.domain.common.service.CommonJpaTreeService;
-import com.oborodulin.softreport.web.support.MessageHelper;
-
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +23,6 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 		extends AbstractMvcController<E, S, U> implements CommonTreeMvcController<E, U> {
 
 	public static final String PV_PARENT_ID = "parentId";
-
-	public static final String URL_READ_TREE = "/tree";
-	public static final String URL_EDIT_TREE = "/tree/edit/{id}";
 
 	protected static final String RM_CREATE_CHILD = "create-child";
 
@@ -49,26 +43,6 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getRedirectToRead() {
-		String redirect = "redirect:".concat(this.baseUrl).concat(URL_READ_TREE);
-		log.info("Redirect to: " + redirect);
-		return redirect;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getRedirectToCreate() {
-		String redirect = super.getRedirectToRead().concat(URL_CREATE);
-		log.info("Redirect to: " + redirect);
-		return redirect;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public String getRedirectToCreateChild(Long parentId) {
 		String redirect = super.getRedirectToRead().concat("/").concat(Long.toString(parentId)).concat(URL_CREATE);
 		log.info("Redirect to: " + redirect);
@@ -79,11 +53,19 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<String, Object> getCreateChildModelAttributes(Long parentId) {
+	public Map<String, Object> getShowCreateModelAttributes() {
 		Map<String, Object> ma = new HashMap<>();
 		ma.put(this.objCollectName, this.service.findAll());
 		ma.forEach((key, value) -> log.info(key + ":" + value));
 		return ma;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, Object> getCreateChildModelAttributes(Long parentId) {
+		return this.getShowCreateModelAttributes();
 	}
 
 	/**
@@ -101,17 +83,8 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	 * {@inheritDoc}
 	 */
 	@Override
-	@GetMapping(URL_READ_TREE)
-	public String showTree(Locale locale, Model model) {
-		List<E> entities = this.service.findByParentIsNull();
-		if (entities.isEmpty()) {
-			MessageHelper.addInfoAttribute(model, this.msPrefix.concat(".info.empty"));
-		}
-		log.info(this.objCollectName + " [" + URL_READ_TREE + "]: " + entities.size() + " counts");
-		model.mergeAttributes(this.getModelAttributes(RM_READ));
-		model.addAttribute(MA_TITLE_READ, this.ms.getMessage(this.msPrefix.concat(".title.read"), null, locale));
-		model.addAttribute(this.objCollectName, entities);
-		return this.getViewNameReadDelete();
+	public List<E> getShowListEntities() {
+		return this.service.findByParentIsNull();
 	}
 
 	/**
@@ -131,22 +104,9 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	 * {@inheritDoc}
 	 */
 	@Override
-	@GetMapping(URL_EDIT_TREE)
-	public String showUpdateForm(@PathVariable(PV_ID) Long id, Model model) {
-		model.mergeAttributes(this.getShowUpdateModelAttributes(id));
-		model.mergeAttributes(this.getModelAttributes(RM_UPDATE));
-		model.addAttribute(this.objName, this.service.getById(id));
-		log.info(this.objName + " [" + URL_EDIT + "]: id = " + id);
-		return this.getViewNameCreateUpdate();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	@PostMapping(URL_CREATE_CHILD_CONTINUE)
-	public String create(@PathVariable(PV_PARENT_ID) Long parentId,
-			@PathVariable(PV_IS_CONTINUE) boolean isContinue, @Valid E entity, Errors errors, Model model) {
+	public String create(@PathVariable(PV_PARENT_ID) Long parentId, @PathVariable(PV_IS_CONTINUE) boolean isContinue,
+			@Valid E entity, Errors errors, Model model) {
 		if (errors.hasErrors()) {
 			return this.getViewNameCreateUpdate();
 		}

@@ -39,11 +39,8 @@
 							<th class="column-title" th:text="#{attr9.label}" />
 							<th class="column-title no-link last"><span class="nobr"
 								th:text="#{attr10.label}"></span></th>
-							<th class="bulk-actions" colspan="16">
-								<button type="submit" class="btn btn-danger btn-xs">
-									<i class="fa fa-trash-o"></i><span
-										th:text="' '+#{delete.label}"></span>
-								</button>
+							<th class="bulk-actions" colspan="16"><th:block
+									th:replace="fragments/fragment-read-delete :: grid-buttons" />
 							</th>
 						</tr>
 					</thead>

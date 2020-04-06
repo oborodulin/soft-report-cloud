@@ -89,6 +89,14 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<T> getShowListChildren(Long parentId) {
+		return this.service.findByParentId(parentId, Sort.by(Sort.Direction.ASC, this.dtlSortPropName));
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public T createChildEntity(Long parentId) {
 		return this.service.getById(parentId);
 	}
@@ -119,8 +127,8 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	@Override
 	@GetMapping(URL_CHLD_READ)
 	public String showList(@PathVariable(PV_PARENT_ID) Long parentId, Locale locale, Model model) {
-		T parent = this.service.getById(parentId);;
-		List<T> children = this.service.findByParentId(parentId, Sort.by(Sort.Direction.ASC, this.dtlSortPropName));
+		T parent = this.service.getById(parentId);
+		List<T> children = this.getShowListChildren(parentId);
 		if (children.isEmpty()) {
 			MessageHelper.addInfoAttribute(model, this.msPrefix.concat(".parent.info.empty"), parent.getCodeId());
 		}

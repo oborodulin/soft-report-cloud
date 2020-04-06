@@ -12,7 +12,7 @@
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
 		<th:block
-			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/databases}, master=${parent}, detailsHref='databases')" />
+			th:replace="fragments/fragment-read-delete :: panel-buttons(detailsHref='databases')" />
 
 		<div th:if="${not #lists.isEmpty(dataBases)}" class="table-responsive">
 			<form th:action="@{~/databases/delete}" th:method="POST"

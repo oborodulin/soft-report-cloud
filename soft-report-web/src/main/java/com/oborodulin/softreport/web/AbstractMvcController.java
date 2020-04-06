@@ -102,6 +102,46 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getBaseUrl() {
+		return baseUrl;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getViewPath() {
+		return viewPath;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getObjName() {
+		return objName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getObjCollectName() {
+		return objCollectName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getMsPrefix() {
+		return msPrefix;
+	}
+
+	/**
 	 * Предустанавливает атрибуты модели.
 	 * <p>
 	 * Используется в конструкторе
@@ -196,13 +236,29 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	public List<E> getShowListEntities() {
 		return this.service.findAll();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public E createEntity() {
 		return this.service.create();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, Object> getShowCreateModelAttributes() {
+		return new HashMap<>();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, Object> getShowUpdateModelAttributes(Long id) {
+		return new HashMap<>();
 	}
 
 	/**
@@ -228,6 +284,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	@Override
 	@GetMapping(URL_CREATE)
 	public String showCreateForm(Locale locale, Model model) {
+		model.mergeAttributes(this.getShowCreateModelAttributes());
 		model.mergeAttributes(this.getModelAttributes(RM_CREATE));
 		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage(this.msPrefix.concat(".title.create"), null, locale));
 		model.addAttribute(this.objName, this.createEntity());
@@ -241,6 +298,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	@Override
 	@GetMapping(URL_EDIT)
 	public String showUpdateForm(@PathVariable(PV_ID) Long id, Locale locale, Model model) {
+		model.mergeAttributes(this.getShowUpdateModelAttributes(id));
 		model.mergeAttributes(this.getModelAttributes(RM_UPDATE));
 		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage(this.msPrefix.concat(".title.update"), null, locale));
 		model.addAttribute(this.objName, this.service.getById(id));

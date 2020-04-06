@@ -1,5 +1,7 @@
 package com.oborodulin.softreport.web.controller.docobject;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,14 @@ public class SchemaMvcController extends AbstractTreeChildrenMvcController<DocOb
 	@Autowired
 	public SchemaMvcController(DocObjectServiceImpl masterService, DocObjectServiceImpl service) {
 		super(service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<DocObject> getShowListChildren(Long parentId) {
+		return this.service.findSchemasByDataBaseId(parentId);
 	}
 
 	/**

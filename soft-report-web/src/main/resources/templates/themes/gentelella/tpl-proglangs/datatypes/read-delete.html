@@ -11,19 +11,9 @@
 <body class="nav-md">
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
-		<th:block th:if="${master == null}">
-			<a th:href="@{~/datatypes/create}" class="btn btn-primary btn-xs"><i
-				class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a>
-		</th:block>
-		<th:block th:unless="${master == null}">
-			<a th:href="@{~/proglangs}" class="btn btn-secondary btn-xs"><i
-				class="fa fa-arrow-left"></i> <th:block
-					th:text="' '+#{backto.label}+' '+${master.lang.val}" /></a>
-			<a
-				th:href="@{~/datatypes/{masterId}/create(masterId=${master.id})}"
-				class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> <th:block
-					th:text="' '+#{add.label}" /></a>
-		</th:block>
+		<th:block
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/proglangs}, master=${master}, detailsHref='datatypes')" />
+
 		<div th:if="${not #lists.isEmpty(dataTypes)}" class="table-responsive">
 			<form
 				th:action="${master == null} ? @{~/datatypes/delete} : @{~/datatypes/{masterId}/delete(masterId=${master.id})}"
@@ -43,10 +33,8 @@
 							<th class="column-title no-link last"><span class="nobr"
 								th:text="#{frontendtype.label}"></span></th>
 							<th class="bulk-actions" th:colspan="${master == null} ? 7 : 6">
-								<button type="submit" class="btn btn-danger btn-xs">
-									<i class="fa fa-trash-o"></i>
-									<th:block th:text="' '+#{delete.label}" />
-								</button>
+								<th:block
+									th:replace="fragments/fragment-read-delete :: grid-buttons" />
 							</th>
 						</tr>
 					</thead>

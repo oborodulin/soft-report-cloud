@@ -19,7 +19,7 @@
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
 		<th:block
-			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/objhierarches/tree}, master=${master}, detailsHref='objhierarches')" />
+			th:replace="fragments/fragment-read-delete :: panel-buttons(detailsHref='objhierarches')" />
 
 		<div th:if="${not #lists.isEmpty(objHierarches)}"
 			class="table-responsive">
@@ -36,14 +36,9 @@
 								style="width: 15%" />
 							<th class="column-title no-link last" style="width: 70%"><span
 								class="nobr" th:text="#{type.label}"></span></th>
-							<th class="bulk-actions" colspan="3"><button type="submit"
-									class="btn btn-danger btn-xs">
-									<i class="fa fa-trash-o"></i>
-									<th:block th:text="' '+#{delete.label}" />
-								</button> <a th:href="@{~/objhierarches/[id]/create}"
-								class="btn btn-secondary btn-xs"
-								onclick="bulkActionChecked(this, event, 'table_records');"><i
-									class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a></th>
+							<th class="bulk-actions" colspan="3"><th:block
+									th:replace="fragments/fragment-read-delete :: grid-tree-buttons(baseHref='objhierarches')" />
+							</th>
 						</tr>
 					</thead>
 					<tbody th:with="rowNum=0">

@@ -12,7 +12,7 @@
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
 		<th:block
-			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/softwares/tree}, master=${master}, detailsHref='businessobjects')" />
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/softwares}, master=${master}, detailsHref='businessobjects')" />
 
 		<div th:if="${not #lists.isEmpty(businessObjects)}"
 			class="table-responsive">
@@ -31,10 +31,8 @@
 							<th class="column-title no-link last"><span class="nobr"
 								th:text="#{descr.label}"></span></th>
 							<th class="bulk-actions" th:colspan="${master == null} ? 4 : 3">
-								<button type="submit" class="btn btn-danger btn-xs">
-									<i class="fa fa-trash-o"></i>
-									<th:block th:text="' '+#{delete.label}" />
-								</button>
+								<th:block
+									th:replace="fragments/fragment-read-delete :: grid-buttons" />
 							</th>
 						</tr>
 					</thead>

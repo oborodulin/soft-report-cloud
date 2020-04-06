@@ -11,8 +11,8 @@
 <body class="nav-md">
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
-		<a th:href="@{~/enterprises/create}" class="btn btn-primary btn-xs"><i
-			class="fa fa-plus"></i> <th:block th:text="' '+#{add.label}" /></a>
+		<th:block
+			th:replace="fragments/fragment-read-delete :: panel-buttons(detailsHref='enterprises')" />
 
 		<div th:if="${not #lists.isEmpty(enterprises)}"
 			class="table-responsive">

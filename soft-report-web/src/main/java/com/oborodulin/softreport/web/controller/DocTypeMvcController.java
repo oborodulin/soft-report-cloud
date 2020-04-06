@@ -35,6 +35,7 @@ public class DocTypeMvcController extends AbstractTreeMvcController<DocType, Doc
 		ma.put("types", this.service.getTypes());
 		this.setModelAttributes(RM_CREATE, ma);
 		this.setModelAttributes(RM_UPDATE, ma);
+		this.setModelAttributes(RM_CREATE_CHILD, ma);
 	}
 
 }
