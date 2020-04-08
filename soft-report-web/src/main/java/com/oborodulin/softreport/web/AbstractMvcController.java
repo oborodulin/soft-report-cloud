@@ -258,7 +258,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public Map<String, Object> getShowUpdateModelAttributes(Long id) {
-		return new HashMap<>();
+		return this.getShowCreateModelAttributes();
 	}
 
 	/**

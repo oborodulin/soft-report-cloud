@@ -20,6 +20,7 @@ import com.oborodulin.softreport.domain.model.software.Software;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -39,6 +40,7 @@ public class BusinessObject extends DetailEntity<Software, String> {
 
 	/** Список объектов БД, связанных с текущим бизнес-объектом */
 	@ManyToMany(mappedBy = "businessObjects", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> docObjects = new ArrayList<>();
 

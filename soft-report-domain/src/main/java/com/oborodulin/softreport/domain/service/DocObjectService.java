@@ -21,6 +21,8 @@ public interface DocObjectService extends CommonJpaTreeService<DocObject, String
 
 	public List<Server> getDbServers();
 
+	public List<DocObject> getSchemas();
+
 	public List<Value> getDtTypes();
 
 	public List<Software> getSoftwares();

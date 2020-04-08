@@ -14,9 +14,38 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${dataTable.id == null} ? @{~/datatables/create/{isContinue}(isContinue='false')} : @{~/datatables/update/{id}(id=${dataTable.id})}"
+			th:action="${dataTable.id == null} ? @{~/datatables/[parentId]/create/{isContinue}(isContinue='false')} : @{~/datatables/update/{id}(id=${dataTable.id})}"
 			th:object="${dataTable}" th:method="POST" id="form-create-dataTable"
 			data-parsley-validate class="form-horizontal form-label-left">
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					th:text="#{db.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<!--/* https://github.com/geekonjava/filterselect */-->
+					<select data-target="secondList" id="parentId1"
+						class="select2_group form-control firstList selectFilter">
+						<option value="" th:text="#{db.opt.empty.label}" />
+						<option th:each="opt : ${dataBases}" th:value="${opt.id}"
+							th:text="${opt.name}"
+							th:selected="${dataTable.parent != null} ? ${opt.id == dataTable.parent.id}: 'false'"
+							th:data-ref="${opt.id}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align" for=""
+					th:text="#{arch.label}"><span class="required">*</span></label>
+				<div class="col-md-6 col-sm-6 ">
+					<select id="parentId2"
+						class="select2_group form-control secondList selectFilter">
+						<option value="" th:text="#{schema.opt.empty.label}" />
+						<option th:each="opt : ${schemas}" th:value="${opt.id}"
+							th:text="${opt.name}"
+							th:selected="${dataTable.parent != null} ? ${opt.id == dataTable.parent.id}: 'false'"
+							th:data-belong="${opt.parent.id}"></option>
+					</select>
+				</div>
+			</div>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
 					for="name"><th:block th:text="#{name.label}" /><span
@@ -30,27 +59,39 @@
 			</div>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="dbType" th:text="#{dbtype.label}"><span
+					for="dtType" th:text="#{dttype.label}"><span
 					class="required">*</span></label>
 				<div class="col-md-6 col-sm-6 ">
-					<select th:field="*{dbType}" required="required"
+					<select th:field="*{dtType}" required="required"
 						class="select2_group form-control">
-						<option value="" th:text="#{dbtype.opt.empty.label}" />
-						<option th:each="opt : ${dbTypes}" th:value="${opt.id}"
+						<option value="" th:text="#{dttype.opt.empty.label}" />
+						<option th:each="opt : ${dtTypes}" th:value="${opt.id}"
 							th:text="${opt.val}"
-							th:selected="${dataTable.dbType != null} ? ${opt.id == dataTable.dbType.id}: 'false'"></option>
+							th:selected="${dataTable.dtType != null} ? ${opt.id == dataTable.dtType.id}: 'false'"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					th:text="#{software.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<select data-target="thirdList" id="software"
+						class="select2_group form-control firstList selectFilter">
+						<option value="" th:text="#{software.opt.empty.label}" />
+						<option th:each="opt : ${softwares}" th:value="${opt.id}"
+							th:text="${opt.name}" th:data-ref="${opt.id}"></option>
 					</select>
 				</div>
 			</div>
 			<div class="item form-group">
-				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="server" th:text="#{server.label}"></label>
+				<label class="col-form-label col-md-3 col-sm-3 label-align" for=""
+					th:text="#{businessobject.label}"><span class="required">*</span></label>
 				<div class="col-md-6 col-sm-6 ">
-					<select th:field="*{server}" class="select2_group form-control">
-						<option value="" th:text="#{server.opt.empty.label}" />
-						<option th:each="opt : ${servers}" th:value="${opt.id}"
-							th:text="${opt.host}"
-							th:selected="${dataTable.server != null} ? ${opt.id == dataTable.server.id}: 'false'"></option>
+					<select th:field="*{businessObjects}" required="required"
+						class="select2_group form-control thirdList selectFilter">
+						<option value="" th:text="#{businessobject.opt.empty.label}" />
+						<option th:each="opt : ${businessObjects}" th:value="${opt.id}"
+							th:text="${opt.name}" th:data-belong="${opt.master.id}"></option>
 					</select>
 				</div>
 			</div>
@@ -62,8 +103,8 @@
 					<textarea th:field="*{descr}" class="form-control" rows="3"></textarea>
 				</div>
 			</div>
-			<input type="hidden" th:field="*{type}">
-			<input type="hidden" th:field="*{pos}">
+			<input type="hidden" th:field="*{type}"> <input type="hidden"
+				th:field="*{pos}">
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
 			<th:block
@@ -73,8 +114,8 @@
 	<!-- /page content -->
 	<th:block th:fragment="body-scripts">
 		<th:block
-			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})">
-		</th:block>
+			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})" />
+		<script class="custom-script" src="/js/selectFilter.min.js"></script>
 	</th:block>
 </body>
 </html>

@@ -8,13 +8,41 @@ function bulkActionChecked(obj, event, checkName) {
 		alert('Отмечено более одной записи. Отметьте, пожалуйста, только одну запись...');
 	} else {
 		var href = $(obj).attr('href');
-		var id = $('input[name="' + checkName + '"]:checked').map(function(){return $(this).val()}).get();
+		var id = $('input[name="' + checkName + '"]:checked').map(function() {
+			return $(this).val()
+		}).get();
 		var newHref = href.replace('[id]', id);
-		//alert(newHref);
+		// alert(newHref);
 		window.location.href = newHref;
 	}
 	event.preventDefault();
 	return false;
+}
+
+/*
+ * Выполнянет отправку данных формы на сервер.
+ * 
+ * Предварительно при необходимости форрмирует ссылку обработки данных формы.
+ * Например, параметра parentId и пр.
+ */
+function submitForm(formId) {
+	var action = $("#" + formId).attr("action");
+	var parentId = null;
+	for (var i = 1; i < 10; i++) {
+		var selectedParent = $("#parentId" + i).children("option:selected").val();
+		if (selectedParent == null) {
+			break;
+		}
+		parentId = selectedParent;
+	}
+	if (parentId != null) {
+		var newAction = action.replace('[parentId]', parentId);
+		//alert(newAction);
+		$("#" + formId).attr("action", newAction);
+	}
+	//event.preventDefault();
+	//return false;
+	$("#" + formId).submit();
 }
 
 /*
@@ -24,7 +52,7 @@ function bulkActionChecked(obj, event, checkName) {
 function setFormContinueMark(formId) {
 	var action = $("#" + formId).attr("action");
 	var newAction = action.replace('/false', '/true');
-	//alert(newAction);
+	// alert(newAction);
 	$("#" + formId).attr("action", newAction);
-	$("#" + formId).submit();
+	submitForm(formId);
 }

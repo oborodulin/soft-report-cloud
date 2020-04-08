@@ -71,6 +71,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 
 	/** Версии */
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	@NotAudited
 	private List<Version> versions = new ArrayList<>();
@@ -101,9 +102,10 @@ public class DocObject extends TreeEntity<DocObject, String> {
 
 	/** ТД: Бизнес-объект */
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
-//	@JoinColumn(name = "business_objects_id")
 	@NotAudited
+//	@JoinColumn(name = "business_objects_id")
 	private List<BusinessObject> businessObjects;
 
 	/** Поле ТД: Признак первичного ключа */
@@ -199,6 +201,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 
 	/** Поле ТД: Список UI объектов, связанных с текущим объектом БД */
 	@OneToMany(mappedBy = "dbObject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	@NotAudited
 	private List<DocObject> uiObjects = new ArrayList<>();

@@ -150,6 +150,7 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	@GetMapping(URL_CHLD_CREATE)
 	public String showCreateForm(@PathVariable(PV_PARENT_ID) Long parentId, Locale locale, Model model) {
 		T child = this.createChildEntity(parentId);
+		model.mergeAttributes(this.getShowCreateModelAttributes());
 		model.addAttribute(MA_TITLE_MASTER, child.getParent().getCodeId());
 		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage(this.msPrefix.concat(".title.create"), null, locale));
 		model.addAttribute(this.objName, child);
@@ -165,6 +166,7 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	public String showUpdateForm(@PathVariable(PV_PARENT_ID) Long parentId, @PathVariable(PV_ID) Long id, Locale locale,
 			Model model) {
 		T child = this.service.getById(id);
+		model.mergeAttributes(this.getShowUpdateModelAttributes(id));
 		model.addAttribute(MA_TITLE_MASTER, child.getParent().getCodeId());
 		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage(this.msPrefix.concat(".title.update"), null, locale));
 		model.addAttribute(this.objName, child);

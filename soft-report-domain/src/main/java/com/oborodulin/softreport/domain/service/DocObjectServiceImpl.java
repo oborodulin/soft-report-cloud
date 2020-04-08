@@ -50,11 +50,11 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<DocObject> findSchemasByDataBaseId(Long dataBaseId){
-		return this.repository.findByParentIdAndType(dataBaseId, this.valueService.getDocObjectSchemaType(), Sort.by("name"));
+	public List<DocObject> findSchemasByDataBaseId(Long dataBaseId) {
+		return this.repository.findByParentIdAndType(dataBaseId, this.valueService.getDocObjectSchemaType(),
+				Sort.by("name"));
 	}
-	
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -77,6 +77,14 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	@Override
 	public List<Server> getDbServers() {
 		return this.serverService.getDbServers();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<DocObject> getSchemas() {
+		return this.repository.findByType(this.valueService.getDocObjectSchemaType(), Sort.by("name"));
 	}
 
 	/**
@@ -137,7 +145,12 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	 */
 	@Override
 	public DocObject createSchema(Long parentId) {
-		DocObject entity = this.create(parentId);
+		DocObject entity = null;
+		if (parentId == null) {
+			entity = this.create();
+		} else {
+			entity = this.create(parentId);
+		}
 		entity.setType(this.valueService.getDocObjectSchemaType());
 		entity.setPos(this.getNewPos(entity));
 		return entity;
@@ -148,7 +161,12 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	 */
 	@Override
 	public DocObject createDataTable(Long parentId) {
-		DocObject entity = this.create(parentId);
+		DocObject entity = null;
+		if (parentId == null) {
+			entity = this.create();
+		} else {
+			entity = this.create(parentId);
+		}
 		entity.setType(this.valueService.getDocObjectDataTableType());
 		entity.setPos(this.getNewPos(entity));
 		return entity;
@@ -167,9 +185,9 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 			lastDocObjectPos = this.repository.findFirstByTypeAndParentIdOrderByPosDesc(entity.getType(),
 					entity.getParent().getId());
 		}
-		if (entity.getPos() == 0 || entity.getPos() > lastDocObjectPos.getPos() + 1) {
-			entity.setPos(lastDocObjectPos.getPos() + 1);
-		} else if (entity.getPos() >= 1 && entity.getPos() <= lastDocObjectPos.getPos()) {
+		if (entity.getPos() == 0 || (lastDocObjectPos != null && entity.getPos() > lastDocObjectPos.getPos() + 1)) {
+			entity.setPos((lastDocObjectPos == null ? 0 : lastDocObjectPos.getPos()) + 1);
+		} else if (entity.getPos() >= 1 && lastDocObjectPos != null && entity.getPos() <= lastDocObjectPos.getPos()) {
 			List<DocObject> docObjects = this.repository.findByPosGreaterThanEqual(entity.getPos());
 			for (DocObject docObj : docObjects) {
 				docObj.setPos(docObj.getPos() + 1);

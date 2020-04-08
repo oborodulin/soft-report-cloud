@@ -148,7 +148,8 @@
 		<a th:href="${cancelHref}" class="btn btn-primary"> <i
 			class="fa fa-undo"></i> <th:block th:text="' '+#{cancel.label}" />
 		</a>
-		<button type="submit" class="btn btn-success">
+		<button type="submit" class="btn btn-success" th:formId="${formId}"
+			th:onclick="submitForm(this.getAttribute('formId'));">
 			<i th:class="${object.id == null} ? 'fa fa-sign-out' : 'fa fa-check'"
 				aria-hidden="true"></i>
 			<th:block
