@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-read-delete}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
+	</head>
+</th:block>
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<th:block
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/datatables}, master=${parent}, detailsHref='tdcolumns')" />
+
+		<div th:if="${not #lists.isEmpty(tdColumns)}" class="table-responsive">
+			<form
+				th:action="@{~/tdcolumns/{parentId}/delete(parentId=${parent.id})}"
+				th:method="POST" id="form-delete-tdcolumns">
+				<table class="table table-striped jambo_table bulk_action">
+					<thead>
+						<tr class="headings">
+							<th><input type="checkbox" id="check-all" class="flat">
+							</th>
+							<th class="column-title" />
+							<th class="column-title" th:text="#{position.label}" />
+							<th class="column-title" th:text="#{name.label}" />
+							<th class="column-title" th:text="#{type.label}" />
+							<th class="column-title" th:text="#{isprimarykey.label}" />
+							<th class="column-title" th:text="#{isuniquekey.label}" />
+							<th class="column-title" th:text="#{isrequired.label}" />
+							<th class="column-title" th:text="#{defaultvalue.label}" />
+							<th class="column-title" th:text="#{foreignkey.label}" />
+							<th class="column-title no-link last"><span class="nobr"
+								th:text="#{descr.label}"></span></th>
+							<th class="bulk-actions" colspan="9"><th:block
+									th:replace="fragments/fragment-read-delete :: grid-buttons" />
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="tdColumn, rowStat : ${tdColumns}"
+							th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
+							<td class="a-center "><input id="table_records"
+								name="table_records" type="checkbox" th:value="${tdColumn.id}"
+								class="flat"></td>
+							<td
+								th:replace="fragments/fragment-read-delete :: detail-buttons(master=${tdColumn.parent}, detailsHref='tdcolumns', detail=${tdColumn})" />
+							<td th:text="${tdColumn.pos}" class=" " />
+							<td th:text="${tdColumn.name}" class=" " />
+							<td th:text="${tdColumn.dtColumnType}" class=" " />
+							<td class="a-center"><input type="checkbox"
+								id="isPrimaryKey" name="isPrimaryKey" disabled="disabled"
+								th:checked="${tdColumn.isPrimaryKey}" class="flat" /></td>
+							<td class="a-center"><input type="checkbox" id="isUniqueKey"
+								name="isUniqueKey" disabled="disabled"
+								th:checked="${tdColumn.isUniqueKey}" class="flat" /></td>
+							<td class="a-center"><input type="checkbox" id="isRequired"
+								name="isRequired" disabled="disabled"
+								th:checked="${tdColumn.isRequired}" class="flat" /></td>
+							<td th:text="${tdColumn.defaultValue}" class=" " />
+							<td th:text="${tdColumn.foreignKeyString}" class=" " />
+							<td th:text="${tdColumn.descr}" class=" " />
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-read-delete :: body(scripts=~{this :: .custom-script})" />
+	</th:block>
+</body>
+</html>

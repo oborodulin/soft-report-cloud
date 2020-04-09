@@ -14,7 +14,7 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${dataTable.id == null} ? @{~/datatables/[parentId]/create/{isContinue}(isContinue='false')} : @{~/datatables/update/{id}(id=${dataTable.id})}"
+			th:action="${dataTable.id == null} ? @{~/datatables/[parentId]/create/{isContinue}(isContinue='false')} : @{~/datatables/[parentId]/update/{id}(id=${dataTable.id})}"
 			th:object="${dataTable}" th:method="POST" id="form-create-dataTable"
 			data-parsley-validate class="form-horizontal form-label-left">
 			<div class="form-group row">

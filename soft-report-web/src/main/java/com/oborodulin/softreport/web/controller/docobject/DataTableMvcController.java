@@ -42,6 +42,14 @@ public class DataTableMvcController extends AbstractTreeChildrenMvcController<Do
 
 	/**
 	 * {@inheritDoc}
+	 */
+	@Override
+	public String getRedirectToRead(Long parentId) {
+		return this.getRedirectToRead();
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * <p>
 	 * Возвращает список таблиц данных.
 	 */

@@ -385,4 +385,39 @@ public class DocObject extends TreeEntity<DocObject, String> {
 		return businessObjectsNames;
 	}
 
+	/**
+	 * Возвращает строковое представление типа поля таблицы данных.
+	 * 
+	 * @return строковое представление типа поля таблицы данных
+	 */
+	public String getDtColumnType() {
+		String dtColumnType = this.dataType.getName();
+		if (this.precision != null) {
+			dtColumnType.concat(" (").concat(this.precision.toString());
+			if (this.scale != null) {
+				dtColumnType.concat(",").concat(this.precision.toString()).concat(")");
+			} else {
+				dtColumnType.concat(")");
+			}
+		}
+		return dtColumnType;
+	}
+
+	/**
+	 * Возвращает строковое представление внешнего ключа.
+	 * 
+	 * @return строковое представление типа поля таблицы данных
+	 */
+	public String getForeignKeyString() {
+		String foreignKeyString = null;
+		if (this.foreignKey != null) {
+			String tableField = this.foreignKey.getParent().getName().concat(".").concat(this.foreignKey.getName());
+			if (!this.getParent().getParent().getId().equals(this.foreignKey.getParent().getParent().getId())) {
+				foreignKeyString = this.foreignKey.getParent().getParent().getName().concat(".").concat(tableField);
+			} else {
+				foreignKeyString = tableField;
+			}
+		}
+		return foreignKeyString;
+	}
 }

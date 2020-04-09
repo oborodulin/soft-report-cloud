@@ -17,6 +17,8 @@ public interface DocObjectService extends CommonJpaTreeService<DocObject, String
 
 	public List<DocObject> findDataTables();
 
+	public List<DocObject> findDtColumnsByDataTableId(Long dataTableId);
+
 	public List<Value> getDbTypes();
 
 	public List<Server> getDbServers();
@@ -34,5 +36,7 @@ public interface DocObjectService extends CommonJpaTreeService<DocObject, String
 	public DocObject createSchema(Long parentId);
 
 	public DocObject createDataTable(Long parentId);
+
+	public DocObject createDtColumn(Long parentId);
 
 }

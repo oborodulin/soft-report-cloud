@@ -7,6 +7,7 @@ import com.oborodulin.softreport.domain.model.docobject.DocObject;
 import com.oborodulin.softreport.domain.model.docobject.DocObjectRepository;
 import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.model.software.businessobject.BusinessObject;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service("jpaDocObjectService")
 @Transactional
 public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocObjectRepository, String>
@@ -61,6 +63,15 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	@Override
 	public List<DocObject> findDataTables() {
 		return this.repository.findByType(this.valueService.getDocObjectDataTableType(), Sort.by("name"));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<DocObject> findDtColumnsByDataTableId(Long dataTableId) {
+		return this.repository.findByParentIdAndType(dataTableId, this.valueService.getDocObjectDataTableColumnType(),
+				Sort.by("pos"));
 	}
 
 	/**
@@ -112,9 +123,11 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Устанавливает позицию по умолчанию у объекта документа.
+	 * 
+	 * @param docObject объект документа
 	 */
-	private Integer getNewPos(DocObject docObject) {
+	private void setDefaultDocObjectPos(DocObject docObject) {
 		DocObject lastDocObjectPos = null;
 		if (docObject.getParent() == null) {
 			lastDocObjectPos = this.repository.findFirstByTypeAndParentIsNullOrderByPosDesc(docObject.getType());
@@ -123,10 +136,40 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 					docObject.getParent().getId());
 		}
 		if (lastDocObjectPos != null) {
-			return lastDocObjectPos.getPos() + 1;
+			docObject.setPos(lastDocObjectPos.getPos() + 1);
 		} else {
-			return 1;
+			docObject.setPos(1);
 		}
+	}
+
+	/**
+	 * Создаёт и возвращает объект документа заданного типа.
+	 * 
+	 * @param type тип объекта
+	 * @return объект документа
+	 */
+	private DocObject createDocObject(Value type) {
+		DocObject entity = this.create();
+		entity.setType(type);
+		this.setDefaultDocObjectPos(entity);
+		return entity;
+	}
+
+	/**
+	 * Создаёт и возвращает дочерний объект документа заданного типа.
+	 * 
+	 * @param type     тип объекта
+	 * @param parentId идентификатор родительского объекта
+	 * @return дочерний объект документа
+	 */
+	private DocObject createDocObject(Value type, Long parentId) {
+		if (parentId == null) {
+			return this.createDocObject(type);
+		}
+		DocObject entity = this.create(parentId);
+		entity.setType(type);
+		this.setDefaultDocObjectPos(entity);
+		return entity;
 	}
 
 	/**
@@ -134,10 +177,7 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	 */
 	@Override
 	public DocObject createDataBase() {
-		DocObject entity = this.create();
-		entity.setType(this.valueService.getDocObjectDataBaseType());
-		entity.setPos(this.getNewPos(entity));
-		return entity;
+		return this.createDocObject(this.valueService.getDocObjectDataBaseType());
 	}
 
 	/**
@@ -145,15 +185,7 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	 */
 	@Override
 	public DocObject createSchema(Long parentId) {
-		DocObject entity = null;
-		if (parentId == null) {
-			entity = this.create();
-		} else {
-			entity = this.create(parentId);
-		}
-		entity.setType(this.valueService.getDocObjectSchemaType());
-		entity.setPos(this.getNewPos(entity));
-		return entity;
+		return this.createDocObject(this.valueService.getDocObjectSchemaType(), parentId);
 	}
 
 	/**
@@ -161,15 +193,15 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	 */
 	@Override
 	public DocObject createDataTable(Long parentId) {
-		DocObject entity = null;
-		if (parentId == null) {
-			entity = this.create();
-		} else {
-			entity = this.create(parentId);
-		}
-		entity.setType(this.valueService.getDocObjectDataTableType());
-		entity.setPos(this.getNewPos(entity));
-		return entity;
+		return this.createDocObject(this.valueService.getDocObjectDataTableType(), parentId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DocObject createDtColumn(Long parentId) {
+		return this.createDocObject(this.valueService.getDocObjectDataTableColumnType(), parentId);
 	}
 
 	/**
@@ -185,9 +217,10 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 			lastDocObjectPos = this.repository.findFirstByTypeAndParentIdOrderByPosDesc(entity.getType(),
 					entity.getParent().getId());
 		}
-		if (entity.getPos() == 0 || (lastDocObjectPos != null && entity.getPos() > lastDocObjectPos.getPos() + 1)) {
+		if (entity.getPos() <= 0 || (lastDocObjectPos != null && entity.getPos() > lastDocObjectPos.getPos() + 1)) {
 			entity.setPos((lastDocObjectPos == null ? 0 : lastDocObjectPos.getPos()) + 1);
 		} else if (entity.getPos() >= 1 && lastDocObjectPos != null && entity.getPos() <= lastDocObjectPos.getPos()) {
+			log.info("Current Entity Pos = " + entity.getPos() + "; lastDocObjectPos = " + lastDocObjectPos.getPos());
 			List<DocObject> docObjects = this.repository.findByPosGreaterThanEqual(entity.getPos());
 			for (DocObject docObj : docObjects) {
 				docObj.setPos(docObj.getPos() + 1);

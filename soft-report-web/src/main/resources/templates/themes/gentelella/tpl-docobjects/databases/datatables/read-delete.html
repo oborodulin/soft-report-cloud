@@ -14,7 +14,8 @@
 		<th:block
 			th:replace="fragments/fragment-read-delete :: panel-buttons(detailsHref='datatables')" />
 
-		<div th:if="${not #lists.isEmpty(dataTables)}" class="table-responsive">
+		<div th:if="${not #lists.isEmpty(dataTables)}"
+			class="table-responsive">
 			<form th:action="@{~/datatables/delete}" th:method="POST"
 				id="form-delete-dataTables">
 				<table class="table table-striped jambo_table bulk_action">
@@ -29,11 +30,8 @@
 							<th class="column-title" th:text="#{businessobject.label}" />
 							<th class="column-title no-link last"><span class="nobr"
 								th:text="#{descr.label}"></span></th>
-							<th class="bulk-actions" colspan="5">
-								<button type="submit" class="btn btn-danger btn-xs">
-									<i class="fa fa-trash-o"></i>
-									<th:block th:text="' '+#{delete.label}" />
-								</button>
+							<th class="bulk-actions" colspan="7"><th:block
+									th:replace="fragments/fragment-read-delete :: grid-buttons" />
 							</th>
 						</tr>
 					</thead>
@@ -45,14 +43,15 @@
 								class="flat"></td>
 							<td
 								th:replace="fragments/fragment-read-delete :: master-buttons(masterHref='datatables', master=${dataTable}, detailsHref='dtcolumns', details=${dataTable.children})" />
-							<td th:text="${dataTable.parent.type.code == 'DOT_DB'} ? ${dataTable.parent.name} : ${dataTable.parent.parent.name}"
+							<td
+								th:text="${dataTable.parent.type.code == 'DOT_DB'} ? ${dataTable.parent.name} : ${dataTable.parent.parent.name}"
 								class=" " />
-							<td th:text="${dataTable.parent.type.code == 'DOT_SCHEMA'} ? ${dataTable.parent.name} : ''"
+							<td
+								th:text="${dataTable.parent.type.code == 'DOT_SCHEMA'} ? ${dataTable.parent.name} : ''"
 								class=" " />
 							<td th:text="${dataTable.name}" class=" " />
 							<td th:text="${dataTable.dtType.val}" class=" " />
-							<td th:text="${dataTable.businessObjectsNames}"
-								class=" " />
+							<td th:text="${dataTable.businessObjectsNames}" class=" " />
 							<td th:text="${dataTable.descr}" class=" " />
 						</tr>
 					</tbody>

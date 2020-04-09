@@ -27,11 +27,8 @@
 							<th class="column-title" th:text="#{server.label}" />
 							<th class="column-title no-link last"><span class="nobr"
 								th:text="#{descr.label}"></span></th>
-							<th class="bulk-actions" colspan="5">
-								<button type="submit" class="btn btn-danger btn-xs">
-									<i class="fa fa-trash-o"></i>
-									<th:block th:text="' '+#{delete.label}" />
-								</button>
+							<th class="bulk-actions" colspan="5"><th:block
+									th:replace="fragments/fragment-read-delete :: grid-buttons" />
 							</th>
 						</tr>
 					</thead>
@@ -45,7 +42,8 @@
 								th:replace="fragments/fragment-read-delete :: master-buttons(masterHref='databases', master=${dataBase}, detailsHref='schemas', details=${dataBase.children})" />
 							<td th:text="${dataBase.name}" class=" " />
 							<td th:text="${dataBase.dbType.val}" class=" " />
-							<td th:text="${dataBase.server != null} ? ${dataBase.server.host} : ''"
+							<td
+								th:text="${dataBase.server != null} ? ${dataBase.server.host} : ''"
 								class=" " />
 							<td th:text="${dataBase.descr}" class=" " />
 						</tr>
