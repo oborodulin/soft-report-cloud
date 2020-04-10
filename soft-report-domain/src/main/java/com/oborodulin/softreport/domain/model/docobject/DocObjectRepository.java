@@ -21,6 +21,8 @@ public interface DocObjectRepository extends CommonTreeRepository<DocObject, Str
 
 	public DocObject findFirstByTypeAndParentIdOrderByPosDesc(Value type, Long parentId);
 
-	public List<DocObject> findByPosGreaterThanEqual(Integer pos);
+	public List<DocObject> findByParentIdAndPosGreaterThanEqualOrderByPosAsc(Long parentId, Integer pos);
+
+	public List<DocObject> findByPosGreaterThanEqualOrderByPosAsc(Integer pos);
 
 }

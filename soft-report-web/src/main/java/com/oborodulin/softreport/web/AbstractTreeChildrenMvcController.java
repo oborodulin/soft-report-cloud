@@ -2,6 +2,7 @@ package com.oborodulin.softreport.web;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -54,16 +55,13 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 		super(service, baseUrl, viewPath, objName, collectObjName);
 	}
 
-
 	public String getDtlSortPropName() {
 		return dtlSortPropName;
 	}
 
-
 	protected void setDtlSortPropName(String dtlSortPropName) {
 		this.dtlSortPropName = dtlSortPropName;
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -92,7 +90,23 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	public List<T> getShowListChildren(Long parentId) {
 		return this.service.findByParentId(parentId, Sort.by(Sort.Direction.ASC, this.dtlSortPropName));
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, Object> getShowCreateModelAttributes(Long parentId) {
+		return super.getShowCreateModelAttributes();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, Object> getShowUpdateModelAttributes(Long parentId, Long id) {
+		return this.getShowCreateModelAttributes(parentId);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -150,7 +164,8 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	@GetMapping(URL_CHLD_CREATE)
 	public String showCreateForm(@PathVariable(PV_PARENT_ID) Long parentId, Locale locale, Model model) {
 		T child = this.createChildEntity(parentId);
-		model.mergeAttributes(this.getShowCreateModelAttributes());
+		model.mergeAttributes(this.getShowCreateModelAttributes(parentId));
+		model.mergeAttributes(this.getModelAttributes(RM_CREATE));
 		model.addAttribute(MA_TITLE_MASTER, child.getParent().getCodeId());
 		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage(this.msPrefix.concat(".title.create"), null, locale));
 		model.addAttribute(this.objName, child);
@@ -166,7 +181,8 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	public String showUpdateForm(@PathVariable(PV_PARENT_ID) Long parentId, @PathVariable(PV_ID) Long id, Locale locale,
 			Model model) {
 		T child = this.service.getById(id);
-		model.mergeAttributes(this.getShowUpdateModelAttributes(id));
+		model.mergeAttributes(this.getShowUpdateModelAttributes(parentId, id));
+		model.mergeAttributes(this.getModelAttributes(RM_UPDATE));
 		model.addAttribute(MA_TITLE_MASTER, child.getParent().getCodeId());
 		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage(this.msPrefix.concat(".title.update"), null, locale));
 		model.addAttribute(this.objName, child);

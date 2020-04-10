@@ -30,10 +30,12 @@ public class ProgLangMvcController extends AbstractMvcController<ProgLang, ProgL
 	@Autowired
 	public ProgLangMvcController(ProgLangServiceImpl service) {
 		super(service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
-
 		Map<String, Object> ma = new HashMap<>();
+
 		ma.put("langs", this.service.getLangs());
 		ma.put("archs", this.service.getArchs());
+		ma.put("dbTypes", this.service.getDbTypes());
+		
 		this.setModelAttributes(RM_CREATE, ma);
 		this.setModelAttributes(RM_UPDATE, ma);
 	}

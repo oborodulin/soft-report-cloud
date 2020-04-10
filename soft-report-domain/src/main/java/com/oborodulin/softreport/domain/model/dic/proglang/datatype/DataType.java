@@ -61,11 +61,13 @@ public class DataType extends DetailEntity<ProgLang, String> {
 	private DataType frontendType;
 
 	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DataFormat> formats = new ArrayList<>();
 
 	/** Список объектов БД/UI, текущего типа данных */
 	@OneToMany(mappedBy = "dataType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DocObject> docObjects = new ArrayList<>();
 
@@ -74,7 +76,8 @@ public class DataType extends DetailEntity<ProgLang, String> {
 	 */
 	@Override
 	public String getCodeId() {
-		return this.name;
+		return this.name != null && !this.name.isEmpty() ? this.name
+				: (this.sqlType != null ? this.sqlType.getVal() : null);
 	}
 
 }

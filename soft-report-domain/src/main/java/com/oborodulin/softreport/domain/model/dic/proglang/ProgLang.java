@@ -56,18 +56,28 @@ public class ProgLang extends AuditableEntity<String> {
 	@ToString.Exclude
 	private Value arch;
 
+	/** БД: Тип базы данных */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "db_type_code")
+	@ToString.Exclude
+	private Value dbType;
+	
 	/** Список типов данных текущего языка программирования */
-	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<DataType> dataTypes = new ArrayList<>();
 
 	/** Список типов UI объектов текущего языка программирования */
 	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<UiObjectType> uiObjectTypes = new ArrayList<>();
 
 	/** Список ПО, использующих текущий язык программирования */
 	@ManyToMany(mappedBy = "progLangs", fetch = FetchType.LAZY)
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	private List<Software> softwares = new ArrayList<>();
 
 	/**

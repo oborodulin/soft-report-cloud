@@ -32,9 +32,7 @@ public class DataTableMvcController extends AbstractTreeChildrenMvcController<Do
 	public DataTableMvcController(DocObjectServiceImpl masterService, DocObjectServiceImpl service) {
 		super(service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
 		Map<String, Object> ma = new HashMap<>();
-		ma.put("dataBases", this.service.findDataBases());
 		ma.put("dtTypes", this.service.getDtTypes());
-		ma.put("softwares", this.service.getSoftwares());
 
 		this.setModelAttributes(RM_CREATE, ma);
 		this.setModelAttributes(RM_UPDATE, ma);
@@ -64,7 +62,9 @@ public class DataTableMvcController extends AbstractTreeChildrenMvcController<Do
 	@Override
 	public Map<String, Object> getShowCreateModelAttributes() {
 		Map<String, Object> ma = new HashMap<>();
+		ma.put("dataBases", this.service.findDataBases());
 		ma.put("schemas", this.service.getSchemas());
+		ma.put("softwares", this.service.getSoftwares());
 		ma.put("businessObjects", this.service.getBusinessObjects());
 		return ma;
 	}

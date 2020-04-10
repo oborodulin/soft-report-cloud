@@ -43,6 +43,18 @@
 					</select>
 				</div>
 			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="dbType" th:text="#{dbtype.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<select th:field="*{dbType}" class="select2_group form-control">
+						<option value="" th:text="#{dbtype.opt.empty.label}" />
+						<option th:each="opt : ${dbTypes}" th:value="${opt.id}"
+							th:text="${opt.val}"
+							th:selected="${progLang.dbType != null} ? ${opt.id == progLang.dbType.id}: 'false'"></option>
+					</select>
+				</div>
+			</div>
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
 			<th:block

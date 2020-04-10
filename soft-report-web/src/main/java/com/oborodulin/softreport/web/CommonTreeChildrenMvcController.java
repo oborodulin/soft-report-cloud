@@ -2,6 +2,7 @@ package com.oborodulin.softreport.web;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -32,9 +33,34 @@ public interface CommonTreeChildrenMvcController<T extends TreeEntity<T, U>, U> 
 	 * 
 	 * @param parentId идентификатор родительского объекта
 	 * @return список дочерних объектов
-	 * @see 
+	 * @see
 	 */
 	public List<T> getShowListChildren(Long parentId);
+
+	/**
+	 * Возвращает ассоциированный список атрибутов модели для нового дочернего доменного
+	 * объекта.
+	 * <p>
+	 * Для последующего использования при наполнении данными нового дочернего доменного
+	 * объекта в шаблоне представления "создание-обновление".
+	 * 
+	 * @return ассоциированный список атрибутов модели
+	 * @see #showCreateForm(Long, Locale, Model)
+	 */
+	public Map<String, Object> getShowCreateModelAttributes(Long parentId);
+
+	/**
+	 * Возвращает ассоциированный список атрибутов модели для заданного
+	 * идентификаторар доменного объекта.
+	 * <p>
+	 * Для последующего использования при обновлении данных доменного объекта в
+	 * шаблоне представления "создание-обновление".
+	 * 
+	 * @param id идентификатор обновляемого доменного объекта
+	 * @return ассоциированный список атрибутов модели
+	 * @see #showUpdateForm(Long, Long, Locale, Model)
+	 */
+	public Map<String, Object> getShowUpdateModelAttributes(Long parentId, Long id);
 
 	/**
 	 * Создаёт и возвращает дочерний объект.

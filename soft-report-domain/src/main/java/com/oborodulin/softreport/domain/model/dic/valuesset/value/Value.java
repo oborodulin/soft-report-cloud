@@ -231,6 +231,12 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	@EqualsAndHashCode.Exclude
 	private List<ProgLang> archProgLangs = new ArrayList<>();
 
+	/** Список объектов БД текущего типа базы данных (значения) */
+	@OneToMany(mappedBy = "dbType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
+	private List<ProgLang> dbTypeProgLangs = new ArrayList<>();
+
 	/** Список типов данных текущего SQL-типа данных (значения) */
 	@OneToMany(mappedBy = "sqlType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@ToString.Exclude

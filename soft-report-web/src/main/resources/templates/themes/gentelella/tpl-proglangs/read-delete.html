@@ -25,9 +25,10 @@
 							<th class="column-title"></th>
 							<th class="column-title" th:text="#{lang.label}" />
 							<th class="column-title" th:text="#{arch.label}" />
+							<th class="column-title" th:text="#{dbtype.label}" />
 							<th class="column-title no-link last"><span class="nobr"
 								th:text="#{software.label}"></span></th>
-							<th class="bulk-actions" colspan="4"><th:block
+							<th class="bulk-actions" colspan="5"><th:block
 									th:replace="fragments/fragment-read-delete :: grid-buttons" />
 								<a th:href="@{~/datatypes/[id]}"
 								class="btn btn-secondary btn-xs"
@@ -51,6 +52,9 @@
 								th:replace="fragments/fragment-read-delete :: grid-row-buttons(href='proglangs', object=${progLang})" />
 							<td th:text="${progLang.lang.val}" class=" " />
 							<td th:text="${progLang.arch.val}" class=" " />
+							<td
+								th:text="${progLang.dbType != null} ? ${progLang.dbType.val} : ''"
+								class=" " />
 							<td th:text="${progLang.softwareCodes}" class=" " />
 						</tr>
 					</tbody>

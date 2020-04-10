@@ -36,7 +36,7 @@ public interface ValuesSetService extends CommonJpaService<ValuesSet, String> {
 
 	public List<Value> getDtTypes();
 
-	public List<Value> getDbColumnTypes();
+	public List<Value> getDtColumnTypes();
 
 	public List<Value> getSqlDataTypes();
 

@@ -1,6 +1,7 @@
 package com.oborodulin.softreport.domain.service;
 
 import com.oborodulin.softreport.domain.common.service.AbstractJpaTreeService;
+import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
 import com.oborodulin.softreport.domain.model.dic.server.Server;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import com.oborodulin.softreport.domain.model.docobject.DocObject;
@@ -9,6 +10,7 @@ import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.model.software.businessobject.BusinessObject;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,9 +33,10 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	private ServerService serverService;
 	@Autowired
 	private SoftwareService softwareService;
-
 	@Autowired
 	private BusinessObjectService businessObjectService;
+	@Autowired
+	private DataTypeService dataTypeService;
 
 	@Autowired
 	public DocObjectServiceImpl(DocObjectRepository repository) {
@@ -120,6 +123,66 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	@Override
 	public List<BusinessObject> getBusinessObjects() {
 		return this.businessObjectService.findAll();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Value> getDtColumnTypes() {
+		return this.valuesSetService.getDtColumnTypes();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<DataType> getDbDataTypes(Long dataTableId) {
+		Optional<DocObject> dataTable = this.repository.findById(dataTableId);
+		// определяем БД по ИД таблицы
+		DocObject dataBase = null;
+		if (dataTable.get().getParent().getType().equals(this.valueService.getDocObjectSchemaType())) {
+			dataBase = dataTable.get().getParent().getParent();
+		} else {
+			dataBase = dataTable.get().getParent();
+		}
+		log.info("Data Base Type = " + dataBase.getDbType().getCode() + "; id = " + dataBase.getDbType().getId());
+		return this.dataTypeService.getTypesByDataBaseType(dataBase.getDbType());
+	}
+
+	private List<DocObject> getPrimaryKeysFromDbDataTables(List<DocObject> children, Value dtColumnType) {
+		List<DocObject> primaryKeys = new ArrayList<>();
+		for (DocObject docObject : children) {
+			if (docObject.getType().equals(dtColumnType)) {
+				if (docObject.getIsPrimaryKey()) {
+					primaryKeys.add(docObject);
+					break;
+				}
+			} else {
+				primaryKeys.addAll(this.getPrimaryKeysFromDbDataTables(docObject.getChildren(), dtColumnType));
+			}
+		}
+		return primaryKeys;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<DocObject> getDbDataTablesPrimaryKeys(Long dataTableId) {
+		List<DocObject> primaryKeys = new ArrayList<>();
+		Optional<DocObject> dataTable = this.repository.findById(dataTableId);
+		// определяем БД по ИД таблицы
+		DocObject dataBase = null;
+		if (dataTable.get().getParent().getType().equals(this.valueService.getDocObjectSchemaType())) {
+			dataBase = dataTable.get().getParent().getParent();
+		} else {
+			dataBase = dataTable.get().getParent();
+		}
+		// получаем все первичные ключи БД
+		Value dtColumnType = this.valueService.getDocObjectDataTableColumnType();
+		primaryKeys.addAll(this.getPrimaryKeysFromDbDataTables(dataBase.getChildren(), dtColumnType));
+		return primaryKeys;
 	}
 
 	/**
@@ -221,7 +284,13 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 			entity.setPos((lastDocObjectPos == null ? 0 : lastDocObjectPos.getPos()) + 1);
 		} else if (entity.getPos() >= 1 && lastDocObjectPos != null && entity.getPos() <= lastDocObjectPos.getPos()) {
 			log.info("Current Entity Pos = " + entity.getPos() + "; lastDocObjectPos = " + lastDocObjectPos.getPos());
-			List<DocObject> docObjects = this.repository.findByPosGreaterThanEqual(entity.getPos());
+			List<DocObject> docObjects = null;
+			if (entity.getParent() == null) {
+				docObjects = this.repository.findByPosGreaterThanEqualOrderByPosAsc(entity.getPos());
+			} else {
+				docObjects = this.repository
+						.findByParentIdAndPosGreaterThanEqualOrderByPosAsc(entity.getParent().getId(), entity.getPos());
+			}
 			for (DocObject docObj : docObjects) {
 				docObj.setPos(docObj.getPos() + 1);
 			}

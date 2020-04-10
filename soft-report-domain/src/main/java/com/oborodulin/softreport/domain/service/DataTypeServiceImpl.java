@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,7 @@ public class DataTypeServiceImpl
 	 */
 	private Map<String, List<DataType>> getDataTypes(String archCode) {
 		Map<String, List<DataType>> backendTypes = new HashMap<>();
-		for (ProgLang backendProgLang : masterRepository.findByArch_CodeOrderByArch_ValAsc(archCode)) {
+		for (ProgLang backendProgLang : this.masterRepository.findByArch_CodeOrderByArch_ValAsc(archCode)) {
 			backendTypes.put(backendProgLang.getLang().getVal(), backendProgLang.getDataTypes());
 		}
 		return backendTypes;
@@ -63,4 +64,12 @@ public class DataTypeServiceImpl
 		return this.getDataTypes(Value.VC_ARCH_FRONT);
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<DataType> getTypesByDataBaseType(Value dbType) {
+		return this.repository.findByMaster_DbType(dbType, Sort.by("name"));
+	};
+	
 }

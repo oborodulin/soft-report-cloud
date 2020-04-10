@@ -12,12 +12,12 @@
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
 		<th:block
-			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/datatables}, master=${parent}, detailsHref='tdcolumns')" />
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/datatables}, master=${parent}, detailsHref='dtcolumns')" />
 
-		<div th:if="${not #lists.isEmpty(tdColumns)}" class="table-responsive">
+		<div th:if="${not #lists.isEmpty(dtColumns)}" class="table-responsive">
 			<form
-				th:action="@{~/tdcolumns/{parentId}/delete(parentId=${parent.id})}"
-				th:method="POST" id="form-delete-tdcolumns">
+				th:action="@{~/dtcolumns/{parentId}/delete(parentId=${parent.id})}"
+				th:method="POST" id="form-delete-dtcolumns">
 				<table class="table table-striped jambo_table bulk_action">
 					<thead>
 						<tr class="headings">
@@ -34,34 +34,34 @@
 							<th class="column-title" th:text="#{foreignkey.label}" />
 							<th class="column-title no-link last"><span class="nobr"
 								th:text="#{descr.label}"></span></th>
-							<th class="bulk-actions" colspan="9"><th:block
+							<th class="bulk-actions" colspan="10"><th:block
 									th:replace="fragments/fragment-read-delete :: grid-buttons" />
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="tdColumn, rowStat : ${tdColumns}"
+						<tr th:each="dtColumn, rowStat : ${dtColumns}"
 							th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
 							<td class="a-center "><input id="table_records"
-								name="table_records" type="checkbox" th:value="${tdColumn.id}"
+								name="table_records" type="checkbox" th:value="${dtColumn.id}"
 								class="flat"></td>
 							<td
-								th:replace="fragments/fragment-read-delete :: detail-buttons(master=${tdColumn.parent}, detailsHref='tdcolumns', detail=${tdColumn})" />
-							<td th:text="${tdColumn.pos}" class=" " />
-							<td th:text="${tdColumn.name}" class=" " />
-							<td th:text="${tdColumn.dtColumnType}" class=" " />
+								th:replace="fragments/fragment-read-delete :: detail-buttons(master=${dtColumn.parent}, detailsHref='dtcolumns', detail=${dtColumn})" />
+							<td th:text="${dtColumn.pos}" class=" " />
+							<td th:text="${dtColumn.name}" class=" " />
+							<td th:text="${dtColumn.dtColumnType}" class=" " />
 							<td class="a-center"><input type="checkbox"
 								id="isPrimaryKey" name="isPrimaryKey" disabled="disabled"
-								th:checked="${tdColumn.isPrimaryKey}" class="flat" /></td>
+								th:checked="${dtColumn.isPrimaryKey}" class="flat" /></td>
 							<td class="a-center"><input type="checkbox" id="isUniqueKey"
 								name="isUniqueKey" disabled="disabled"
-								th:checked="${tdColumn.isUniqueKey}" class="flat" /></td>
+								th:checked="${dtColumn.isUniqueKey}" class="flat" /></td>
 							<td class="a-center"><input type="checkbox" id="isRequired"
 								name="isRequired" disabled="disabled"
-								th:checked="${tdColumn.isRequired}" class="flat" /></td>
-							<td th:text="${tdColumn.defaultValue}" class=" " />
-							<td th:text="${tdColumn.foreignKeyString}" class=" " />
-							<td th:text="${tdColumn.descr}" class=" " />
+								th:checked="${dtColumn.isRequired}" class="flat" /></td>
+							<td th:text="${dtColumn.defaultValue}" class=" " />
+							<td th:text="${dtColumn.foreignKeyString}" class=" " />
+							<td th:text="${dtColumn.descr}" class=" " />
 						</tr>
 					</tbody>
 				</table>

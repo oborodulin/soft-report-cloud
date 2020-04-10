@@ -39,4 +39,12 @@ public class ProgLangServiceImpl extends AbstractJpaService<ProgLang, ProgLangRe
 		return valuesSetService.getSoftwareArchs();
 	};
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Value> getDbTypes() {
+		return this.valuesSetService.getDbTypes();
+	}
+
 }

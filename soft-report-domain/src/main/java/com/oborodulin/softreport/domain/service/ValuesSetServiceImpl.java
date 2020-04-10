@@ -155,8 +155,8 @@ public class ValuesSetServiceImpl extends AbstractJpaService<ValuesSet, ValuesSe
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Value> getDbColumnTypes() {
-		return this.findValuesBySetCode(ValuesSet.VS_DB_COLUMN_TYPES);
+	public List<Value> getDtColumnTypes() {
+		return this.findValuesBySetCode(ValuesSet.VS_DT_COLUMN_TYPES);
 	};
 
 	/**

@@ -1,6 +1,7 @@
 package com.oborodulin.softreport.domain.model.docobject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -369,11 +370,17 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	}
 
 	/**
-	 * Возвращает строку-перечень наименованний бизнес-объектов через запятую
+	 * Возвращает строку-перечень наименованний бизнес-объектов через запятую.
+	 * <p>
+	 * Актуально для таблиц данных, представлений, хранимых процедур и пр.
 	 * 
 	 * @return строка-перечень наименованний бизнес-объектов
 	 */
 	public String getBusinessObjectsNames() {
+		if (!Arrays.asList(new String[] { Value.VC_DOT_DT, Value.VC_DOT_VIEW, Value.VC_DOT_PROC, Value.VC_DOT_FUNC })
+				.contains(this.type.getCode())) {
+			return null;
+		}
 		StringBuilder sbString = new StringBuilder("");
 		for (BusinessObject businessObject : this.businessObjects) {
 			sbString.append(businessObject.getCodeId()).append(", ");
@@ -387,32 +394,59 @@ public class DocObject extends TreeEntity<DocObject, String> {
 
 	/**
 	 * Возвращает строковое представление типа поля таблицы данных.
+	 * <p>
+	 * В формате "SQL-тип (длина,точность)".
 	 * 
 	 * @return строковое представление типа поля таблицы данных
 	 */
 	public String getDtColumnType() {
-		String dtColumnType = this.dataType.getName();
+		if (!Arrays.asList(new String[] { Value.VC_DOT_DTCOLUMN, Value.VC_DOT_VWCOLUMN })
+				.contains(this.type.getCode())) {
+			return null;
+		}
+		String dtColumnType = this.dataType.getCodeId();
 		if (this.precision != null) {
-			dtColumnType.concat(" (").concat(this.precision.toString());
+			dtColumnType = dtColumnType.concat("(").concat(this.precision.toString());
 			if (this.scale != null) {
-				dtColumnType.concat(",").concat(this.precision.toString()).concat(")");
+				dtColumnType = dtColumnType.concat(",").concat(this.scale.toString()).concat(")");
 			} else {
-				dtColumnType.concat(")");
+				dtColumnType = dtColumnType.concat(")");
 			}
 		}
 		return dtColumnType;
 	}
 
 	/**
-	 * Возвращает строковое представление внешнего ключа.
+	 * Возвращает строковое представление поля таблицы данных/представления.
+	 * <p>
+	 * В формате "БД/схема.таблица/представление.поле".
 	 * 
-	 * @return строковое представление типа поля таблицы данных
+	 * @return строковое представление поля таблицы данных/представления
+	 */
+	public String getDbColumnString() {
+		if (!Arrays.asList(new String[] { Value.VC_DOT_DTCOLUMN, Value.VC_DOT_VWCOLUMN })
+				.contains(this.type.getCode())) {
+			return null;
+		}
+		return this.getParent().getParent().getName().concat(".")
+				.concat(this.getParent().getName().concat(".").concat(this.name));
+	}
+
+	/**
+	 * Возвращает строковое представление внешнего ключа.
+	 * <p>
+	 * В формате "БД/схема.таблица/представление.поле".
+	 * 
+	 * @return строковое представление внешнего ключа
 	 */
 	public String getForeignKeyString() {
 		String foreignKeyString = null;
 		if (this.foreignKey != null) {
+			// получаем представление "таблица.поле"
 			String tableField = this.foreignKey.getParent().getName().concat(".").concat(this.foreignKey.getName());
+			// если у текущего поля схема/БД не соответствуют схеме/БД первичного кооюча
 			if (!this.getParent().getParent().getId().equals(this.foreignKey.getParent().getParent().getId())) {
+				// формируем представление "БД/схема.таблица/представление.поле"
 				foreignKeyString = this.foreignKey.getParent().getParent().getName().concat(".").concat(tableField);
 			} else {
 				foreignKeyString = tableField;

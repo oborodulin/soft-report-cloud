@@ -55,9 +55,7 @@
 							</th:block>
 							<td th:if="${master == null}"
 								th:text="${dataType.master.lang.val}" class=" " />
-							<td
-								th:text="${dataType.name != null && dataType.name != ''} ? ${dataType.name} : (${dataType.sqlType != null} ? ${dataType.sqlType.val})"
-								class=" " />
+							<td th:text="${dataType.codeId}" class=" " />
 							<td th:text="${dataType.descr}" class=" " />
 							<td
 								th:text="${dataType.sqlType != null} ? ${dataType.sqlType.val}"

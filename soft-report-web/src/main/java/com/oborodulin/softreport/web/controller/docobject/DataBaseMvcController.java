@@ -33,8 +33,7 @@ public class DataBaseMvcController extends AbstractMvcController<DocObject, DocO
 		super(service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
 		Map<String, Object> ma = new HashMap<>();
 		ma.put("dbTypes", this.service.getDbTypes());
-		ma.put("servers", this.service.getDbServers());
-		
+
 		this.setModelAttributes(RM_CREATE, ma);
 		this.setModelAttributes(RM_UPDATE, ma);
 	}
@@ -53,8 +52,18 @@ public class DataBaseMvcController extends AbstractMvcController<DocObject, DocO
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Map<String, Object> getShowCreateModelAttributes() {
+		Map<String, Object> ma = new HashMap<>();
+		ma.put("servers", this.service.getDbServers());
+		return ma;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public DocObject createEntity() {
 		return this.service.createDataBase();
 	}
-	
+
 }

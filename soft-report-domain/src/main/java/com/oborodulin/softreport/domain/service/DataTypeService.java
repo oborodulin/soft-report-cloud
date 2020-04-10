@@ -16,4 +16,6 @@ public interface DataTypeService extends CommonJpaDetailService<ProgLang, DataTy
 
 	public Map<String, List<DataType>> getFrontendTypes();
 
+	public List<DataType> getTypesByDataBaseType(Value dbType);
+	
 }

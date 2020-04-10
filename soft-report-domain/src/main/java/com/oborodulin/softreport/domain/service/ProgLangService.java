@@ -11,5 +11,7 @@ public interface ProgLangService extends CommonJpaService<ProgLang, String> {
 	public List<Value> getLangs();
 
 	public List<Value> getArchs();
-	
+
+	public List<Value> getDbTypes();
+
 }

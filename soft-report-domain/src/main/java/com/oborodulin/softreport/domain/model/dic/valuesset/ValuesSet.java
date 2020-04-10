@@ -83,7 +83,7 @@ public class ValuesSet extends AuditableEntity<String> {
 	/** Код набора значений: типы таблиц данных (справочные, оперативные, интерфейсные, временные, логгирования)*/
 	public static final String VS_DB_DT_TYPES = "DB_DT_TYPES";
 	/** Код набора значений: типы полей таблиц данных (исторические/версия) */
-	public static final String VS_DB_COLUMN_TYPES = "DB_COLUMN_TYPES";
+	public static final String VS_DT_COLUMN_TYPES = "DT_COLUMN_TYPES";
 	/** Код набора значений: типы данных SQL */
 	public static final String VS_DB_SQL_DATA_TYPES = "DB_SQL_DATA_TYPES";
 
