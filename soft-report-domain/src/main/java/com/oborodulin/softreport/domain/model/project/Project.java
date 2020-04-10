@@ -49,7 +49,7 @@ public class Project extends TreeEntity<Project, String> {
 	
 	@ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
 	// @ManyToMany(targetEntity = Software.class)
-	@Size(min = 1, message = "Вы должны выбрать хотя бы одно ПО")
+	//@Size(min = 1, message = "Вы должны выбрать хотя бы одно ПО")
 	private List<Software> softwares = new ArrayList<>();
 
 	/**

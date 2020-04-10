@@ -1,7 +1,6 @@
 package com.oborodulin.softreport.web.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 //import java.util.Arrays;
 //import java.util.List;
@@ -33,9 +32,6 @@ public class ProjectMvcController extends AbstractTreeMvcController<Project, Pro
 	@Autowired
 	public ProjectMvcController(ProjectServiceImpl service) {
 		super(service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
-		Map<String, Object> ma = new HashMap<>();
-		ma.put("projects", this.service.findAll());
-		this.setModelAttributes(RM_CREATE, ma);
 	}
 
 }

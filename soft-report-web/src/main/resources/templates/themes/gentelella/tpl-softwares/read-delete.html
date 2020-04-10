@@ -24,7 +24,7 @@
 		<div th:if="${not #lists.isEmpty(softwares)}" class="table-responsive">
 			<form th:action="@{~/softwares/delete}" th:method="POST"
 				id="form-delete-softwares">
-				<table id="Softwares-tree-table"
+				<table id="softwares-tree-table"
 					class="table table-striped jambo_table bulk_action">
 					<thead>
 						<tr class="headings">
@@ -86,7 +86,7 @@
 			th:src="@{/webjars/jquery-treetable/jquery.treetable.js}"></script>
 		<!-- Initialize jquery.treetable -->
 		<script class="custom-script" type="text/javascript">
-			$("#Softwares-tree-table").treetable({
+			$("#softwares-tree-table").treetable({
 				expandable : true,
 				column : 2,
 				initialState : "expanded",

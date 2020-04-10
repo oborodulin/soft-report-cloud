@@ -6,6 +6,13 @@
 <th:block th:fragment="header">
 	<head
 		th:replace="fragments/fragment-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
+<!-- query.treetable -->
+<link class="custom-link"
+	th:href="@{/webjars/jquery-treetable/css/jquery.treetable.css}"
+	rel="stylesheet">
+<link class="custom-link"
+	href="/css/jquery-treetable/jquery.treetable.theme.default.css"
+	rel="stylesheet">
 	</head>
 </th:block>
 <body class="nav-md">
@@ -17,18 +24,24 @@
 		<div th:if="${not #lists.isEmpty(projects)}" class="table-responsive">
 			<form th:action="@{~/projects/delete}" th:method="POST"
 				id="form-delete-projects">
-				<table class="table table-striped jambo_table bulk_action">
+				<table id="projects-tree-table"
+					class="table table-striped jambo_table bulk_action">
 					<thead>
 						<tr class="headings">
-							<th><input type="checkbox" id="check-all" class="flat">
-							</th>
-							<th class="column-title"></th>
-							<th class="column-title" th:text="#{name.label}" />
-							<th class="column-title no-link last"><span class="nobr"
-								th:text="#{descr.label}"></span></th>
+							<th style="width: 5%"><input type="checkbox" id="check-all"
+								class="flat"></th>
+							<th style="width: 12%" class="column-title"></th>
+							<th style="width: 53%" class="column-title"
+								th:text="#{name.label}" />
+							<th style="width: 30%" class="column-title no-link last"><span
+								class="nobr" th:text="#{descr.label}"></span></th>
 							<th class="bulk-actions" colspan="3"><th:block
 									th:replace="fragments/fragment-read-delete :: grid-tree-buttons(baseHref='projects')" />
-							</th>
+								<a th:href="@{~/documents/[id]}"
+								class="btn btn-secondary btn-xs"
+								onclick="bulkActionChecked(this, event, 'table_records');"><i
+									class="fa fa-file-text-o" aria-hidden="true"></i> <th:block
+										th:text="' '+#{documents.label}" /></a></th>
 						</tr>
 					</thead>
 					<tbody th:with="rowNum=0">
@@ -41,12 +54,13 @@
 	<th:block th:fragment="outputTree(projects, rowNum)">
 		<th:block th:with="rowNum=${rowNum+1}">
 			<th:block th:each="project, stat : ${projects}">
-				<tr th:class="${rowNum % 2 != 0} ? 'odd pointer' : 'even pointer'">
+				<tr th:data-tt-id="${project.id}"
+					th:attrappend="data-tt-parent-id=${project.parent != null} ? ${project.parent.id}"
+					th:class="${rowNum % 2 != 0} ? 'odd pointer' : 'even pointer'">
 					<td class="a-center "><input name="table_records"
 						type="checkbox" th:value="${project.id}" class="flat"></td>
 					<td
 						th:replace="fragments/fragment-read-delete :: master-buttons(masterHref='projects', master=${project}, detailsHref='tasks', details=${project.tasks})" />
-
 					<!-- /*https://stackoverflow.com/questions/46595638/adding-padding-to-bootstrap-table-cells*/ -->
 					<td th:text="${project.name}" class=" " />
 					<td th:text="${project.descr}" class=" " />
@@ -59,8 +73,18 @@
 	<!-- /page content -->
 	<th:block th:fragment="body-scripts">
 		<th:block
-			th:replace="fragments/fragment-read-delete :: body(scripts=~{this :: .custom-script})">
-		</th:block>
+			th:replace="fragments/fragment-read-delete :: body(scripts=~{this :: .custom-script})" />
+		<script class="custom-script"
+			th:src="@{/webjars/jquery-treetable/jquery.treetable.js}"></script>
+		<!-- Initialize jquery.treetable -->
+		<script class="custom-script" type="text/javascript">
+			$("#projects-tree-table").treetable({
+				expandable : true,
+				column : 2,
+				initialState : "expanded",
+				clickableNodeNames : true
+			});
+		</script>
 	</th:block>
 </body>
 </html>
