@@ -14,7 +14,7 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${not #lists.isEmpty(softwares)} ? (${businessObject.id == null} ? @{~/businessobjects/create/{isContinue}(isContinue='false')} : @{~/businessobjects/update/{id}(id=${businessObject.id})}) : (${businessObject.id == null} ? @{~/businessobjects/{masterId}/create/{isContinue}(masterId=${businessObject.master.id}, isContinue='false')} : @{~/businessobjects/{masterId}/update/{id}(masterId=${businessObject.master.id}, id=${businessObject.id})})"
+			th:action="${not #lists.isEmpty(softwares)} ? (${businessObject.id == null} ? @{~/businessobjects/create/{isContinue}(isContinue='false')} : @{~/businessobjects/update/{id}(id=${businessObject.id})}) : (${businessObject.id == null} ? @{~/businessobjects/{mainId}/create/{isContinue}(mainId=${businessObject.master.id}, isContinue='false')} : @{~/businessobjects/{mainId}/update/{id}(mainId=${businessObject.master.id}, id=${businessObject.id})})"
 			th:object="${businessObject}" th:method="POST" id="form-create-businessObject"
 			data-parsley-validate class="form-horizontal form-label-left">
 			<div th:if="${not #lists.isEmpty(softwares)}" class="item form-group">
@@ -50,7 +50,7 @@
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
 			<th:block
-				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=${not #lists.isEmpty(softwares)} ? @{~/businessobjects} : @{~/businessobjects/{masterId}(masterId=${businessObject.master.id})}, object=${businessObject}, formId='form-create-businessObject')" />
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=${not #lists.isEmpty(softwares)} ? @{~/businessobjects} : @{~/businessobjects/{mainId}(mainId=${businessObject.master.id})}, object=${businessObject}, formId='form-create-businessObject')" />
 		</form>
 	</div>
 	<!-- /page content -->

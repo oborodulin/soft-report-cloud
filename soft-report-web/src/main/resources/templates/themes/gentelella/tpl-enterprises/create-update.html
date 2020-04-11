@@ -14,7 +14,7 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${enterprise.id == null} ? (${enterprise.parent == null} ? @{~/enterprises/create/{isContinue}(isContinue='false')}:@{~/enterprises/{parentId}/create/{isContinue}(parentId=${enterprise.parent.id}, isContinue='false')}) : @{~/enterprises/update/{id}(id=${enterprise.id})}"
+			th:action="${enterprise.id == null} ? (${enterprise.parent == null} ? @{~/enterprises/create/{isContinue}(isContinue='false')}:@{~/enterprises/{mainId}/create/{isContinue}(mainId=${enterprise.parent.id}, isContinue='false')}) : @{~/enterprises/update/{id}(id=${enterprise.id})}"
 			th:object="${enterprise}" th:method="POST"
 			id="form-create-enterprise" data-parsley-validate
 			class="form-horizontal form-label-left">

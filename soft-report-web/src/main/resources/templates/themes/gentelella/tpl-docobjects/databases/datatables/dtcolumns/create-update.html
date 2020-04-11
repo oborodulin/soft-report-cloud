@@ -14,7 +14,7 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${dtColumn.id == null} ? @{~/dtcolumns/{parentId}/create/{isContinue}(parentId=${dtColumn.parent.id}, isContinue='false')} : @{~/dtcolumns/{parentId}/update/{id}(parentId=${dtColumn.parent.id}, id=${dtColumn.id})}"
+			th:action="${dtColumn.id == null} ? @{~/dtcolumns/{mainId}/create/{isContinue}(mainId=${dtColumn.parent.id}, isContinue='false')} : @{~/dtcolumns/{mainId}/update/{id}(mainId=${dtColumn.parent.id}, id=${dtColumn.id})}"
 			th:object="${dtColumn}" th:method="POST" id="form-create-dtColumn"
 			data-parsley-validate class="form-horizontal form-label-left">
 			<div class="item form-group">
@@ -163,7 +163,7 @@
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
 			<th:block
-				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/dtcolumns/{parentId}(parentId=${dtColumn.parent.id})}, object=${dtColumn}, formId='form-create-dtColumn')" />
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/dtcolumns/{mainId}(mainId=${dtColumn.parent.id})}, object=${dtColumn}, formId='form-create-dtColumn')" />
 		</form>
 	</div>
 	<!-- /page content -->

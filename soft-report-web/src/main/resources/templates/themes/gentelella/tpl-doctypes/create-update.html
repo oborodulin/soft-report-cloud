@@ -14,7 +14,7 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${docType.id == null} ? (${docType.parent == null} ? @{~/doctypes/create/{isContinue}(isContinue='false')}:@{~/doctypes/{parentId}/create/{isContinue}(parentId=${docType.parent.id}, isContinue='false')}) : @{~/doctypes/update/{id}(id=${docType.id})}"
+			th:action="${docType.id == null} ? (${docType.parent == null} ? @{~/doctypes/create/{isContinue}(isContinue='false')}:@{~/doctypes/{mainId}/create/{isContinue}(mainId=${docType.parent.id}, isContinue='false')}) : @{~/doctypes/update/{id}(id=${docType.id})}"
 			th:object="${docType}" th:method="POST" id="form-create-docType"
 			data-parsley-validate class="form-horizontal form-label-left">
 			<div class="form-group row">

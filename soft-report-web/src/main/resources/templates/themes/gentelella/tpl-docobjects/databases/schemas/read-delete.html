@@ -16,7 +16,7 @@
 
 		<div th:if="${not #lists.isEmpty(schemas)}" class="table-responsive">
 			<form
-				th:action="@{~/schemas/{parentId}/delete(parentId=${parent.id})}"
+				th:action="@{~/schemas/{mainId}/delete(mainId=${parent.id})}"
 				th:method="POST" id="form-delete-schemas">
 				<table class="table table-striped jambo_table bulk_action">
 					<thead>

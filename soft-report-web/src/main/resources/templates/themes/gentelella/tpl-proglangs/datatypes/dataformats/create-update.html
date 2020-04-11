@@ -14,7 +14,7 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${dataFormat.id == null} ? @{~/dataformats/{masterId}/create/{isContinue}(masterId=${dataFormat.master.id}, isContinue='false')} : @{~/dataformats/{masterId}/update/{id}(masterId=${dataFormat.master.id}, id=${dataFormat.id})}"
+			th:action="${dataFormat.id == null} ? @{~/dataformats/{mainId}/create/{isContinue}(mainId=${dataFormat.master.id}, isContinue='false')} : @{~/dataformats/{mainId}/update/{id}(mainId=${dataFormat.master.id}, id=${dataFormat.id})}"
 			th:object="${dataFormat}" th:method="POST"
 			id="form-create-dataFormat" data-parsley-validate
 			class="form-horizontal form-label-left">
@@ -49,7 +49,7 @@
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
 			<th:block
-				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/dataformats/{masterId}(masterId=${dataFormat.master.id})}, object=${dataFormat}, formId='form-create-dataFormat')" />
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/dataformats/{mainId}(mainId=${dataFormat.master.id})}, object=${dataFormat}, formId='form-create-dataFormat')" />
 		</form>
 	</div>
 	<!-- /page content -->

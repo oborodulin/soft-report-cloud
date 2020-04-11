@@ -42,7 +42,7 @@ public class DataTableColumnMvcController extends AbstractTreeChildrenMvcControl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<DocObject> getShowListChildren(Long parentId) {
+	public List<DocObject> getShowListSlavesEntities(Long parentId) {
 		return this.service.findDtColumnsByDataTableId(parentId);
 	}
 
@@ -61,7 +61,7 @@ public class DataTableColumnMvcController extends AbstractTreeChildrenMvcControl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public DocObject createChildEntity(Long parentId) {
+	public DocObject createSlaveEntity(Long parentId) {
 		return this.service.createDtColumn(parentId);
 	}
 

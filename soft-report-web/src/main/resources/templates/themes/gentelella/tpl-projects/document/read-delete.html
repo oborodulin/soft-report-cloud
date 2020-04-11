@@ -12,11 +12,11 @@
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
 		<th:block
-			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/projects}, master=${master}, detailsHref='documents')" />
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/projects}, master=${mainEntity}, detailsHref='documents')" />
 
 		<div th:if="${not #lists.isEmpty(dataTypes)}" class="table-responsive">
 			<form
-				th:action="${master == null} ? @{~/datatypes/delete} : @{~/datatypes/{masterId}/delete(masterId=${master.id})}"
+				th:action="${mainEntity == null} ? @{~/datatypes/delete} : @{~/datatypes/{mainId}/delete(mainId=${mainEntity.id})}"
 				th:method="POST" id="form-delete-dataTypes">
 				<table class="table table-striped jambo_table bulk_action">
 					<thead>
@@ -24,7 +24,7 @@
 							<th><input type="checkbox" id="check-all" class="flat">
 							</th>
 							<th class="column-title" />
-							<th th:if="${master == null}" class="column-title"
+							<th th:if="${mainEntity == null}" class="column-title"
 								th:text="#{lang.label}" />
 							<th class="column-title" th:text="#{name.label}" />
 							<th class="column-title" th:text="#{descr.label}" />
@@ -32,7 +32,7 @@
 							<th class="column-title" th:text="#{backendtype.label}" />
 							<th class="column-title no-link last"><span class="nobr"
 								th:text="#{frontendtype.label}"></span></th>
-							<th class="bulk-actions" th:colspan="${master == null} ? 7 : 6">
+							<th class="bulk-actions" th:colspan="${mainEntity == null} ? 7 : 6">
 								<button type="submit" class="btn btn-danger btn-xs">
 									<i class="fa fa-trash-o"></i>
 									<th:block th:text="' '+#{delete.label}" />
@@ -46,16 +46,16 @@
 							<td class="a-center "><input id="table_records"
 								name="table_records" type="checkbox" th:value="${dataType.id}"
 								class="flat"></td>
-							<th:block th:if="${master == null}">
+							<th:block th:if="${mainEntity == null}">
 								<td
 									th:replace="fragments/fragment-read-delete :: master-buttons(masterHref='datatypes', master=${dataType}, detailsHref='dataformats', details=${dataType.formats})" />
 								<!-- th:replace="fragments/fragment-read-delete :: grid-row-buttons(href='datatypes', object=${dataType})" /-->
 							</th:block>
-							<th:block th:unless="${master == null}">
+							<th:block th:unless="${mainEntity == null}">
 								<td
 									th:replace="fragments/fragment-read-delete :: master-detail-buttons(masterHref='datatypes', master=${dataType}, detailsHref='dataformats', details=${dataType.formats}, detail=${dataType})" />
 							</th:block>
-							<td th:if="${master == null}"
+							<td th:if="${mainEntity == null}"
 								th:text="${dataType.master.lang.val}" class=" " />
 							<td
 								th:text="${dataType.name != null && dataType.name != ''} ? ${dataType.name} : (${dataType.sqlType != null} ? ${dataType.sqlType.val})"

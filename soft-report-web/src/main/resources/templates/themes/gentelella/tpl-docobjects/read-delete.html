@@ -19,7 +19,7 @@
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
 		<th:block
-			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/docobjects}, master=${master}, detailsHref='docobjects')" />
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/docobjects}, master=${mainEntity}, detailsHref='docobjects')" />
 
 		<div th:if="${not #lists.isEmpty(docObjects)}"
 			class="table-responsive">

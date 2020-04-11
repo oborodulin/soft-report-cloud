@@ -81,7 +81,7 @@ public class DataTableMvcController extends AbstractTreeChildrenMvcController<Do
 	 * {@inheritDoc}
 	 */
 	@Override
-	public DocObject createChildEntity(Long parentId) {
+	public DocObject createSlaveEntity(Long parentId) {
 		return this.service.createDataTable(parentId);
 	}
 

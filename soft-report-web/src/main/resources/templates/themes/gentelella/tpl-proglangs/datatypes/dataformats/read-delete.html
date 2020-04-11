@@ -12,12 +12,12 @@
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
 		<th:block
-			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/datatypes}, master=${master}, detailsHref='dataformats')" />
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/datatypes}, master=${mainEntity}, detailsHref='dataformats')" />
 
 		<div th:if="${not #lists.isEmpty(dataFormats)}"
 			class="table-responsive">
 			<form
-				th:action="@{~/dataformats/{masterId}/delete(masterId=${master.id})}"
+				th:action="@{~/dataformats/{mainId}/delete(mainId=${mainEntity.id})}"
 				th:method="POST" id="form-delete-dataFormats">
 				<table class="table table-striped jambo_table bulk_action">
 					<thead>

@@ -1,5 +1,6 @@
 package com.oborodulin.softreport.web;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -33,22 +34,33 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	private static final String MA_READ_DELETE = "viewReadDelete";
 	private static final String MA_CREATE_UPDATE = "viewCreateUpdate";
 
-	public static final String RV_CHK_TABLE_RECORDS = "table_records";
-	public static final String PV_MASTER_ID = "masterId";
-	public static final String PV_PARENT_ID = "parentId";
-	public static final String PV_ID = "id";
-	public static final String PV_IS_CONTINUE = "isContinue";
+	protected static final String RV_CHK_TABLE_RECORDS = "table_records";
+	protected static final String PV_MAIN_ID = "mainId";
+	protected static final String PV_ID = "id";
+	protected static final String PV_IS_CONTINUE = "isContinue";
 
-	public static final String URL_READ = "/read";
-	public static final String URL_CREATE = "/create";
-	public static final String URL_CREATE_CONTINUE = "/create/{isContinue}";
-	public static final String URL_CREATE_CHILD = "/{parentId}/create";
-	public static final String URL_CREATE_CHILD_CONTINUE = "/{parentId}/create/{isContinue}";
-	public static final String URL_EDIT = "/edit/{id}";
-	public static final String URL_UPDATE = "/update/{id}";
-	public static final String URL_DELETE = "/delete";
-	public static final String URL_DELETE_BY_ID = "/delete/{id}";
+	protected static final String URL_READ = "/read";
+	protected static final String URL_CREATE = "/create";
+	protected static final String URL_CREATE_CONTINUE = "/create/{isContinue}";
+	protected static final String URL_CREATE_CHILD = "/{mainId}/create";
+	protected static final String URL_CREATE_CHILD_CONTINUE = "/{mainId}/create/{isContinue}";
+	protected static final String URL_EDIT = "/edit/{id}";
+	protected static final String URL_UPDATE = "/update/{id}";
+	protected static final String URL_DELETE = "/delete";
+	protected static final String URL_DELETE_BY_ID = "/delete/{id}";
 
+	protected static final String URL_SLV_READ = "/{mainId}";
+	protected static final String URL_SLV_CREATE = "/{mainId}/create";
+	protected static final String URL_SLV_CREATE_CONTINUE = "/{mainId}/create/{isContinue}";
+	protected static final String URL_SLV_CREATE_CHILD = "/{mainId}/{mainId}/create";
+	protected static final String URL_SLV_CREATE_CHILD_CONTINUE = "/{mainId}/{mainId}/create/{isContinue}";
+	protected static final String URL_SLV_EDIT = "/{mainId}/edit/{id}";
+	protected static final String URL_SLV_UPDATE = "/{mainId}/update/{id}";
+	protected static final String URL_SLV_DELETE = "/{mainId}/delete";
+	protected static final String URL_SLV_DELETE_BY_ID = "/{mainId}/delete/{id}";
+
+	protected static final String MA_MAIN_ENTITY = "mainEntity";
+	protected static final String MA_TITLE_MASTER = "titleMaster";
 	protected static final String MA_TITLE_PARENT = "titleParent";
 	protected static final String MA_TITLE_READ = "titleRead";
 	protected static final String MA_TITLE_CREATE = "titleCreate";
@@ -78,6 +90,14 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 
 	/** Префикс строковых ресурсов источника сообщений */
 	protected String msPrefix;
+
+	/**
+	 * Наименование свойства Entity-объектов, по которому выполняется сортировка в
+	 * процессе их получения.
+	 * <p>
+	 * По умолчанию: {@code "name"}
+	 */
+	private String sortPropName = "name";
 
 	/** Префикс строковых ресурсов источника сообщений */
 	private Map<String, Map<String, Object>> modelAttributes = new HashMap<>();
@@ -142,11 +162,29 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getSortPropName() {
+		return sortPropName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setSortPropName(String sortPropName) {
+		this.sortPropName = sortPropName;
+	}
+
+	/**
 	 * Предустанавливает атрибуты модели.
 	 * <p>
-	 * Используется в конструкторе
+	 * Используется в конструкторе для однократной инициализации данных,
+	 * используемых контроллером.
 	 * 
-	 * @param requestMethName идентификатор Request-метода, в котором
+	 * @param requestMethName идентификатор Request-метода, в котором будут
+	 *                        использоваться атрибуты
 	 * @param modelAttributes ассоциативный список атрибутов
 	 * @see #RM_SHOW_LIST
 	 * @see #RM_SHOW_UPDATE_FORM
@@ -159,7 +197,8 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 * Возвращает асоциативный список атрибутов модели по зданному идентификатору
 	 * Request-метода
 	 * 
-	 * @param requestMethName идентификатор Request-метода
+	 * @param requestMethName идентификатор Request-метода, в котором будут
+	 *                        использоваться атрибуты
 	 * @return асоциативный список атрибутов модели
 	 * @see #RM_SHOW_LIST
 	 * @see #RM_SHOW_UPDATE_FORM
@@ -167,7 +206,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	protected Map<String, Object> getModelAttributes(String requestMethName) {
 		Map<String, Object> ma = modelAttributes.get(requestMethName);
 		if (ma != null) {
-			ma.forEach((key, value) -> log.info(key + ":" + value));
+			ma.forEach((key, value) -> log.debug(key + ":" + value));
 		}
 		return ma;
 	}
@@ -202,6 +241,44 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 		return redirect;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getRedirectToCreate() {
+		String redirect = this.getRedirectToRead().concat(URL_CREATE);
+		log.info("Redirect to: " + redirect);
+		return redirect;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getRedirectToRead(Long mainId) {
+		String redirect = this.getRedirectToRead().concat("/").concat(Long.toString(mainId));
+		log.info("Redirect to: " + redirect);
+		return redirect;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getRedirectToCreate(Long mainId) {
+		String redirect = this.getRedirectToRead(mainId).concat(URL_CREATE);
+		log.info("Redirect to: " + redirect);
+		return redirect;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getRedirectFromSlaveCreate(Long mainId) {
+		return this.getRedirectToRead(mainId);
+	}
+
 	@ModelAttribute(name = MA_TITLE_PARENT)
 	public String titleParent(Locale locale) {
 		return this.ms.getMessage(this.msPrefix.concat(".title.parent"), null, locale);
@@ -223,16 +300,6 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getRedirectToCreate() {
-		String redirect = this.getRedirectToRead().concat(URL_CREATE);
-		log.info("Redirect to: " + redirect);
-		return redirect;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public List<E> getShowListEntities() {
 		return this.service.findAll();
 	}
@@ -241,8 +308,47 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 * {@inheritDoc}
 	 */
 	@Override
+	public AuditableEntity<U> getShowListMainEntity(Long mainId) {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<E> getShowListSlavesEntities(Long mainId) {
+		return new ArrayList<>();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public E createEntity() {
 		return this.service.create();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public E createSlaveEntity(Long mainId) {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public AuditableEntity<U> getMainEntity(E slaveEntity) {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void saveSlaveEntity(Long mainId, E slaveEntity) {
 	}
 
 	/**
@@ -259,6 +365,22 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	@Override
 	public Map<String, Object> getShowUpdateModelAttributes(Long id) {
 		return this.getShowCreateModelAttributes();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, Object> getShowCreateModelAttributes(Long mainId) {
+		return this.getShowCreateModelAttributes();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, Object> getShowUpdateModelAttributes(Long mainId, Long id) {
+		return this.getShowCreateModelAttributes(mainId);
 	}
 
 	/**
@@ -282,6 +404,28 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 * {@inheritDoc}
 	 */
 	@Override
+	@GetMapping(URL_SLV_READ)
+	public String showList(@PathVariable(PV_MAIN_ID) Long mainId, Locale locale, Model model) {
+		AuditableEntity<U> mainEntity = this.getShowListMainEntity(mainId);
+		List<E> slaves = this.getShowListSlavesEntities(mainId);
+		if (slaves.isEmpty()) {
+			MessageHelper.addInfoAttribute(model, this.msPrefix.concat(".main.info.empty"), mainEntity.getCodeId());
+		}
+		model.mergeAttributes(this.getModelAttributes(RM_READ));
+		model.addAttribute(MA_TITLE_MASTER, mainEntity.getCodeId());
+		model.addAttribute(MA_TITLE_READ, this.ms.getMessage(this.msPrefix.concat(".title.read"), null, locale));
+		model.addAttribute(MA_MAIN_ENTITY, mainEntity);
+		model.addAttribute(this.objCollectName, slaves);
+		// model.addAttribute(MA_TITLE_READ, this.ms.getMessage("tasks.title.read",
+		// new Object[] {project.getCode()}, locale));
+		log.info(this.objCollectName + " [" + URL_SLV_READ + "]: " + slaves.size() + " counts");
+		return this.getViewNameReadDelete();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@GetMapping(URL_CREATE)
 	public String showCreateForm(Locale locale, Model model) {
 		model.mergeAttributes(this.getShowCreateModelAttributes());
@@ -289,6 +433,25 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage(this.msPrefix.concat(".title.create"), null, locale));
 		model.addAttribute(this.objName, this.createEntity());
 		log.info(this.objName + " [" + URL_CREATE + "]");
+		return this.getViewNameCreateUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@GetMapping(URL_SLV_CREATE)
+	public String showCreateForm(@PathVariable(PV_MAIN_ID) Long mainId, Locale locale, Model model) {
+		E slave = this.createSlaveEntity(mainId);
+		model.mergeAttributes(this.getShowCreateModelAttributes(mainId));
+		model.mergeAttributes(this.getModelAttributes(RM_CREATE));
+		AuditableEntity<U> mainEntity = this.getMainEntity(slave);
+		if (mainEntity != null) {
+			model.addAttribute(MA_TITLE_MASTER, mainEntity.getCodeId());
+		}
+		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage(this.msPrefix.concat(".title.create"), null, locale));
+		model.addAttribute(this.objName, slave);
+		log.info(this.objName + " [" + URL_SLV_CREATE + "]: mainId = " + mainId + "; slave = " + slave);
 		return this.getViewNameCreateUpdate();
 	}
 
@@ -310,11 +473,29 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 * {@inheritDoc}
 	 */
 	@Override
+	@GetMapping(URL_SLV_EDIT)
+	public String showUpdateForm(@PathVariable(PV_MAIN_ID) Long mainId, @PathVariable(PV_ID) Long id, Locale locale,
+			Model model) {
+		E slave = this.service.getById(id);
+		model.mergeAttributes(this.getShowUpdateModelAttributes(mainId, id));
+		model.mergeAttributes(this.getModelAttributes(RM_UPDATE));
+		model.addAttribute(MA_TITLE_MASTER, this.getMainEntity(slave).getCodeId());
+		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage(this.msPrefix.concat(".title.update"), null, locale));
+		model.addAttribute(this.objName, slave);
+		log.info(this.objName + " [" + URL_SLV_EDIT + "]: mainId = " + mainId + "; slave = " + slave);
+		return this.getViewNameCreateUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@PostMapping(URL_CREATE_CONTINUE)
 	public String create(@PathVariable(PV_IS_CONTINUE) boolean isContinue, @Valid E entity, Errors errors,
 			Model model) {
 		// @ModelAttribute("software") @Valid Software software
 		if (errors.hasErrors()) {
+			errors.getAllErrors().stream().forEach(err -> log.error(err.toString()));
 			return this.getViewNameCreateUpdate();
 		}
 		this.service.save(entity);
@@ -329,15 +510,56 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 * {@inheritDoc}
 	 */
 	@Override
+	@PostMapping(URL_SLV_CREATE_CONTINUE)
+	public String create(@PathVariable(PV_MAIN_ID) Long mainId, @PathVariable(PV_IS_CONTINUE) boolean isContinue,
+			@Valid E entity, Errors errors, Model model
+	// , RedirectAttributes redirectAttributes
+	) {
+		log.info(this.objName + " [" + URL_SLV_CREATE_CONTINUE + "]: mainId = " + mainId + "; isContinue = "
+				+ isContinue + "; entity = " + entity);
+		if (errors.hasErrors()) {
+			errors.getAllErrors().stream().forEach(err -> log.error(err.toString()));
+			return this.getViewNameCreateUpdate();
+		}
+		this.saveSlaveEntity(mainId, entity);
+		if (isContinue) {
+			return getRedirectToCreate(mainId);
+		}
+		// redirectAttributes.addFlashAttribute("valuesSet", );
+		return this.getRedirectFromSlaveCreate(mainId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@PostMapping(URL_UPDATE)
 	public String update(@PathVariable(PV_ID) Long id, @Valid E entity, Errors errors, Model model) {
 		log.info(this.objName + " [" + URL_UPDATE + "]: id = " + id + "; entity = " + entity);
 		if (errors.hasErrors()) {
+			errors.getAllErrors().stream().forEach(err -> log.error(err.toString()));
 			entity.setId(id);
 			return this.getViewNameCreateUpdate();
 		}
 		this.service.save(entity);
 		return this.getRedirectToRead();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@PostMapping(URL_SLV_UPDATE)
+	public String update(@PathVariable(PV_MAIN_ID) Long mainId, @PathVariable(PV_ID) Long id, @Valid E entity,
+			Errors errors, Model model) {
+		log.info(this.objName + " [" + URL_SLV_UPDATE + "]: id = " + id + "; entity = " + entity);
+		if (errors.hasErrors()) {
+			errors.getAllErrors().stream().forEach(err -> log.error(err.toString()));
+			entity.setId(id);
+			return this.getViewNameCreateUpdate();
+		}
+		this.saveSlaveEntity(mainId, entity);
+		return this.getRedirectToRead(mainId);
 	}
 
 	/**
@@ -359,11 +581,37 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 * {@inheritDoc}
 	 */
 	@Override
+	@PostMapping(URL_SLV_DELETE)
+	public String delete(@PathVariable(PV_MAIN_ID) Long mainId, @RequestParam(RV_CHK_TABLE_RECORDS) List<String> ids) {
+		if (ids != null) {
+			for (String idsStr : ids) {
+				this.service.deleteById(Long.parseLong(idsStr));
+			}
+		}
+		log.info(this.objCollectName + " [" + URL_SLV_DELETE + "]: ids = " + ids);
+		return this.getRedirectToRead(mainId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@GetMapping(URL_DELETE_BY_ID)
 	public String deleteById(@PathVariable(PV_ID) Long id) {
 		this.service.deleteById(id);
 		log.info(this.objName + " [" + URL_DELETE_BY_ID + "]: id = " + id);
 		return this.getRedirectToRead();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@GetMapping(URL_SLV_DELETE_BY_ID)
+	public String deleteById(@PathVariable(PV_MAIN_ID) Long mainId, @PathVariable(PV_ID) Long id) {
+		this.service.deleteById(id);
+		log.info(this.objName + " [" + URL_SLV_DELETE_BY_ID + "]: id = " + id);
+		return this.getRedirectToRead(mainId);
 	}
 
 }

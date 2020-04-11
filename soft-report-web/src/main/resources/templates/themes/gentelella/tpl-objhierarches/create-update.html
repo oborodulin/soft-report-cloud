@@ -14,7 +14,7 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${objHierarchy.id == null} ? (${objHierarchy.parent == null} ? @{~/objhierarches/create/{isContinue}(isContinue='false')}:@{~/objhierarches/{parentId}/create/{isContinue}(parentId=${objHierarchy.parent.id}, isContinue='false')}) : @{~/objhierarches/update/{id}(id=${objHierarchy.id})}"
+			th:action="${objHierarchy.id == null} ? (${objHierarchy.parent == null} ? @{~/objhierarches/create/{isContinue}(isContinue='false')}:@{~/objhierarches/{mainId}/create/{isContinue}(mainId=${objHierarchy.parent.id}, isContinue='false')}) : @{~/objhierarches/update/{id}(id=${objHierarchy.id})}"
 			th:object="${objHierarchy}" th:method="POST"
 			id="form-create-objHierarchy" data-parsley-validate
 			class="form-horizontal form-label-left">

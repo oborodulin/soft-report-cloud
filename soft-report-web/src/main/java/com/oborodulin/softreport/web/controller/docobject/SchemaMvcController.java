@@ -35,7 +35,7 @@ public class SchemaMvcController extends AbstractTreeChildrenMvcController<DocOb
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<DocObject> getShowListChildren(Long parentId) {
+	public List<DocObject> getShowListSlavesEntities(Long parentId) {
 		return this.service.findSchemasByDataBaseId(parentId);
 	}
 
@@ -43,7 +43,7 @@ public class SchemaMvcController extends AbstractTreeChildrenMvcController<DocOb
 	 * {@inheritDoc}
 	 */
 	@Override
-	public DocObject createChildEntity(Long parentId) {
+	public DocObject createSlaveEntity(Long parentId) {
 		return this.service.createSchema(parentId);
 	}
 

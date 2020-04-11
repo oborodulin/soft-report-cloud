@@ -12,11 +12,11 @@
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
 		<th:block
-			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/valuessets}, master=${master}, detailsHref='values')" />
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/valuessets}, master=${mainEntity}, detailsHref='values')" />
 
 		<div th:if="${not #lists.isEmpty(values)}" class="table-responsive">
 			<form
-				th:action="@{~/values/{masterId}/delete(masterId=${master.id})}"
+				th:action="@{~/values/{mainId}/delete(mainId=${mainEntity.id})}"
 				th:method="POST" id="form-delete-values">
 				<table class="table table-striped jambo_table bulk_action">
 					<thead>

@@ -14,7 +14,7 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${not #lists.isEmpty(progLangs)} ? (${dataType.id == null} ? @{~/datatypes/create/{isContinue}(isContinue='false')} : @{~/datatypes/update/{id}(id=${dataType.id})}) : (${dataType.id == null} ? @{~/datatypes/{masterId}/create/{isContinue}(masterId=${dataType.master.id}, isContinue='false')} : @{~/datatypes/{masterId}/update/{id}(masterId=${dataType.master.id}, id=${dataType.id})})"
+			th:action="${not #lists.isEmpty(progLangs)} ? (${dataType.id == null} ? @{~/datatypes/create/{isContinue}(isContinue='false')} : @{~/datatypes/update/{id}(id=${dataType.id})}) : (${dataType.id == null} ? @{~/datatypes/{mainId}/create/{isContinue}(mainId=${dataType.master.id}, isContinue='false')} : @{~/datatypes/{mainId}/update/{id}(mainId=${dataType.master.id}, id=${dataType.id})})"
 			th:object="${dataType}" th:method="POST" id="form-create-dataType"
 			data-parsley-validate class="form-horizontal form-label-left">
 			<div th:if="${not #lists.isEmpty(progLangs)}" class="item form-group">
@@ -94,7 +94,7 @@
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
 			<th:block
-				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=${not #lists.isEmpty(progLangs)} ? @{~/datatypes} : @{~/datatypes/{masterId}(masterId=${dataType.master.id})}, object=${dataType}, formId='form-create-dataType')" />
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=${not #lists.isEmpty(progLangs)} ? @{~/datatypes} : @{~/datatypes/{mainId}(mainId=${dataType.master.id})}, object=${dataType}, formId='form-create-dataType')" />
 		</form>
 	</div>
 	<!-- /page content -->

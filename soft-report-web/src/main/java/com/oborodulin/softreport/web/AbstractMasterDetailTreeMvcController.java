@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public abstract class AbstractMasterDetailTreeMvcController<E extends AuditableEntity<U>, T extends DetailTreeEntity<E, T, U>, S extends CommonJpaDetailTreeService<E, T, U>, U>
 		extends AbstractTreeMvcController<T, S, U> implements CommonMasterDetailTreeMvcController<E, T, U> {
 
-	public static final String URL_DTL_READ_TREE = "/tree/{masterId}";
+	public static final String URL_DTL_READ_TREE = "/tree/{mainId}";
 
 	/**
 	 * Конструктор. Инстанцирует объект.
@@ -38,7 +38,7 @@ public abstract class AbstractMasterDetailTreeMvcController<E extends AuditableE
 	 */
 	@Override
 	@GetMapping(URL_DTL_READ_TREE)
-	public String showDetailTree(@PathVariable(PV_MASTER_ID) Long masterId, Locale locale, Model model) {
+	public String showDetailTree(@PathVariable(PV_MAIN_ID) Long masterId, Locale locale, Model model) {
 		List<T> entities = this.service.findByMasterId(masterId);
 		if (entities.isEmpty()) {
 			MessageHelper.addInfoAttribute(model, this.msPrefix.concat(".info.empty"));

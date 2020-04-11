@@ -12,11 +12,11 @@
 	<!-- page content -->
 	<div class="x_content" layout:fragment="page-content">
 		<th:block
-			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/projects}, master=${master}, detailsHref='tasks')" />
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/projects}, master=${mainEntity}, detailsHref='tasks')" />
 
 		<div th:if="${not #lists.isEmpty(tasks)}" class="table-responsive">
 			<form
-				th:action="@{~/tasks/{masterId}/delete(masterId=${master.id})}"
+				th:action="@{~/tasks/{mainId}/delete(mainId=${mainEntity.id})}"
 				th:method="POST" id="form-delete-tasks">
 				<table class="table table-striped jambo_table bulk_action">
 					<thead>
@@ -43,11 +43,11 @@
 								class="flat"></td>
 							<td class=" "><div style="display: flex;">
 									<a
-										th:href="@{~/tasks/{masterId}/edit/{id}(masterId=${task.master.id}, id=${task.id})}"
+										th:href="@{~/tasks/{mainId}/edit/{id}(mainId=${task.master.id}, id=${task.id})}"
 										class="btn btn-info btn-sm"
 										style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
 										class="fa fa-pencil fa-xs"></i></a><a
-										th:href="@{~/tasks/{masterId}/delete/{id}(masterId=${task.master.id}, id=${task.id})}"
+										th:href="@{~/tasks/{mainId}/delete/{id}(mainId=${task.master.id}, id=${task.id})}"
 										class="btn btn-danger btn-sm"
 										style="margin: 0px; padding-top: 0px; padding-bottom: 0px; display: inline;"><i
 										class="fa fa-trash-o fa-xs"></i></a>

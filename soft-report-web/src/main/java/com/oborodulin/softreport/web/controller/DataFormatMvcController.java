@@ -30,7 +30,7 @@ public class DataFormatMvcController
 	@Autowired
 	public DataFormatMvcController(DataTypeServiceImpl masterService, DataFormatServiceImpl service) {
 		super(masterService, service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
-		this.setDtlSortPropName("format");
+		this.setSortPropName("format");
 	}
 
 }

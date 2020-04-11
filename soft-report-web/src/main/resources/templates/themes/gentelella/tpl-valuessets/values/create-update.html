@@ -23,7 +23,7 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${value.id == null} ? @{~/values/{masterId}/create/{isContinue}(masterId=${value.master.id}, isContinue='false')} : @{~/values/{masterId}/update/{id}(masterId=${value.master.id}, id=${value.id})}"
+			th:action="${value.id == null} ? @{~/values/{mainId}/create/{isContinue}(mainId=${value.master.id}, isContinue='false')} : @{~/values/{mainId}/update/{id}(mainId=${value.master.id}, id=${value.id})}"
 			th:object="${value}" th:method="POST" id="form-create-value"
 			data-parsley-validate class="form-horizontal form-label-left">
 			<div class="item form-group">
@@ -98,7 +98,7 @@
 			<div class="clearfix"></div>
 			<div class="ln_solid"></div>
 			<th:block
-				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/values/{masterId}(masterId=${value.master.id})}, object=${value}, formId='form-create-value')" />
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=@{~/values/{mainId}(mainId=${value.master.id})}, object=${value}, formId='form-create-value')" />
 		</form>
 	</div>
 	<!-- /page content -->
