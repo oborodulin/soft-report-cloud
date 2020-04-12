@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-read-delete}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
+<!-- query.treetable -->
+<link class="custom-link"
+	th:href="@{/webjars/jquery-treetable/css/jquery.treetable.css}"
+	rel="stylesheet">
+<link class="custom-link"
+	href="/css/jquery-treetable/jquery.treetable.theme.default.css"
+	rel="stylesheet">
+	</head>
+</th:block>
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<th:block
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/projects}, master=${mainEntity}, detailsHref='documents')" />
+
+		<div th:if="${not #lists.isEmpty(documents)}" class="table-responsive">
+			<form
+				th:action="${mainEntity == null} ? @{~/documents/delete} : @{~/documents/{mainId}/delete(mainId=${mainEntity.id})}"
+				th:method="POST" id="form-delete-documents">
+				<table id="documents-tree-table"
+					class="table table-striped jambo_table bulk_action">
+					<thead>
+						<tr class="headings">
+							<th style="width: 5%"><input type="checkbox" id="check-all"
+								class="flat"></th>
+							<th class="column-title" style="width: 10%" />
+							<th class="column-title" style="width: 25%"
+								th:text="#{name.label}" />
+							<th class="column-title" style="width: 10%"
+								th:text="#{version.label}" />
+							<th class="column-title" style="width: 10%"
+								th:text="#{type.label}" />
+							<th class="column-title" style="width: 30%"
+								th:text="#{purpose.label}" />
+							<th class="column-title no-link last" style="width: 30%"><span
+								class="nobr" th:text="#{objectives.label}"></span></th>
+							<th class="bulk-actions" th:colspan="6"><th:block
+									th:replace="fragments/fragment-read-delete :: grid-tree-buttons(baseHref='documents')" />
+									<a th:href="@{~/documents/view/[id]}"
+								class="btn btn-secondary btn-xs"
+								onclick="bulkActionChecked(this, event, 'table_records');"><i
+									class="fa fa-file-text" aria-hidden="true"></i> <th:block
+										th:text="' '+#{view.label}" /></a>
+							</th>
+						</tr>
+					</thead>
+					<tbody th:with="rowNum=0">
+						<th:block th:replace="this :: outputTree(${documents}, ${rowNum})" />
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+	<th:block th:fragment="outputTree(documents, rowNum)">
+		<th:block th:with="rowNum=${rowNum+1}">
+			<th:block th:each="document, stat : ${documents}">
+				<tr th:data-tt-id="${document.id}"
+					th:attrappend="data-tt-parent-id=${document.parent != null} ? ${document.parent.id}"
+					th:class="${rowNum % 2 != 0} ? 'odd pointer' : 'even pointer'">
+					<td class="a-center "><input name="table_records"
+						type="checkbox" th:value="${document.id}" class="flat"></td>
+					<td
+						th:replace="fragments/fragment-read-delete :: master-detail-buttons(masterHref='documents', master=${document}, detailsHref='versions', details=${document.versions}, detail=${document})" />
+					<td th:text="${document.name}" class=" " />
+					<td th:text="${document.lastVersion}" class=" " />
+					<td th:text="${document.type.type.val}" class=" " />
+					<td th:text="${document.purpose}" class=" " />
+					<td th:text="${document.objectives}" class=" " />
+				</tr>
+				<th:block th:if="${!#lists.isEmpty(document.children)}"
+					th:replace="this :: outputTree(${document.children}, ${rowNum})" />
+			</th:block>
+		</th:block>
+	</th:block>
+	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-read-delete :: body(scripts=~{this :: .custom-script})" />
+		<script class="custom-script"
+			th:src="@{/webjars/jquery-treetable/jquery.treetable.js}"></script>
+		<!-- Initialize jquery.treetable -->
+		<script class="custom-script" type="text/javascript">
+			$("#documents-tree-table").treetable({
+				expandable : true,
+				column : 2,
+				initialState : "expanded",
+				clickableNodeNames : true
+			});
+		</script>
+	</th:block>
+</body>
+</html>

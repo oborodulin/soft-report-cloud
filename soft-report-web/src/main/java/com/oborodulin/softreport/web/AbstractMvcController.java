@@ -42,8 +42,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	protected static final String URL_READ = "/read";
 	protected static final String URL_CREATE = "/create";
 	protected static final String URL_CREATE_CONTINUE = "/create/{isContinue}";
-	protected static final String URL_CREATE_CHILD = "/{mainId}/create";
-	protected static final String URL_CREATE_CHILD_CONTINUE = "/{mainId}/create/{isContinue}";
+	protected static final String URL_VIEW = "/view/{id}";
 	protected static final String URL_EDIT = "/edit/{id}";
 	protected static final String URL_UPDATE = "/update/{id}";
 	protected static final String URL_DELETE = "/delete";
@@ -52,8 +51,6 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	protected static final String URL_SLV_READ = "/{mainId}";
 	protected static final String URL_SLV_CREATE = "/{mainId}/create";
 	protected static final String URL_SLV_CREATE_CONTINUE = "/{mainId}/create/{isContinue}";
-	protected static final String URL_SLV_CREATE_CHILD = "/{mainId}/{mainId}/create";
-	protected static final String URL_SLV_CREATE_CHILD_CONTINUE = "/{mainId}/{mainId}/create/{isContinue}";
 	protected static final String URL_SLV_EDIT = "/{mainId}/edit/{id}";
 	protected static final String URL_SLV_UPDATE = "/{mainId}/update/{id}";
 	protected static final String URL_SLV_DELETE = "/{mainId}/delete";

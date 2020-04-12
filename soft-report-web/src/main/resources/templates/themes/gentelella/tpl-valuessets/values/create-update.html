@@ -11,11 +11,11 @@
 <link class="custom-link"
 	th:href="@{/webjars/bootstrap-daterangepicker/css/bootstrap-daterangepicker.css}"
 	rel="stylesheet">
+<!-- bootstrap-datetimepicker -->
+<link class="custom-link"
+	th:href="@{/webjars/Eonasdan-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}"
+	rel="stylesheet">
 	</head>
-	<!-- bootstrap-datetimepicker -->
-	<link class="custom-link"
-		th:href="@{/webjars/Eonasdan-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}"
-		rel="stylesheet">
 </th:block>
 
 <body class="nav-md">
@@ -104,8 +104,7 @@
 	<!-- /page content -->
 	<th:block th:fragment="body-scripts">
 		<th:block
-			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})">
-		</th:block>
+			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})"/>
 		<!-- bootstrap-daterangepicker -->
 		<script class="custom-script" src="/js/moment-with-locales.min.js"></script>
 		<!-- script class="custom-script" th:src="@{/webjars/momentjs/min/moment.min.js}"></script-->

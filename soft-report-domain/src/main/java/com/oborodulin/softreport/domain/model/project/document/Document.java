@@ -1,7 +1,9 @@
 package com.oborodulin.softreport.domain.model.project.document;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -46,14 +48,14 @@ public class Document extends DetailTreeEntity<Project, Document, String> {
 
 	@Column(length = 2000)
 	private String purpose;
-	
+
 	@Column(length = 2000)
 	private String objectives;
 
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	private Date approveDate;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "doc_types_id", nullable = false)
 	@ToString.Exclude
@@ -66,7 +68,7 @@ public class Document extends DetailTreeEntity<Project, Document, String> {
 	@OneToMany(mappedBy = CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private Set<Version> versions = new HashSet<>();
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -81,6 +83,12 @@ public class Document extends DetailTreeEntity<Project, Document, String> {
 
 	public void addVersion(Version version) {
 		this.versions.add(version);
+	}
+
+	public String getLastVersion() {
+		Version lastVersion = this.versions.stream().max(Comparator.comparing(Version::getVersionNumber))
+				.orElseThrow(NoSuchElementException::new);
+		return lastVersion.getSemVersionString();
 	}
 
 }

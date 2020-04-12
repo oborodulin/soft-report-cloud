@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-read-delete}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-read-delete :: head(${titleRead}, ~{this :: .custom-link})">
+	</head>
+</th:block>
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<th:block
+			th:replace="fragments/fragment-read-delete :: panel-master-buttons(masterHref=@{~/datatypes}, master=${mainEntity}, detailsHref='dataformats')" />
+
+		<div th:if="${not #lists.isEmpty(dataFormats)}"
+			class="table-responsive">
+			<form
+				th:action="@{~/dataformats/{mainId}/delete(mainId=${mainEntity.id})}"
+				th:method="POST" id="form-delete-dataFormats">
+				<table class="table table-striped jambo_table bulk_action">
+					<thead>
+						<tr class="headings">
+							<th><input type="checkbox" id="check-all" class="flat">
+							</th>
+							<th class="column-title" />
+							<th class="column-title" th:text="#{format.label}" />
+							<th class="column-title" th:text="#{sample.label}" />
+							<th class="column-title no-link last"><span class="nobr"
+								th:text="#{descr.label}"></span></th>
+							<th class="bulk-actions" colspan="4"><th:block
+									th:replace="fragments/fragment-read-delete :: grid-buttons" />
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="dataFormat, rowStat : ${dataFormats}"
+							th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
+							<td class="a-center "><input id="table_records"
+								name="table_records" type="checkbox" th:value="${dataFormat.id}"
+								class="flat"></td>
+							<td
+								th:replace="fragments/fragment-read-delete :: detail-buttons(master=${dataFormat.master}, detailsHref='dataformats', detail=${dataFormat})" />
+							<td th:text="${dataFormat.format}" class=" " />
+							<td th:text="${dataFormat.sample}" class=" " />
+							<td th:text="${dataFormat.descr}" class=" " />
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-read-delete :: body(scripts=~{this :: .custom-script})">
+		</th:block>
+	</th:block>
+</body>
+</html>

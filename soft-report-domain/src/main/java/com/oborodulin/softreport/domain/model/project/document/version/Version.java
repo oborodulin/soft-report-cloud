@@ -57,7 +57,7 @@ public class Version extends DetailEntity<Document, String> {
 	 */
 	@Override
 	public String getCodeId() {
-		return this.getSemVer();
+		return this.getSemVersionString();
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class Version extends DetailEntity<Document, String> {
 	 * 
 	 * @return номер версии в формате (x.y.z)
 	 */
-	public String getSemVer() {
+	public String getSemVersionString() {
 		String strMinor = null;
 		String strPatch = null;
 		if (getPatch() != 0L) {
@@ -75,7 +75,15 @@ public class Version extends DetailEntity<Document, String> {
 			}
 		}
 		return this.major.toString().concat(strMinor).concat(strPatch);
+	}
 
+	/**
+	 * Возвращает номер версии в числовом формате
+	 * 
+	 * @return номер версии в числовом формате
+	 */
+	public Long getVersionNumber() {
+		return this.major * 100000000L + this.minor * 100000L + this.patch * 100L;
 	}
 
 	/**

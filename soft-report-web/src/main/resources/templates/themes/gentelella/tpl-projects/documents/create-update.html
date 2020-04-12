@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-create-update}"
+	th:with="titleCurrent=${document.id == null} ? ${titleCreate} : ${titleUpdate}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
+<!-- bootstrap-daterangepicker -->
+<link class="custom-link"
+	th:href="@{/webjars/bootstrap-daterangepicker/css/bootstrap-daterangepicker.css}"
+	rel="stylesheet">
+<!-- bootstrap-datetimepicker -->
+<link class="custom-link"
+	th:href="@{/webjars/Eonasdan-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}"
+	rel="stylesheet">
+	</head>
+</th:block>
+
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<br />
+		<form
+			th:action="${not #lists.isEmpty(projects)} ? (${document.id == null} ? @{~/documents/create/{isContinue}(isContinue='false')} : @{~/documents/update/{id}(id=${document.id})}) : (${document.id == null} ? @{~/documents/{mainId}/create/{isContinue}(mainId=${document.master.id}, isContinue='false')} : @{~/documents/{mainId}/update/{id}(mainId=${document.master.id}, id=${document.id})})"
+			th:object="${document}" th:method="POST" id="form-create-document"
+			data-parsley-validate class="form-horizontal form-label-left">
+			<div th:if="${not #lists.isEmpty(projects)}" class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="master" th:text="#{project.label}"><span
+					class="required">*</span></label>
+				<div class="col-md-6 col-sm-6 ">
+					<select th:field="*{master}" required="required"
+						class="select2_group form-control">
+						<option value="" th:text="#{project.opt.empty.label}" />
+						<option th:each="opt : ${projects}" th:value="${opt.id}"
+							th:text="${opt.name}"
+							th:selected="${document.master != null} ? ${opt.id == document.master.id}: 'false'"></option>
+					</select>
+				</div>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="type" th:text="#{backendtype.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<select th:field="*{type}" class="select2_group form-control">
+						<option value="" th:text="#{type.opt.empty.label}" />
+						<optgroup th:each="entry : ${types.entrySet()}"
+							th:with="details=${entry.value}" th:label="${entry.key}">
+							<option th:each="opt : ${details}" th:value="${opt.id}"
+								th:text="${opt.name}"
+								th:selected="${document.type != null} ? ${opt.id == document.type.id}: 'false'"></option>
+						</optgroup>
+					</select>
+				</div>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="name"><th:block th:text="#{name.label}" /></label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{name}" class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+					class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="approveDate" th:text="#{approveDate.label}"></label>
+				<div class='input-group date col-md-3 col-sm-3'
+					id='approveDatetimepicker'>
+					<input type='text' th:field="*{approveDate}" class="form-control" />
+					<span class="input-group-addon"><i
+						class="fa fa-calendar fa-lg"></i></span>
+				</div>
+				<span th:if="${#fields.hasErrors('approveDate')}"
+					th:errors="*{approveDate}" class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label for="purpose"
+					class="col-form-label col-md-3 col-sm-3 label-align"
+					th:text="#{purpose.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<textarea th:field="*{purpose}" class="form-control" rows="3"></textarea>
+				</div>
+			</div>
+			<div class="item form-group">
+				<label for="objectives"
+					class="col-form-label col-md-3 col-sm-3 label-align"
+					th:text="#{objectives.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<textarea th:field="*{objectives}" class="form-control" rows="3"></textarea>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="ln_solid"></div>
+			<th:block
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=${not #lists.isEmpty(projects)} ? @{~/documents} : @{~/documents/{mainId}(mainId=${document.master.id})}, object=${document}, formId='form-create-document')" />
+		</form>
+	</div>
+	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})" />
+		<!-- bootstrap-daterangepicker -->
+		<script class="custom-script" src="/js/moment-with-locales.min.js"></script>
+		<!-- script class="custom-script" th:src="@{/webjars/momentjs/min/moment.min.js}"></script-->
+		<script class="custom-script"
+			th:src="@{/webjars/bootstrap-daterangepicker/js/bootstrap-daterangepicker.js}"></script>
+		<!-- bootstrap-datetimepicker -->
+		<script class="custom-script"
+			th:src="@{/webjars/Eonasdan-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}"></script>
+		<!-- Initialize datetimepicker 	format:'d.m.Y H:i',-->
+		<script class="custom-script" type="text/javascript">
+			$(function() {
+				moment().locale('ru');
+				$('#approveDatetimepicker').datetimepicker({
+					format : "DD.MM.YYYY"
+				});
+			});
+		</script>
+	</th:block>
+</body>
+</html>

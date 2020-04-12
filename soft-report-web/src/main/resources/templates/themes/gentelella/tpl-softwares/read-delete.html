@@ -80,8 +80,7 @@
 	<!-- /page content -->
 	<th:block th:fragment="body-scripts">
 		<th:block
-			th:replace="fragments/fragment-read-delete :: body(scripts=~{this :: .custom-script})">
-		</th:block>
+			th:replace="fragments/fragment-read-delete :: body(scripts=~{this :: .custom-script})"/>
 		<script class="custom-script"
 			th:src="@{/webjars/jquery-treetable/jquery.treetable.js}"></script>
 		<!-- Initialize jquery.treetable -->
