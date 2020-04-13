@@ -34,12 +34,22 @@ public class DataTypeMvcController
 	public DataTypeMvcController(ProgLangServiceImpl masterService, DataTypeServiceImpl service) {
 		super(masterService, service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
 		Map<String, Object> ma = new HashMap<>();
-		ma.put("progLangs", masterService.findAll());
 		ma.put("sqlTypes", this.service.getSqlTypes());
-		ma.put("backendTypes", this.service.getBackendTypes());
-		ma.put("frontendTypes", this.service.getFrontendTypes());
+
 		this.setModelAttributes(RM_CREATE, ma);
 		this.setModelAttributes(RM_UPDATE, ma);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, Object> getShowCreateModelAttributes() {
+		Map<String, Object> ma = new HashMap<>();
+		ma.put("progLangs", masterService.findAll());
+		ma.put("backendTypes", this.service.getBackendTypes());
+		ma.put("frontendTypes", this.service.getFrontendTypes());
+		return ma;
 	}
 
 }

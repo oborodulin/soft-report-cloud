@@ -27,6 +27,14 @@ public class DocTypeServiceImpl extends AbstractJpaTreeService<DocType, DocTypeR
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<DocType> findAllOrderByCateg() {
+		return this.repository.findAllByOrderByCategCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<Value> getCategs() {
 		return valuesSetService.getDocCategs();
 	};

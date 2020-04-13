@@ -12,7 +12,7 @@ public interface CommonJpaDetailService<E extends AuditableEntity<U>, D extends 
 
 	public List<D> findByMaster(E master, Sort sort);
 
-	public List<D> findByMasterId(Long id, Sort sort);
+	public List<D> findByMasterId(Long masterId, Sort sort);
 
 	public D create(Long masterId);
 

@@ -42,14 +42,14 @@
 			</div>
 			<div class="item form-group">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
-					for="type" th:text="#{backendtype.label}"></label>
+					for="type" th:text="#{type.label}"></label>
 				<div class="col-md-6 col-sm-6 ">
 					<select th:field="*{type}" class="select2_group form-control">
 						<option value="" th:text="#{type.opt.empty.label}" />
 						<optgroup th:each="entry : ${types.entrySet()}"
 							th:with="details=${entry.value}" th:label="${entry.key}">
 							<option th:each="opt : ${details}" th:value="${opt.id}"
-								th:text="${opt.name}"
+								th:text="${opt.type.val}"
 								th:selected="${document.type != null} ? ${opt.id == document.type.id}: 'false'"></option>
 						</optgroup>
 					</select>

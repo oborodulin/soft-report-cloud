@@ -8,6 +8,8 @@ import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 
 public interface DocTypeService extends CommonJpaTreeService<DocType, String> {
 
+	public List<DocType> findAllOrderByCateg();
+
 	public List<Value> getCategs();
 
 	public List<Value> getTypes();

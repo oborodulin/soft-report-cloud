@@ -38,8 +38,8 @@ public abstract class AbstractJpaDetailTreeService<E extends AuditableEntity<U>,
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<T> findByMasterId(Long id, Sort sort) {
-		return this.repository.findByMaster_Id(id, sort);
+	public List<T> findByMasterId(Long masterId, Sort sort) {
+		return this.repository.findByMaster_Id(masterId, sort);
 	};
 
 	/**
@@ -47,7 +47,7 @@ public abstract class AbstractJpaDetailTreeService<E extends AuditableEntity<U>,
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<T> findByMasterId(Long masterId) {
+	public List<T> findByMasterIdAndParentIsNull(Long masterId, Sort sort) {
 		return this.repository.findByMaster_IdAndParentIsNull(masterId);
 	};
 
@@ -56,14 +56,13 @@ public abstract class AbstractJpaDetailTreeService<E extends AuditableEntity<U>,
 	 */
 	@Override
 	@Transactional
-	public T create(Long parentId) {
+	public T create(Long masterId) {
 		T entity = null;
 		try {
-			T parent = this.repository.findById(parentId)
-					.orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + parentId));
+			E master = this.masterRepository.findById(masterId)
+					.orElseThrow(() -> new IllegalArgumentException("Invalid master Id:" + masterId));
 			entity = this.create();
-			entity.setParent(parent);
-			entity.setMaster(parent.getMaster());
+			entity.setMaster(master);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,12 +75,47 @@ public abstract class AbstractJpaDetailTreeService<E extends AuditableEntity<U>,
 	 */
 	@Override
 	@Transactional
-	public Optional<T> save(Long parentId, T entity) {
-		T parent = this.repository.findById(parentId)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + parentId));
-		entity.setParent(parent);
-		entity.setMaster(parent.getMaster());
+	public T create(Long masterId, Long parentId) {
+		T entity = null;
+		try {
+			E master = this.masterRepository.findById(masterId)
+					.orElseThrow(() -> new IllegalArgumentException("Invalid master Id:" + parentId));
+			T parent = this.repository.findById(parentId)
+					.orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + parentId));
+			entity = this.create();
+			entity.setMaster(master);
+			entity.setParent(parent);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return entity;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional
+	public Optional<T> save(Long masterId, T entity) {
+		E master = this.masterRepository.findById(masterId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid master Id:" + masterId));
+		entity.setMaster(master);
 		return this.save(entity);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional
+	public Optional<T> save(Long masterId, Long parentId, T entity) {
+		E master = this.masterRepository.findById(masterId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid master Id:" + masterId));
+		T parent = this.repository.findById(parentId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + parentId));
+		entity.setMaster(master);
+		entity.setParent(parent);
+		return this.save(entity);
+	}
 }

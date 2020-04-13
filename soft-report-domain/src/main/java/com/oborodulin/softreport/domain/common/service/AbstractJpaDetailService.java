@@ -38,8 +38,8 @@ public abstract class AbstractJpaDetailService<E extends AuditableEntity<U>, D e
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<D> findByMasterId(Long id, Sort sort) {
-		return this.repository.findByMaster_Id(id, sort);
+	public List<D> findByMasterId(Long masterId, Sort sort) {
+		return this.repository.findByMaster_Id(masterId, sort);
 	};
 
 	/**

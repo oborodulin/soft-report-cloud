@@ -27,11 +27,12 @@ import com.oborodulin.softreport.domain.model.dic.doctype.DocType;
 import com.oborodulin.softreport.domain.model.project.Project;
 import com.oborodulin.softreport.domain.model.project.document.version.Version;
 import com.oborodulin.softreport.domain.model.term.Term;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Data
 @Entity
 @Table(name = Document.TABLE_NAME)
@@ -74,7 +75,8 @@ public class Document extends DetailTreeEntity<Project, Document, String> {
 	 */
 	@Override
 	public String getCodeId() {
-		return this.name;
+		return this.name != null && !this.name.isEmpty() ? this.name
+				: this.type.getType().getVal() + ". " + this.getMaster().getName();
 	}
 
 	public void addTerm(Term term) {
@@ -86,9 +88,14 @@ public class Document extends DetailTreeEntity<Project, Document, String> {
 	}
 
 	public String getLastVersion() {
-		Version lastVersion = this.versions.stream().max(Comparator.comparing(Version::getVersionNumber))
-				.orElseThrow(NoSuchElementException::new);
-		return lastVersion.getSemVersionString();
+		Version lastVersion = null;
+		try {
+			lastVersion = this.versions.stream().max(Comparator.comparing(Version::getVersionNumber))
+					.orElseThrow(NoSuchElementException::new);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return lastVersion != null ? lastVersion.getSemVersionString() : null;
 	}
 
 }

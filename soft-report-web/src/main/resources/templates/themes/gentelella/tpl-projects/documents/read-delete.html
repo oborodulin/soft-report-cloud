@@ -68,8 +68,8 @@
 					<td class="a-center "><input name="table_records"
 						type="checkbox" th:value="${document.id}" class="flat"></td>
 					<td
-						th:replace="fragments/fragment-read-delete :: master-detail-buttons(masterHref='documents', master=${document}, detailsHref='versions', details=${document.versions}, detail=${document})" />
-					<td th:text="${document.name}" class=" " />
+						th:replace="fragments/fragment-read-delete :: master-buttons(masterHref='documents', master=${document}, detailsHref='versions', details=${document.versions})" />
+					<td th:text="${document.codeId}" class=" " />
 					<td th:text="${document.lastVersion}" class=" " />
 					<td th:text="${document.type.type.val}" class=" " />
 					<td th:text="${document.purpose}" class=" " />
