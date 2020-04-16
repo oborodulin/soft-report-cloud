@@ -56,6 +56,10 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	protected static final String URL_SLV_DELETE = "/{mainId}/delete";
 	protected static final String URL_SLV_DELETE_BY_ID = "/{mainId}/delete/{id}";
 
+	protected static final String URL_MVC_CREATE_CONTINUE = "/mvc/create/{isContinue}";
+	protected static final String URL_MVC_UPDATE = "/mvc/update/{id}";
+	protected static final String URL_MVC_SLV_CREATE_CONTINUE = "/mvc/{mainId}/create/{isContinue}";
+	
 	protected static final String MA_MAIN_ENTITY = "mainEntity";
 	protected static final String MA_TITLE_MASTER = "titleMaster";
 	protected static final String MA_TITLE_PARENT = "titleParent";
@@ -187,6 +191,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 * @see #RM_SHOW_UPDATE_FORM
 	 */
 	protected void setModelAttributes(String requestMethName, Map<String, Object> modelAttributes) {
+		log.info("setModelAttributes: requestMethName = " + requestMethName);
 		this.modelAttributes.put(requestMethName, modelAttributes);
 	}
 
@@ -201,6 +206,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 * @see #RM_SHOW_UPDATE_FORM
 	 */
 	protected Map<String, Object> getModelAttributes(String requestMethName) {
+		log.info("getModelAttributes: requestMethName = " + requestMethName);
 		Map<String, Object> ma = modelAttributes.get(requestMethName);
 		if (ma != null) {
 			ma.forEach((key, value) -> log.debug(key + ":" + value));
@@ -298,6 +304,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public List<E> getShowListEntities() {
+		log.info("getShowListEntities:");
 		return this.service.findAll();
 	}
 
@@ -306,6 +313,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public AuditableEntity<U> getShowListMainEntity(Long mainId) {
+		log.info("getShowListMainEntity: mainId = " + mainId);
 		return null;
 	}
 
@@ -314,6 +322,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public List<E> getShowListSlavesEntities(Long mainId) {
+		log.info("getShowListSlavesEntities: mainId = " + mainId);
 		return new ArrayList<>();
 	}
 
@@ -322,6 +331,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public E createEntity() {
+		log.info("createEntity:");
 		return this.service.create();
 	}
 
@@ -330,6 +340,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public E createSlaveEntity(Long mainId) {
+		log.info("createSlaveEntity: mainId = " + mainId);
 		return null;
 	}
 
@@ -338,6 +349,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public AuditableEntity<U> getMainEntity(E slaveEntity) {
+		log.info("getMainEntity: slaveEntityId = " + slaveEntity.getId());
 		return null;
 	}
 
@@ -346,6 +358,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public void saveSlaveEntity(Long mainId, E slaveEntity) {
+		log.info("saveSlaveEntity: mainId = " + mainId + "; slaveEntityId = " + slaveEntity.getId());
 	}
 
 	/**
@@ -353,6 +366,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public Map<String, Object> getShowCreateModelAttributes() {
+		log.info("getShowCreateModelAttributes:");
 		return new HashMap<>();
 	}
 
@@ -361,6 +375,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public Map<String, Object> getShowUpdateModelAttributes(Long id) {
+		log.info("getShowUpdateModelAttributes: id = " + id);
 		return this.getShowCreateModelAttributes();
 	}
 
@@ -369,6 +384,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public Map<String, Object> getShowCreateModelAttributes(Long mainId) {
+		log.info("getShowCreateModelAttributes: mainId = " + mainId);
 		return this.getShowCreateModelAttributes();
 	}
 
@@ -377,6 +393,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	 */
 	@Override
 	public Map<String, Object> getShowUpdateModelAttributes(Long mainId, Long id) {
+		log.info("getShowUpdateModelAttributes: mainId = " + mainId + "; id = " + id);
 		return this.getShowCreateModelAttributes(mainId);
 	}
 

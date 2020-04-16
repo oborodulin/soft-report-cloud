@@ -84,7 +84,7 @@ public abstract class AbstractJpaTreeService<E extends TreeEntity<E, U>, R exten
 	@Transactional
 	public Optional<E> save(Long parentId, E entity) {
 		entity.setParent(this.repository.findById(parentId)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid software parent Id:" + parentId)));
+				.orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + parentId)));
 		return this.save(entity);
 	};
 

@@ -2,11 +2,11 @@ package com.oborodulin.softreport.domain.service;
 
 import com.oborodulin.softreport.domain.common.service.AbstractJpaDetailTreeService;
 import com.oborodulin.softreport.domain.model.dic.doctype.DocType;
-import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import com.oborodulin.softreport.domain.model.project.Project;
 import com.oborodulin.softreport.domain.model.project.ProjectRepository;
 import com.oborodulin.softreport.domain.model.project.document.Document;
 import com.oborodulin.softreport.domain.model.project.document.DocumentRepository;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service("jpaDocumentService")
 @Transactional
 public class DocumentServiceImpl
@@ -37,16 +38,12 @@ public class DocumentServiceImpl
 	@Override
 	public Map<String, List<DocType>> getTypes() {
 		Map<String, List<DocType>> types = new HashMap<>();
-		Value prevCateg = null;
-		List<DocType> categTypes = new ArrayList<>();
 		for (DocType docType : this.docTypeService.findAllOrderByCateg()) {
-			if (prevCateg == null || prevCateg.equals(docType.getCateg())) {
-				categTypes.add(docType);
-			} else {
-				types.put(prevCateg.getVal(), new ArrayList<>(categTypes));
-				categTypes.clear();
+			log.info("Doc = " + docType);
+			if (types.get(docType.getCateg().getVal()) == null) {
+				types.put(docType.getCateg().getVal(), new ArrayList<>());
 			}
-			prevCateg = docType.getCateg();
+			types.get(docType.getCateg().getVal()).add(docType);
 		}
 		return types;
 	};

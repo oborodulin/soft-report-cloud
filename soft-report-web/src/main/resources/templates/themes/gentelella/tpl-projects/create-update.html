@@ -7,6 +7,10 @@
 <th:block th:fragment="header">
 	<head
 		th:replace="fragments/fragment-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
+<!-- bootstrap-duallistbox -->
+<link class="custom-link"
+	th:href="@{/webjars/bootstrap-duallistbox/dist/bootstrap-duallistbox.css}"
+	rel="stylesheet">
 	</head>
 </th:block>
 <body class="nav-md">
@@ -14,10 +18,9 @@
 	<div class="x_content" layout:fragment="page-content">
 		<br />
 		<form
-			th:action="${project.id == null} ? (${project.parent == null} ? @{~/projects/create/{isContinue}(isContinue='false')}:@{~/projects/{mainId}/create/{isContinue}(mainId=${project.parent.id}, isContinue='false')}) : @{~/projects/update/{id}(id=${project.id})}"
-			th:object="${project}" th:method="POST"
-			id="form-create-project" data-parsley-validate
-			class="form-horizontal form-label-left">
+			th:action="${project.id == null} ? (${project.parent == null} ? @{~/projects/mvc/create/{isContinue}(isContinue='false')}:@{~/projects/mvc/{mainId}/create/{isContinue}(mainId=${project.parent.id}, isContinue='false')}) : @{~/projects/mvc/update/{id}(id=${project.id})}"
+			th:object="${project}" th:method="POST" id="form-create-project"
+			data-parsley-validate class="form-horizontal form-label-left">
 			<div class="form-group row">
 				<label class="col-form-label col-md-3 col-sm-3 label-align"
 					th:text="#{projects.parent.label}"></label>
@@ -38,8 +41,8 @@
 					<input type="text" th:field="*{name}" required="required"
 						class="form-control ">
 				</div>
-				<span th:if="${#fields.hasErrors('name')}"
-					th:errors="*{name}" class="text-danger"></span>
+				<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+					class="text-danger"></span>
 			</div>
 			<div class="item form-group">
 				<label for="descr"
@@ -47,6 +50,51 @@
 					th:text="#{descr.label}"></label>
 				<div class="col-md-6 col-sm-6 ">
 					<textarea th:field="*{descr}" class="form-control" rows="3"></textarea>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="x_content">
+				<ul class="nav nav-tabs bar_tabs" id="softwareTab" role="tablist">
+					<li class="nav-item"><a class="nav-link active"
+						id="enterprises-tab" data-toggle="tab" href="#enterprises"
+						role="tab" aria-controls="enterprises" aria-selected="true">Активы</a></li>
+					<li class="nav-item"><a class="nav-link" id="software-tab"
+						data-toggle="tab" href="#softwares" role="tab"
+						aria-controls="softwares" aria-selected="false">ПО</a></li>
+					<li class="nav-item"><a class="nav-link" id="participants-tab"
+						data-toggle="tab" href="#participants" role="tab"
+						aria-controls="participants" aria-selected="false">Участники</a></li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active" id="enterprises"
+						role="tabpanel" aria-labelledby="enterprises-tab">Raw denim
+						you probably haven't heard of them jean shorts Austin. Nesciunt
+						tofu stumptown aliqua, retro synth master cleanse. Mustache cliche
+						tempor, williamsburg carles vegan helvetica. Reprehenderit butcher
+						retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui
+						irure terr.</div>
+					<div class="tab-pane fade" id="softwares" role="tabpanel"
+						aria-labelledby="software-tab">
+						<div class="clearfix"></div>
+						<div class="form-group row">
+							<select multiple="multiple" size="${#lists.size(softwares)}"
+								name="selectSoftwares[]" id="selectSoftwares"
+								class="form-control">
+								<th:block th:each="entry : ${softwares.entrySet()}"
+									th:with="details=${entry.value}">
+									<option th:each="opt : ${details}" th:value="${opt.id}"
+										th:text="${opt.codeId}" th:selected="${entry.key}"></option>
+								</th:block>
+							</select>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="tab-pane fade" id="participants" role="tabpanel"
+						aria-labelledby="participants-tab">xxFood truck fixie
+						locavore, accusamus mcsweeney's marfa nulla single-origin coffee
+						squid. Exercitation +1 labore velit, blog sartorial PBR leggings
+						next level wes anderson artisan four loko farm-to-table craft beer
+						twee. Qui photo booth letterpress, commodo enim craft beer mlkshk</div>
 				</div>
 			</div>
 			<div class="clearfix"></div>
@@ -60,6 +108,18 @@
 		<th:block
 			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})">
 		</th:block>
+		<!-- jquery.bootstrap-duallistbox -->
+		<script class="custom-script"
+			th:src="@{/webjars/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js}"></script>
+		<!-- Initialize datetimepicker 	format:'d.m.Y H:i',-->
+		<script class="custom-script" type="text/javascript">
+			$('#selectSoftwares').bootstrapDualListbox({
+				nonSelectedListLabel : 'Non-selected',
+				selectedListLabel : 'Selected',
+				preserveSelectionOnMove : 'moved',
+				moveOnSelect : false
+			});
+		</script>
 	</th:block>
 </body>
 </html>

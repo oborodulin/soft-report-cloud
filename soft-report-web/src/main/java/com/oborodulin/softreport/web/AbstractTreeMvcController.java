@@ -35,6 +35,7 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	 */
 	@Override
 	public String getRedirectFromSlaveCreate(Long mainId) {
+		log.info("getRedirectFromSlaveCreate: mainId = " + mainId);
 		return this.getRedirectToRead();
 	}
 
@@ -43,6 +44,7 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	 */
 	@Override
 	public Map<String, Object> getShowCreateModelAttributes() {
+		log.info("getShowCreateModelAttributes:");
 		Map<String, Object> ma = new HashMap<>();
 		ma.put(this.objCollectName, this.service.findAll());
 		ma.forEach((key, value) -> log.debug(key + ":" + value));
@@ -54,6 +56,7 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	 */
 	@Override
 	public Map<String, Object> getShowCreateModelAttributes(Long parentId) {
+		log.info("getShowCreateModelAttributes: parentId = " + parentId);
 		return this.getShowCreateModelAttributes();
 	}
 
@@ -62,6 +65,7 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	 */
 	@Override
 	public Map<String, Object> getShowUpdateModelAttributes(Long id) {
+		log.info("getShowUpdateModelAttributes: id = " + id);
 		Map<String, Object> ma = new HashMap<>();
 		ma.put(this.objCollectName, this.service.findByIdIsNot(id));
 		ma.forEach((key, value) -> log.debug(key + ":" + value));
@@ -73,6 +77,7 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	 */
 	@Override
 	public List<E> getShowListEntities() {
+		log.info("getShowListEntities:");
 		return this.service.findByParentIsNull();
 	}
 
@@ -81,6 +86,7 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	 */
 	@Override
 	public E createSlaveEntity(Long mainId) {
+		log.info("createSlaveEntity: mainId = " + mainId);
 		return this.service.create(mainId);
 	}
 

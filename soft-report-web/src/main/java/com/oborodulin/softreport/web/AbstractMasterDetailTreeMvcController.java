@@ -2,6 +2,7 @@ package com.oborodulin.softreport.web;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -51,7 +52,17 @@ public abstract class AbstractMasterDetailTreeMvcController<E extends AuditableE
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Map<String, Object> getShowUpdateModelAttributes(Long id) {
+		log.info("getShowUpdateModelAttributes: id = " + id);
+		return this.getShowCreateModelAttributes();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public E getShowListMainEntity(Long mainId) {
+		log.info("getShowListMainEntity: MainId = " + mainId);
 		return this.masterService.getById(mainId);
 	}
 
@@ -60,6 +71,7 @@ public abstract class AbstractMasterDetailTreeMvcController<E extends AuditableE
 	 */
 	@Override
 	public List<T> getShowListSlavesEntities(Long mainId) {
+		log.info("getShowListSlavesEntities: MainId = " + mainId);
 		return this.service.findByMasterIdAndParentIsNull(mainId, Sort.by(Sort.Direction.ASC, this.getSortPropName()));
 	}
 
@@ -68,6 +80,7 @@ public abstract class AbstractMasterDetailTreeMvcController<E extends AuditableE
 	 */
 	@Override
 	public T createSlaveEntity(Long mainId) {
+		log.info("createSlaveEntity: MainId = " + mainId);
 		return this.service.create(mainId);
 	}
 
@@ -76,6 +89,7 @@ public abstract class AbstractMasterDetailTreeMvcController<E extends AuditableE
 	 */
 	@Override
 	public E getMainEntity(T slaveEntity) {
+		log.info("getMainEntity: slaveEntityId = " + slaveEntity.getId());
 		return slaveEntity.getMaster();
 	}
 
@@ -84,6 +98,7 @@ public abstract class AbstractMasterDetailTreeMvcController<E extends AuditableE
 	 */
 	@Override
 	public void saveSlaveEntity(Long mainId, T slaveEntity) {
+		log.info("saveSlaveEntity: mainId = " + mainId + "; slaveEntityId = " + slaveEntity.getId());
 		this.service.save(mainId, slaveEntity);
 	}
 
@@ -113,7 +128,7 @@ public abstract class AbstractMasterDetailTreeMvcController<E extends AuditableE
 	 */
 	@Override
 	@PostMapping(URL_MST_SLV_CREATE_CONTINUE)
-	public String create(@PathVariable(PV_MAIN_ID) Long masterId, @PathVariable(PV_PARENT_ID) Long parentId,
+	public String create(@PathVariable(PV_MASTER_ID) Long masterId, @PathVariable(PV_PARENT_ID) Long parentId,
 			@PathVariable(PV_IS_CONTINUE) boolean isContinue, @Valid T entity, Errors errors, Model model
 	// , RedirectAttributes redirectAttributes
 	) {

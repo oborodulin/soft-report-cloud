@@ -65,7 +65,7 @@ public class Software extends TreeEntity<Software, String> {
 	@NotNull
 	@Column(columnDefinition = "boolean not null default false")
 	private Boolean isContractor = false;
-	
+
 	/** Тип ПО */
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "type_code", nullable = false)
@@ -73,11 +73,12 @@ public class Software extends TreeEntity<Software, String> {
 	private Value type;
 
 	/** Проекты */
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "softwares")
+	// @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<Project> projects = new ArrayList<>();
-	
+
 	/** Бизнес-объекты */
 	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@ToString.Exclude
@@ -97,5 +98,5 @@ public class Software extends TreeEntity<Software, String> {
 	public String getCodeId() {
 		return this.code;
 	}
-	
+
 }
