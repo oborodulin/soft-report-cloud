@@ -29,7 +29,7 @@ public class TaskMvcController
 
 	@Autowired
 	public TaskMvcController(ProjectServiceImpl masterService, TaskServiceImpl service) {
-		super(masterService, service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
+		super(masterService, ProjectMvcController.COC_NAME, service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
 	}
 
 }

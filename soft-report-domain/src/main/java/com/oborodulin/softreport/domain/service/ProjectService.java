@@ -14,8 +14,8 @@ public interface ProjectService extends CommonJpaTreeService<Project, String> {
 
 	public Map<Boolean, List<Software>> getSelectSoftwares(Long id);
 
-	public Optional<Project> save(List<String> softwares, Project entity);
+	public Optional<Project> save(Project entity, @SuppressWarnings("unchecked") List<String> ... reqParams);
 
-	public Optional<Project> save(List<String> softwares, Long parentId, Project entity);
+	public Optional<Project> save(Long parentId, Project entity, @SuppressWarnings("unchecked") List<String> ... reqParams);
 
 }

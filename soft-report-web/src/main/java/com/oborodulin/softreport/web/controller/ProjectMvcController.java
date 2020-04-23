@@ -35,7 +35,7 @@ public class ProjectMvcController extends AbstractTreeMvcController<Project, Pro
 	 * Наименование коллекции объектов контроллера (Controller Objects Collection
 	 * Name)
 	 */
-	private static final String COC_NAME = "projects";
+	public static final String COC_NAME = "projects";
 	/** Путь к шаблонам (каталог) */
 	public static final String VN_PATH = "tpl-projects/";
 
@@ -67,6 +67,7 @@ public class ProjectMvcController extends AbstractTreeMvcController<Project, Pro
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@PostMapping(URL_MVC_CREATE_CONTINUE)
 	public String create(@RequestParam(PV_SEL_SOFTWARES) List<String> softwares,
 			@PathVariable(PV_IS_CONTINUE) boolean isContinue, @Valid Project entity, Errors errors, Model model) {
@@ -74,7 +75,7 @@ public class ProjectMvcController extends AbstractTreeMvcController<Project, Pro
 			errors.getAllErrors().stream().forEach(err -> log.error(err.toString()));
 			return this.getViewNameCreateUpdate();
 		}
-		this.service.save(softwares, entity);
+		this.service.save(entity, softwares);
 		log.info(this.objName + " [" + URL_MVC_CREATE_CONTINUE + "]: entity = " + entity + "; isContinue = "
 				+ isContinue);
 		if (isContinue) {
@@ -86,6 +87,7 @@ public class ProjectMvcController extends AbstractTreeMvcController<Project, Pro
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@PostMapping(URL_MVC_SLV_CREATE_CONTINUE)
 	public String create(@RequestParam(PV_SEL_SOFTWARES) List<String> softwares, @PathVariable(PV_MAIN_ID) Long mainId,
 			@PathVariable(PV_IS_CONTINUE) boolean isContinue, @Valid Project entity, Errors errors, Model model) {
@@ -95,7 +97,7 @@ public class ProjectMvcController extends AbstractTreeMvcController<Project, Pro
 			errors.getAllErrors().stream().forEach(err -> log.error(err.toString()));
 			return this.getViewNameCreateUpdate();
 		}
-		this.service.save(softwares, mainId, entity);
+		this.service.save(mainId, entity, softwares);
 		if (isContinue) {
 			return getRedirectToCreate(mainId);
 		}
@@ -105,6 +107,7 @@ public class ProjectMvcController extends AbstractTreeMvcController<Project, Pro
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@PostMapping(URL_MVC_UPDATE)
 	public String update(@RequestParam(PV_SEL_SOFTWARES) List<String> softwares, @PathVariable(PV_ID) Long id,
 			@Valid Project entity, Errors errors, Model model) {
@@ -114,7 +117,7 @@ public class ProjectMvcController extends AbstractTreeMvcController<Project, Pro
 			entity.setId(id);
 			return this.getViewNameCreateUpdate();
 		}
-		this.service.save(softwares, entity);
+		this.service.save(entity, softwares);
 		return this.getRedirectToRead();
 	}
 

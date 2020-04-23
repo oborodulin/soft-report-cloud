@@ -22,6 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.model.dic.doctype.DocType;
+import com.oborodulin.softreport.domain.model.dic.doctype.section.Section;
 import com.oborodulin.softreport.domain.model.dic.objhierarchy.ObjHierarchy;
 import com.oborodulin.softreport.domain.model.dic.proglang.ProgLang;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
@@ -30,6 +31,7 @@ import com.oborodulin.softreport.domain.model.dic.proglang.uiobjecttype.uieventt
 import com.oborodulin.softreport.domain.model.dic.server.Server;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.model.docobject.DocObject;
+import com.oborodulin.softreport.domain.model.project.document.chapter.Chapter;
 import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.model.software.configbundle.ConfigBundle;
 
@@ -183,6 +185,12 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	@EqualsAndHashCode.Exclude
 	private List<DocType> typeDocTypes = new ArrayList<>();
 
+	/** Список разделов типов документов текущего раздела (значения) */
+	@OneToMany(mappedBy = "section", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
+	private List<Section> docTypeSections = new ArrayList<>();
+
 	/** Список объектов БД/UI текущего типа (значения) */
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@ToString.Exclude
@@ -317,6 +325,12 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<ConfigBundle> configBundles = new ArrayList<>();
+
+	/** Список глав документов текущей главы (значения) */
+	@OneToMany(mappedBy = "chapter", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
+	private List<Chapter> docChapters = new ArrayList<>();
 
 	/**
 	 * Возвращает код набора значений.

@@ -23,9 +23,9 @@ public class DocTypeMvcController extends AbstractTreeMvcController<DocType, Doc
 	 * Наименование коллекции объектов контроллера (Controller Objects Collection
 	 * Name)
 	 */
-	private static final String COC_NAME = "docTypes";
+	public static final String COC_NAME = "docTypes";
 	/** Путь к шаблонам (каталог) */
-	private static final String VN_PATH = "tpl-doctypes/";
+	public static final String VN_PATH = "tpl-doctypes/";
 
 	@Autowired
 	public DocTypeMvcController(DocTypeServiceImpl service) {

@@ -65,6 +65,7 @@ public class Project extends TreeEntity<Project, String> {
 	 */
 	public void addTask(Task task) {
 		this.tasks.add(task);
+		task.setMaster(this);
 	}
 
 	/**
@@ -75,6 +76,7 @@ public class Project extends TreeEntity<Project, String> {
 	 */
 	public void addDocument(Document document) {
 		this.documents.add(document);
+		document.setMaster(this);
 	}
 
 	/**

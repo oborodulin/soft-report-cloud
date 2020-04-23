@@ -48,6 +48,9 @@ public class Version extends DetailEntity<Document, String> {
 	@NotEmpty
 	private Long patch = 0L;
 
+	/** Номер ревизии */
+	private Long revisionNumber;	
+	
 	/** Объекты БД/UI */
 	@ManyToMany(mappedBy = "versions", fetch = FetchType.LAZY)
 	private List<DocObject> docObjects = new ArrayList<>();
@@ -68,10 +71,10 @@ public class Version extends DetailEntity<Document, String> {
 	public String getSemVersionString() {
 		String strMinor = null;
 		String strPatch = null;
-		if (getPatch() != 0L) {
-			strPatch = ".".concat(getPatch().toString());
-			if (getMinor() != 0L) {
-				strMinor = ".".concat(getMinor().toString());
+		if (this.patch != 0L) {
+			strPatch = ".".concat(this.patch.toString());
+			if (this.minor != 0L) {
+				strMinor = ".".concat(this.minor.toString());
 			}
 		}
 		return this.major.toString().concat(strMinor).concat(strPatch);
@@ -90,24 +93,24 @@ public class Version extends DetailEntity<Document, String> {
 	 * Увеличивает номер мажорной версии
 	 */
 	public void incMajor() {
-		setMajor(getMajor() + 1);
-		setMinor(0L);
-		setPatch(0L);
+		this.major++;
+		this.minor = 0L;
+		this.patch = 0L;
 	}
 
 	/**
 	 * Увеличивает номер минорной версии
 	 */
 	public void incMinor() {
-		setMinor(getMinor() + 1);
-		setPatch(0L);
+		this.minor++;
+		this.patch = 0L;
 	}
 
 	/**
 	 * Увеличивает номер патча
 	 */
 	public void incPatch() {
-		setPatch(getPatch() + 1);
+		this.patch++;
 	}
 
 }

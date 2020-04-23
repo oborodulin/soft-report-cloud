@@ -12,8 +12,8 @@ import com.oborodulin.softreport.web.AbstractMasterDetailMvcController;
 
 @Controller
 @RequestMapping(DataFormatMvcController.BASE_URL)
-public class DataFormatMvcController
-		extends AbstractMasterDetailMvcController<DataType, DataFormat, DataTypeServiceImpl, DataFormatServiceImpl, String> {
+public class DataFormatMvcController extends
+		AbstractMasterDetailMvcController<DataType, DataFormat, DataTypeServiceImpl, DataFormatServiceImpl, String> {
 
 	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/dataformats";
@@ -29,7 +29,7 @@ public class DataFormatMvcController
 
 	@Autowired
 	public DataFormatMvcController(DataTypeServiceImpl masterService, DataFormatServiceImpl service) {
-		super(masterService, service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
+		super(masterService, DataTypeMvcController.COC_NAME, service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
 		this.setSortPropName("format");
 	}
 

@@ -1,8 +1,10 @@
 package com.oborodulin.softreport.domain.model.project.document;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -25,6 +27,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.oborodulin.softreport.domain.common.entity.DetailTreeEntity;
 import com.oborodulin.softreport.domain.model.dic.doctype.DocType;
 import com.oborodulin.softreport.domain.model.project.Project;
+import com.oborodulin.softreport.domain.model.project.document.chapter.Chapter;
 import com.oborodulin.softreport.domain.model.project.document.version.Version;
 import com.oborodulin.softreport.domain.model.term.Term;
 import lombok.Data;
@@ -68,6 +71,10 @@ public class Document extends DetailTreeEntity<Project, Document, String> {
 
 	@OneToMany(mappedBy = CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
+	private List<Chapter> chapters = new ArrayList<>();
+
+	@OneToMany(mappedBy = CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
 	private Set<Version> versions = new HashSet<>();
 
 	/**
@@ -81,10 +88,12 @@ public class Document extends DetailTreeEntity<Project, Document, String> {
 
 	public void addTerm(Term term) {
 		this.terms.add(term);
+		term.addDocument(this);
 	}
 
 	public void addVersion(Version version) {
 		this.versions.add(version);
+		version.setMaster(this);
 	}
 
 	public String getLastVersion() {

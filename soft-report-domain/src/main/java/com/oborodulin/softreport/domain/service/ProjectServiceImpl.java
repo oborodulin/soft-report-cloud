@@ -65,7 +65,8 @@ public class ProjectServiceImpl extends AbstractJpaTreeService<Project, ProjectR
 		return softwares;
 	};
 
-	private Project setSelectedEntities(List<String> softwares, Project entity) {
+	private Project setSelectedEntities(Project entity, @SuppressWarnings("unchecked") List<String>... reqParams) {
+		List<String> softwares = reqParams[0];
 		List<Software> projectSoftwares = entity.getSoftwares();
 		for (Software software : projectSoftwares) {
 			if (!softwares.contains(software.getId().toString())) {
@@ -87,8 +88,8 @@ public class ProjectServiceImpl extends AbstractJpaTreeService<Project, ProjectR
 	 */
 	@Override
 	@Transactional
-	public Optional<Project> save(List<String> softwares, Project entity) {
-		return this.save(this.setSelectedEntities(softwares, entity));
+	public Optional<Project> save(Project entity, @SuppressWarnings("unchecked") List<String>... reqParams) {
+		return this.save(this.setSelectedEntities(entity, reqParams));
 	};
 
 	/**
@@ -96,10 +97,10 @@ public class ProjectServiceImpl extends AbstractJpaTreeService<Project, ProjectR
 	 */
 	@Override
 	@Transactional
-	public Optional<Project> save(List<String> softwares, Long parentId, Project entity) {
+	public Optional<Project> save(Long parentId, Project entity, @SuppressWarnings("unchecked") List<String>... reqParams) {
 		entity.setParent(this.repository.findById(parentId)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid software parent Id:" + parentId)));
-		return this.save(this.setSelectedEntities(softwares, entity));
+		return this.save(this.setSelectedEntities(entity, reqParams));
 	};
 
 }

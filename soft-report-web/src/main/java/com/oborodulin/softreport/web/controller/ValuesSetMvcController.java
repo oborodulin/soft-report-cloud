@@ -20,7 +20,7 @@ public class ValuesSetMvcController extends AbstractMvcController<ValuesSet, Val
 	 * Наименование коллекции объектов контроллера (Controller Objects Collection
 	 * Name)
 	 */
-	private static final String COC_NAME = "valuesSets";
+	public static final String COC_NAME = "valuesSets";
 	/** Путь к шаблонам (каталог) */
 	public static final String VN_PATH = "tpl-valuessets/";
 

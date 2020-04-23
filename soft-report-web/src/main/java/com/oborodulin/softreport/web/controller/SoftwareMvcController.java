@@ -22,7 +22,7 @@ public class SoftwareMvcController extends AbstractTreeMvcController<Software, S
 	 * Наименование коллекции объектов контроллера (Controller Objects Collection
 	 * Name)
 	 */
-	private static final String COC_NAME = "softwares";
+	public static final String COC_NAME = "softwares";
 	/** Путь к шаблонам (каталог) */
 	public static final String VN_PATH = "tpl-softwares/";
 

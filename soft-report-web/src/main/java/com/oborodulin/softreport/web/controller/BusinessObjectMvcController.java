@@ -1,8 +1,5 @@
 package com.oborodulin.softreport.web.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,11 +46,7 @@ public class BusinessObjectMvcController extends
 	 */
 	@Autowired
 	public BusinessObjectMvcController(SoftwareServiceImpl masterService, BusinessObjectServiceImpl service) {
-		super(masterService, service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
-		Map<String, Object> ma = new HashMap<>();
-		ma.put("softwares", this.masterService.findAll());
-		this.setModelAttributes(RM_CREATE, ma);
-		this.setModelAttributes(RM_UPDATE, ma);
+		super(masterService, SoftwareMvcController.COC_NAME, service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
 	}
 
 }

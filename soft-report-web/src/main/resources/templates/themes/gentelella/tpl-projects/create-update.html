@@ -106,19 +106,21 @@
 	<!-- /page content -->
 	<th:block th:fragment="body-scripts">
 		<th:block
-			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})">
-		</th:block>
+			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})" />
 		<!-- jquery.bootstrap-duallistbox -->
 		<script class="custom-script"
 			th:src="@{/webjars/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js}"></script>
 		<!-- Initialize datetimepicker 	format:'d.m.Y H:i',-->
-		<script class="custom-script" type="text/javascript">
+		<script class="custom-script" th:inline="javascript"
+			type="text/javascript">
+			/*<![CDATA[*/
 			$('#selectSoftwares').bootstrapDualListbox({
-				nonSelectedListLabel : 'Non-selected',
-				selectedListLabel : 'Selected',
+				nonSelectedListLabel : [# th:text="#{nonselected.label}"],
+				selectedListLabel : [# th:text="#{selected.label}"],
 				preserveSelectionOnMove : 'moved',
 				moveOnSelect : false
 			});
+			/*]]>*/
 		</script>
 	</th:block>
 </body>

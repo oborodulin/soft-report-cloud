@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-create-update}"
+	th:with="titleCurrent=${businessObject.id == null} ? ${titleCreate} : ${titleUpdate}">
+<th:block th:fragment="header">
+	<head
+		th:replace="fragments/fragment-create-update :: head(${titleCurrent}, ~{this :: .custom-link})">
+</th:block>
+
+<body class="nav-md">
+	<!-- page content -->
+	<div class="x_content" layout:fragment="page-content">
+		<br />
+		<form
+			th:action="${not #lists.isEmpty(softwares)} ? (${businessObject.id == null} ? @{~/businessobjects/create/{isContinue}(isContinue='false')} : @{~/businessobjects/update/{id}(id=${businessObject.id})}) : (${businessObject.id == null} ? @{~/businessobjects/{mainId}/create/{isContinue}(mainId=${businessObject.master.id}, isContinue='false')} : @{~/businessobjects/{mainId}/update/{id}(mainId=${businessObject.master.id}, id=${businessObject.id})})"
+			th:object="${businessObject}" th:method="POST" id="form-create-businessObject"
+			data-parsley-validate class="form-horizontal form-label-left">
+			<div th:if="${not #lists.isEmpty(softwares)}" class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="master" th:text="#{software.label}"><span class="required">*</span></label>
+				<div class="col-md-6 col-sm-6 ">
+					<select th:field="*{master}" required="required"
+						class="select2_group form-control">
+						<option value="" th:text="#{software.opt.empty.label}" />
+						<option th:each="opt : ${softwares}" th:value="${opt.id}"
+							th:text="${opt.name}"
+							th:selected="${businessObject.master != null} ? ${opt.id == businessObject.master.id}: 'false'"></option>
+					</select>
+				</div>
+			</div>
+			<div class="item form-group">
+				<label class="col-form-label col-md-3 col-sm-3 label-align"
+					for="name"><th:block th:text="#{name.label}" /></label>
+				<div class="col-md-6 col-sm-6 ">
+					<input type="text" th:field="*{name}" class="form-control ">
+				</div>
+				<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+					class="text-danger"></span>
+			</div>
+			<div class="item form-group">
+				<label for="descr"
+					class="col-form-label col-md-3 col-sm-3 label-align"
+					th:text="#{descr.label}"></label>
+				<div class="col-md-6 col-sm-6 ">
+					<textarea th:field="*{descr}" class="form-control" rows="3"></textarea>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="ln_solid"></div>
+			<th:block
+				th:replace="fragments/fragment-create-update :: form-buttons(cancelHref=${not #lists.isEmpty(softwares)} ? @{~/businessobjects} : @{~/businessobjects/{mainId}(mainId=${businessObject.master.id})}, object=${businessObject}, formId='form-create-businessObject')" />
+		</form>
+	</div>
+	<!-- /page content -->
+	<th:block th:fragment="body-scripts">
+		<th:block
+			th:replace="fragments/fragment-create-update :: body(scripts=~{this :: .custom-script})">
+		</th:block>
+	</th:block>
+</body>
+</html>

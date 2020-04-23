@@ -23,7 +23,7 @@ public class ProgLangMvcController extends AbstractMvcController<ProgLang, ProgL
 	 * Наименование коллекции объектов контроллера (Controller Objects Collection
 	 * Name)
 	 */
-	private static final String COC_NAME = "progLangs";
+	public static final String COC_NAME = "progLangs";
 	/** Путь к шаблонам (каталог) */
 	public static final String VN_PATH = "tpl-proglangs/";
 
