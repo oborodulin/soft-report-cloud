@@ -14,14 +14,79 @@
 		<section class="content invoice">
 			<!-- title row -->
 			<div class="row">
-				<div class="  invoice-header">
+				<div class="text-center">
+					<p class="h4" th:text="${document.type.type.val}" />
+					<p class="h3" th:unless="${#strings.isEmpty(document.parentTitle)}"
+						th:text="${document.parentTitle}" />
+					<p class="h3" th:text="${document.title}" />
+					<p class="h4"
+						th:text="#{version.label} + ' ' + ${document.lastVersionString}" />
+				</div>
+			</div>
+		</section>
+		<section class="content invoice">
+			<th:block th:each="entry : ${docModel.entrySet()}"
+				th:with="models=${entry.value}">
+				<th:block th:if="${#strings.equals(entry.key, 'dataModel')}">
+					<th:block th:each="dataModel : ${models.entrySet()}"
+						th:with="dbObjects=${dataModel.value}">
+						<h1
+							th:text="#{datamodel.label} + ' ('+${dataModel.key.name} + ')'">
+						</h1>
+						<h2 th:text="#{dtdictionary.label}"></h2>
+						<th:block th:each="dataTable : ${dbObjects}">
+							<th:block
+								th:if="${#strings.equals(dataTable.dtType.code, 'DTT_DIC')}">
+								<h3 th:text="${dataTable.businessObjectsNames}"></h3>
+								<p th:text="${dataTable.descr}" />
+								<table class="table table-striped">
+									<thead>
+										<tr class="headings">
+											<th class="column-title text-center" colspan="7"
+												th:text="${dataTable.name}" />
+										</tr>
+										<tr class="headings">
+											<th class="column-title" th:text="#{name.label}" />
+											<th class="column-title" th:text="#{descr.label}" />
+											<th class="column-title" th:text="#{type.label}" />
+											<th class="column-title" th:text="#{isrequired.label}" />
+											<th class="column-title" th:text="#{isuniquekey.label}" />
+											<th class="column-title" th:text="#{defaultvalue.label}" />
+											<th class="column-title no-link last"><span class="nobr"
+												th:text="#{foreignkey.label}"></span></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="dtColumn, rowStat : ${dataTable.children}"
+											th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
+											<td th:text="${dtColumn.name}" class=" " />
+											<td th:text="${dtColumn.descr}" class=" " />
+											<td th:text="${dtColumn.dtColumnType}" class=" " />
+											<td class="a-center"><input type="checkbox"
+												id="isRequired" name="isRequired" disabled="disabled"
+												th:checked="${dtColumn.isRequired}" class="flat" /></td>
+											<td class="a-center"><input type="checkbox"
+												id="isUniqueKey" name="isUniqueKey" disabled="disabled"
+												th:checked="${dtColumn.isUniqueKey}" class="flat" /></td>
+											<td th:text="${dtColumn.defaultValue}" class=" " />
+											<td th:text="${dtColumn.foreignKeyString}" class=" " />
+										</tr>
+									</tbody>
+								</table>
+							</th:block>
+						</th:block>
+					</th:block>
+				</th:block>
+			</th:block>
+			<div class="row">
+				<div class="invoice-header">
 					<h1>
-						<i class="fa fa-globe"></i> Invoice. <small class="pull-right">Date:
-							16/08/2016</small>
+						<i class="fa fa-globe"></i>
+						<th:block th:text="${document.master.codeId}" />
 					</h1>
 				</div>
-				<!-- /.col -->
 			</div>
+			<!-- /.col -->
 			<!-- info row -->
 			<div class="row invoice-info">
 				<div class="col-sm-4 invoice-col">

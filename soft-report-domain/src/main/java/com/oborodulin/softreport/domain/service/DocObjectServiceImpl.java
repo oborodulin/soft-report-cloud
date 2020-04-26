@@ -11,8 +11,10 @@ import com.oborodulin.softreport.domain.model.software.businessobject.BusinessOb
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -137,15 +139,37 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	 * {@inheritDoc}
 	 */
 	@Override
+	public DocObject getDataObjectDb(DocObject docObject) {
+		switch (docObject.getType().getCode()) {
+		case Value.VC_DOT_DB:
+			return docObject;
+		case Value.VC_DOT_SCHEMA:
+		case Value.VC_DOT_DT:
+		case Value.VC_DOT_VIEW:
+		case Value.VC_DOT_PROC:
+		case Value.VC_DOT_FUNC:
+		case Value.VC_DOT_TRIGGER:
+		case Value.VC_DOT_DTCOLUMN:
+		case Value.VC_DOT_VWCOLUMN:
+		case Value.VC_DOT_CLNMVAL:
+			if (docObject.getParent() != null) {
+				return this.getDataObjectDb(docObject.getParent());
+			}
+			break;
+		default:
+			return null;
+		}
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<DataType> getDbDataTypes(Long dataTableId) {
 		Optional<DocObject> dataTable = this.repository.findById(dataTableId);
 		// определяем БД по ИД таблицы
-		DocObject dataBase = null;
-		if (dataTable.get().getParent().getType().equals(this.valueService.getDocObjectSchemaType())) {
-			dataBase = dataTable.get().getParent().getParent();
-		} else {
-			dataBase = dataTable.get().getParent();
-		}
+		DocObject dataBase = this.getDataObjectDb(dataTable.get());
 		log.info("Data Base Type = " + dataBase.getDbType().getCode() + "; id = " + dataBase.getDbType().getId());
 		return this.dataTypeService.getTypesByDataBaseType(dataBase.getDbType());
 	}
@@ -173,16 +197,54 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 		List<DocObject> primaryKeys = new ArrayList<>();
 		Optional<DocObject> dataTable = this.repository.findById(dataTableId);
 		// определяем БД по ИД таблицы
-		DocObject dataBase = null;
-		if (dataTable.get().getParent().getType().equals(this.valueService.getDocObjectSchemaType())) {
-			dataBase = dataTable.get().getParent().getParent();
-		} else {
-			dataBase = dataTable.get().getParent();
-		}
+		DocObject dataBase = this.getDataObjectDb(dataTable.get());
 		// получаем все первичные ключи БД
 		Value dtColumnType = this.valueService.getDocObjectDataTableColumnType();
 		primaryKeys.addAll(this.getPrimaryKeysFromDbDataTables(dataBase.getChildren(), dtColumnType));
 		return primaryKeys;
+	}
+
+	private DocObject getDataObjectUiForm(DocObject docObject) {
+		switch (docObject.getType().getCode()) {
+		case Value.VC_DOT_DB:
+			return docObject;
+		case Value.VC_DOT_SCHEMA:
+		case Value.VC_DOT_DT:
+		case Value.VC_DOT_VIEW:
+		case Value.VC_DOT_PROC:
+		case Value.VC_DOT_FUNC:
+		case Value.VC_DOT_TRIGGER:
+		case Value.VC_DOT_DTCOLUMN:
+		case Value.VC_DOT_VWCOLUMN:
+		case Value.VC_DOT_CLNMVAL:
+			if (docObject.getParent() != null) {
+				return this.getDataObjectDb(docObject.getParent());
+			}
+			break;
+		default:
+			return null;
+		}
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Set<DocObject> getDataObjectUiForms(DocObject docObject) {
+		Set<DocObject> uiForms = new HashSet<>();
+		switch (docObject.getType().getCode()) {
+		case Value.VC_DOT_DT:
+			for (DocObject dtColumn : docObject.getChildren()) {
+				for (DocObject uiObject : this.repository.findByDbObject(dtColumn)) {
+					uiForms.add(this.getDataObjectUiForm(uiObject));
+				}
+			}
+			break;
+		default:
+			return null;
+		}
+		return uiForms;
 	}
 
 	/**

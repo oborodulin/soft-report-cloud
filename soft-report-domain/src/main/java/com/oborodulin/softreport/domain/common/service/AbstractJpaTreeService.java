@@ -23,6 +23,7 @@ public abstract class AbstractJpaTreeService<E extends TreeEntity<E, U>, R exten
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional(readOnly = true)
 	public List<E> findByParentIsNull() {
 		return this.repository.findByParentIsNull();
 	};
@@ -31,6 +32,7 @@ public abstract class AbstractJpaTreeService<E extends TreeEntity<E, U>, R exten
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional(readOnly = true)
 	public List<E> findByParentId(Long parentId, Sort sort) {
 		return this.repository.findByParentId(parentId, sort);
 	};
@@ -39,6 +41,7 @@ public abstract class AbstractJpaTreeService<E extends TreeEntity<E, U>, R exten
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional(readOnly = true)
 	public List<E> findByIdIsNot(Long id) {
 		return this.repository.findByIdIsNot(id);
 	};
@@ -87,5 +90,17 @@ public abstract class AbstractJpaTreeService<E extends TreeEntity<E, U>, R exten
 				.orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + parentId)));
 		return this.save(entity);
 	};
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public String getParentsPath(E entity) {
+		if (entity.getParent() != null) {
+			return this.getParentsPath(entity.getParent()).concat(".").concat(entity.getCodeId());
+		}
+		return entity.getCodeId();
+	}
 
 }

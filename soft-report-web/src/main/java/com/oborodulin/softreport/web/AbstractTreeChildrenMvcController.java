@@ -38,7 +38,7 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	 */
 	@Override
 	public List<T> getShowListSlavesEntities(Long mainId) {
-		return this.service.findByParentId(mainId, Sort.by(Sort.Direction.ASC, this.getSortPropName()));
+		return this.service.init(this.service.findByParentId(mainId, Sort.by(Sort.Direction.ASC, this.getSortPropName())));
 	}
 
 	/**

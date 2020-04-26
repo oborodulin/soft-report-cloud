@@ -22,6 +22,7 @@ import org.hibernate.envers.RelationTargetAuditMode;
 
 import com.oborodulin.softreport.domain.common.entity.DetailEntity;
 import com.oborodulin.softreport.domain.common.entity.TreeEntity;
+import com.oborodulin.softreport.domain.model.dic.doctype.section.Section;
 import com.oborodulin.softreport.domain.model.dic.proglang.ProgLang;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import com.oborodulin.softreport.domain.model.project.Project;
@@ -91,12 +92,17 @@ public class Software extends TreeEntity<Software, String> {
 	@EqualsAndHashCode.Exclude
 	private List<ProgLang> progLangs = new ArrayList<>();
 
+	/** Список разделов типов документов по текущему ПО */
+	@OneToMany(mappedBy = "software", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
+	private List<Section> docTypeSections = new ArrayList<>();
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public String getCodeId() {
-		return this.code;
+		return this.name;
 	}
 
 }

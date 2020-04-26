@@ -16,6 +16,6 @@ public interface DocumentService extends CommonJpaDetailTreeService<Project, Doc
 
 	public String getView(Document document);
 
-	public Map<String, Set<DocObject>> getDocModel(Document document);
+	public Map<String, Map<DocObject, Set<DocObject>>> getDocModel(Document document);
 
 }

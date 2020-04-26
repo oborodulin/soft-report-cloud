@@ -72,7 +72,7 @@ public abstract class AbstractMasterDetailTreeMvcController<E extends AuditableE
 	@Override
 	public List<T> getShowListSlavesEntities(Long mainId) {
 		log.info("getShowListSlavesEntities: MainId = " + mainId);
-		return this.service.findByMasterIdAndParentIsNull(mainId, Sort.by(Sort.Direction.ASC, this.getSortPropName()));
+		return this.service.init(this.service.findByMasterIdAndParentIsNull(mainId, Sort.by(Sort.Direction.ASC, this.getSortPropName())));
 	}
 
 	/**

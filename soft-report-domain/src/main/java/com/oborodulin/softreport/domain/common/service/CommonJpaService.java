@@ -6,17 +6,22 @@ import java.util.Optional;
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 
 public interface CommonJpaService<E extends AuditableEntity<U>, U> {
-	List<E> findAll();
 
-	Optional<E> findById(Long id);
+	public List<E> findAll();
 
-	E getById(Long id);
+	public Optional<E> findById(Long id);
+
+	public E getById(Long id);
 
 	public E create();
 
-	Optional<E> save(E entity);
+	public E init(E entity);
 
-	void delete(E entity);
+	public List<E> init(List<E> entities);
+	
+	public Optional<E> save(E entity);
 
-	void deleteById(Long id);
+	public void delete(E entity);
+
+	public void deleteById(Long id);
 }

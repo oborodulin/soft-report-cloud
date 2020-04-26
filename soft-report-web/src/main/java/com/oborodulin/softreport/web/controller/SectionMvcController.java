@@ -12,11 +12,12 @@ import com.oborodulin.softreport.domain.model.dic.doctype.DocType;
 import com.oborodulin.softreport.domain.model.dic.doctype.section.Section;
 import com.oborodulin.softreport.domain.service.DocTypeServiceImpl;
 import com.oborodulin.softreport.web.AbstractMasterDetailMvcController;
+import com.oborodulin.softreport.web.AbstractMasterDetailTreeMvcController;
 
 @Controller
 @RequestMapping(SectionMvcController.BASE_URL)
 public class SectionMvcController
-		extends AbstractMasterDetailMvcController<DocType, Section, DocTypeServiceImpl, SectionServiceImpl, String> {
+		extends AbstractMasterDetailTreeMvcController<DocType, Section, DocTypeServiceImpl, SectionServiceImpl, String> {
 
 	/** Базовый URL контроллера */
 	protected static final String BASE_URL = "/sections";
@@ -32,7 +33,7 @@ public class SectionMvcController
 
 	@Autowired
 	public SectionMvcController(DocTypeServiceImpl masterService, SectionServiceImpl service) {
-		super(masterService, DocTypeMvcController.COC_NAME, service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
+		super(masterService, service, BASE_URL, VN_PATH, CO_NAME, COC_NAME);
 		Map<String, Object> ma = new HashMap<>();
 		// ma.put("sqlTypes", this.service.getSqlTypes());
 
@@ -46,7 +47,7 @@ public class SectionMvcController
 	@Override
 	public Map<String, Object> getShowCreateModelAttributes() {
 		Map<String, Object> ma = new HashMap<>();
-		ma.put(this.masterObjCollectName, masterService.findAll());
+		//ma.put(this.masterObjCollectName, masterService.findAll());
 		// ma.put("backendTypes", this.service.getBackendTypes());
 		// ma.put("frontendTypes", this.service.getFrontendTypes());
 		return ma;

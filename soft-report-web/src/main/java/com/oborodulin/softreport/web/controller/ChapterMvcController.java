@@ -19,14 +19,14 @@ public class ChapterMvcController
 		extends AbstractMasterDetailMvcController<Document, Chapter, DocumentServiceImpl, ChapterServiceImpl, String> {
 
 	/** Базовый URL контроллера */
-	protected static final String BASE_URL = "/sections";
+	protected static final String BASE_URL = "/chapters";
 	/** Наименование объекта контроллера (Controller Objects Name) */
-	private static final String CO_NAME = "section";
+	private static final String CO_NAME = "chapter";
 	/**
 	 * Наименование коллекции объектов контроллера (Controller Objects Collection
 	 * Name)
 	 */
-	public static final String COC_NAME = "sections";
+	public static final String COC_NAME = "chapters";
 	/** Путь к шаблонам (каталог) */
 	public static final String VN_PATH = DocumentMvcController.VN_PATH.concat(COC_NAME.toLowerCase()).concat("/");
 

@@ -135,10 +135,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@NotNull
 	private Boolean isPreset = false;
 
-	/**
-	 * Поле ТД: Тип служебного поля (исторические/версия/логическое (мягкое)
-	 * удаление)
-	 */
+	/** Поле ТД: Тип служебного поля (исторические/версия) */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "column_type_code")
 	@ToString.Exclude
@@ -370,6 +367,17 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	}
 
 	/**
+	 * Добавляет версию документа к объекту документа
+	 * 
+	 * @param version версия
+	 * @see com.oborodulin.softreport.domain.model.project.document.version.Version
+	 */
+	public void addVersion(Version version) {
+		this.versions.add(version);
+		version.getDocObjects().add(this);
+	}
+
+	/**
 	 * Возвращает строку-перечень наименованний бизнес-объектов через запятую.
 	 * <p>
 	 * Актуально для таблиц данных, представлений, хранимых процедур и пр.
@@ -454,4 +462,5 @@ public class DocObject extends TreeEntity<DocObject, String> {
 		}
 		return foreignKeyString;
 	}
+
 }

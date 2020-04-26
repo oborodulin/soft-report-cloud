@@ -306,7 +306,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	@Override
 	public List<E> getShowListEntities() {
 		log.info("getShowListEntities:");
-		return this.service.findAll();
+		return this.service.init(this.service.findAll());
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package com.oborodulin.softreport.domain.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.oborodulin.softreport.domain.common.service.CommonJpaTreeService;
 import com.oborodulin.softreport.domain.model.dic.proglang.datatype.DataType;
@@ -34,9 +35,13 @@ public interface DocObjectService extends CommonJpaTreeService<DocObject, String
 
 	public List<Value> getDtColumnTypes();
 
+	public DocObject getDataObjectDb(DocObject docObject);
+
 	public List<DataType> getDbDataTypes(Long dataTableId);
 
 	public List<DocObject> getDbDataTablesPrimaryKeys(Long dataTableId);
+
+	public Set<DocObject> getDataObjectUiForms(DocObject docObject);
 
 	public DocObject createDataBase();
 

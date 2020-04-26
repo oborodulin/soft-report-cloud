@@ -25,7 +25,7 @@ public abstract class AbstractJpaService<E extends AuditableEntity<U>, R extends
 		this.repository = repository;
 		this.clazz = clazz;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -66,6 +66,25 @@ public abstract class AbstractJpaService<E extends AuditableEntity<U>, R extends
 			e.printStackTrace();
 		}
 		return entity;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public E init(E entity) {
+		return entity;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public List<E> init(List<E> entities) {
+		entities.stream().forEach(x -> init(x));
+		return entities;
 	}
 
 	/**

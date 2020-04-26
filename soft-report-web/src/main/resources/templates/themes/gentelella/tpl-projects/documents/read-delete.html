@@ -70,7 +70,7 @@
 					<td
 						th:replace="fragments/fragment-read-delete :: master-buttons(masterHref='documents', master=${document}, detailsHref='versions', details=${document.versions})" />
 					<td th:text="${document.codeId}" class=" " />
-					<td th:text="${document.lastVersion}" class=" " />
+					<td th:text="${document.lastVersionString}" class=" " />
 					<td th:text="${document.type.type.val}" class=" " />
 					<td th:text="${document.purpose}" class=" " />
 					<td th:text="${document.objectives}" class=" " />

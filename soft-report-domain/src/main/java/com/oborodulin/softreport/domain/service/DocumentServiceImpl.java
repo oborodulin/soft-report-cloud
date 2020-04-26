@@ -7,12 +7,15 @@ import com.oborodulin.softreport.domain.model.project.Project;
 import com.oborodulin.softreport.domain.model.project.ProjectRepository;
 import com.oborodulin.softreport.domain.model.project.document.Document;
 import com.oborodulin.softreport.domain.model.project.document.DocumentRepository;
+import com.oborodulin.softreport.domain.model.project.document.version.Version;
 import com.oborodulin.softreport.domain.model.software.Software;
 import com.oborodulin.softreport.domain.model.software.businessobject.BusinessObject;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.NoSuchElementException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -39,6 +42,12 @@ public class DocumentServiceImpl
 	private DocTypeService docTypeService;
 	@Autowired
 	private VersionService versionService;
+	@Autowired
+	private DocObjectService docObjectService;
+	@Autowired
+	private ProjectService projectService;
+	@Autowired
+	private SoftwareService softwareService;
 
 	@Autowired
 	public DocumentServiceImpl(ProjectRepository masterRepository, DocumentRepository repository) {
@@ -74,17 +83,67 @@ public class DocumentServiceImpl
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public Map<String, Set<DocObject>> getDocModel(Document document) {
-		Map<String, Set<DocObject>> docModel = new HashMap<>();
-		docModel.put(MA_DOC_DATAMODEL, new HashSet<>());
+	public Document init(Document document) {
+		// устанавливаем заголовок документа
+		if (document.getName() != null && !document.getName().isEmpty()) {
+			document.setTitle(document.getName());
+		} else {
+			Project project = document.getMaster();
+			List<Software> softwares = project.getSoftwares();
+			String parentsPath = null;
+			if (softwares.size() == 1) {
+				parentsPath = this.softwareService.getParentsPath(softwares.get(0));
+			} else {
+				parentsPath = this.projectService.getParentsPath(project);
+			}
+			int lastDotPos = parentsPath.lastIndexOf(".");
+			if (lastDotPos == -1) {
+				document.setTitle(parentsPath);
+			} else {
+				document.setParentTitle(parentsPath.substring(0, lastDotPos + 1));
+				document.setTitle(parentsPath.substring(lastDotPos + 1));
+			}
+		}
+		// устанавливаем последнюю версию документа
+		try {
+			document.setLastVersion(document.getVersions().stream().max(Comparator.comparing(Version::getVersionNumber))
+					.orElseThrow(NoSuchElementException::new));
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return document;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Map<String, Map<DocObject, Set<DocObject>>> getDocModel(Document document) {
+		Map<String, Map<DocObject, Set<DocObject>>> docModel = new HashMap<>();
+		Map<DocObject, Set<DocObject>> dataModel = new HashMap<>();
+		Map<DocObject, Set<DocObject>> uiModel = new HashMap<>();
+		DocObject dataBase = null;
 		Project project = document.getMaster();
 		for (Software software : project.getSoftwares()) {
 			for (BusinessObject businessObject : software.getBusinessObjects()) {
 				for (DocObject docObject : businessObject.getDocObjects()) {
-					docModel.get(MA_DOC_DATAMODEL).add(docObject);
+					dataBase = this.docObjectService.getDataObjectDb(docObject);
+					if (dataModel.get(dataBase) == null) {
+						dataModel.put(dataBase, new HashSet<>());
+					}
+					dataModel.get(dataBase).add(docObject);
+					for (DocObject uiForm : this.docObjectService.getDataObjectUiForms(docObject)) {
+						if (uiModel.get(uiForm) == null) {
+							uiModel.put(uiForm, new HashSet<>());
+						}
+						uiModel.get(uiForm).addAll(new HashSet<DocObject>(uiForm.getChildren()));
+					}
 				}
 			}
 		}
+		docModel.put(MA_DOC_DATAMODEL, dataModel);
+		docModel.put(MA_DOC_UIMODEL, uiModel);
 		return docModel;
 	}
 
