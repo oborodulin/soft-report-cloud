@@ -6,7 +6,7 @@
 	<groupId>com.oborodulin</groupId>
 	<artifactId>soft-report-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-        <packaging>pom</packaging>
+	<packaging>pom</packaging>
 	<name>soft-report-parent</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -16,7 +16,8 @@
 		<junit-jupiter.version>5.5.2</junit-jupiter.version>
 		<mockito.version>3.1.0</mockito.version>
 		<surefire.version>2.22.2</surefire.version>
-      		<softreport.version>${project.version}</softreport.version>
+		<itext.version>RELEASE</itext.version>
+		<softreport.version>${project.version}</softreport.version>
 	</properties>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -29,7 +30,7 @@
 		<module>soft-report</module>
 		<module>soft-report-domain</module>
 		<module>soft-report-rest</module>
-		<!--module>soft-report-security</module-->
+		<!--module>soft-report-security</module -->
 		<module>soft-report-web</module>
 	</modules>
 

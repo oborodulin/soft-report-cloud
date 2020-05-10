@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -56,6 +57,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 
 	/** Поле ТД/параметр поиска/поле формы ввода/: Позиция */
 	@NotNull
+	@OrderBy
 	private Integer pos = 0;
 
 	/**
@@ -113,9 +115,13 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	@NotNull
 	private Boolean isPrimaryKey = false;
 
-	/** Поле ТД: Признак уникального ключа */
+	/** Поле ТД/представление: Признак уникального ключа */
 	@NotNull
 	private Boolean isUniqueKey = false;
+
+	/** Поле ТД/представление: Признак составного ключа */
+	@NotNull
+	private Boolean isCompositeKey = false;
 
 	/**
 	 * Поле ТД (NULLable)/Поле формы/колонка грида: Признак обязательного значения
@@ -378,6 +384,35 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	}
 
 	/**
+	 * Возвращает полное наименование объекта документа.
+	 * <p>
+	 * Актуально для схемы (в формате "БД.схема"), таблицы, представления,
+	 * процедуры, функции (В формате
+	 * "БД/схема.таблица/представление/процедура/функция"), триггера, поля таблицы
+	 * данных/представления (в формате
+	 * "БД/схема.таблица/представление.поле/триггер").
+	 * 
+	 * @return полное наименование объекта документа
+	 */
+	public String getFullName() {
+		switch (this.type.getCode()) {
+		case Value.VC_DOT_SCHEMA:
+		case Value.VC_DOT_DT:
+		case Value.VC_DOT_VIEW:
+		case Value.VC_DOT_PROC:
+		case Value.VC_DOT_FUNC:
+			return this.getParent().getName().concat(".").concat(this.name);
+		case Value.VC_DOT_TRIGGER:
+		case Value.VC_DOT_DTCOLUMN:
+		case Value.VC_DOT_VWCOLUMN:
+			return this.getParent().getParent().getName().concat(".")
+					.concat(this.getParent().getName().concat(".").concat(this.name));
+
+		}
+		return this.name;
+	}
+
+	/**
 	 * Возвращает строку-перечень наименованний бизнес-объектов через запятую.
 	 * <p>
 	 * Актуально для таблиц данных, представлений, хранимых процедур и пр.
@@ -425,22 +460,6 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	}
 
 	/**
-	 * Возвращает строковое представление поля таблицы данных/представления.
-	 * <p>
-	 * В формате "БД/схема.таблица/представление.поле".
-	 * 
-	 * @return строковое представление поля таблицы данных/представления
-	 */
-	public String getDbColumnString() {
-		if (!Arrays.asList(new String[] { Value.VC_DOT_DTCOLUMN, Value.VC_DOT_VWCOLUMN })
-				.contains(this.type.getCode())) {
-			return null;
-		}
-		return this.getParent().getParent().getName().concat(".")
-				.concat(this.getParent().getName().concat(".").concat(this.name));
-	}
-
-	/**
 	 * Возвращает строковое представление внешнего ключа.
 	 * <p>
 	 * В формате "БД/схема.таблица/представление.поле".
@@ -455,7 +474,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 			// если у текущего поля схема/БД не соответствуют схеме/БД первичного кооюча
 			if (!this.getParent().getParent().getId().equals(this.foreignKey.getParent().getParent().getId())) {
 				// формируем представление "БД/схема.таблица/представление.поле"
-				foreignKeyString = this.foreignKey.getParent().getParent().getName().concat(".").concat(tableField);
+				foreignKeyString = this.foreignKey.getFullName();
 			} else {
 				foreignKeyString = tableField;
 			}

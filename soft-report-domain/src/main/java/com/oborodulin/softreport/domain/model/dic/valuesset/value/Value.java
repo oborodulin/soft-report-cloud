@@ -109,6 +109,22 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	/** Код значения (тип объекта документа): Поле представления БД */
 	public static final String VC_DOT_VWCOLUMN = "DOT_VWCOLUMN";
 
+	// Типы таблиц данных:
+	/** Код значения (тип ТД): Справочная */
+	public static final String VC_DTT_DIC = "DTT_DIC";
+
+	/** Код значения (тип ТД): Интерфейсная */
+	public static final String VC_DTT_IFACE = "DTT_IFACE";
+
+	/** Код значения (тип ТД): Логгирования */
+	public static final String VC_DTT_LOG = "DTT_LOG";
+
+	/** Код значения (тип ТД): Оперативная */
+	public static final String VC_DTT_OPER = "DTT_OPER";
+
+	/** Код значения (тип ТД): Временная */
+	public static final String VC_DTT_TMP = "DTT_TMP";
+
 	/** Уникальный код значения */
 	@NotBlank
 	@Column(unique = true)

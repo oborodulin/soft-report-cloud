@@ -137,7 +137,7 @@
 						class="select2_group form-control">
 						<option value="" th:text="#{foreignkey.opt.empty.label}" />
 						<option th:each="opt : ${primaryKeys}" th:value="${opt.id}"
-							th:text="${opt.dbColumnString}"
+							th:text="${opt.fullName}"
 							th:selected="${dtColumn.foreignKey != null} ? ${opt.id == dtColumn.foreignKey.id}: 'false'"></option>
 					</select>
 				</div>
