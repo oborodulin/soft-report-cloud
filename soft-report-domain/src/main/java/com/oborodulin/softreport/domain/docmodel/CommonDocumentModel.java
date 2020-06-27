@@ -1,5 +1,7 @@
 package com.oborodulin.softreport.domain.docmodel;
 
+import java.util.Set;
+
 public interface CommonDocumentModel {
 
 	public void setHeader(String header);
@@ -10,4 +12,6 @@ public interface CommonDocumentModel {
 
 	public void setFooter(String footer);
 
+	public Set<CommonDocModelObject> getServers();
+	
 }

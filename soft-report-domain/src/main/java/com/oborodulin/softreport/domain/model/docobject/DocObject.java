@@ -43,7 +43,6 @@ import lombok.ToString;
  * кнопки и т.д.
  * 
  * @author Oleg Borodulin
- *
  */
 @Data
 @Entity

@@ -101,7 +101,7 @@ public class DocumentServiceImpl
 				document.setTitle(parentsPath.substring(lastDotPos + 1));
 			}
 		}
-		// устанавливаем последнюю версию документа
+		// определяем последнюю версию документа
 		try {
 			document.setLastVersion(document.getVersions().stream().max(Comparator.comparing(Version::getVersionNumber))
 					.orElseThrow(NoSuchElementException::new));
@@ -142,7 +142,7 @@ public class DocumentServiceImpl
 		Project project = document.getMaster();
 		for (Software software : project.getSoftwares()) {
 			for (BusinessObject businessObject : software.getBusinessObjects()) {
-				// получаем объеты данных высокого уровня (таблицы данных, представления,
+				// получаем объекты данных первого-второго уровня (таблицы данных, представления,
 				// процедуры и функции)
 				for (DocObject docObject : businessObject.getDocObjects()) {
 					DocObject dataBase = this.docObjectService.getDataObjectDb(docObject);

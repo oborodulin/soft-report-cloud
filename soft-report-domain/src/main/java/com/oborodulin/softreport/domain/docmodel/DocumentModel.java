@@ -16,7 +16,7 @@ public class DocumentModel implements CommonDocumentModel {
 
 	private String footer;
 
-	Set<CommonDocModelObject> servers = new HashSet<>();
+	private Set<CommonDocModelObject> servers = new HashSet<>();
 
 	public void addServer(CommonDocModelObject server) {
 		servers.add(server);

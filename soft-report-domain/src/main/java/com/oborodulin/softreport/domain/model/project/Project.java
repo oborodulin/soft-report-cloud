@@ -24,6 +24,11 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Класс описывает проект.
+ * 
+ * @author Oleg Borodulin
+ */
 @Slf4j
 @Data
 @Entity
@@ -34,22 +39,27 @@ public class Project extends TreeEntity<Project, String> {
 	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "PROJECTS";
 
+	/** Наименование проекта */
 	@NotBlank
 	@Size(min = 5, message = "Наименование проекта должно состоять как минимум из 5 символов")
 	private String name;
 
+	/** Описание проекта */
 	private String descr;
 
+	/** Задачи */
 	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<Task> tasks = new ArrayList<>();
 
+	/** Документы */
 	@OneToMany(mappedBy = DetailEntity.CLM_MASTER, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private List<Document> documents = new ArrayList<>();
 
+	/** ПО */
 	// @ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "PROJECTS_SOFTWARES", joinColumns = @JoinColumn(name = "PROJECTS_ID"), inverseJoinColumns = @JoinColumn(name = "SOFTWARES_ID"))
