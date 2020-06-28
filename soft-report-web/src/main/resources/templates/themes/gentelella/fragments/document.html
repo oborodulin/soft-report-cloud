@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<!-- Вывод таблиц данных и их полей -->
+	<th:block th:fragment="outputDataTables(server, type)">
+		<th:block
+			th:with="dataTables=${server.components(T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DOT_DT, type, true)}">
+			<th:block th:if="${#lists.size(dataTables) > 0}">
+				<h2
+					th:if="${#strings.equals(type, T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_DIC)}"
+					th:text="#{dt.dictionary.report}"></h2>
+				<h2
+					th:if="${#strings.equals(type, T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_OPER)}"
+					th:text="#{dt.operational.report}"></h2>
+				<h2
+					th:if="${#strings.equals(type, T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_IFACE)}"
+					th:text="#{dt.interface.report}"></h2>
+				<h2
+					th:if="${#strings.equals(type, T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_LOG)}"
+					th:text="#{dt.logging.report}"></h2>
+				<h2
+					th:if="${#strings.equals(type, T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_TMP)}"
+					th:text="#{dt.temporary.report}"></h2>
+				<th:block th:each="dataTable : ${dataTables}">
+					<h3 th:text="${dataTable.businessObjectsString}"></h3>
+					<p th:text="${dataTable.descr}" />
+					<table class="table table-striped jambo_tabl">
+						<thead>
+							<tr class="headings">
+								<th class="column-title text-center" colspan="7"
+									th:text="${dataTable.fullName}" />
+							</tr>
+							<tr class="headings">
+								<th class="column-title" th:text="#{dtclnm.name.report}" />
+								<th class="column-title" th:text="#{dtclnm.descr.report}" />
+								<th class="column-title" th:text="#{dtclnm.type.report}" />
+								<th class="column-title" th:text="#{dtclnm.isrequired.report}" />
+								<th class="column-title" th:text="#{dtclnm.isuniquekey.report}" />
+								<th class="column-title" th:text="#{dtclnm.defaultvalue.report}" />
+								<th class="column-title no-link last"><span class="nobr"
+									th:text="#{dtclnm.foreignkey.report}"></span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="dtColumn, rowStat : ${dataTable.components(T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DOT_DTCOLUMN)}"
+								th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
+								<td th:text="${dtColumn.name}" class=" " />
+								<td th:text="${dtColumn.descr}" class=" " />
+								<td th:text="${dtColumn.type}" class=" " />
+								<td class="a-center"><input type="checkbox" id="isRequired"
+									name="isRequired" disabled="disabled"
+									th:checked="${dtColumn.isRequired}" class="flat" /></td>
+								<td class="a-center"><input type="checkbox"
+									id="isUniqueKey" name="isUniqueKey" disabled="disabled"
+									th:checked="${dtColumn.isUniqueKey}" class="flat" /></td>
+								<td th:text="${dtColumn.defaultValue}" class=" " />
+								<td th:text="${dtColumn.foreignKey}" class=" " />
+							</tr>
+						</tbody>
+					</table>
+				</th:block>
+			</th:block>
+		</th:block>
+	</th:block>
+</body>
+</html>

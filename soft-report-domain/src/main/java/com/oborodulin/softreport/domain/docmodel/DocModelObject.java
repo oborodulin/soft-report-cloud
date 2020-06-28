@@ -1,7 +1,11 @@
 package com.oborodulin.softreport.domain.docmodel;
 
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.AllArgsConstructor;
@@ -28,7 +32,7 @@ public class DocModelObject implements CommonDocModelObject {
 	 */
 	private String categ;
 
-	/** Тип */
+	/** Тип (ТД, поля ТД/представления)*/
 	private String type;
 
 	/** Наименование */
@@ -70,53 +74,109 @@ public class DocModelObject implements CommonDocModelObject {
 	private String foreignKey;
 
 	/**
-	 * Добавляет компонент к текущему объекту модели документа.
-	 *
-	 * @param component объект-компонент модели документа
+	 * {@inheritDoc}
 	 */
 	public void addComponent(CommonDocModelObject component) {
 		components.add(component);
 	}
 
 	/**
-	 * Возвращает компонент текущего объекта модели документа по заданному
-	 * наименованию.
-	 * <p>
-	 * Подразумевается список компонентов текущего объекта модели документа.
-	 * 
-	 * @param name наименованию объекта-компонента модели документа
-	 * @return если найден, то объект-компонент модели документа, иначе -
-	 *         {@code NULL}
+	 * {@inheritDoc}
 	 */
 	public CommonDocModelObject getComponent(String name) {
 		return this.components.stream().filter(component -> name.equals(component.getName())).findAny().orElse(null);
 	}
 
 	/**
-	 * Добавляет бизнес-объект к текущему объекту модели документа.
-	 *
-	 * @param name наименование бизнес-объекта
+	 * {@inheritDoc}
+	 */
+	public String getComponentsString() {
+		return this.components.stream().map(x -> x.getName()).collect(Collectors.joining(","));
+	}
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public void addBusinessObject(String name) {
-		businessObjects.add(name);
+		this.businessObjects.add(name);
 	}
 
 	/**
-	 * Возвращает наименование бизнес-объекта текущего объекту модели документа.
-	 *
-	 * @param name наименованию объекта-компонента модели документа
-	 * @return если найдено, то наименованию объекта-компонента модели документа,
-	 *         иначе - {@code NULL}
+	 * {@inheritDoc}
 	 */
 	public String getBusinessObject(String name) {
-		return businessObjects.stream().filter(businessObject -> name.equals(businessObject)).findAny().orElse(null);
+		return this.businessObjects.stream().filter(businessObject -> name.equals(businessObject)).findAny()
+				.orElse(null);
 	}
 
 	/**
-	 * Находит и возвращает объект модели документа из заданного списка по заданной
-	 * категории или типу.
+	 * {@inheritDoc}
+	 */
+	public String getBusinessObjectsString() {
+		return this.businessObjects.stream().collect(Collectors.joining(","));
+	}
+
+	/**
+	 * Находит и возвращает множество объектов модели документа из заданного
+	 * множества по заданной категории или типу.
 	 *
-	 * @param components список объектов модели документа (компоненты)
+	 * @param components множество объектов модели документа (компоненты)
+	 * @param categ      категория
+	 * @param type       тип
+	 * @return множество объектов-компонентов модели документа
+	 */
+	private Set<CommonDocModelObject> findComponentsByCategAndType(Set<CommonDocModelObject> components, String categ,
+			String type) {
+		List<CommonDocModelObject> findComponents = new ArrayList<>();
+		if (!components.isEmpty()) {
+			findComponents
+					.addAll(components.stream()
+							.filter(component -> categ.equals(component.getCateg())
+									&& (type == null || type.equals(component.getType())))
+							.collect(Collectors.toList()));
+			for (CommonDocModelObject component : components) {
+				findComponents.addAll(this.findComponentsByCategAndType(component.getComponents(), categ, type));
+			}
+		}
+		return new HashSet<>(findComponents);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public Set<CommonDocModelObject> getComponents(String categ, String type, boolean byAllTree) {
+		List<CommonDocModelObject> components = new ArrayList<>();
+		if (byAllTree) {
+			components.addAll(this.findComponentsByCategAndType(this.components, categ, type));
+		} else {
+			components
+					.addAll(this.components.stream()
+							.filter(component -> categ.equals(component.getCateg())
+									&& (type == null || type.equals(component.getType())))
+							.collect(Collectors.toList()));
+		}
+		return new HashSet<>(components);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public Set<CommonDocModelObject> getComponents(String categ, boolean byAllTree) {
+		return this.getComponents(categ, null, byAllTree);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public Set<CommonDocModelObject> getComponents(String categ) {
+		return this.getComponents(categ, null, false);
+	}
+
+	/**
+	 * Находит и возвращает объект модели документа из заданного множества по
+	 * заданной категории или типу.
+	 *
+	 * @param components множество объектов модели документа (компоненты)
 	 * @param categ      категория
 	 * @param type       тип
 	 * @return если найден, то объект-компонент модели документа, иначе -
@@ -141,17 +201,7 @@ public class DocModelObject implements CommonDocModelObject {
 	}
 
 	/**
-	 * Возвращает признак наличия объекта модели документа с заданной категорией или
-	 * типом.
-	 *
-	 * @param categ     категория
-	 * @param type      тип
-	 * @param byAllTree признак поиска по всему дереву модели документа
-	 *                  ({@code true} - поиск выполняется по всему дереву,
-	 *                  {@code false} - поиск выполняется по списку компонентов
-	 *                  текущего объекта модели документа)
-	 * @return если найден объект модели документа, то {@code true}, иначе -
-	 *         {@code false}
+	 * {@inheritDoc}
 	 */
 	public boolean isComponentPresent(String categ, String type, boolean byAllTree) {
 		CommonDocModelObject docModelObject = null;
@@ -165,29 +215,14 @@ public class DocModelObject implements CommonDocModelObject {
 	}
 
 	/**
-	 * Возвращает признак наличия объекта модели документа с заданной категорией.
-	 *
-	 * @param categ     категория
-	 * @param byAllTree признак поиска по всему дереву модели документа
-	 *                  ({@code true} - поиск выполняется по всему дереву,
-	 *                  {@code false} - поиск выполняется по списку компонентов
-	 *                  текущего объекта модели документа)
-	 * @return если найден объект модели документа, то {@code true}, иначе -
-	 *         {@code false}
+	 * {@inheritDoc}
 	 */
 	public boolean isComponentPresent(String categ, boolean byAllTree) {
 		return this.isComponentPresent(categ, null, byAllTree);
 	}
 
 	/**
-	 * Возвращает признак наличия объекта модели документа с заданной категорией.
-	 * <p>
-	 * Поиск выполняется только по списку компонентов текущего объекта модели
-	 * документа.
-	 * 
-	 * @param categ категория
-	 * @return если найден объект модели документа, то {@code true}, иначе -
-	 *         {@code false}
+	 * {@inheritDoc}
 	 */
 	public boolean isComponentPresent(String categ) {
 		return this.isComponentPresent(categ, null, false);

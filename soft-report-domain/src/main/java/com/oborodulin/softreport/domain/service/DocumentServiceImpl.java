@@ -118,9 +118,14 @@ public class DocumentServiceImpl
 			CommonDocModelObject modelObject = DocModelObject.builder().categ(categ).name(docObject.getName())
 					.descr(docObject.getDescr()).build();
 			switch (categ) {
-			case Value.VC_DOT_DTCOLUMN:
 			case Value.VC_DOT_VWCOLUMN:
+			case Value.VC_DOT_DTCOLUMN:
 				modelObject.setType(docObject.getDtColumnType());
+				modelObject.setIsRequired(docObject.getIsRequired());
+				modelObject.setIsUniqueKey(docObject.getIsUniqueKey());
+				modelObject.setIsCompositeKey(docObject.getIsCompositeKey());
+				modelObject.setDefaultValue(docObject.getDefaultValue());
+				modelObject.setForeignKey(docObject.getForeignKeyString());
 				break;
 			}
 			parentModelObject.addComponent(modelObject);
@@ -142,7 +147,8 @@ public class DocumentServiceImpl
 		Project project = document.getMaster();
 		for (Software software : project.getSoftwares()) {
 			for (BusinessObject businessObject : software.getBusinessObjects()) {
-				// получаем объекты данных первого-второго уровня (таблицы данных, представления,
+				// получаем объекты данных первого-второго уровня (таблицы данных,
+				// представления,
 				// процедуры и функции)
 				for (DocObject docObject : businessObject.getDocObjects()) {
 					DocObject dataBase = this.docObjectService.getDataObjectDb(docObject);
@@ -157,6 +163,7 @@ public class DocumentServiceImpl
 					CommonDocModelObject modelObject = DocModelObject.builder().categ(categ)
 							.name(docObject.getFullName()).descr(docObject.getDescr()).sqlQuery(docObject.getSqlQuery())
 							.build();
+					modelObject.addBusinessObject(businessObject.getName());
 					if (categ.equals(Value.VC_DOT_DT)) {
 						modelObject.setType(docObject.getDtType().getCode());
 					}
