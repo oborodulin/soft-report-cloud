@@ -115,8 +115,8 @@ public class DocumentServiceImpl
 	private void setDocumentDataModel(CommonDocModelObject parentModelObject, List<DocObject> docObjects) {
 		for (DocObject docObject : docObjects) {
 			String categ = docObject.getType().getCode();
-			CommonDocModelObject modelObject = DocModelObject.builder().categ(categ).name(docObject.getName())
-					.descr(docObject.getDescr()).build();
+			CommonDocModelObject modelObject = DocModelObject.builder().pos(docObject.getPos()).categ(categ)
+					.name(docObject.getName()).descr(docObject.getDescr()).build();
 			switch (categ) {
 			case Value.VC_DOT_VWCOLUMN:
 			case Value.VC_DOT_DTCOLUMN:
@@ -142,25 +142,22 @@ public class DocumentServiceImpl
 		DocumentModel docModel = new DocumentModel();
 		CommonDocModelObject server = DocModelObject.builder().name("localhost").build();
 		docModel.addServer(server);
-		// Comparator<DocObject> compareByPos = (DocObject o1, DocObject o2) ->
-		// o1.getPos().compareTo(o2.getPos());
 		Project project = document.getMaster();
 		for (Software software : project.getSoftwares()) {
 			for (BusinessObject businessObject : software.getBusinessObjects()) {
 				// получаем объекты данных первого-второго уровня (таблицы данных,
-				// представления,
-				// процедуры и функции)
+				// представления, процедуры и функции)
 				for (DocObject docObject : businessObject.getDocObjects()) {
 					DocObject dataBase = this.docObjectService.getDataObjectDb(docObject);
 					CommonDocModelObject docDataBase = server.getComponent(dataBase.getName());
 					if (docDataBase == null) {
-						docDataBase = DocModelObject.builder().categ(dataBase.getType().getCode())
-								.type(dataBase.getDbType().getCode()).name(dataBase.getName())
-								.descr(dataBase.getDescr()).build();
+						docDataBase = DocModelObject.builder().pos(docObject.getPos())
+								.categ(dataBase.getType().getCode()).type(dataBase.getDbType().getCode())
+								.name(dataBase.getName()).descr(dataBase.getDescr()).build();
 						server.addComponent(docDataBase);
 					}
 					String categ = docObject.getType().getCode();
-					CommonDocModelObject modelObject = DocModelObject.builder().categ(categ)
+					CommonDocModelObject modelObject = DocModelObject.builder().pos(docObject.getPos()).categ(categ)
 							.name(docObject.getFullName()).descr(docObject.getDescr()).sqlQuery(docObject.getSqlQuery())
 							.build();
 					modelObject.addBusinessObject(businessObject.getName());
@@ -183,6 +180,14 @@ public class DocumentServiceImpl
 		return docModel;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Comparator<CommonDocModelObject> getDocObjectComparator() {
+		return (CommonDocModelObject o1, CommonDocModelObject o2) -> o1.getPos().compareTo(o2.getPos());
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

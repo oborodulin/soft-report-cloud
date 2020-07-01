@@ -74,7 +74,7 @@ public interface CommonDocModelObject {
 	 *                  текущего объекта модели документа)
 	 * @return множество объектов-компонентов
 	 */
-	public Set<CommonDocModelObject> getComponents(String categ, String type, boolean byAllTree);
+	public Set<CommonDocModelObject> getComponents(String categ, String type, Boolean byAllTree);
 
 	/**
 	 * Возвращает множество объектов-компонентов с заданной категорией.
@@ -86,7 +86,7 @@ public interface CommonDocModelObject {
 	 *                  текущего объекта модели документа)
 	 * @return множество объектов-компонентов
 	 */
-	public Set<CommonDocModelObject> getComponents(String categ, boolean byAllTree);
+	public Set<CommonDocModelObject> getComponents(String categ, Boolean byAllTree);
 
 	/**
 	 * Возвращает множество объектов-компонентов с заданной категорией.
@@ -135,7 +135,7 @@ public interface CommonDocModelObject {
 	 * @return если найден объект модели документа, то {@code true}, иначе -
 	 *         {@code false}
 	 */
-	public boolean isComponentPresent(String categ, String type, boolean byAllTree);
+	public Boolean isComponentPresent(String categ, String type, Boolean byAllTree);
 
 	/**
 	 * Возвращает признак наличия объекта модели документа с заданной категорией.
@@ -148,7 +148,7 @@ public interface CommonDocModelObject {
 	 * @return если найден объект модели документа, то {@code true}, иначе -
 	 *         {@code false}
 	 */
-	public boolean isComponentPresent(String categ, boolean byAllTree);
+	public Boolean isComponentPresent(String categ, Boolean byAllTree);
 
 	/**
 	 * Возвращает признак наличия объекта модели документа с заданной категорией.
@@ -160,7 +160,7 @@ public interface CommonDocModelObject {
 	 * @return если найден объект модели документа, то {@code true}, иначе -
 	 *         {@code false}
 	 */
-	public boolean isComponentPresent(String categ);
+	public Boolean isComponentPresent(String categ);
 
 	public void setIsRequired(Boolean isRequired);
 

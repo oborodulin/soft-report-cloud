@@ -144,7 +144,7 @@ public class DocModelObject implements CommonDocModelObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Set<CommonDocModelObject> getComponents(String categ, String type, boolean byAllTree) {
+	public Set<CommonDocModelObject> getComponents(String categ, String type, Boolean byAllTree) {
 		List<CommonDocModelObject> components = new ArrayList<>();
 		if (byAllTree) {
 			components.addAll(this.findComponentsByCategAndType(this.components, categ, type));
@@ -161,7 +161,7 @@ public class DocModelObject implements CommonDocModelObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Set<CommonDocModelObject> getComponents(String categ, boolean byAllTree) {
+	public Set<CommonDocModelObject> getComponents(String categ, Boolean byAllTree) {
 		return this.getComponents(categ, null, byAllTree);
 	}
 
@@ -203,7 +203,7 @@ public class DocModelObject implements CommonDocModelObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean isComponentPresent(String categ, String type, boolean byAllTree) {
+	public Boolean isComponentPresent(String categ, String type, Boolean byAllTree) {
 		CommonDocModelObject docModelObject = null;
 		if (byAllTree) {
 			docModelObject = this.findComponentByCategAndType(this.components, categ, type);
@@ -217,14 +217,14 @@ public class DocModelObject implements CommonDocModelObject {
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean isComponentPresent(String categ, boolean byAllTree) {
+	public Boolean isComponentPresent(String categ, Boolean byAllTree) {
 		return this.isComponentPresent(categ, null, byAllTree);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean isComponentPresent(String categ) {
+	public Boolean isComponentPresent(String categ) {
 		return this.isComponentPresent(categ, null, false);
 	}
 }

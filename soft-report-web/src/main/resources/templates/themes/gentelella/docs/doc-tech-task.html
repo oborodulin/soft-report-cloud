@@ -29,15 +29,15 @@
 				<h1
 					th:text="#{datamodel.label} + ' ('+${server.componentsString} + ')'"></h1>
 						<th:block
-							th:replace="fragments/document :: outputDataTables(${server}, ${T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_DIC})" />
+							th:replace="fragments/document :: outputDataTables(${server}, ${T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_DIC}, ${comparator})" />
 						<th:block
-							th:replace="fragments/document :: outputDataTables(${server}, ${T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_OPER})" />
+							th:replace="fragments/document :: outputDataTables(${server}, ${T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_OPER}, ${comparator})" />
 						<th:block
-							th:replace="fragments/document :: outputDataTables(${server}, ${T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_IFACE})" />
+							th:replace="fragments/document :: outputDataTables(${server}, ${T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_IFACE}, ${comparator})" />
 						<th:block
-							th:replace="fragments/document :: outputDataTables(${server}, ${T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_LOG})" />
+							th:replace="fragments/document :: outputDataTables(${server}, ${T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_LOG}, ${comparator})" />
 						<th:block
-							th:replace="fragments/document :: outputDataTables(${server}, ${T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_TMP})" />
+							th:replace="fragments/document :: outputDataTables(${server}, ${T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_TMP}, ${comparator})" />
 			</th:block>
 
 			<div class="row">

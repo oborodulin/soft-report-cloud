@@ -62,6 +62,7 @@ public class DocumentMvcController extends
 		model.addAttribute(MA_TITLE_READ, document.getCodeId());
 		model.addAttribute(this.objName, this.service.init(document));
 		model.addAttribute("docModel", this.service.getDocModel(document));
+		model.addAttribute("comparator", this.service.getDocObjectComparator());
 		/*
 		 * model.addAttribute("signatories", this.service.getSignatories(document));
 		 * model.addAttribute("terms", this.service.getTerms(document));

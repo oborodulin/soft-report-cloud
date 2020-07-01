@@ -3,25 +3,27 @@
 	xmlns:th="http://www.thymeleaf.org">
 <body>
 	<!-- Вывод таблиц данных и их полей -->
-	<th:block th:fragment="outputDataTables(server, type)">
+	<th:block th:fragment="outputDataTables(server, type, comparator)">
 		<th:block
-			th:with="dataTables=${server.components(T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DOT_DT, type, true)}">
+			th:with="dataTables=${server.getComponents(T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DOT_DT, type, true)}">
 			<th:block th:if="${#lists.size(dataTables) > 0}">
-				<h2
-					th:if="${#strings.equals(type, T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_DIC)}"
-					th:text="#{dt.dictionary.report}"></h2>
-				<h2
-					th:if="${#strings.equals(type, T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_OPER)}"
-					th:text="#{dt.operational.report}"></h2>
-				<h2
-					th:if="${#strings.equals(type, T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_IFACE)}"
-					th:text="#{dt.interface.report}"></h2>
-				<h2
-					th:if="${#strings.equals(type, T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_LOG)}"
-					th:text="#{dt.logging.report}"></h2>
-				<h2
-					th:if="${#strings.equals(type, T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_TMP)}"
-					th:text="#{dt.temporary.report}"></h2>
+				<th:block th:switch="${type}">
+					<h2
+						th:case="${T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_DIC}"
+						th:text="#{dt.dictionary.report}"></h2>
+					<h2
+						th:case="${T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_OPER}"
+						th:text="#{dt.operational.report}"></h2>
+					<h2
+						th:case="${T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_IFACE}"
+						th:text="#{dt.interface.report}"></h2>
+					<h2
+						th:case="${T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_LOG}"
+						th:text="#{dt.logging.report}"></h2>
+					<h2
+						th:case="${T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DTT_TMP}"
+						th:text="#{dt.temporary.report}"></h2>
+				</th:block>
 				<th:block th:each="dataTable : ${dataTables}">
 					<h3 th:text="${dataTable.businessObjectsString}"></h3>
 					<p th:text="${dataTable.descr}" />
@@ -29,7 +31,7 @@
 						<thead>
 							<tr class="headings">
 								<th class="column-title text-center" colspan="7"
-									th:text="${dataTable.fullName}" />
+									th:text="${dataTable.name}" />
 							</tr>
 							<tr class="headings">
 								<th class="column-title" th:text="#{dtclnm.name.report}" />
@@ -43,7 +45,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="dtColumn, rowStat : ${dataTable.components(T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DOT_DTCOLUMN)}"
+							<tr
+								th:each="dtColumn, rowStat : ${#lists.sort(dataTable.getComponents(T(com.oborodulin.softreport.domain.model.dic.valuesset.value.Value).VC_DOT_DTCOLUMN), comparator)}"
 								th:class="${rowStat.odd} ? 'odd pointer' : 'even pointer'">
 								<td th:text="${dtColumn.name}" class=" " />
 								<td th:text="${dtColumn.descr}" class=" " />
