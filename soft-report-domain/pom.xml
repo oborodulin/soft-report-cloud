@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>soft-report-domain</artifactId>
-	<name>soft-report-domain</name>
-	<description>Demo project for Spring Boot</description>
+	<name>Soft Report Domain</name>
+	<description>Доменная модель</description>
 	<packaging>jar</packaging>
 	<parent>
 		<groupId>com.oborodulin</groupId>
@@ -15,6 +15,10 @@
 
 	<dependencies>
 		<!-- Necessary Boot starters -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -31,13 +35,16 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-envers -->
-		<!-- dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-envers</artifactId> 
-			</dependency -->
+		<!-- Hibernate Envers -->
 		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-envers</artifactId>
+		</dependency>
+		<!-- Spring Data Envers -->
+		<!-- dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-envers</artifactId>
-		</dependency>
+		</dependency-->
 		<!-- add all iText 7 modules -->
 		<dependency>
 			<groupId>com.itextpdf</groupId>
@@ -66,5 +73,4 @@
 		<!--dependency> <groupId>org.springframework.security</groupId> <artifactId>spring-security-test</artifactId> 
 			<scope>test</scope> </dependency -->
 	</dependencies>
-
 </project>

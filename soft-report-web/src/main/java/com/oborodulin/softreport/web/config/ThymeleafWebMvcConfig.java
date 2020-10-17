@@ -3,16 +3,16 @@ package com.oborodulin.softreport.web.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
-import org.springframework.web.servlet.ViewResolver;
+//import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+//import org.thymeleaf.spring5.SpringTemplateEngine;
+//import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import lombok.var;
-import nz.net.ultraq.thymeleaf.LayoutDialect;
-import nz.net.ultraq.thymeleaf.decorators.strategies.GroupingRespectLayoutTitleStrategy;
+//import lombok.var;
+//import nz.net.ultraq.thymeleaf.LayoutDialect;
+//import nz.net.ultraq.thymeleaf.decorators.strategies.GroupingRespectLayoutTitleStrategy;
 
 @Configuration
 public class ThymeleafWebMvcConfig implements WebMvcConfigurer {
@@ -20,7 +20,7 @@ public class ThymeleafWebMvcConfig implements WebMvcConfigurer {
 	@Bean
 	@Description("Thymeleaf template resolver serving HTML 5")
 	public ClassLoaderTemplateResolver templateResolver() {
-		var templateResolver = new ClassLoaderTemplateResolver();
+		ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
 
 		// templateResolver.setPrefix("templates/");
 		templateResolver.setPrefix("templates/themes/gentelella/");

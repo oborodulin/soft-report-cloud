@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>soft-report</artifactId>
@@ -22,11 +23,8 @@
 			<artifactId>soft-report-rest</artifactId>
 			<version>${softreport.version}</version>
 		</dependency>
-		<!-- dependency>
-			<groupId>com.oborodulin</groupId>
-			<artifactId>soft-report-security</artifactId>
-			<version>${softreport.version}</version>
-		</dependency-->
+		<!-- dependency> <groupId>com.oborodulin</groupId> <artifactId>soft-report-security</artifactId> 
+			<version>${softreport.version}</version> </dependency -->
 		<dependency>
 			<groupId>com.oborodulin</groupId>
 			<artifactId>soft-report-web</artifactId>
@@ -36,6 +34,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -76,6 +78,13 @@
 					<artifactId>junit-vintage-engine</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<!-- Groovy -->
+		<!-- Решаем проблему: WARNING: Illegal reflective access by org.codehaus.groovy.vmplugin.v7.Java7 -->
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy</artifactId>
+			<version>3.0.6</version>
 		</dependency>
 	</dependencies>
 
