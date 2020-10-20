@@ -24,6 +24,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +41,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class DocumentServiceImpl
 		extends AbstractJpaDetailTreeService<Project, Document, ProjectRepository, DocumentRepository, String>
 		implements DocumentService {
+	@PersistenceContext
+	private EntityManager entityManager;
 	@Autowired
 	private DocTypeService docTypeService;
 	@Autowired
@@ -109,6 +117,21 @@ public class DocumentServiceImpl
 			log.error(e.getMessage());
 		}
 		return document;
+	}
+
+	private List<DocObject> getDocObjects(Document document) {
+		List<DocObject> docObjects = new ArrayList<>();
+		Project project = document.getMaster();
+		for (Software software : project.getSoftwares()) {
+			for (BusinessObject businessObject : software.getBusinessObjects()) {
+				// получаем объекты данных первого-второго уровня (таблицы данных,
+				// представления, процедуры и функции)
+				for (DocObject docObject : businessObject.getDocObjects()) {
+					docObjects.add(docObject);
+				}
+			}
+		}
+		return docObjects;
 	}
 
 	@Transactional(readOnly = true)
@@ -187,7 +210,23 @@ public class DocumentServiceImpl
 	public Comparator<CommonDocModelObject> getDocObjectComparator() {
 		return (CommonDocModelObject o1, CommonDocModelObject o2) -> o1.getPos().compareTo(o2.getPos());
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional
+	public void fix(Document document) {
+		AuditReader auditReader = AuditReaderFactory.get(entityManager);
+		for (DocObject docObject : this.getDocObjects(document)) {
+			List<Number> revisionNumbers = auditReader.getRevisions(DocObject.class, docObject.getId());
+			for (Number rev : revisionNumbers) {
+				DocObject auditedDocObject = auditReader.find(DocObject.class, docObject.getId(), rev);
+				log.info("DocObject [" + auditedDocObject + "] at revision [" + rev + "].");
+			}
+		}
+		log.info("End revisions");
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

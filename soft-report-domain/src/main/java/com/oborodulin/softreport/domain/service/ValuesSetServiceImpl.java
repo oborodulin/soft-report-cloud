@@ -3,6 +3,7 @@ package com.oborodulin.softreport.domain.service;
 import com.oborodulin.softreport.domain.common.service.AbstractJpaService;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet;
 import com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSetRepository;
+import com.oborodulin.softreport.domain.model.dic.valuesset.value.AttrValueYes;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 
 import java.util.ArrayList;
@@ -182,7 +183,7 @@ public class ValuesSetServiceImpl extends AbstractJpaService<ValuesSet, ValuesSe
 	public List<Value> getDocObjСontainerTypes() {
 		List<Value> containerTypes = new ArrayList<>();
 		for (Value val : this.findValuesBySetCode(ValuesSet.VS_DOC_OBJ_TYPES)) {
-			if (val.getAttr2().equals(Value.AV_YES)) {
+			if (new AttrValueYes().equals(val.getAttr2())) {
 				containerTypes.add(val);
 			}
 		}
@@ -196,7 +197,7 @@ public class ValuesSetServiceImpl extends AbstractJpaService<ValuesSet, ValuesSe
 	public List<Value> getParentObjHierarchyСontainerTypes(String archCode) {
 		List<Value> parentTypes = new ArrayList<>();
 		for (Value val : this.findValuesBySetCode(ValuesSet.VS_DOC_OBJ_TYPES)) {
-			if (val.getAttr1().equals(archCode) && val.getAttr2().equals(Value.AV_YES)) {
+			if (val.getAttr1().equals(archCode) && new AttrValueYes().equals(val.getAttr2())) {
 				parentTypes.add(val);
 			}
 		}
@@ -210,7 +211,7 @@ public class ValuesSetServiceImpl extends AbstractJpaService<ValuesSet, ValuesSe
 	public List<Value> getDocObjComponentTypes() {
 		List<Value> componentTypes = new ArrayList<>();
 		for (Value val : this.findValuesBySetCode(ValuesSet.VS_DOC_OBJ_TYPES)) {
-			if (val.getAttr3().equals(Value.AV_YES)) {
+			if (new AttrValueYes().equals(val.getAttr3())) {
 				componentTypes.add(val);
 			}
 		}

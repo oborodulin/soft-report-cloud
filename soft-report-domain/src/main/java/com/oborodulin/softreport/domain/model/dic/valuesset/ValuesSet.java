@@ -30,7 +30,7 @@ import lombok.EqualsAndHashCode;
  * модели.
  * 
  * @author Oleg Borodulin
- *
+ * @version 1.0
  */
 @Data
 @Entity

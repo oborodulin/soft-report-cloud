@@ -49,6 +49,11 @@
 								onclick="bulkActionChecked(this, event, 'table_records');"><i
 									class="fa fa-file-text" aria-hidden="true"></i> <th:block
 										th:text="' '+#{view.label}" /></a>
+									<a th:href="@{~/documents/fix/[id]}"
+								class="btn btn-secondary btn-xs"
+								onclick="bulkActionChecked(this, event, 'table_records');"><i
+									class="fa fa-floppy-o" aria-hidden="true"></i> <th:block
+										th:text="' '+#{fix.label}" /></a>
 							</th>
 						</tr>
 					</thead>

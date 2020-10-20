@@ -3,6 +3,7 @@ package com.oborodulin.softreport.domain.service;
 import com.oborodulin.softreport.domain.common.service.AbstractJpaTreeService;
 import com.oborodulin.softreport.domain.model.dic.objhierarchy.ObjHierarchy;
 import com.oborodulin.softreport.domain.model.dic.objhierarchy.ObjHierarchyRepository;
+import com.oborodulin.softreport.domain.model.dic.valuesset.value.AttrValueYes;
 import com.oborodulin.softreport.domain.model.dic.valuesset.value.Value;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class ObjHierarchyServiceImpl extends AbstractJpaTreeService<ObjHierarchy
 		// return
 		// this.valueRepository.findByMaster_CodeAndAttr2OrderByCodeAsc(ValuesSet.VS_DOC_OBJ_TYPES,
 		// Value.AV_YES);
-		return this.repository.findByType_Attr2(Value.AV_YES);
+		return this.repository.findByType_Attr2(new AttrValueYes().toString());
 	}
 
 	/**
@@ -47,7 +48,7 @@ public class ObjHierarchyServiceImpl extends AbstractJpaTreeService<ObjHierarchy
 		// return
 		// this.valueRepository.findByMaster_CodeAndAttr1AndAttr2OrderByCodeAsc(ValuesSet.VS_DOC_OBJ_TYPES,
 		// childObj.getParent().getArch().getAttr1(), Value.AV_YES);
-		return this.repository.findByType_Attr1AndType_Attr2(childObj.getParent().getArch().getCodeId(), Value.AV_YES);
+		return this.repository.findByType_Attr1AndType_Attr2(childObj.getParent().getArch().getCodeId(), new AttrValueYes().toString());
 	};
 
 	/**

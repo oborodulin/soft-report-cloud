@@ -1,5 +1,6 @@
 package com.oborodulin.softreport;
 
+import org.hibernate.envers.Audited;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -10,6 +11,14 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
  * Класс запуска Spring Boot приложение Soft Report.
  * <p>
  * Приложение использует аудит (отслеживание изменений в сущностных классах).
+ * <p>
+ * В общем случае для включения поддержки аудита необходимо:
+ * <ul>
+ * <li>в классы сущностей добавить аннотацию {@code @Audited}
+ * <li>в базовом классе поддержки аудита сущностей {@link com.oborodulin.softreport.domain.common.entity.AuditableEntity AuditableEntity}
+ * добавить аннотацию {@code @MappedSuperClass} и описать свойства с аннотациями {@code @CreatedBy}, {@code @CreatedDate}, 
+ * {@code @LastModifiedBy} и {@code @LastModifiedDate}
+ * </ul> 
  * Для Spring Data JPA/Data Envers аудита необходимо:
  * <ul>
  * <li>добавить зависимость в pom.xml 
@@ -29,7 +38,6 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
  * создаём бин получения данных о пользователе, изменившем запись {@link com.oborodulin.softreport.domain.config.PersistenceConfig#auditorAware() auditorAware}
  * <li>к базовому классу поддержки аудита сущностей {@link com.oborodulin.softreport.domain.common.entity.AuditableEntity AuditableEntity} 
  * добавляем слушатель обратного вызова {@code @EntityListeners(AuditingEntityListener.class)}   
- * <li>в классы сущностей добавить аннотацию {@code }
  * <li>для получения информации о ревизиях:
  * <ul>
  * <li>добавляем аннотацию {@code @EnableJpaRepositories(repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)} 
@@ -47,8 +55,8 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
  *		<artifactId>hibernate-envers</artifactId>
  *	</dependency>
  * }
- * <li>добавляем аннотацию {@code @EnableJpaAuditing}, включающую поддержку аудита, 
- * 
+ * <li> 
+ * </ul>
  * @author Oleg Borodulin
  * @version 1.0
  */

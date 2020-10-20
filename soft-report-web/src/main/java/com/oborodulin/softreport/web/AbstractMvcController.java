@@ -43,6 +43,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	protected static final String URL_CREATE = "/create";
 	protected static final String URL_CREATE_CONTINUE = "/create/{isContinue}";
 	protected static final String URL_VIEW = "/view/{id}";
+	protected static final String URL_FIX = "/fix/{id}";
 	protected static final String URL_EDIT = "/edit/{id}";
 	protected static final String URL_UPDATE = "/update/{id}";
 	protected static final String URL_DELETE = "/delete";

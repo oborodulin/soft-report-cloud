@@ -49,9 +49,6 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	/** Наименование таблицы данных доменного объекта (сущности) */
 	protected static final String TABLE_NAME = "VALS";
 
-	/** Значение атрибута: YES */
-	public static final String AV_YES = "Y";
-
 	/** Значение атрибута: NO */
 	public static final String AV_NO = "N";
 
