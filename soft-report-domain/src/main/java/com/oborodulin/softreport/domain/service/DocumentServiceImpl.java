@@ -119,13 +119,18 @@ public class DocumentServiceImpl
 		return document;
 	}
 
-	private List<DocObject> getDocObjects(Document document) {
+	/**
+	 * Возвращает список объектов данных документа первого-второго уровней
+	 * <p>
+	 * Таблицы данных, представления, процедуры и функции
+	 * 
+	 * @return список объектов данных документа первого-второго уровней
+	 */
+	private List<DocObject> getDataDocObjects(Document document) {
 		List<DocObject> docObjects = new ArrayList<>();
 		Project project = document.getMaster();
 		for (Software software : project.getSoftwares()) {
 			for (BusinessObject businessObject : software.getBusinessObjects()) {
-				// получаем объекты данных первого-второго уровня (таблицы данных,
-				// представления, процедуры и функции)
 				for (DocObject docObject : businessObject.getDocObjects()) {
 					docObjects.add(docObject);
 				}
@@ -217,7 +222,7 @@ public class DocumentServiceImpl
 	@Transactional
 	public void fix(Document document) {
 		AuditReader auditReader = AuditReaderFactory.get(entityManager);
-		for (DocObject docObject : this.getDocObjects(document)) {
+		for (DocObject docObject : this.getDataDocObjects(document)) {
 			List<Number> revisionNumbers = auditReader.getRevisions(DocObject.class, docObject.getId());
 			for (Number rev : revisionNumbers) {
 				DocObject auditedDocObject = auditReader.find(DocObject.class, docObject.getId(), rev);
