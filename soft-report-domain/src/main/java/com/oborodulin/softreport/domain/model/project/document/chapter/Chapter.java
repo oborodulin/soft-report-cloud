@@ -54,7 +54,7 @@ public class Chapter extends DetailEntity<Document, String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.name != null && !this.name.isEmpty() ? this.name : this.chapter.getVal();
 	}
 

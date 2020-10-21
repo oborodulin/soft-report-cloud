@@ -59,7 +59,7 @@ public class Version extends DetailEntity<Document, String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.getSemVersionString();
 	}
 

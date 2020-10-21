@@ -6,5 +6,5 @@ public interface Treelike<T extends TreeEntity<T, U>, U> {
 	 * 
 	 * @param child дочерний объект
 	 */
-	public void addСhild(T child);
+	public void add(T child);
 }

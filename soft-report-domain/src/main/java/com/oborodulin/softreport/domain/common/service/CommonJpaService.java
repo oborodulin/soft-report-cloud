@@ -5,23 +5,81 @@ import java.util.Optional;
 
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
 
+/**
+ * Базовый интерфейс JPA-сервисов всех сущностей модели
+ * <p>
+ * Описывает базовые операции сервисов: поиск сущностей, их создание,
+ * инициализацию, сохранение и удаление
+ * 
+ * @author Oleg Borodulin
+ * @version 1.0
+ */
 public interface CommonJpaService<E extends AuditableEntity<U>, U> {
 
-	public List<E> findAll();
+	/**
+	 * Возвращает список всех сущностей
+	 * 
+	 * @return список всех сущностей
+	 */
+	public List<E> entities();
 
-	public Optional<E> findById(Long id);
+	/**
+	 * Возвращает возможную cущность по заданному идентификатору
+	 * 
+	 * @param id идентификатор сущности
+	 * @return возможная cущность
+	 */
+	public Optional<E> optionalEntity(Long id);
 
-	public E getById(Long id);
+	/**
+	 * Возвращает cущность по заданному идентификатору
+	 * 
+	 * @param id идентификатор сущности
+	 * @return cущность или {@code null}
+	 */
+	public E entity(Long id);
 
-	public E create();
+	/**
+	 * Возвращает созданную cущность
+	 * 
+	 * @return созданная cущность
+	 */
+	public E createdEntity();
 
-	public E init(E entity);
+	/**
+	 * Возвращает проинициализированную cущность
+	 * 
+	 * @param entity сущность, которую требуется проинициализировать
+	 * @return проинициализированная cущность
+	 */
+	public E initializedEntity(E entity);
 
-	public List<E> init(List<E> entities);
-	
-	public Optional<E> save(E entity);
+	/**
+	 * Возвращает список проинициализированных cущностей
+	 * 
+	 * @param entities список сущностей, которые требуется проинициализировать
+	 * @return список проинициализированных cущностей
+	 */
+	public List<E> initializedEntities(List<E> entities);
 
+	/**
+	 * Сохраняет заданную cущность
+	 * 
+	 * @param entity сохраняемая сущность
+	 */
+	public void save(E entity);
+
+	/**
+	 * Удаляет заданную cущность
+	 * 
+	 * @param entity удаляемая сущность
+	 */
 	public void delete(E entity);
 
-	public void deleteById(Long id);
+	/**
+	 * Удаляет cущность с заданным идентификатором
+	 * 
+	 * @param id идентификатор сущности
+	 */
+	public void delete(Long id);
 }

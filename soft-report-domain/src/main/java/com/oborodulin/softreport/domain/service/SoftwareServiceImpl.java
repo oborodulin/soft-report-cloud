@@ -35,8 +35,8 @@ public class SoftwareServiceImpl extends AbstractJpaTreeService<Software, Softwa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Software create(Long parentId) {
-		Software software = super.create(parentId);
+	public Software createdEntity(Long parentId) {
+		Software software = super.createdEntity(parentId);
 		software.setType(software.getParent().getType());
 		return software;
 	};

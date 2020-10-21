@@ -49,7 +49,7 @@ public class DataFormat extends DetailEntity<DataType, String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.format;
 	}
 	

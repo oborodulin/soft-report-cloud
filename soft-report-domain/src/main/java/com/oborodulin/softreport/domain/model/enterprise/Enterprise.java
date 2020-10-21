@@ -30,7 +30,7 @@ public class Enterprise extends TreeEntity<Enterprise, String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.code;
 	}
 }

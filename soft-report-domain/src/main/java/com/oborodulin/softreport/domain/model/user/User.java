@@ -43,7 +43,7 @@ public class User extends AuditableEntity<String> { // implements UserDetails {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.username;
 	}
 	

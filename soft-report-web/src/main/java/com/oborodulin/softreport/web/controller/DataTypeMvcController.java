@@ -46,7 +46,7 @@ public class DataTypeMvcController extends
 	@Override
 	public Map<String, Object> getShowCreateModelAttributes() {
 		Map<String, Object> ma = new HashMap<>();
-		ma.put(this.masterObjCollectName, masterService.findAll());
+		ma.put(this.masterObjCollectName, masterService.entities());
 		ma.put("backendTypes", this.service.getBackendTypes());
 		ma.put("frontendTypes", this.service.getFrontendTypes());
 		return ma;

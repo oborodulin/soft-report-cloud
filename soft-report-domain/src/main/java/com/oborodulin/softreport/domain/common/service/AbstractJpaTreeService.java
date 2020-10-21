@@ -1,8 +1,6 @@
 package com.oborodulin.softreport.domain.common.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.transaction.annotation.Transactional;
 
 import com.oborodulin.softreport.domain.common.entity.TreeEntity;
@@ -51,7 +49,7 @@ public abstract class AbstractJpaTreeService<E extends TreeEntity<E, U>, R exten
 	 */
 	@Override
 	@Transactional
-	public E create() {
+	public E createdEntity() {
 		E entity = null;
 		try {
 			entity = this.clazz.getDeclaredConstructor().newInstance();
@@ -67,10 +65,10 @@ public abstract class AbstractJpaTreeService<E extends TreeEntity<E, U>, R exten
 	 */
 	@Override
 	@Transactional
-	public E create(Long parentId) {
+	public E createdEntity(Long parentId) {
 		E entity = null;
 		try {
-			entity = this.create();
+			entity = this.createdEntity();
 			entity.setParent(this.repository.findById(parentId)
 					.orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + parentId)));
 		} catch (Exception e) {
@@ -85,10 +83,10 @@ public abstract class AbstractJpaTreeService<E extends TreeEntity<E, U>, R exten
 	 */
 	@Override
 	@Transactional
-	public Optional<E> save(Long parentId, E entity) {
+	public void save(Long parentId, E entity) {
 		entity.setParent(this.repository.findById(parentId)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid parent Id:" + parentId)));
-		return this.save(entity);
+		this.save(entity);
 	};
 
 	/**
@@ -98,9 +96,9 @@ public abstract class AbstractJpaTreeService<E extends TreeEntity<E, U>, R exten
 	@Transactional(readOnly = true)
 	public String getParentsPath(E entity) {
 		if (entity.getParent() != null) {
-			return this.getParentsPath(entity.getParent()).concat(".").concat(entity.getCodeId());
+			return this.getParentsPath(entity.getParent()).concat(".").concat(entity.codeId());
 		}
-		return entity.getCodeId();
+		return entity.codeId();
 	}
 
 }

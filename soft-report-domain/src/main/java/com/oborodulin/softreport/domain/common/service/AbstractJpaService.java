@@ -31,7 +31,7 @@ public abstract class AbstractJpaService<E extends AuditableEntity<U>, R extends
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<E> findAll() {
+	public List<E> entities() {
 		return this.repository.findAll();
 	}
 
@@ -40,7 +40,7 @@ public abstract class AbstractJpaService<E extends AuditableEntity<U>, R extends
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public Optional<E> findById(Long id) {
+	public Optional<E> optionalEntity(Long id) {
 		return this.repository.findById(id);
 	}
 
@@ -48,8 +48,8 @@ public abstract class AbstractJpaService<E extends AuditableEntity<U>, R extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public E getById(Long id) {
-		return this.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid entity Id:" + id));
+	public E entity(Long id) {
+		return this.optionalEntity(id).orElseThrow(() -> new IllegalArgumentException("Invalid entity Id:" + id));
 	}
 
 	/**
@@ -57,7 +57,7 @@ public abstract class AbstractJpaService<E extends AuditableEntity<U>, R extends
 	 */
 	@Override
 	@Transactional
-	public E create() {
+	public E createdEntity() {
 		E entity = null;
 		try {
 			entity = this.clazz.getDeclaredConstructor().newInstance();
@@ -73,7 +73,7 @@ public abstract class AbstractJpaService<E extends AuditableEntity<U>, R extends
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public E init(E entity) {
+	public E initializedEntity(E entity) {
 		return entity;
 	}
 
@@ -82,8 +82,8 @@ public abstract class AbstractJpaService<E extends AuditableEntity<U>, R extends
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<E> init(List<E> entities) {
-		entities.stream().forEach(x -> init(x));
+	public List<E> initializedEntities(List<E> entities) {
+		entities.stream().forEach(x -> initializedEntity(x));
 		return entities;
 	}
 
@@ -92,8 +92,8 @@ public abstract class AbstractJpaService<E extends AuditableEntity<U>, R extends
 	 */
 	@Override
 	@Transactional
-	public Optional<E> save(E entity) {
-		return Optional.of(this.repository.save(entity));
+	public void save(E entity) {
+		Optional.of(this.repository.save(entity));
 	}
 
 	/**
@@ -109,7 +109,7 @@ public abstract class AbstractJpaService<E extends AuditableEntity<U>, R extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void deleteById(Long id) {
+	public void delete(Long id) {
 		this.repository.deleteById(id);
 	}
 

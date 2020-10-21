@@ -57,7 +57,7 @@ public class UiEventType extends DetailEntity<UiObjectType, String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.name;
 	}
 	

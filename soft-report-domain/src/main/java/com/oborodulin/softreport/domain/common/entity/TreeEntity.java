@@ -35,7 +35,7 @@ public abstract class TreeEntity<E extends TreeEntity<E, U>, U> extends Auditabl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addСhild(E child) {
+	public void add(E child) {
 		this.children.add(child);
 	}
 

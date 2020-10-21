@@ -116,7 +116,7 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	 */
 	@Override
 	public List<Software> getSoftwares() {
-		return this.softwareService.findAll();
+		return this.softwareService.entities();
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	 */
 	@Override
 	public List<BusinessObject> getBusinessObjects() {
-		return this.businessObjectService.findAll();
+		return this.businessObjectService.entities();
 	}
 
 	/**
@@ -274,7 +274,7 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	 * @return объект документа
 	 */
 	private DocObject createDocObject(Value type) {
-		DocObject entity = this.create();
+		DocObject entity = this.createdEntity();
 		entity.setType(type);
 		this.setDefaultDocObjectPos(entity);
 		return entity;
@@ -291,7 +291,7 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 		if (parentId == null) {
 			return this.createDocObject(type);
 		}
-		DocObject entity = this.create(parentId);
+		DocObject entity = this.createdEntity(parentId);
 		entity.setType(type);
 		this.setDefaultDocObjectPos(entity);
 		return entity;
@@ -334,7 +334,7 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 	 */
 	@Override
 	@Transactional
-	public Optional<DocObject> save(DocObject entity) {
+	public void save(DocObject entity) {
 		DocObject lastDocObjectPos = null;
 		if (entity.getParent() == null) {
 			lastDocObjectPos = this.repository.findFirstByTypeAndParentIsNullOrderByPosDesc(entity.getType());
@@ -358,6 +358,6 @@ public class DocObjectServiceImpl extends AbstractJpaTreeService<DocObject, DocO
 			}
 			this.repository.saveAll(docObjects);
 		}
-		return Optional.of(this.repository.save(entity));
+		Optional.of(this.repository.save(entity));
 	}
 }

@@ -307,7 +307,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	@Override
 	public List<E> getShowListEntities() {
 		log.info("getShowListEntities:");
-		return this.service.init(this.service.findAll());
+		return this.service.initializedEntities(this.service.entities());
 	}
 
 	/**
@@ -334,7 +334,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	@Override
 	public E createEntity() {
 		log.info("createEntity:");
-		return this.service.create();
+		return this.service.createdEntity();
 	}
 
 	/**
@@ -425,10 +425,10 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 		AuditableEntity<U> mainEntity = this.getShowListMainEntity(mainId);
 		List<E> slaves = this.getShowListSlavesEntities(mainId);
 		if (slaves.isEmpty()) {
-			MessageHelper.addInfoAttribute(model, this.msPrefix.concat(".main.info.empty"), mainEntity.getCodeId());
+			MessageHelper.addInfoAttribute(model, this.msPrefix.concat(".main.info.empty"), mainEntity.codeId());
 		}
 		model.mergeAttributes(this.getModelAttributes(RM_READ));
-		model.addAttribute(MA_TITLE_MASTER, mainEntity.getCodeId());
+		model.addAttribute(MA_TITLE_MASTER, mainEntity.codeId());
 		model.addAttribute(MA_TITLE_READ, this.ms.getMessage(this.msPrefix.concat(".title.read"), null, locale));
 		model.addAttribute(MA_MAIN_ENTITY, mainEntity);
 		model.addAttribute(this.objCollectName, slaves);
@@ -463,7 +463,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 		model.mergeAttributes(this.getModelAttributes(RM_CREATE));
 		AuditableEntity<U> mainEntity = this.getMainEntity(slave);
 		if (mainEntity != null) {
-			model.addAttribute(MA_TITLE_MASTER, mainEntity.getCodeId());
+			model.addAttribute(MA_TITLE_MASTER, mainEntity.codeId());
 		}
 		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage(this.msPrefix.concat(".title.create"), null, locale));
 		model.addAttribute(this.objName, slave);
@@ -480,7 +480,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 		model.mergeAttributes(this.getShowUpdateModelAttributes(id));
 		model.mergeAttributes(this.getModelAttributes(RM_UPDATE));
 		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage(this.msPrefix.concat(".title.update"), null, locale));
-		model.addAttribute(this.objName, this.service.getById(id));
+		model.addAttribute(this.objName, this.service.entity(id));
 		log.info(this.objName + " [" + URL_EDIT + "]: id = " + id);
 		return this.getViewNameCreateUpdate();
 	}
@@ -492,10 +492,10 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	@GetMapping(URL_SLV_EDIT)
 	public String showUpdateForm(@PathVariable(PV_MAIN_ID) Long mainId, @PathVariable(PV_ID) Long id, Locale locale,
 			Model model) {
-		E slave = this.service.getById(id);
+		E slave = this.service.entity(id);
 		model.mergeAttributes(this.getShowUpdateModelAttributes(mainId, id));
 		model.mergeAttributes(this.getModelAttributes(RM_UPDATE));
-		model.addAttribute(MA_TITLE_MASTER, this.getMainEntity(slave).getCodeId());
+		model.addAttribute(MA_TITLE_MASTER, this.getMainEntity(slave).codeId());
 		model.addAttribute(MA_TITLE_UPDATE, this.ms.getMessage(this.msPrefix.concat(".title.update"), null, locale));
 		model.addAttribute(this.objName, slave);
 		log.info(this.objName + " [" + URL_SLV_EDIT + "]: mainId = " + mainId + "; slave = " + slave);
@@ -586,7 +586,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	public String delete(@RequestParam(RV_CHK_TABLE_RECORDS) List<String> ids) {
 		if (ids != null) {
 			for (String idsStr : ids) {
-				this.service.deleteById(Long.parseLong(idsStr));
+				this.service.delete(Long.parseLong(idsStr));
 			}
 		}
 		log.info(this.objCollectName + " [" + URL_DELETE + "]: ids = " + ids);
@@ -601,7 +601,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	public String delete(@PathVariable(PV_MAIN_ID) Long mainId, @RequestParam(RV_CHK_TABLE_RECORDS) List<String> ids) {
 		if (ids != null) {
 			for (String idsStr : ids) {
-				this.service.deleteById(Long.parseLong(idsStr));
+				this.service.delete(Long.parseLong(idsStr));
 			}
 		}
 		log.info(this.objCollectName + " [" + URL_SLV_DELETE + "]: ids = " + ids);
@@ -614,7 +614,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	@Override
 	@GetMapping(URL_DELETE_BY_ID)
 	public String deleteById(@PathVariable(PV_ID) Long id) {
-		this.service.deleteById(id);
+		this.service.delete(id);
 		log.info(this.objName + " [" + URL_DELETE_BY_ID + "]: id = " + id);
 		return this.getRedirectToRead();
 	}
@@ -625,7 +625,7 @@ public abstract class AbstractMvcController<E extends AuditableEntity<U>, S exte
 	@Override
 	@GetMapping(URL_SLV_DELETE_BY_ID)
 	public String deleteById(@PathVariable(PV_MAIN_ID) Long mainId, @PathVariable(PV_ID) Long id) {
-		this.service.deleteById(id);
+		this.service.delete(id);
 		log.info(this.objName + " [" + URL_SLV_DELETE_BY_ID + "]: id = " + id);
 		return this.getRedirectToRead(mainId);
 	}

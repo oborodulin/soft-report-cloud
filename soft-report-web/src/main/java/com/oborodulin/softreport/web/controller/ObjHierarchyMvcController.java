@@ -47,7 +47,7 @@ public class ObjHierarchyMvcController
 	 */
 	@Override
 	public Map<String, Object> getShowCreateModelAttributes(Long parentId) {
-		ObjHierarchy objHierarchy = this.service.create(parentId);
+		ObjHierarchy objHierarchy = this.service.createdEntity(parentId);
 		Map<String, Object> ma = new HashMap<>();
 		ma.put("objHierarches", this.service.findAllParentСontainerObjects(objHierarchy));
 		ma.put("archs", this.service.getParentArchs(objHierarchy));

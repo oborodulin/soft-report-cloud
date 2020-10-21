@@ -367,7 +367,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.name;
 	}
 
@@ -425,7 +425,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 		}
 		StringBuilder sbString = new StringBuilder("");
 		for (BusinessObject businessObject : this.businessObjects) {
-			sbString.append(businessObject.getCodeId()).append(", ");
+			sbString.append(businessObject.codeId()).append(", ");
 		}
 		String businessObjectsNames = sbString.toString();
 		if (businessObjectsNames.length() > 0) {
@@ -446,7 +446,7 @@ public class DocObject extends TreeEntity<DocObject, String> {
 				.contains(this.type.getCode())) {
 			return null;
 		}
-		String dtColumnType = this.dataType.getCodeId();
+		String dtColumnType = this.dataType.codeId();
 		if (this.precision != null) {
 			dtColumnType = dtColumnType.concat("(").concat(this.precision.toString());
 			if (this.scale != null) {

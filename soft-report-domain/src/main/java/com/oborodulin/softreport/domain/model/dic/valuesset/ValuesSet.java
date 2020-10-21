@@ -173,7 +173,7 @@ public class ValuesSet extends AuditableEntity<String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.getName().concat(" [").concat(this.getCode()).concat("]");
 	}
 

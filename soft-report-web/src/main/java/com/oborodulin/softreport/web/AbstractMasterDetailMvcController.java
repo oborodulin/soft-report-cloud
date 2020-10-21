@@ -46,7 +46,7 @@ public abstract class AbstractMasterDetailMvcController<E extends AuditableEntit
 	public Map<String, Object> getShowCreateModelAttributes() {
 		log.info("getShowCreateModelAttributes:");
 		Map<String, Object> ma = new HashMap<>();
-		ma.put(this.masterObjCollectName, this.masterService.findAll());
+		ma.put(this.masterObjCollectName, this.masterService.entities());
 		return ma;
 	}
 
@@ -64,7 +64,7 @@ public abstract class AbstractMasterDetailMvcController<E extends AuditableEntit
 	 */
 	@Override
 	public E getShowListMainEntity(Long mainId) {
-		return this.masterService.getById(mainId);
+		return this.masterService.entity(mainId);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public abstract class AbstractMasterDetailMvcController<E extends AuditableEntit
 	 */
 	@Override
 	public List<D> getShowListSlavesEntities(Long mainId) {
-		return this.service.init(this.service.findByMasterId(mainId, Sort.by(Sort.Direction.ASC, this.getSortPropName())));
+		return this.service.initializedEntities(this.service.entities(mainId, Sort.by(Sort.Direction.ASC, this.getSortPropName())));
 	}
 
 	/**
@@ -80,7 +80,7 @@ public abstract class AbstractMasterDetailMvcController<E extends AuditableEntit
 	 */
 	@Override
 	public D createSlaveEntity(Long mainId) {
-		return this.service.create(mainId);
+		return this.service.createdEntity(mainId);
 	}
 
 	/**

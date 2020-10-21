@@ -48,7 +48,7 @@ public class ObjHierarchy extends TreeEntity<ObjHierarchy, String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.arch.getVal().concat(" :: ").concat(this.type.getVal());
 	}
 

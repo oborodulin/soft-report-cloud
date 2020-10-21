@@ -355,15 +355,15 @@ public class Value extends DetailEntity<ValuesSet, String> {
 	 * @see com.oborodulin.softreport.domain.model.dic.valuesset.ValuesSet#code
 	 */
 	public String getValuesSetCode() {
-		return getMaster() != null ? getMaster().getCodeId() : null;
+		return getMaster() != null ? getMaster().codeId() : null;
 	};
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
-		return this.getMaster() != null ? this.getMaster().getCodeId().concat(" :: ").concat(this.getVal()) : null;
+	public String codeId() {
+		return this.getMaster() != null ? this.getMaster().codeId().concat(" :: ").concat(this.getVal()) : null;
 	}
 
 	/**

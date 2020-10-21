@@ -32,7 +32,7 @@ public class ConfigParameter extends DetailEntity<ConfigBundle, String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.name;
 	}
 	

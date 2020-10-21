@@ -19,5 +19,5 @@ public interface Identifiable {
 	 * 
 	 * @return символьный код-идентификатор
 	 */
-	public String getCodeId();
+	public String codeId();
 }

@@ -23,8 +23,6 @@ import java.util.NoSuchElementException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -88,7 +86,7 @@ public class DocumentServiceImpl
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public Document init(Document document) {
+	public Document initializedEntity(Document document) {
 		// устанавливаем заголовок документа
 		if (document.getName() != null && !document.getName().isEmpty()) {
 			document.setTitle(document.getName());
@@ -126,7 +124,7 @@ public class DocumentServiceImpl
 	 * 
 	 * @return список объектов данных документа первого-второго уровней
 	 */
-	private List<DocObject> getDataDocObjects(Document document) {
+	private List<DocObject> dbDocObjects(Document document) {
 		List<DocObject> docObjects = new ArrayList<>();
 		Project project = document.getMaster();
 		for (Software software : project.getSoftwares()) {
@@ -222,7 +220,7 @@ public class DocumentServiceImpl
 	@Transactional
 	public void fix(Document document) {
 		AuditReader auditReader = AuditReaderFactory.get(entityManager);
-		for (DocObject docObject : this.getDataDocObjects(document)) {
+		for (DocObject docObject : this.dbDocObjects(document)) {
 			List<Number> revisionNumbers = auditReader.getRevisions(DocObject.class, docObject.getId());
 			for (Number rev : revisionNumbers) {
 				DocObject auditedDocObject = auditReader.find(DocObject.class, docObject.getId(), rev);
@@ -237,13 +235,10 @@ public class DocumentServiceImpl
 	 */
 	@Override
 	@Transactional
-	public Optional<Document> save(Long masterId, Document entity) {
-		Optional<Document> document = super.save(masterId, entity);
-		if (document.isPresent()) {
-			this.versionService.getNextVersion(document.get());
-			return this.save(document.get());
-		}
-		return document;
+	public void save(Long masterId, Document entity) {
+		super.save(masterId, entity);
+		//this.versionService.getNextVersion(entity);
+		//this.save(entity);
 	}
 
 	/**
@@ -251,8 +246,8 @@ public class DocumentServiceImpl
 	 */
 	@Override
 	@Transactional
-	public Optional<Document> save(Long masterId, Long parentId, Document entity) {
-		return super.save(masterId, parentId, entity);
+	public void save(Long masterId, Long parentId, Document entity) {
+		super.save(masterId, parentId, entity);
 	}
 
 }

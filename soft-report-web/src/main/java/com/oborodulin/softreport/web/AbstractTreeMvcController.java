@@ -46,7 +46,7 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	public Map<String, Object> getShowCreateModelAttributes() {
 		log.info("getShowCreateModelAttributes:");
 		Map<String, Object> ma = new HashMap<>();
-		ma.put(this.objCollectName, this.service.init(this.service.findAll()));
+		ma.put(this.objCollectName, this.service.initializedEntities(this.service.entities()));
 		ma.forEach((key, value) -> log.debug(key + ":" + value));
 		return ma;
 	}
@@ -67,7 +67,7 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	public Map<String, Object> getShowUpdateModelAttributes(Long id) {
 		log.info("getShowUpdateModelAttributes: id = " + id);
 		Map<String, Object> ma = new HashMap<>();
-		ma.put(this.objCollectName, this.service.init(this.service.findByIdIsNot(id)));
+		ma.put(this.objCollectName, this.service.initializedEntities(this.service.findByIdIsNot(id)));
 		ma.forEach((key, value) -> log.debug(key + ":" + value));
 		return ma;
 	}
@@ -78,7 +78,7 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	@Override
 	public List<E> getShowListEntities() {
 		log.info("getShowListEntities:");
-		return this.service.init(this.service.findByParentIsNull());
+		return this.service.initializedEntities(this.service.findByParentIsNull());
 	}
 
 	/**
@@ -87,7 +87,7 @@ public abstract class AbstractTreeMvcController<E extends TreeEntity<E, U>, S ex
 	@Override
 	public E createSlaveEntity(Long mainId) {
 		log.info("createSlaveEntity: mainId = " + mainId);
-		return this.service.create(mainId);
+		return this.service.createdEntity(mainId);
 	}
 
 }

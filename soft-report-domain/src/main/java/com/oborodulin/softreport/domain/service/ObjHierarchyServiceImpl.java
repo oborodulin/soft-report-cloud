@@ -48,7 +48,7 @@ public class ObjHierarchyServiceImpl extends AbstractJpaTreeService<ObjHierarchy
 		// return
 		// this.valueRepository.findByMaster_CodeAndAttr1AndAttr2OrderByCodeAsc(ValuesSet.VS_DOC_OBJ_TYPES,
 		// childObj.getParent().getArch().getAttr1(), Value.AV_YES);
-		return this.repository.findByType_Attr1AndType_Attr2(childObj.getParent().getArch().getCodeId(), new AttrValueYes().toString());
+		return this.repository.findByType_Attr1AndType_Attr2(childObj.getParent().getArch().codeId(), new AttrValueYes().toString());
 	};
 
 	/**
@@ -67,8 +67,8 @@ public class ObjHierarchyServiceImpl extends AbstractJpaTreeService<ObjHierarchy
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ObjHierarchy create(Long parentId) {
-		ObjHierarchy objHierarchy = super.create(parentId);
+	public ObjHierarchy createdEntity(Long parentId) {
+		ObjHierarchy objHierarchy = super.createdEntity(parentId);
 		objHierarchy.setArch(objHierarchy.getParent().getArch());
 		return objHierarchy;
 	};

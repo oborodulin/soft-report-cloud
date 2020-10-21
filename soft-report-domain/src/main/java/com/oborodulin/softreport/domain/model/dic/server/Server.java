@@ -70,7 +70,7 @@ public class Server extends AuditableEntity<String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.host;
 	}
 	

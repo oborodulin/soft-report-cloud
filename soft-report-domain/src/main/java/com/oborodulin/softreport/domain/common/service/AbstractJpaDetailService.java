@@ -1,8 +1,6 @@
 package com.oborodulin.softreport.domain.common.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.transaction.annotation.Transactional;
 
 import com.oborodulin.softreport.domain.common.entity.AuditableEntity;
@@ -29,7 +27,7 @@ public abstract class AbstractJpaDetailService<E extends AuditableEntity<U>, D e
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<D> findByMaster(E master, Sort sort) {
+	public List<D> entities(E master, Sort sort) {
 		return this.repository.findByMaster(master, sort);
 	};
 
@@ -38,7 +36,7 @@ public abstract class AbstractJpaDetailService<E extends AuditableEntity<U>, D e
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<D> findByMasterId(Long masterId, Sort sort) {
+	public List<D> entities(Long masterId, Sort sort) {
 		return this.repository.findByMaster_Id(masterId, sort);
 	};
 
@@ -47,7 +45,7 @@ public abstract class AbstractJpaDetailService<E extends AuditableEntity<U>, D e
 	 */
 	@Override
 	@Transactional
-	public D create() {
+	public D createdEntity() {
 		D entity = null;
 		try {
 			entity = this.clazz.getDeclaredConstructor().newInstance();
@@ -63,7 +61,7 @@ public abstract class AbstractJpaDetailService<E extends AuditableEntity<U>, D e
 	 */
 	@Override
 	@Transactional
-	public D create(Long masterId) {
+	public D createdEntity(Long masterId) {
 		D entity = null;
 		try {
 			entity = this.clazz.getDeclaredConstructor().newInstance();
@@ -81,10 +79,10 @@ public abstract class AbstractJpaDetailService<E extends AuditableEntity<U>, D e
 	 */
 	@Override
 	@Transactional
-	public Optional<D> save(Long masterId, D entity) {
+	public void save(Long masterId, D entity) {
 		entity.setMaster(this.masterRepository.findById(masterId)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid master Id:" + masterId)));
-		return this.save(entity);
+		this.save(entity);
 	}
 
 }

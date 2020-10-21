@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +31,7 @@ public class ProjectServiceImpl extends AbstractJpaTreeService<Project, ProjectR
 	@Override
 	public Map<Boolean, List<Software>> getSelectSoftwares() {
 		Map<Boolean, List<Software>> softwares = new HashMap<>();
-		softwares.put(false, this.softwareService.findAll());
+		softwares.put(false, this.softwareService.entities());
 		return softwares;
 	};
 
@@ -49,7 +47,7 @@ public class ProjectServiceImpl extends AbstractJpaTreeService<Project, ProjectR
 		if (prjSoftwares.isEmpty()) {
 			return this.getSelectSoftwares();
 		}
-		for (Software software : this.softwareService.findAll()) {
+		for (Software software : this.softwareService.entities()) {
 			if (prjSoftwares.contains(software)) {
 				if (softwares.get(true) == null) {
 					softwares.put(true, new ArrayList<>());
@@ -74,7 +72,7 @@ public class ProjectServiceImpl extends AbstractJpaTreeService<Project, ProjectR
 			}
 		}
 		for (String softwareId : softwares) {
-			Software software = this.softwareService.findById(Long.parseLong(softwareId))
+			Software software = this.softwareService.optionalEntity(Long.parseLong(softwareId))
 					.orElseThrow(() -> new IllegalArgumentException("Invalid software Id:" + softwareId));
 			if (!projectSoftwares.contains(software)) {
 				entity.addSoftware(software);
@@ -88,8 +86,8 @@ public class ProjectServiceImpl extends AbstractJpaTreeService<Project, ProjectR
 	 */
 	@Override
 	@Transactional
-	public Optional<Project> save(Project entity, @SuppressWarnings("unchecked") List<String>... reqParams) {
-		return this.save(this.setSelectedEntities(entity, reqParams));
+	public void save(Project entity, @SuppressWarnings("unchecked") List<String>... reqParams) {
+		this.save(this.setSelectedEntities(entity, reqParams));
 	};
 
 	/**
@@ -97,10 +95,10 @@ public class ProjectServiceImpl extends AbstractJpaTreeService<Project, ProjectR
 	 */
 	@Override
 	@Transactional
-	public Optional<Project> save(Long parentId, Project entity, @SuppressWarnings("unchecked") List<String>... reqParams) {
+	public void save(Long parentId, Project entity, @SuppressWarnings("unchecked") List<String>... reqParams) {
 		entity.setParent(this.repository.findById(parentId)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid software parent Id:" + parentId)));
-		return this.save(this.setSelectedEntities(entity, reqParams));
+		this.save(this.setSelectedEntities(entity, reqParams));
 	};
 
 }

@@ -48,7 +48,7 @@ public class DocumentMvcController extends
 	@Override
 	public Map<String, Object> getShowCreateModelAttributes() {
 		Map<String, Object> ma = new HashMap<>();
-		ma.put("projects", this.masterService.findAll());
+		ma.put("projects", this.masterService.entities());
 		ma.put("types", this.service.getTypes());
 		return ma;
 	}
@@ -58,9 +58,9 @@ public class DocumentMvcController extends
 	 */
 	@GetMapping(URL_VIEW)
 	public String view(@PathVariable(PV_ID) Long id, Locale locale, Model model) {
-		Document document = this.service.getById(id);
-		model.addAttribute(MA_TITLE_READ, document.getCodeId());
-		model.addAttribute(this.objName, this.service.init(document));
+		Document document = this.service.entity(id);
+		model.addAttribute(MA_TITLE_READ, document.codeId());
+		model.addAttribute(this.objName, this.service.initializedEntity(document));
 		model.addAttribute("docModel", this.service.getDocModel(document));
 		model.addAttribute("comparator", this.service.getDocObjectComparator());
 		/*
@@ -75,7 +75,7 @@ public class DocumentMvcController extends
 
 	@GetMapping(URL_FIX)
 	public String fix(@PathVariable(PV_ID) Long id, Locale locale, Model model) {
-		Document document = this.service.getById(id);
+		Document document = this.service.entity(id);
 		this.service.fix(document);
 		// model.addAttribute(MA_TITLE_READ, document.getCodeId());
 		// model.addAttribute(this.objName, this.service.init(document));

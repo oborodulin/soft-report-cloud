@@ -1,8 +1,6 @@
 package com.oborodulin.softreport.domain.common.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.data.domain.Sort;
 
 import com.oborodulin.softreport.domain.common.entity.TreeEntity;
@@ -15,9 +13,9 @@ public interface CommonJpaTreeService<E extends TreeEntity<E, U>, U> extends Com
 
 	public List<E> findByParentIsNull();
 
-	public E create(Long parentId);
+	public E createdEntity(Long parentId);
 
-	public Optional<E> save(Long parentId, E entity);
+	public void save(Long parentId, E entity);
 
 	public String getParentsPath(E entity);
 	

@@ -75,7 +75,7 @@ public class DataType extends DetailEntity<ProgLang, String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.name != null && !this.name.isEmpty() ? this.name
 				: (this.sqlType != null ? this.sqlType.getVal() : null);
 	}

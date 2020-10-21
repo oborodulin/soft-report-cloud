@@ -63,7 +63,7 @@ public abstract class AbstractMasterDetailTreeMvcController<E extends AuditableE
 	@Override
 	public E getShowListMainEntity(Long mainId) {
 		log.info("getShowListMainEntity: MainId = " + mainId);
-		return this.masterService.getById(mainId);
+		return this.masterService.entity(mainId);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public abstract class AbstractMasterDetailTreeMvcController<E extends AuditableE
 	@Override
 	public List<T> getShowListSlavesEntities(Long mainId) {
 		log.info("getShowListSlavesEntities: MainId = " + mainId);
-		return this.service.init(this.service.findByMasterIdAndParentIsNull(mainId, Sort.by(Sort.Direction.ASC, this.getSortPropName())));
+		return this.service.initializedEntities(this.service.findByMasterIdAndParentIsNull(mainId, Sort.by(Sort.Direction.ASC, this.getSortPropName())));
 	}
 
 	/**
@@ -81,7 +81,7 @@ public abstract class AbstractMasterDetailTreeMvcController<E extends AuditableE
 	@Override
 	public T createSlaveEntity(Long mainId) {
 		log.info("createSlaveEntity: MainId = " + mainId);
-		return this.service.create(mainId);
+		return this.service.createdEntity(mainId);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public abstract class AbstractMasterDetailTreeMvcController<E extends AuditableE
 		model.mergeAttributes(this.getModelAttributes(RM_CREATE));
 		AuditableEntity<U> mainEntity = this.getMainEntity(slave);
 		if (mainEntity != null) {
-			model.addAttribute(MA_TITLE_MASTER, mainEntity.getCodeId());
+			model.addAttribute(MA_TITLE_MASTER, mainEntity.codeId());
 		}
 		model.addAttribute(MA_TITLE_CREATE, this.ms.getMessage(this.msPrefix.concat(".title.create"), null, locale));
 		model.addAttribute(this.objName, slave);

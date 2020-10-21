@@ -61,7 +61,7 @@ public class Section extends DetailTreeEntity<DocType, Section, String> {
 	 * @see #section
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.section.getVal();
 	}
 

@@ -101,7 +101,7 @@ public class Software extends TreeEntity<Software, String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.name;
 	}
 

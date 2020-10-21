@@ -60,7 +60,7 @@ public class UiObjectType extends DetailEntity<ProgLang, String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.name;
 	}
 	

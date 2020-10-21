@@ -88,7 +88,7 @@ public class ProgLang extends AuditableEntity<String> {
 	public String getSoftwareCodes() {
 		StringBuilder sbString = new StringBuilder("");
 		for (Software software : this.softwares) {
-			sbString.append(software.getCodeId()).append(", ");
+			sbString.append(software.codeId()).append(", ");
 		}
 		String softwareCodes = sbString.toString();
 		if (softwareCodes.length() > 0) {
@@ -101,7 +101,7 @@ public class ProgLang extends AuditableEntity<String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.lang.getVal();
 	}
 

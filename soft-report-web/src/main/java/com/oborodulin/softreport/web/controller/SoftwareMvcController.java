@@ -35,7 +35,7 @@ public class SoftwareMvcController extends AbstractTreeMvcController<Software, S
 		this.setModelAttributes(RM_UPDATE, ma);
 
 		Map<String, Object> maCreate = new HashMap<>();
-		maCreate.put("softwares", this.service.findAll());
+		maCreate.put("softwares", this.service.entities());
 		maCreate.putAll(ma);
 		this.setModelAttributes(RM_CREATE, maCreate);
 	}

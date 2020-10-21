@@ -48,7 +48,7 @@ public class BusinessObject extends DetailEntity<Software, String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.name;
 	}
 	

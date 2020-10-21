@@ -108,7 +108,7 @@ public class Document extends DetailTreeEntity<Project, Document, String> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.name != null && !this.name.isEmpty() ? this.name
 				: this.type.getType().getVal() + "." + this.getMaster().getName();
 	}

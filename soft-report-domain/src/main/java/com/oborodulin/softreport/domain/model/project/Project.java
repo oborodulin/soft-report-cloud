@@ -98,7 +98,7 @@ public class Project extends TreeEntity<Project, String> {
 	public void addSoftware(Software software) {
 		this.softwares.add(software);
 		software.getProjects().add(this);
-		log.info("Project: add software " + software.getCodeId());
+		log.info("Project: add software " + software.codeId());
 	}
 
 	/**
@@ -110,14 +110,14 @@ public class Project extends TreeEntity<Project, String> {
 	public void removeSoftware(Software software) {
 		this.softwares.remove(software);
 		software.getProjects().remove(this);
-		log.info("Project: remove software " + software.getCodeId());
+		log.info("Project: remove software " + software.codeId());
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.name;
 	}
 

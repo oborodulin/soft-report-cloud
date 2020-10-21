@@ -90,7 +90,7 @@ public class DocType extends TreeEntity<DocType, String> {
 	 * @see #type
 	 */
 	@Override
-	public String getCodeId() {
+	public String codeId() {
 		return this.categ.getVal().concat(" :: ").concat(this.type.getVal());
 	}
 

@@ -30,7 +30,7 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	 */
 	@Override
 	public AuditableEntity<U> getShowListMainEntity(Long mainId) {
-		return this.service.getById(mainId);
+		return this.service.entity(mainId);
 	}
 
 	/**
@@ -38,7 +38,7 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	 */
 	@Override
 	public List<T> getShowListSlavesEntities(Long mainId) {
-		return this.service.init(this.service.findByParentId(mainId, Sort.by(Sort.Direction.ASC, this.getSortPropName())));
+		return this.service.initializedEntities(this.service.findByParentId(mainId, Sort.by(Sort.Direction.ASC, this.getSortPropName())));
 	}
 
 	/**
@@ -46,7 +46,7 @@ public abstract class AbstractTreeChildrenMvcController<T extends TreeEntity<T, 
 	 */
 	@Override
 	public T createSlaveEntity(Long mainId) {
-		return this.service.create(mainId);// this.service.getById(mainId);
+		return this.service.createdEntity(mainId);// this.service.getById(mainId);
 	}
 
 	/**
