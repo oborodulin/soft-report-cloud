@@ -12,22 +12,35 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+/**
+ * Класс конфигурации интернационализации приложения
+ * <p>
+ * Включает поддержку интернационализации. Определяет местоположение ресурсных
+ * пакетов, локализацию по умолчанию, параметр изменения локализации и кодировку
+ * ресурсного пакета.
+ * 
+ * @author Oleg Borodulin
+ * @version 1.0
+ */
 @Configuration
 public class SpringInternationalizationConfig implements WebMvcConfigurer {
 	private static final String MESSAGE_SOURCE = "i18n/messages";
+	private static final String DEF_LOCALE = "ru";
+	private static final String LOCALE_PARAM = "lang";
+	private static final String DEF_ENCODING = "UTF-8";
 
 	@Bean
 	public LocaleResolver localeResolver() {
 		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
 		// localeResolver.setDefaultLocale(Locale.US);
-		localeResolver.setDefaultLocale(new Locale("ru"));
+		localeResolver.setDefaultLocale(new Locale(DEF_LOCALE));
 		return localeResolver;
 	}
 
 	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor() {
 		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-		localeChangeInterceptor.setParamName("lang");
+		localeChangeInterceptor.setParamName(LOCALE_PARAM);
 		return localeChangeInterceptor;
 	}
 
@@ -40,7 +53,7 @@ public class SpringInternationalizationConfig implements WebMvcConfigurer {
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasenames(MESSAGE_SOURCE);
-		messageSource.setDefaultEncoding("UTF-8");
+		messageSource.setDefaultEncoding(DEF_ENCODING);
 		return messageSource;
 	}
 

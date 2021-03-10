@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 /**
- * Класс объект модели документа (объекты БД и UI.
+ * Класс объект модели документа (объекты БД и UI).
  * 
  * @author Oleg Borodulin
  */
